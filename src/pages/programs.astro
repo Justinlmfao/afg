@@ -23,6 +23,37 @@ const impactStats = [
   { value: 3, suffix: '', label: 'years running', variant: 'teal' },
   { value: 60, suffix: '+', label: 'workshops & sessions delivered', variant: 'violet' },
 ];
+
+// Photos from sessions at Ling To Catholic School. The image files live in
+// public/programs/ — see public/programs/README.md for the exact filenames to
+// drop in. `span` lets a photo take two columns for a varied layout.
+const photos = [
+  {
+    src: '/programs/teaching-classroom.jpg',
+    alt: 'An AI For Good volunteer leads a session at Ling To Catholic School while a student raises her hand to answer.',
+    span: true,
+  },
+  {
+    src: '/programs/teaching-ai-word-problems.jpg',
+    alt: 'A volunteer holds a laptop and explains how to use AI to work through a real-life maths word problem.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-maths-module.jpg',
+    alt: 'Two volunteers run the maths module — a slide on shape, space and measurement on screen — for pupils at Ling To Catholic School.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-chalkboard.jpg',
+    alt: 'A volunteer works through a mental-arithmetic shortcut on the chalkboard during a maths session.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-prompting.jpg',
+    alt: 'A volunteer teaches students how to ask an AI good questions, with worked examples shown on the screen.',
+    span: false,
+  },
+];
 ---
 
 <BaseLayout
@@ -113,6 +144,29 @@ const impactStats = [
         </li>
         <li>Most partner schools have invited us back for a second year.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- In the classroom — real photos -->
+  <section class="tint-cool">
+    <div class="container">
+      <p class="eyebrow" data-reveal>In the classroom</p>
+      <p class="gallery-intro lead" data-reveal>
+        Our volunteers running sessions at Ling To Catholic School in Ho Man Tin.
+      </p>
+      <div class="gallery">
+        {
+          photos.map((photo, i) => (
+            <figure
+              class={`shot magnify ${photo.span ? 'shot-wide' : ''}`}
+              data-reveal
+              style={`--reveal-delay:${(i % 3) * 0.08}s`}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
+            </figure>
+          ))
+        }
+      </div>
     </div>
   </section>
 
@@ -304,6 +358,44 @@ const impactStats = [
     color: var(--coral);
   }
 
+  /* Photo gallery */
+  .gallery-intro {
+    margin-bottom: 1.5rem;
+    max-width: var(--measure);
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 14rem;
+    gap: 1rem;
+  }
+
+  .shot {
+    margin: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background: var(--color-surface);
+  }
+
+  .shot-wide {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .shot:hover img {
+    transform: scale(1.08);
+  }
+
   /* Anecdote */
   .anecdote {
     border-top: 1px solid var(--color-border);
@@ -325,6 +417,23 @@ const impactStats = [
     }
     .impact-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 11rem;
+    }
+    .shot-wide {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+    .shot-wide {
+      grid-column: span 1;
     }
   }
 </style>
