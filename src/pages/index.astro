@@ -3,6 +3,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import StatsBand from '../components/StatsBand.astro';
 import Card from '../components/Card.astro';
 import Icon from '../components/Icon.astro';
+import ParticleField from '../components/ParticleField.astro';
+
+// Hero headline, split into word tokens for a cinematic staggered reveal.
+// Each token keeps its trailing space; `grad` marks the gradient word.
+const headline = [
+  'Technology ', 'and ', 'policy ', 'should ', 'serve ',
+  { t: 'everyone. ', grad: true },
+  'We ', 'do ', 'the ', 'work ', 'to ', 'make ', 'sure ', 'they ', 'do.',
+];
+
+// Policy areas scrolled in the marquee band (decorative breadth cue).
+const topics = [
+  'Taxation', 'AI governance', 'Education', 'Labour', 'Public health',
+  'Human capital', 'Innovation', 'Algorithmic accountability',
+  'The Greater Bay Area', 'The future of work',
+];
 
 // Featured work shown on the home page (links into /research).
 const featured = [
@@ -22,30 +38,44 @@ const featured = [
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- Hero with animated gradient + floating blobs -->
+  <!-- Hero: particle network + floating blobs + cinematic headline reveal -->
   <section class="hero">
+    <ParticleField />
     <div class="blob blob-1" style="background:#818cf8" data-parallax="0.5"></div>
     <div class="blob blob-2" style="background:#fb7185" data-parallax="0.9"></div>
     <div class="blob blob-3" style="background:#2dd4bf" data-parallax="0.3"></div>
 
     <div class="container hero-inner">
       <p class="eyebrow" data-reveal>Student-led · Hong Kong · since 2023</p>
-      <h1 data-reveal>
-        Technology and policy should serve{' '}
-        <span class="gradient-text">everyone</span>. We do the work to make sure
-        they do.
+      <h1 class="reveal-words">
+        {
+          headline.map((word, i) => {
+            const text = typeof word === 'string' ? word : word.t;
+            const grad = typeof word !== 'string' && word.grad;
+            return (
+              <span class="word">
+                <span
+                  class={grad ? 'word-inner gradient-text' : 'word-inner'}
+                  style={`--wd:${(0.2 + i * 0.05).toFixed(2)}s`}
+                >
+                  {text}
+                </span>
+              </span>
+            );
+          })
+        }
       </h1>
-      <p class="lead hero-subhead" data-reveal style="--reveal-delay:0.1s">
+      <p class="lead hero-subhead" data-reveal style="--reveal-delay:0.85s">
         AI For Good is a student-led think tank in Hong Kong. We produce policy
         research, submit evidence-based recommendations to government, and teach
         children to use AI as a tool to close the gap that wealth would
         otherwise decide.
       </p>
-      <div class="hero-actions" data-reveal style="--reveal-delay:0.2s">
-        <a class="btn btn-primary" href="/research">
+      <div class="hero-actions" data-reveal style="--reveal-delay:1s">
+        <a class="btn btn-primary" href="/research" data-magnetic>
           Read our research <span class="arrow">→</span>
         </a>
-        <a class="btn btn-secondary" href="/get-involved">
+        <a class="btn btn-secondary" href="/get-involved" data-magnetic>
           Get involved <span class="arrow">→</span>
         </a>
       </div>
@@ -78,6 +108,13 @@ const featured = [
       </div>
     </div>
   </section>
+
+  <!-- Topic marquee — the breadth of policy areas, quietly in motion -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[...topics, ...topics].map((t) => <span class="marquee-item">{t}</span>)}
+    </div>
+  </div>
 
   <!-- Featured work -->
   <section>

@@ -95,10 +95,13 @@ research areas, and the team roster.
 
 ## Design & animation
 
-The site is intentionally colourful and motion-rich: an animated gradient hero
-with floating shapes, scroll-reveal on most elements, count-up statistics,
-cards that tilt toward the cursor and magnify on hover, gradient text, a
-scroll-progress bar, and a deep-gradient stats band and footer.
+The site is intentionally cinematic and motion-rich: a hero with a drifting
+**particle network** (`src/components/ParticleField.astro`) and a word-by-word
+**headline reveal**, an auto-scrolling **topic marquee**, scroll-reveal on most
+elements, count-up statistics, cards that tilt toward the cursor with a
+**cursor-follow spotlight**, **magnetic** buttons, gradient text, a
+scroll-progress bar, a deep-gradient stats band and footer, and a **lightbox**
+for the program photos (click a photo; arrow keys / Esc to navigate).
 
 - **All of it lives in two places:** the design tokens, palette, gradients, and
   animation utilities in `src/styles/global.css`, and the small animation
