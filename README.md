@@ -64,25 +64,34 @@ spot that still needs real information before launch.
 
 ---
 
-## Before you publish — placeholder checklist
+## Before you publish — remaining checklist
 
-The copy ships with `[BRACKETED]` placeholders so nothing is silently
-invented. **Don't launch with any of these still in place** — for an org doing
-government work, one inflated claim costs more than ten modest true ones.
+Confirmed facts are already in place. **Don't launch with any DRAFT copy or
+`[BRACKET]` still unverified** — for an org doing government work, one inflated
+claim costs more than ten modest true ones. Still to do:
 
-- [ ] Exact year AFG was founded (About → "Our story")
-- [ ] Exact number of partner schools (Home stats, Programs)
-- [ ] Submission titles, bodies, and dates (`src/content/submissions/`)
-- [ ] Report titles + the actual PDF files (`src/content/publications/`, `public/research/`)
-- [ ] Number of workshops / sessions delivered (Programs → Impact)
-- [ ] One real anecdote (Programs → quote block)
-- [ ] Team member names, roles, one line each (`src/content/team/`)
-- [ ] Contact email + any social links (footer + Get Involved)
-- [ ] Confirm "300+" is current and accurate (StatsBand, Programs)
-- [ ] 3–5 real research areas (Research page)
+- [ ] Verify the tax-submission summary against the real document, and fill in
+  the exact month (`src/content/submissions/tax-relief-2025-26-budget.md`)
+- [ ] Confirm the program description and pick the real activity
+  (`src/content/programs/ai-literacy-workshops.md`)
+- [ ] Confirm the sessions-delivered number — "~40" is a DRAFT estimate
+  (`src/pages/programs.astro`)
+- [ ] Replace the Programs anecdote with a true one + the real school name
+  (`src/pages/programs.astro`)
+- [ ] Confirm the team bios are accurate (focus areas + roles)
+  (`src/content/team/`)
+- [ ] Add the contact email when ready — set `email` in both
+  `src/pages/get-involved.astro` and `src/components/Footer.astro`
+- [ ] Add real PDFs to `public/research/` and link them from the submission /
+  publication frontmatter
 - [ ] Set your real domain in `astro.config.mjs` (`site:`)
 
-Tip: run a search for `[PLACEHOLDER]` and `[` across the project to catch them all.
+Already confirmed and in place: founding date (June 2023 / 3 years), 350
+children, 10 institutions, ~20 submissions a year, 4 recommendations a year in
+the Policy Address, the Five-Year Plan callout, research areas, and the team
+roster.
+
+Tip: search the project for `DRAFT` and `[` to find everything still to verify.
 
 ---
 

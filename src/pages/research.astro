@@ -2,39 +2,62 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Pull submissions and publications from their content collections and sort
-// by the `order` field. To add a new item, drop a .md file into
-// src/content/submissions/ or src/content/publications/ — see the existing
-// example files for the format.
-const submissions = (await getCollection('submissions')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const publications = (await getCollection('publications')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+// Pull submissions and publications from their content collections, drop any
+// marked `draft: true`, and sort by the `order` field. To add a new item, drop
+// a .md file into src/content/submissions/ or src/content/publications/ — see
+// the example files (draft: true) for the format.
+const submissions = (await getCollection('submissions'))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+const publications = (await getCollection('publications'))
+  .filter((item) => !item.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
 
-// [PLACEHOLDER] Replace with 3–5 real research areas, or delete the section.
+// Economics-forward research areas. Edit freely.
 const researchAreas = [
-  'AI and educational equity',
-  'Algorithmic accountability in public services',
-  'AI governance in the Hong Kong / Greater Bay Area context',
+  'AI and economic policy — taxation, growth, and the economics of technology',
+  'AI, education, and equity of access',
+  'Technology governance in Hong Kong and the Greater Bay Area',
+  'AI and the future of work',
 ];
 ---
 
 <BaseLayout
   title="Research & Policy"
-  description="Research on the social, economic, and ethical dimensions of AI — put to work through formal submissions to government consultations and public bodies."
+  description="Research on the economic, social, and ethical dimensions of AI — put to work through roughly twenty government submissions a year, with four recommendations a year reflected in the Policy Address."
 >
   <section class="section-tight">
     <div class="container prose">
       <p class="eyebrow">Research & Policy</p>
       <h1>Research &amp; Policy</h1>
       <p class="lead">
-        We produce research on the social, economic, and ethical dimensions of
-        artificial intelligence, and we put that research to work — through
-        formal submissions to government consultations and recommendations to
-        public bodies.
+        We produce research on the economic, social, and ethical dimensions of
+        artificial intelligence — and we put it to work. Each year we make
+        roughly twenty submissions to government consultations and public
+        bodies, and on average four of our recommendations are reflected in the
+        Policy Address.
       </p>
+    </div>
+  </section>
+
+  <!-- Currently in progress callout -->
+  <section class="section-tight">
+    <div class="container">
+      <aside class="callout" aria-label="Work currently in progress">
+        <p class="callout-label">Currently in progress</p>
+        <h2 class="callout-title">
+          Submission to Hong Kong's First Five-Year Plan (2026–2030)
+        </h2>
+        <p>
+          The Government opened public consultation on <em>The First Five-Year
+          Plan for Economic and Social Development of the Hong Kong Special
+          Administrative Region (2026–2030)</em> on 15 June 2026, running until
+          14 August 2026. We are preparing a submission on how AI and economic
+          policy can be designed to widen, rather than narrow, opportunity —
+          engaging the plan's priorities on the AI+ Initiative, innovation and
+          technology, and education.
+        </p>
+      </aside>
     </div>
   </section>
 
@@ -55,34 +78,6 @@ const researchAreas = [
               <p class="entry-summary">{item.data.summary}</p>
               {item.data.pdf && (
                 <a class="entry-link" href={item.data.pdf}>
-                  Read the submission (PDF) →
-                </a>
-              )}
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <!-- Publications & reports -->
-  <section class="section-tight">
-    <div class="container">
-      <div class="prose">
-        <h2>Publications &amp; reports</h2>
-      </div>
-      <ol class="entry-list">
-        {
-          publications.map((item) => (
-            <li class="entry">
-              <h3>{item.data.title}</h3>
-              <p class="entry-meta">
-                {item.data.date}
-                {item.data.detail && <> · {item.data.detail}</>}
-              </p>
-              <p class="entry-summary">{item.data.summary}</p>
-              {item.data.pdf && (
-                <a class="entry-link" href={item.data.pdf}>
                   Download PDF →
                 </a>
               )}
@@ -92,6 +87,36 @@ const researchAreas = [
       </ol>
     </div>
   </section>
+
+  <!-- Publications & reports (only rendered once there's a published entry) -->
+  {
+    publications.length > 0 && (
+      <section class="section-tight">
+        <div class="container">
+          <div class="prose">
+            <h2>Publications &amp; reports</h2>
+          </div>
+          <ol class="entry-list">
+            {publications.map((item) => (
+              <li class="entry">
+                <h3>{item.data.title}</h3>
+                <p class="entry-meta">
+                  {item.data.date}
+                  {item.data.detail && <> · {item.data.detail}</>}
+                </p>
+                <p class="entry-summary">{item.data.summary}</p>
+                {item.data.pdf && (
+                  <a class="entry-link" href={item.data.pdf}>
+                    Download PDF →
+                  </a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
 
   <!-- Research areas -->
   <section class="section-tight areas">
@@ -105,6 +130,34 @@ const researchAreas = [
 </BaseLayout>
 
 <style>
+  .callout {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: 1.75rem 2rem;
+    max-width: var(--measure);
+  }
+
+  .callout-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .callout-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .callout p:last-child {
+    color: var(--color-text-soft);
+    margin: 0;
+  }
+
   .entry-list {
     list-style: none;
     padding: 0;

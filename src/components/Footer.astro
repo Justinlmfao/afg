@@ -1,7 +1,10 @@
 ---
 // Site footer.
-// [PLACEHOLDER] Update the contact email and any social links before launch.
+// Contact email is on file (dudequa3@gmail.com) but left blank for now. Set
+// `email` to that address when ready and the contact line will appear.
+// Social links omitted for now.
 const year = new Date().getFullYear();
+const email = '';
 ---
 
 <footer class="site-footer">
@@ -10,7 +13,7 @@ const year = new Date().getFullYear();
       <p class="footer-brand">AI For Good</p>
       <p class="footer-tagline">
         A student-led think tank in Hong Kong working at the intersection of
-        technology, policy, and education.
+        technology, economics, and policy.
       </p>
     </div>
 
@@ -23,8 +26,7 @@ const year = new Date().getFullYear();
     </nav>
 
     <div class="footer-contact">
-      <!-- [PLACEHOLDER] contact email + social links -->
-      <a href="mailto:[contact@email]">[contact@email]</a>
+      {email && <a href={`mailto:${email}`}>{email}</a>}
       <p class="footer-meta">Based in Hong Kong · &copy; {year} AI For Good</p>
     </div>
   </div>

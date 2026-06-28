@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
-// Programs are content-collection entries. Each .md file's body becomes the
-// program description. Add a program by creating a new file in
-// src/content/programs/.
-const programs = (await getCollection('programs')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+// Programs are content-collection entries (drafts excluded). Each .md file's
+// body becomes the program description. Add a program by creating a new file
+// in src/content/programs/.
+const programs = (await getCollection('programs'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
 
 // Render the Markdown body of each program ahead of time.
 const rendered = await Promise.all(
@@ -17,27 +17,31 @@ const rendered = await Promise.all(
   }))
 );
 
-// [PLACEHOLDER] Confirm/replace these impact figures before launch.
+// Impact figures. The first three are confirmed (as of June 2026).
+// "~40 sessions delivered" is a DRAFT estimate — confirm the real count before
+// publishing. Add any other truthful measurable outcome (returning students,
+// partner renewals, feedback) as a new array item.
 const impact = [
-  '300+ students reached',
-  '[NUMBER] partner schools',
-  '[NUMBER] workshops / sessions delivered',
-  '[Any other measurable outcome — surveys, feedback, returning students]',
+  '350 children taught',
+  '10 partner institutions',
+  '3 years running',
+  '~40 sessions delivered', // DRAFT — confirm exact number
 ];
 ---
 
 <BaseLayout
   title="Education & Outreach"
-  description="Hands-on AI literacy programs that reach students who don't usually get access — 300+ children taught across Hong Kong."
+  description="Hands-on programs bringing AI and economic literacy to students who don't usually get access — 350 children taught across 10 institutions in Hong Kong."
 >
   <section class="section-tight">
     <div class="container prose">
       <p class="eyebrow">Education & Outreach</p>
       <h1>Education &amp; Outreach</h1>
       <p class="lead">
-        Understanding AI shouldn't be a privilege. We run hands-on programs that
-        teach AI literacy to students who don't usually get access to it —
-        reaching 300+ children across [NUMBER] schools in Hong Kong.
+        Understanding AI and the economy shouldn't be a privilege. We run
+        hands-on programs that bring AI and economic literacy to students who
+        don't usually get access — 350 children to date, across 10 institutions
+        in Hong Kong.
       </p>
     </div>
   </section>
@@ -69,11 +73,14 @@ const impact = [
   <!-- Human texture / anecdote -->
   <section class="anecdote">
     <div class="container prose">
-      <!-- [PLACEHOLDER] One short, specific anecdote from a session — a
-           student's question, a real moment. Delete this block if unused. -->
+      <!-- DRAFT / EXAMPLE — swap in a true, specific anecdote (even two
+           sentences) before publishing, and replace [school] with the real
+           place. A real moment does more here than any statistic. -->
       <blockquote class="anecdote-quote">
-        [One short, specific anecdote — a moment from a session, a student's
-        question, something real. This is what people remember.]
+        At a session at [school], a student who'd said economics "wasn't for
+        people like me" spent the whole hour arguing about whether a tax cut
+        would reach his neighbourhood. That's the point — not that he memorised
+        a definition, but that he saw the subject was about him.
       </blockquote>
     </div>
   </section>

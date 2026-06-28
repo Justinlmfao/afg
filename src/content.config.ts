@@ -7,6 +7,9 @@
 //
 // `order` controls sort position (lower numbers appear first). Anything
 // optional can simply be left out of the frontmatter.
+//
+// Set `draft: true` on any file to keep it in the repo as a template/example
+// without showing it on the live site (the pages filter drafts out).
 
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
@@ -24,6 +27,7 @@ const submissions = defineCollection({
     summary: z.string(),
     // PDF lives in /public/research/. Reference it as "/research/file.pdf".
     pdf: z.string().optional(),
+    draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });
@@ -38,6 +42,7 @@ const publications = defineCollection({
     detail: z.string().optional(),
     summary: z.string(),
     pdf: z.string().optional(),
+    draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });
@@ -48,6 +53,7 @@ const programs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/programs' }),
   schema: z.object({
     title: z.string(),
+    draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });
@@ -63,6 +69,7 @@ const team = defineCollection({
     // Which group they belong to, used to organise the page.
     // e.g. "Leadership", "Research", "Education & Outreach".
     group: z.string(),
+    draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });

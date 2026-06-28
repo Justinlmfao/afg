@@ -2,12 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Team members come from src/content/team/. Add a person by creating a new
-// .md file there. The `group` field controls which section they appear under;
-// the order of groups below controls section order on the page.
-const members = await getCollection('team');
+// Team members come from src/content/team/ (drafts excluded). Add a person by
+// creating a new .md file there. The `group` field controls which section they
+// appear under; the order of groups below controls section order on the page.
+const members = (await getCollection('team')).filter((m) => !m.data.draft);
 
-const groupOrder = ['Leadership', 'Research', 'Education & Outreach', 'Operations'];
+const groupOrder = ['Leadership', 'Executive Team'];
 
 // Bucket members by group, then sort each bucket by `order`.
 const grouped = groupOrder
@@ -29,8 +29,8 @@ const grouped = groupOrder
       <p class="eyebrow">Our Team</p>
       <h1>Our Team</h1>
       <p class="lead">
-        AI For Good is run entirely by students, organised into research,
-        education, and operations teams.
+        AI For Good is run entirely by students, organised into research and
+        education teams.
       </p>
     </div>
   </section>
