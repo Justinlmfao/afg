@@ -2,46 +2,75 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import StatsBand from '../components/StatsBand.astro';
 import Card from '../components/Card.astro';
+import Icon from '../components/Icon.astro';
+
+// Featured work shown on the home page (links into /research).
+const featured = [
+  {
+    title: "Submission to Hong Kong's First Five-Year Plan (2026–2030)",
+    tag: 'In progress',
+  },
+  {
+    title: 'Tax Relief and Household Resilience — Submission to the 2025–26 Budget',
+    tag: 'Submission',
+  },
+  {
+    title: 'The Spark Gap: AI Literacy and Educational Inequality in Hong Kong',
+    tag: 'Report',
+  },
+];
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- Hero -->
+  <!-- Hero with animated gradient + floating blobs -->
   <section class="hero">
-    <div class="container">
-      <h1>Technology and policy should serve everyone. We do the work to make sure they do.</h1>
-      <p class="lead hero-subhead">
+    <div class="blob blob-1" style="background:#818cf8" data-parallax="0.5"></div>
+    <div class="blob blob-2" style="background:#fb7185" data-parallax="0.9"></div>
+    <div class="blob blob-3" style="background:#2dd4bf" data-parallax="0.3"></div>
+
+    <div class="container hero-inner">
+      <p class="eyebrow" data-reveal>Student-led · Hong Kong · since 2023</p>
+      <h1 data-reveal>
+        Technology and policy should serve
+        <span class="gradient-text">everyone</span>. We do the work to make sure
+        they do.
+      </h1>
+      <p class="lead hero-subhead" data-reveal style="--reveal-delay:0.1s">
         AI For Good is a student-led think tank in Hong Kong. We produce policy
         research, submit evidence-based recommendations to government, and teach
-        AI and economic literacy to communities too often left out of the
-        conversation.
+        children to use AI as a tool to close the gap that wealth would
+        otherwise decide.
       </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="/research">Read our research →</a>
-        <a class="btn btn-secondary" href="/get-involved">Get involved →</a>
+      <div class="hero-actions" data-reveal style="--reveal-delay:0.2s">
+        <a class="btn btn-primary" href="/research">
+          Read our research <span class="arrow">→</span>
+        </a>
+        <a class="btn btn-secondary" href="/get-involved">
+          Get involved <span class="arrow">→</span>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Stats band -->
+  <!-- Stats band (animated count-up) -->
   <StatsBand />
 
   <!-- What we do -->
-  <section>
+  <section class="tint-cool">
     <div class="container">
-      <p class="eyebrow">What we do</p>
+      <p class="eyebrow" data-reveal>What we do</p>
       <div class="cards-grid">
-        <Card title="Research & Policy">
+        <Card title="Research & Policy" icon="research" variant="cool">
           We research how AI and economic policy shape society, and submit
-          roughly twenty evidence-based recommendations a year to government
-          consultations and public bodies — from the annual Budget to Hong
-          Kong's first five-year plan.
+          roughly twenty evidence-based recommendations a year to government —
+          from the annual Budget to Hong Kong's First Five-Year Plan.
         </Card>
-        <Card title="Education & Outreach">
+        <Card title="Education & Outreach" icon="education" variant="warm">
           We teach AI and economic literacy to underprivileged students across
-          Hong Kong — 350 children and counting — because understanding the
-          forces shaping the economy shouldn't depend on where you're born.
+          Hong Kong — 350 children and counting — by showing them how to use AI
+          as a free, patient tutor, the kind their wealthier peers pay for.
         </Card>
-        <Card title="Public Engagement">
+        <Card title="Public Engagement" icon="engagement" variant="teal">
           We bring students, educators, and policymakers into the same room, on
           the conviction that the people who will live longest with these
           decisions should help shape them.
@@ -50,56 +79,166 @@ import Card from '../components/Card.astro';
     </div>
   </section>
 
+  <!-- Featured work -->
+  <section>
+    <div class="container">
+      <p class="eyebrow" data-reveal>Featured work</p>
+      <ul class="featured-list">
+        {
+          featured.map((item, i) => (
+            <li class="featured-item magnify" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+              <a href="/research">
+                <span class="featured-tag">{item.tag}</span>
+                <span class="featured-title">{item.title}</span>
+                <span class="featured-arrow" aria-hidden="true">
+                  <Icon name="arrow" size={22} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
   <!-- Closing line -->
   <section class="closing">
     <div class="container prose">
-      <p class="closing-line">We're students. We think that's the point.</p>
+      <p class="closing-line" data-reveal>
+        We're students. We think that's the point — the people who will inherit
+        these decisions should have a hand in shaping them.
+      </p>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    padding-block: clamp(3.5rem, 9vw, 7rem);
+    background: var(--grad-hero);
+    background-size: 300% 300%;
+    animation: gradientShift 20s ease infinite;
+    padding-block: clamp(4rem, 11vw, 9rem);
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
   }
 
   .hero h1 {
-    max-width: 18ch;
+    max-width: 20ch;
   }
 
   .hero-subhead {
-    max-width: 46ch;
+    max-width: 50ch;
     margin-top: 1.5rem;
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.85rem;
-    margin-top: 2.25rem;
+    gap: 0.9rem;
+    margin-top: 2.5rem;
+  }
+
+  /* Floating blobs */
+  .blob-1 {
+    width: 26rem;
+    height: 26rem;
+    top: -8rem;
+    right: -6rem;
+    animation: floatY 9s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 20rem;
+    height: 20rem;
+    bottom: -8rem;
+    left: -5rem;
+    animation: floatX 11s ease-in-out infinite;
+  }
+  .blob-3 {
+    width: 14rem;
+    height: 14rem;
+    top: 30%;
+    right: 22%;
+    opacity: 0.35;
+    animation: floatY 7s ease-in-out infinite;
   }
 
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    margin-top: 1rem;
+  }
+
+  /* Featured work list */
+  .featured-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .featured-item a {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.4rem 1.75rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .featured-tag {
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--grad-cool);
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  .featured-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    flex: 1;
+  }
+
+  .featured-arrow {
+    color: var(--color-accent);
+    transition: transform 0.2s ease;
+  }
+
+  .featured-item:hover .featured-arrow {
+    transform: translateX(6px);
   }
 
   .closing {
-    border-top: 1px solid var(--color-border);
+    text-align: center;
   }
 
   .closing-line {
     font-family: var(--font-serif);
-    font-size: clamp(1.4rem, 3vw, 1.9rem);
-    line-height: 1.4;
-    color: var(--color-text);
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    line-height: 1.35;
+    max-width: 24ch;
+    margin-inline: auto;
   }
 
   @media (max-width: 52rem) {
     .cards-grid {
       grid-template-columns: 1fr;
+    }
+    .featured-item a {
+      flex-wrap: wrap;
+      gap: 0.75rem;
     }
   }
 </style>

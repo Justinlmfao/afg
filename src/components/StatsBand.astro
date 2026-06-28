@@ -1,19 +1,30 @@
 ---
-// Three high-impact figures (all confirmed as of June 2026).
-// Edit the `stats` array to update them.
+// Three high-impact figures (all confirmed as of June 2026). Each big number
+// counts up from zero when it scrolls into view. Edit the `stats` array to
+// change them: `value` is the number that animates; `prefix`/`suffix` are
+// static text around it.
 const stats = [
   {
-    figure: '3 years',
-    label: 'building from a school club into a working think tank — since June 2023',
+    prefix: '',
+    value: 3,
+    suffix: ' yrs',
+    label: 'built from a school club into a working think tank — since June 2023',
+    variant: 'cool',
   },
   {
-    figure: '350 children',
-    label: 'taught across 10 institutions in Hong Kong',
+    prefix: '',
+    value: 350,
+    suffix: '',
+    label: 'children taught across 10 institutions in Hong Kong',
+    variant: 'warm',
   },
   {
-    figure: '~20 a year',
+    prefix: '~',
+    value: 20,
+    suffix: '/yr',
     label:
       'submissions to government — with, on average, 4 recommendations reflected in the Policy Address',
+    variant: 'teal',
   },
 ];
 ---
@@ -21,9 +32,13 @@ const stats = [
 <div class="stats-band">
   <div class="container stats-grid">
     {
-      stats.map((stat) => (
-        <div class="stat">
-          <p class="stat-figure">{stat.figure}</p>
+      stats.map((stat, i) => (
+        <div class={`stat var-${stat.variant}`} data-reveal style={`--reveal-delay:${i * 0.12}s`}>
+          <p class="stat-figure">
+            <span class="stat-prefix">{stat.prefix}</span>
+            <span class="count" data-count={stat.value}>0</span>
+            <span class="stat-suffix">{stat.suffix}</span>
+          </p>
           <p class="stat-label">{stat.label}</p>
         </div>
       ))
@@ -33,35 +48,67 @@ const stats = [
 
 <style>
   .stats-band {
-    border-block: 1px solid var(--color-border);
-    background: var(--color-surface);
+    background: linear-gradient(135deg, #0f1030, #1e1b4b 50%, #0b3b3a);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
   }
 
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+    position: relative;
+    z-index: 1;
   }
 
   .stat-figure {
     font-family: var(--font-serif);
-    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-    color: var(--color-accent);
-    line-height: 1.1;
-    margin-bottom: 0.5rem;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    line-height: 1;
+    font-weight: 600;
+    display: flex;
+    align-items: baseline;
+    gap: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  .stat-prefix,
+  .stat-suffix {
+    font-size: 0.5em;
+    opacity: 0.85;
+  }
+
+  /* Each figure gets its own bright gradient */
+  .var-cool .stat-figure {
+    background: linear-gradient(120deg, #818cf8, #38bdf8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .var-warm .stat-figure {
+    background: linear-gradient(120deg, #fbbf24, #fb7185);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .var-teal .stat-figure {
+    background: linear-gradient(120deg, #2dd4bf, #a3e635);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .stat-label {
-    color: var(--color-text-soft);
+    color: rgba(255, 255, 255, 0.82);
     font-size: 0.97rem;
   }
 
   @media (max-width: 46rem) {
     .stats-grid {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      text-align: left;
+      gap: 2rem;
     }
   }
 </style>

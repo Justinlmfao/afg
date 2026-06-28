@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 
-// Pull submissions and publications from their content collections, drop any
-// marked `draft: true`, and sort by the `order` field. To add a new item, drop
-// a .md file into src/content/submissions/ or src/content/publications/ — see
-// the example files (draft: true) for the format.
+// Submissions + publications come from content collections (drafts excluded),
+// sorted by `order`. Add an item by dropping a .md file into
+// src/content/submissions/ or src/content/publications/.
 const submissions = (await getCollection('submissions'))
   .filter((item) => !item.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
@@ -13,12 +13,14 @@ const publications = (await getCollection('publications'))
   .filter((item) => !item.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 
-// Economics-forward research areas. Edit freely.
 const researchAreas = [
-  'AI and economic policy — taxation, growth, and the economics of technology',
-  'AI, education, and equity of access',
-  'Technology governance in Hong Kong and the Greater Bay Area',
-  'AI and the future of work',
+  'AI and economic policy — taxation, growth, and industrial strategy',
+  'The economics of education and human capital',
+  'Labour economics and the future of work',
+  'Health economics and public-service delivery',
+  'Financial economics, markets, and AI in fintech',
+  'AI governance and algorithmic accountability',
+  'Technology, innovation, and the Greater Bay Area',
 ];
 ---
 
@@ -26,11 +28,12 @@ const researchAreas = [
   title="Research & Policy"
   description="Research on the economic, social, and ethical dimensions of AI — put to work through roughly twenty government submissions a year, with four recommendations a year reflected in the Policy Address."
 >
-  <section class="section-tight">
+  <section class="section-tight research-hero">
+    <div class="blob" style="background:#93c5fd;width:18rem;height:18rem;top:-5rem;right:-4rem" data-parallax="0.6"></div>
     <div class="container prose">
-      <p class="eyebrow">Research & Policy</p>
-      <h1>Research &amp; Policy</h1>
-      <p class="lead">
+      <p class="eyebrow" data-reveal>Research & Policy</p>
+      <h1 data-reveal>Research &amp; <span class="gradient-text">Policy</span></h1>
+      <p class="lead" data-reveal style="--reveal-delay:0.1s">
         We produce research on the economic, social, and ethical dimensions of
         artificial intelligence — and we put it to work. Each year we make
         roughly twenty submissions to government consultations and public
@@ -43,7 +46,8 @@ const researchAreas = [
   <!-- Currently in progress callout -->
   <section class="section-tight">
     <div class="container">
-      <aside class="callout" aria-label="Work currently in progress">
+      <aside class="callout" data-reveal aria-label="Work currently in progress">
+        <span class="callout-pulse" aria-hidden="true"></span>
         <p class="callout-label">Currently in progress</p>
         <h2 class="callout-title">
           Submission to Hong Kong's First Five-Year Plan (2026–2030)
@@ -55,7 +59,7 @@ const researchAreas = [
           14 August 2026. We are preparing a submission on how AI and economic
           policy can be designed to widen, rather than narrow, opportunity —
           engaging the plan's priorities on the AI+ Initiative, innovation and
-          technology, and education.
+          technology, education, and the future of work.
         </p>
       </aside>
     </div>
@@ -65,22 +69,27 @@ const researchAreas = [
   <section class="section-tight">
     <div class="container">
       <div class="prose">
-        <h2>Government &amp; policy submissions</h2>
+        <h2 data-reveal>Government &amp; policy submissions</h2>
       </div>
       <ol class="entry-list">
         {
-          submissions.map((item) => (
-            <li class="entry">
-              <h3>{item.data.title}</h3>
-              <p class="entry-meta">
-                Submitted to {item.data.submittedTo}, {item.data.date}.
-              </p>
-              <p class="entry-summary">{item.data.summary}</p>
-              {item.data.pdf && (
-                <a class="entry-link" href={item.data.pdf}>
-                  Download PDF →
-                </a>
-              )}
+          submissions.map((item, i) => (
+            <li class="entry magnify" data-reveal style={`--reveal-delay:${(i % 3) * 0.06}s`}>
+              <span class="entry-num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div class="entry-body">
+                <h3>{item.data.title}</h3>
+                <p class="entry-meta">
+                  Submitted to {item.data.submittedTo}, {item.data.date}.
+                </p>
+                <p class="entry-summary">{item.data.summary}</p>
+                {item.data.pdf && (
+                  <a class="entry-link link-underline" href={item.data.pdf}>
+                    Download PDF →
+                  </a>
+                )}
+              </div>
             </li>
           ))
         }
@@ -88,68 +97,96 @@ const researchAreas = [
     </div>
   </section>
 
-  <!-- Publications & reports (only rendered once there's a published entry) -->
+  <!-- Publications & reports -->
   {
     publications.length > 0 && (
-      <section class="section-tight">
+      <section class="section-tight tint-cool">
         <div class="container">
           <div class="prose">
-            <h2>Publications &amp; reports</h2>
+            <h2 data-reveal>Publications &amp; reports</h2>
           </div>
-          <ol class="entry-list">
-            {publications.map((item) => (
-              <li class="entry">
+          <div class="reports-grid">
+            {publications.map((item, i) => (
+              <article class="report magnify" data-reveal style={`--reveal-delay:${(i % 3) * 0.08}s`}>
+                <span class="report-badge" aria-hidden="true">
+                  <Icon name="report" />
+                </span>
                 <h3>{item.data.title}</h3>
-                <p class="entry-meta">
+                <p class="report-meta">
                   {item.data.date}
                   {item.data.detail && <> · {item.data.detail}</>}
                 </p>
-                <p class="entry-summary">{item.data.summary}</p>
+                <p class="report-summary">{item.data.summary}</p>
                 {item.data.pdf && (
-                  <a class="entry-link" href={item.data.pdf}>
+                  <a class="entry-link link-underline" href={item.data.pdf}>
                     Download PDF →
                   </a>
                 )}
-              </li>
+              </article>
             ))}
-          </ol>
+          </div>
         </div>
       </section>
     )
   }
 
   <!-- Research areas -->
-  <section class="section-tight areas">
-    <div class="container prose">
-      <h2>Research areas</h2>
-      <ul>
-        {researchAreas.map((area) => <li>{area}</li>)}
+  <section class="section-tight">
+    <div class="container">
+      <p class="eyebrow" data-reveal>Research areas</p>
+      <ul class="areas-grid">
+        {
+          researchAreas.map((area, i) => (
+            <li class="area-chip magnify" data-reveal style={`--reveal-delay:${i * 0.05}s`}>
+              {area}
+            </li>
+          ))
+        }
       </ul>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  .research-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Callout */
   .callout {
-    background: var(--color-surface);
+    position: relative;
+    background: linear-gradient(135deg, #eef2ff, #fdf2f8);
     border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-accent);
+    border-left: 5px solid var(--color-accent);
     border-radius: var(--radius);
-    padding: 1.75rem 2rem;
+    padding: 1.9rem 2.1rem;
     max-width: var(--measure);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .callout-pulse {
+    position: absolute;
+    top: 1.9rem;
+    right: 1.9rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background: var(--coral);
+    animation: pulseGlow 2.4s ease infinite;
   }
 
   .callout-label {
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.78rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--coral);
     margin-bottom: 0.5rem;
   }
 
   .callout-title {
-    font-size: 1.4rem;
+    font-size: 1.45rem;
     margin-bottom: 0.75rem;
   }
 
@@ -158,16 +195,35 @@ const researchAreas = [
     margin: 0;
   }
 
+  /* Submission entries */
   .entry-list {
     list-style: none;
     padding: 0;
     margin-top: 1.5rem;
-    max-width: var(--measure);
+    display: grid;
+    gap: 1rem;
   }
 
   .entry {
-    padding-block: 1.75rem;
-    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: 1.25rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .entry-num {
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 600;
+    background: var(--grad-cool);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    line-height: 1;
+    flex-shrink: 0;
   }
 
   .entry h3 {
@@ -185,11 +241,94 @@ const researchAreas = [
   }
 
   .entry-link {
-    font-weight: 500;
-    font-size: 0.97rem;
+    font-weight: 600;
+    font-size: 0.95rem;
   }
 
-  .areas {
-    border-top: 1px solid var(--color-border);
+  /* Reports */
+  .reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .report {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .report-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    color: #fff;
+    background: var(--grad-warm);
+    margin-bottom: 1rem;
+  }
+
+  .report h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .report-meta {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .report-summary {
+    color: var(--color-text-soft);
+    margin-bottom: 0.85rem;
+  }
+
+  /* Research-area chips */
+  .areas-grid {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 0.9rem;
+  }
+
+  .area-chip {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.85rem 1.3rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    padding-left: 2.4rem;
+  }
+
+  .area-chip::before {
+    content: '';
+    position: absolute;
+    left: 1.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: var(--grad-rainbow);
+    background-size: 200% 200%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  @media (max-width: 46rem) {
+    .entry {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
   }
 </style>

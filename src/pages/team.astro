@@ -2,14 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Team members come from src/content/team/ (drafts excluded). Add a person by
-// creating a new .md file there. The `group` field controls which section they
-// appear under; the order of groups below controls section order on the page.
+// Team members come from src/content/team/ (drafts excluded). The `group`
+// field controls which section a person appears under; the order of groups
+// below controls section order on the page.
 const members = (await getCollection('team')).filter((m) => !m.data.draft);
 
 const groupOrder = ['Leadership', 'Executive Team'];
 
-// Bucket members by group, then sort each bucket by `order`.
 const grouped = groupOrder
   .map((group) => ({
     group,
@@ -18,19 +17,38 @@ const grouped = groupOrder
       .sort((a, b) => a.data.order - b.data.order),
   }))
   .filter((section) => section.people.length > 0);
+
+// Colourful gradients cycled across avatars.
+const gradients = [
+  'linear-gradient(135deg,#4f46e5,#2563eb)',
+  'linear-gradient(135deg,#f97316,#ec4899)',
+  'linear-gradient(135deg,#0d9488,#059669)',
+  'linear-gradient(135deg,#7c3aed,#4f46e5)',
+  'linear-gradient(135deg,#f59e0b,#ef4444)',
+];
+
+const initials = (name: string) =>
+  name
+    .split(' ')
+    .map((w) => w[0])
+    .slice(0, 2)
+    .join('');
+
+let avatarIndex = 0;
 ---
 
 <BaseLayout
   title="Our Team"
-  description="AI For Good is run entirely by students, organised into research, education, and operations teams."
+  description="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
 >
-  <section class="section-tight">
+  <section class="section-tight team-hero">
+    <div class="blob" style="background:#c4b5fd;width:18rem;height:18rem;top:-5rem;right:-3rem" data-parallax="0.6"></div>
     <div class="container prose">
-      <p class="eyebrow">Our Team</p>
-      <h1>Our Team</h1>
-      <p class="lead">
-        AI For Good is run entirely by students, organised into research and
-        education teams.
+      <p class="eyebrow" data-reveal>Our Team</p>
+      <h1 data-reveal>Our <span class="gradient-text">Team</span></h1>
+      <p class="lead" data-reveal style="--reveal-delay:0.1s">
+        AI For Good is run entirely by students, organised into research,
+        partnerships, and education teams.
       </p>
     </div>
   </section>
@@ -39,17 +57,25 @@ const grouped = groupOrder
     grouped.map((section) => (
       <section class="section-tight team-section">
         <div class="container">
-          <div class="prose">
-            <h2>{section.group}</h2>
-          </div>
+          <p class="eyebrow" data-reveal>{section.group}</p>
           <ul class="people-grid">
-            {section.people.map((person) => (
-              <li class="person">
-                <p class="person-name">{person.data.name}</p>
-                <p class="person-role">{person.data.role}</p>
-                <p class="person-bio">{person.data.bio}</p>
-              </li>
-            ))}
+            {section.people.map((person, i) => {
+              const grad = gradients[avatarIndex++ % gradients.length];
+              return (
+                <li
+                  class="person magnify"
+                  data-reveal
+                  style={`--reveal-delay:${i * 0.08}s`}
+                >
+                  <span class="avatar" style={`background:${grad}`} aria-hidden="true">
+                    {initials(person.data.name)}
+                  </span>
+                  <p class="person-name">{person.data.name}</p>
+                  <p class="person-role">{person.data.role}</p>
+                  <p class="person-bio">{person.data.bio}</p>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </section>
@@ -58,8 +84,9 @@ const grouped = groupOrder
 </BaseLayout>
 
 <style>
-  .team-section + .team-section {
-    border-top: 1px solid var(--color-border);
+  .team-hero {
+    position: relative;
+    overflow: hidden;
   }
 
   .people-grid {
@@ -67,21 +94,44 @@ const grouped = groupOrder
     padding: 0;
     margin-top: 1.25rem;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    gap: 1.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .person {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    color: #fff;
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow-sm);
   }
 
   .person-name {
     font-family: var(--font-serif);
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
   .person-role {
     color: var(--color-accent);
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 700;
     letter-spacing: 0.02em;
-    margin-block: 0.15rem 0.5rem;
+    margin-block: 0.2rem 0.6rem;
   }
 
   .person-bio {
