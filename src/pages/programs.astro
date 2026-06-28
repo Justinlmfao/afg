@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Programs are content-collection entries. Each .md file's body becomes the
+// program description. Add a program by creating a new file in
+// src/content/programs/.
+const programs = (await getCollection('programs')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+// Render the Markdown body of each program ahead of time.
+const rendered = await Promise.all(
+  programs.map(async (program) => ({
+    data: program.data,
+    Content: (await render(program)).Content,
+  }))
+);
+
+// [PLACEHOLDER] Confirm/replace these impact figures before launch.
+const impact = [
+  '300+ students reached',
+  '[NUMBER] partner schools',
+  '[NUMBER] workshops / sessions delivered',
+  '[Any other measurable outcome — surveys, feedback, returning students]',
+];
+---
+
+<BaseLayout
+  title="Education & Outreach"
+  description="Hands-on AI literacy programs that reach students who don't usually get access — 300+ children taught across Hong Kong."
+>
+  <section class="section-tight">
+    <div class="container prose">
+      <p class="eyebrow">Education & Outreach</p>
+      <h1>Education &amp; Outreach</h1>
+      <p class="lead">
+        Understanding AI shouldn't be a privilege. We run hands-on programs that
+        teach AI literacy to students who don't usually get access to it —
+        reaching 300+ children across [NUMBER] schools in Hong Kong.
+      </p>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section-tight">
+    <div class="container">
+      {
+        rendered.map((program) => (
+          <article class="program prose">
+            <h2>{program.data.title}</h2>
+            <program.Content />
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="section-tight impact">
+    <div class="container prose">
+      <h2>Impact</h2>
+      <ul>
+        {impact.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Human texture / anecdote -->
+  <section class="anecdote">
+    <div class="container prose">
+      <!-- [PLACEHOLDER] One short, specific anecdote from a session — a
+           student's question, a real moment. Delete this block if unused. -->
+      <blockquote class="anecdote-quote">
+        [One short, specific anecdote — a moment from a session, a student's
+        question, something real. This is what people remember.]
+      </blockquote>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .program {
+    padding-block: 1.5rem;
+  }
+
+  .program + .program {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .program h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .impact {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .anecdote {
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .anecdote-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    line-height: 1.4;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.5rem;
+    color: var(--color-text);
+    font-style: italic;
+  }
+</style>

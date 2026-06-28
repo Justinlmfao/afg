@@ -1,0 +1,11 @@
+# Netlify build configuration.
+# Astro outputs a fully static site into `dist/`, so no server runtime
+# is required. Netlify Forms picks up the form on /get-involved automatically
+# because of the `data-netlify="true"` attribute in the markup.
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

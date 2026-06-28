@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatsBand from '../components/StatsBand.astro';
+import Card from '../components/Card.astro';
+---
+
+<BaseLayout title="AI For Good">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Technology should serve everyone. We do the work to make sure it does.</h1>
+      <p class="lead hero-subhead">
+        AI For Good is a student-led think tank in Hong Kong. We produce policy
+        research, engage with government, and teach AI literacy to communities
+        that are too often left out of the conversation.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/research">Read our research →</a>
+        <a class="btn btn-secondary" href="/get-involved">Get involved →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats band -->
+  <StatsBand />
+
+  <!-- What we do -->
+  <section>
+    <div class="container">
+      <p class="eyebrow">What we do</p>
+      <div class="cards-grid">
+        <Card title="Research & Policy">
+          We publish research on how AI affects society and submit
+          evidence-based recommendations to government consultations and public
+          bodies.
+        </Card>
+        <Card title="Education & Outreach">
+          We run hands-on AI literacy programs for underprivileged students
+          across Hong Kong, because access to understanding technology shouldn't
+          depend on where you're born.
+        </Card>
+        <Card title="Public Engagement">
+          We bring students, educators, and policymakers into the same
+          conversation about building technology that works for people.
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing line -->
+  <section class="closing">
+    <div class="container prose">
+      <p class="closing-line">
+        We're students. We think that's the point — the people who will live
+        longest with these decisions should have a hand in shaping them.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: clamp(3.5rem, 9vw, 7rem);
+  }
+
+  .hero h1 {
+    max-width: 18ch;
+  }
+
+  .hero-subhead {
+    max-width: 46ch;
+    margin-top: 1.5rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 2.25rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .closing {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .closing-line {
+    font-family: var(--font-serif);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+
+  @media (max-width: 52rem) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
