@@ -13,7 +13,7 @@ interface Props {
 const { title, icon, variant = 'cool', eyebrow } = Astro.props;
 ---
 
-<article class={`card tilt variant-${variant}`} data-tilt data-reveal>
+<article class={`card tilt spotlight variant-${variant}`} data-tilt data-reveal>
   {
     icon && (
       <span class="icon-badge" aria-hidden="true">

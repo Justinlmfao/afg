@@ -125,7 +125,7 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
       );
       countEls.forEach((el) => countIO.observe(el));
 
-      // 3D tilt on [data-tilt] cards (only with a fine pointer + motion ok)
+      // 3D tilt on [data-tilt] cards + cursor spotlight (fine pointer + motion ok)
       const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       if (finePointer && !reduceMotion) {
         document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
@@ -135,10 +135,90 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
             const px = (e.clientX - r.left) / r.width - 0.5;
             const py = (e.clientY - r.top) / r.height - 0.5;
             card.style.transform = `rotateY(${px * 9}deg) rotateX(${py * -9}deg) translateY(-6px) scale(1.03)`;
+            // Feed the spotlight (.spotlight::after) the cursor position.
+            card.style.setProperty('--mx', `${(px + 0.5) * 100}%`);
+            card.style.setProperty('--my', `${(py + 0.5) * 100}%`);
           });
           card.addEventListener('mouseleave', () => {
             card.style.transform = '';
           });
+        });
+
+        // Magnetic buttons — drift slightly toward the cursor.
+        document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
+          btn.addEventListener('mousemove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            btn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.35}px) scale(1.04)`;
+          });
+          btn.addEventListener('mouseleave', () => {
+            btn.style.transform = '';
+          });
+        });
+      }
+
+      // ---- Lightbox for [data-lightbox] images ------------------------------
+      const triggers = Array.from(
+        document.querySelectorAll<HTMLElement>('[data-lightbox]')
+      );
+      if (triggers.length) {
+        const items = triggers.map((t) => ({
+          src: t.dataset.src || '',
+          alt: t.dataset.alt || '',
+        }));
+        let current = 0;
+        let lastFocus: HTMLElement | null = null;
+
+        const box = document.createElement('div');
+        box.className = 'lightbox';
+        box.setAttribute('role', 'dialog');
+        box.setAttribute('aria-modal', 'true');
+        box.setAttribute('aria-label', 'Photo viewer');
+        box.innerHTML = `
+          <button class="lightbox-btn lightbox-close" aria-label="Close">✕</button>
+          <button class="lightbox-btn lightbox-prev" aria-label="Previous photo">‹</button>
+          <button class="lightbox-btn lightbox-next" aria-label="Next photo">›</button>
+          <img alt="" />
+          <p class="lightbox-cap"></p>`;
+        document.body.appendChild(box);
+        const img = box.querySelector('img') as HTMLImageElement;
+        const cap = box.querySelector('.lightbox-cap') as HTMLElement;
+        const closeBtn = box.querySelector('.lightbox-close') as HTMLElement;
+
+        const render = () => {
+          img.src = items[current].src;
+          img.alt = items[current].alt;
+          cap.textContent = items[current].alt;
+        };
+        const open = (i: number) => {
+          current = i;
+          lastFocus = document.activeElement as HTMLElement;
+          render();
+          box.classList.add('open');
+          closeBtn.focus();
+        };
+        const close = () => {
+          box.classList.remove('open');
+          lastFocus?.focus();
+        };
+        const step = (d: number) => {
+          current = (current + d + items.length) % items.length;
+          render();
+        };
+
+        triggers.forEach((t, i) => t.addEventListener('click', () => open(i)));
+        closeBtn.addEventListener('click', close);
+        box.querySelector('.lightbox-prev')!.addEventListener('click', () => step(-1));
+        box.querySelector('.lightbox-next')!.addEventListener('click', () => step(1));
+        box.addEventListener('click', (e) => {
+          if (e.target === box) close();
+        });
+        document.addEventListener('keydown', (e) => {
+          if (!box.classList.contains('open')) return;
+          if (e.key === 'Escape') close();
+          else if (e.key === 'ArrowRight') step(1);
+          else if (e.key === 'ArrowLeft') step(-1);
         });
       }
     </script>

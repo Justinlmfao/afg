@@ -95,7 +95,7 @@ const photos = [
         {
           rendered.map((m, i) => (
             <article
-              class={`module tilt variant-${m.data.variant}`}
+              class={`module tilt spotlight variant-${m.data.variant}`}
               data-tilt
               data-reveal
               style={`--reveal-delay:${(i % 2) * 0.1}s`}
@@ -157,13 +157,19 @@ const photos = [
       <div class="gallery">
         {
           photos.map((photo, i) => (
-            <figure
+            <button
+              type="button"
               class={`shot magnify ${photo.span ? 'shot-wide' : ''}`}
               data-reveal
+              data-lightbox
+              data-src={photo.src}
+              data-alt={photo.alt}
+              aria-label={`Expand photo: ${photo.alt}`}
               style={`--reveal-delay:${(i % 3) * 0.08}s`}
             >
               <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
-            </figure>
+              <span class="shot-zoom" aria-hidden="true">⤢</span>
+            </button>
           ))
         }
       </div>
@@ -223,6 +229,7 @@ const photos = [
     padding: 2rem;
     box-shadow: var(--shadow-sm);
     border-top: 5px solid var(--mbar, var(--indigo));
+    overflow: hidden;
   }
 
   .module-badge {
@@ -372,11 +379,41 @@ const photos = [
   }
 
   .shot {
+    position: relative;
     margin: 0;
+    padding: 0;
+    border: none;
+    font: inherit;
+    cursor: zoom-in;
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     background: var(--color-surface);
+  }
+
+  .shot-zoom {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(15, 16, 48, 0.55);
+    color: #fff;
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  .shot:hover .shot-zoom,
+  .shot:focus-visible .shot-zoom {
+    opacity: 1;
+    transform: none;
   }
 
   .shot-wide {

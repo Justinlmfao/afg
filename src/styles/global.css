@@ -451,6 +451,170 @@ hr {
   }
 }
 
+/* ---- Cinematic word reveal (used on the hero headline) ----------------- */
+.reveal-words .word {
+  display: inline-block;
+  white-space: pre; /* keep the trailing space that lives inside each token */
+}
+.reveal-words .word-inner {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  filter: blur(12px);
+  animation: wordIn 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--wd, 0s);
+}
+
+@keyframes wordIn {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+/* ---- Particle network canvas ------------------------------------------- */
+.particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---- Cursor-follow spotlight (cards) ----------------------------------- */
+.spotlight::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--mx, 50%) var(--my, 50%),
+    rgba(79, 70, 229, 0.16),
+    transparent 42%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* ---- Topic marquee ----------------------------------------------------- */
+.marquee {
+  overflow: hidden;
+  border-block: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding-block: 1.15rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-item {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--color-text-soft);
+  padding-inline: 1.4rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.4rem;
+  white-space: nowrap;
+}
+.marquee-item::after {
+  content: '✦';
+  color: var(--color-accent);
+  font-size: 0.62em;
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- Lightbox ---------------------------------------------------------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vw;
+  background: rgba(12, 11, 24, 0.92);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s;
+}
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox img {
+  max-width: 92vw;
+  max-height: 84vh;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.lightbox.open img {
+  transform: none;
+}
+.lightbox-btn {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+.lightbox-prev {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox-next {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.lightbox-cap {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  padding-inline: 2rem;
+}
+
 /* ---- Reduced motion: turn everything calm ------------------------------ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -467,7 +631,17 @@ hr {
     opacity: 1 !important;
     transform: none !important;
   }
-  .blob {
+  .blob,
+  .particles {
     display: none;
+  }
+  .reveal-words .word-inner {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+  .marquee-track {
+    animation: none !important;
   }
 }
