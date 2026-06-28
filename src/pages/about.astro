@@ -1,0 +1,149 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="AI For Good exists to ensure artificial intelligence develops in a way that serves the public good — through rigorous research, direct policy engagement, and education."
+>
+  <section class="section-tight">
+    <div class="container prose">
+      <p class="eyebrow">About</p>
+      <h1>About AI For Good</h1>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="section-tight">
+    <div class="container prose">
+      <h2>Our mission</h2>
+      <p>
+        AI For Good exists to ensure that artificial intelligence and economic
+        policy develop in a way that serves the public good — especially for
+        communities with the least power to shape them. We do this through
+        rigorous research, direct engagement with government, and education that
+        reaches the people policy usually overlooks.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="section-tight">
+    <div class="container prose">
+      <h2>Our story</h2>
+      <p>
+        AI For Good began in June 2023 as a student club at Victoria Shanghai
+        Academy. Three years on, it has grown into a student-led think tank:
+        producing original research at the intersection of technology and
+        economics, making formal submissions to government, and teaching AI and
+        economic literacy across Hong Kong.
+      </p>
+      <p>
+        What stayed constant was a belief that students shouldn't wait for
+        permission to do serious work. The questions raised by AI and by
+        economic policy — about fairness, access, and who gets a say — will
+        define our generation more than any other. We decided to start answering
+        them now.
+      </p>
+    </div>
+  </section>
+
+  <!-- A big-picture look at what we do -->
+  <section class="section-tight">
+    <div class="container prose">
+      <h2>A big-picture look at what we do</h2>
+      <p>We work on three fronts that reinforce each other.</p>
+
+      <h3>We research and submit.</h3>
+      <p>
+        Each year we produce around twenty submissions to government
+        consultations and public bodies — on taxation, AI governance, education,
+        and economic policy. On average, four of our recommendations a year are
+        reflected in the Policy Address, and we are currently preparing a
+        submission to Hong Kong's First Five-Year Plan (2026–2030). Our
+        submissions are grounded in evidence and economic reasoning, not
+        opinion.
+      </p>
+
+      <h3>We teach.</h3>
+      <p>
+        We run programs that bring AI and economic literacy to students who
+        rarely get access to either — 350 children to date, across ten
+        institutions including Ling To Catholic School and St. Barnabas' Home &
+        Society. The research informs what we teach; the teaching keeps the
+        research honest about who it's for.
+      </p>
+
+      <h3>We convene.</h3>
+      <p>
+        We connect students, educators, and policymakers, because good policy
+        and good education both depend on people who usually don't talk to each
+        other doing exactly that.
+      </p>
+    </div>
+  </section>
+
+  <!-- What makes us different -->
+  <section>
+    <div class="container">
+      <div class="prose">
+        <h2>What makes us different</h2>
+      </div>
+      <div class="cards-grid">
+        <Card title="Evidence over opinion">
+          Every position is grounded in research and economic reasoning. We'd
+          rather be careful and right than loud and wrong.
+        </Card>
+        <Card title="We do, not just discuss">
+          A think tank that only talks is a debate club. We turn research into
+          submissions, programs, and measurable outreach.
+        </Card>
+        <Card title="Access is the mission">
+          Most conversations about AI and the economy happen among people who
+          already hold power. We deliberately work with those who don't.
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section-tight values">
+    <div class="container prose">
+      <h2>Our values</h2>
+      <ul>
+        <li>
+          <strong>Intellectual humility</strong> — we hold our views openly and
+          revise them with evidence.
+        </li>
+        <li>
+          <strong>Service before recognition</strong> — impact matters more than
+          titles.
+        </li>
+        <li>
+          <strong>Civil, evidence-based discourse</strong> — we make arguments,
+          not noise.
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .values {
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 52rem) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

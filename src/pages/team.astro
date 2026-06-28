@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Team members come from src/content/team/ (drafts excluded). Add a person by
+// creating a new .md file there. The `group` field controls which section they
+// appear under; the order of groups below controls section order on the page.
+const members = (await getCollection('team')).filter((m) => !m.data.draft);
+
+const groupOrder = ['Leadership', 'Executive Team'];
+
+// Bucket members by group, then sort each bucket by `order`.
+const grouped = groupOrder
+  .map((group) => ({
+    group,
+    people: members
+      .filter((m) => m.data.group === group)
+      .sort((a, b) => a.data.order - b.data.order),
+  }))
+  .filter((section) => section.people.length > 0);
+---
+
+<BaseLayout
+  title="Our Team"
+  description="AI For Good is run entirely by students, organised into research, education, and operations teams."
+>
+  <section class="section-tight">
+    <div class="container prose">
+      <p class="eyebrow">Our Team</p>
+      <h1>Our Team</h1>
+      <p class="lead">
+        AI For Good is run entirely by students, organised into research and
+        education teams.
+      </p>
+    </div>
+  </section>
+
+  {
+    grouped.map((section) => (
+      <section class="section-tight team-section">
+        <div class="container">
+          <div class="prose">
+            <h2>{section.group}</h2>
+          </div>
+          <ul class="people-grid">
+            {section.people.map((person) => (
+              <li class="person">
+                <p class="person-name">{person.data.name}</p>
+                <p class="person-role">{person.data.role}</p>
+                <p class="person-bio">{person.data.bio}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .team-section + .team-section {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .people-grid {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.75rem;
+  }
+
+  .person-name {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+  }
+
+  .person-role {
+    color: var(--color-accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-block: 0.15rem 0.5rem;
+  }
+
+  .person-bio {
+    color: var(--color-text-soft);
+    font-size: 0.97rem;
+  }
+</style>

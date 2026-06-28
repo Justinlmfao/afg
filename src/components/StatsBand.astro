@@ -1,0 +1,67 @@
+---
+// Three high-impact figures (all confirmed as of June 2026).
+// Edit the `stats` array to update them.
+const stats = [
+  {
+    figure: '3 years',
+    label: 'building from a school club into a working think tank — since June 2023',
+  },
+  {
+    figure: '350 children',
+    label: 'taught across 10 institutions in Hong Kong',
+  },
+  {
+    figure: '~20 a year',
+    label:
+      'submissions to government — with, on average, 4 recommendations reflected in the Policy Address',
+  },
+];
+---
+
+<div class="stats-band">
+  <div class="container stats-grid">
+    {
+      stats.map((stat) => (
+        <div class="stat">
+          <p class="stat-figure">{stat.figure}</p>
+          <p class="stat-label">{stat.label}</p>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .stats-band {
+    border-block: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .stat-figure {
+    font-family: var(--font-serif);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    color: var(--color-accent);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    color: var(--color-text-soft);
+    font-size: 0.97rem;
+  }
+
+  @media (max-width: 46rem) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      text-align: left;
+    }
+  }
+</style>

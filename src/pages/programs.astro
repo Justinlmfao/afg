@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+// Programs are content-collection entries (drafts excluded). Each .md file's
+// body becomes the program description. Add a program by creating a new file
+// in src/content/programs/.
+const programs = (await getCollection('programs'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+// Render the Markdown body of each program ahead of time.
+const rendered = await Promise.all(
+  programs.map(async (program) => ({
+    data: program.data,
+    Content: (await render(program)).Content,
+  }))
+);
+
+// Impact figures. The first three are confirmed (as of June 2026).
+// "~40 sessions delivered" is a DRAFT estimate — confirm the real count before
+// publishing. Add any other truthful measurable outcome (returning students,
+// partner renewals, feedback) as a new array item.
+const impact = [
+  '350 children taught',
+  '10 partner institutions',
+  '3 years running',
+  '~40 sessions delivered', // DRAFT — confirm exact number
+];
+---
+
+<BaseLayout
+  title="Education & Outreach"
+  description="Hands-on programs bringing AI and economic literacy to students who don't usually get access — 350 children taught across 10 institutions in Hong Kong."
+>
+  <section class="section-tight">
+    <div class="container prose">
+      <p class="eyebrow">Education & Outreach</p>
+      <h1>Education &amp; Outreach</h1>
+      <p class="lead">
+        Understanding AI and the economy shouldn't be a privilege. We run
+        hands-on programs that bring AI and economic literacy to students who
+        don't usually get access — 350 children to date, across 10 institutions
+        in Hong Kong.
+      </p>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section-tight">
+    <div class="container">
+      {
+        rendered.map((program) => (
+          <article class="program prose">
+            <h2>{program.data.title}</h2>
+            <program.Content />
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- Impact -->
+  <section class="section-tight impact">
+    <div class="container prose">
+      <h2>Impact</h2>
+      <ul>
+        {impact.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Human texture / anecdote -->
+  <section class="anecdote">
+    <div class="container prose">
+      <!-- DRAFT / EXAMPLE — swap in a true, specific anecdote (even two
+           sentences) before publishing, and replace [school] with the real
+           place. A real moment does more here than any statistic. -->
+      <blockquote class="anecdote-quote">
+        At a session at [school], a student who'd said economics "wasn't for
+        people like me" spent the whole hour arguing about whether a tax cut
+        would reach his neighbourhood. That's the point — not that he memorised
+        a definition, but that he saw the subject was about him.
+      </blockquote>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .program {
+    padding-block: 1.5rem;
+  }
+
+  .program + .program {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .program h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .impact {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .anecdote {
+    padding-block: clamp(2.5rem, 6vw, 4rem);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .anecdote-quote {
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    line-height: 1.4;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.5rem;
+    color: var(--color-text);
+    font-style: italic;
+  }
+</style>
