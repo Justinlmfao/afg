@@ -5,41 +5,40 @@ import Card from '../components/Card.astro';
 
 <BaseLayout
   title="About"
-  description="AI For Good exists to ensure artificial intelligence develops in a way that serves the public good — through rigorous research, direct policy engagement, and education."
+  description="AI For Good ensures AI and economic policy develop to serve the public good — through rigorous research, direct engagement with government, and education that reaches the children policy overlooks."
 >
-  <section class="section-tight">
+  <section class="section-tight about-hero">
+    <div class="blob" style="background:#a5b4fc;width:18rem;height:18rem;top:-4rem;right:-4rem" data-parallax="0.6"></div>
     <div class="container prose">
-      <p class="eyebrow">About</p>
-      <h1>About AI For Good</h1>
+      <p class="eyebrow" data-reveal>About</p>
+      <h1 data-reveal>About <span class="gradient-text">AI For Good</span></h1>
     </div>
   </section>
 
-  <!-- Mission -->
   <section class="section-tight">
     <div class="container prose">
-      <h2>Our mission</h2>
-      <p>
+      <h2 data-reveal>Our mission</h2>
+      <p data-reveal>
         AI For Good exists to ensure that artificial intelligence and economic
         policy develop in a way that serves the public good — especially for
         communities with the least power to shape them. We do this through
         rigorous research, direct engagement with government, and education that
-        reaches the people policy usually overlooks.
+        reaches the children policy usually overlooks.
       </p>
     </div>
   </section>
 
-  <!-- Story -->
   <section class="section-tight">
     <div class="container prose">
-      <h2>Our story</h2>
-      <p>
+      <h2 data-reveal>Our story</h2>
+      <p data-reveal>
         AI For Good began in June 2023 as a student club at Victoria Shanghai
         Academy. Three years on, it has grown into a student-led think tank:
         producing original research at the intersection of technology and
-        economics, making formal submissions to government, and teaching AI and
-        economic literacy across Hong Kong.
+        economics, making around twenty submissions to government a year, and
+        teaching AI and economic literacy to 350 children across Hong Kong.
       </p>
-      <p>
+      <p data-reveal>
         What stayed constant was a belief that students shouldn't wait for
         permission to do serious work. The questions raised by AI and by
         economic policy — about fairness, access, and who gets a say — will
@@ -50,56 +49,60 @@ import Card from '../components/Card.astro';
   </section>
 
   <!-- A big-picture look at what we do -->
-  <section class="section-tight">
+  <section class="tint-cool">
     <div class="container prose">
-      <h2>A big-picture look at what we do</h2>
-      <p>We work on three fronts that reinforce each other.</p>
-
-      <h3>We research and submit.</h3>
-      <p>
-        Each year we produce around twenty submissions to government
-        consultations and public bodies — on taxation, AI governance, education,
-        and economic policy. On average, four of our recommendations a year are
-        reflected in the Policy Address, and we are currently preparing a
-        submission to Hong Kong's First Five-Year Plan (2026–2030). Our
-        submissions are grounded in evidence and economic reasoning, not
-        opinion.
-      </p>
-
-      <h3>We teach.</h3>
-      <p>
-        We run programs that bring AI and economic literacy to students who
-        rarely get access to either — 350 children to date, across ten
-        institutions including Ling To Catholic School and St. Barnabas' Home &
-        Society. The research informs what we teach; the teaching keeps the
-        research honest about who it's for.
-      </p>
-
-      <h3>We convene.</h3>
-      <p>
-        We connect students, educators, and policymakers, because good policy
-        and good education both depend on people who usually don't talk to each
-        other doing exactly that.
-      </p>
+      <h2 data-reveal>A big-picture look at what we do</h2>
+      <p data-reveal>We work on three fronts that reinforce each other.</p>
+    </div>
+    <div class="container fronts">
+      <div class="front magnify" data-reveal>
+        <h3>We research and submit.</h3>
+        <p>
+          Each year we produce around twenty submissions to government
+          consultations and public bodies — on taxation, AI governance,
+          education, labour, and health. On average, four of our recommendations
+          a year are reflected in the Policy Address, and we are currently
+          preparing a submission to Hong Kong's First Five-Year Plan
+          (2026–2030). Our work is grounded in evidence and economic reasoning,
+          not opinion.
+        </p>
+      </div>
+      <div class="front magnify" data-reveal style="--reveal-delay:0.1s">
+        <h3>We teach.</h3>
+        <p>
+          We run programs that bring AI and economic literacy to children who
+          rarely get access to either — 350 to date, across ten institutions
+          including Ling To Catholic School in Ho Man Tin and St. Barnabas' Home
+          & Society. Our core idea is that, taught well, AI can be a free and
+          patient tutor — so we teach children to use it as a tool that closes
+          the gap, rather than one more advantage reserved for those who can pay.
+        </p>
+      </div>
+      <div class="front magnify" data-reveal style="--reveal-delay:0.2s">
+        <h3>We convene.</h3>
+        <p>
+          We connect students, educators, and policymakers, because good policy
+          and good education both depend on people who usually don't talk to
+          each other doing exactly that.
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- What makes us different -->
   <section>
     <div class="container">
-      <div class="prose">
-        <h2>What makes us different</h2>
-      </div>
+      <p class="eyebrow" data-reveal>What makes us different</p>
       <div class="cards-grid">
-        <Card title="Evidence over opinion">
+        <Card title="Evidence over opinion" variant="cool">
           Every position is grounded in research and economic reasoning. We'd
           rather be careful and right than loud and wrong.
         </Card>
-        <Card title="We do, not just discuss">
+        <Card title="We do, not just discuss" variant="violet">
           A think tank that only talks is a debate club. We turn research into
           submissions, programs, and measurable outreach.
         </Card>
-        <Card title="Access is the mission">
+        <Card title="Access is the mission" variant="warm">
           Most conversations about AI and the economy happen among people who
           already hold power. We deliberately work with those who don't.
         </Card>
@@ -108,19 +111,19 @@ import Card from '../components/Card.astro';
   </section>
 
   <!-- Values -->
-  <section class="section-tight values">
+  <section class="section-tight values tint-mint">
     <div class="container prose">
-      <h2>Our values</h2>
-      <ul>
-        <li>
+      <h2 data-reveal>Our values</h2>
+      <ul class="values-list">
+        <li data-reveal>
           <strong>Intellectual humility</strong> — we hold our views openly and
           revise them with evidence.
         </li>
-        <li>
+        <li data-reveal style="--reveal-delay:0.08s">
           <strong>Service before recognition</strong> — impact matters more than
           titles.
         </li>
-        <li>
+        <li data-reveal style="--reveal-delay:0.16s">
           <strong>Civil, evidence-based discourse</strong> — we make arguments,
           not noise.
         </li>
@@ -130,15 +133,59 @@ import Card from '../components/Card.astro';
 </BaseLayout>
 
 <style>
+  .about-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fronts {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .front {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 5px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.9rem;
+    box-shadow: var(--shadow-sm);
+    max-width: var(--measure);
+  }
+
+  .front:nth-child(2) {
+    border-left-color: var(--coral);
+  }
+  .front:nth-child(3) {
+    border-left-color: var(--teal);
+  }
+
+  .front h3 {
+    margin-bottom: 0.5rem;
+  }
+  .front p {
+    color: var(--color-text-soft);
+  }
+
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    margin-top: 1.5rem;
   }
 
-  .values {
-    border-top: 1px solid var(--color-border);
+  .values-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.25rem;
+  }
+
+  .values-list li {
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.75rem;
+    border-left: 4px solid var(--emerald);
   }
 
   @media (max-width: 52rem) {

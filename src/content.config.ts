@@ -47,12 +47,17 @@ const publications = defineCollection({
   }),
 });
 
-// Education & outreach programs (Programs page).
-// The Markdown body is rendered as the program description.
+// Teaching modules (Programs page). The Markdown body is the description; the
+// `why` line explains how the module closes the gap, and `icon`/`variant`
+// colour the card. `icon` is an Icon name (math, english, economics, science…).
 const programs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/programs' }),
   schema: z.object({
     title: z.string(),
+    icon: z.string().default('education'),
+    variant: z.string().default('cool'),
+    // The "Why it closes the gap" line shown at the foot of each module card.
+    why: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),

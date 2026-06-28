@@ -1,0 +1,53 @@
+---
+// Inline line-style SVG icons drawn with `currentColor`, so the parent sets
+// the colour (we render them white on a coloured gradient badge). Add new
+// icons by adding a key to `paths`.
+interface Props {
+  name: string;
+  size?: number;
+}
+const { name, size = 26 } = Astro.props;
+
+const paths: Record<string, string> = {
+  // Research & policy — document with magnifier
+  research:
+    '<path d="M4 4h9l5 5v4M4 4v16h7M14 4v5h5M15.5 17.5a3 3 0 1 0-4.2-4.2 3 3 0 0 0 4.2 4.2Zm0 0L19 21"/>',
+  // Education — graduation cap
+  education:
+    '<path d="M2 9 12 4l10 5-10 5L2 9Z"/><path d="M6 11v5c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-5"/><path d="M22 9v5"/>',
+  // Public engagement — connected people
+  engagement:
+    '<circle cx="7" cy="8" r="2.5"/><circle cx="17" cy="8" r="2.5"/><path d="M2.5 20c0-2.8 2-4.5 4.5-4.5S11.5 17.2 11.5 20M12.5 20c0-2.8 2-4.5 4.5-4.5s4.5 1.7 4.5 4.5"/>',
+  // Mathematics — function curve on axes
+  math: '<path d="M4 4v16h16"/><path d="M4 18c4 0 4-10 8-10s4 8 8 8"/>',
+  // English — open book
+  english:
+    '<path d="M12 6c-2-1.4-4.5-2-7-2v13c2.5 0 5 .6 7 2 2-1.4 4.5-2 7-2V4c-2.5 0-5 .6-7 2Z"/><path d="M12 6v13"/>',
+  // Economics — bar chart with trend
+  economics:
+    '<path d="M4 20V10M10 20V4M16 20v-7M22 20V8"/><path d="M3 20h19"/>',
+  // Science — atom
+  science:
+    '<circle cx="12" cy="12" r="2"/><path d="M12 2c-3 4-3 16 0 20M12 2c3 4 3 16 0 20"/><path d="M2.5 12c4-3 15-3 19 0M2.5 12c4 3 15 3 19 0"/>',
+  // Report / publication — stacked doc
+  report:
+    '<path d="M6 2h8l4 4v16H6V2Z"/><path d="M14 2v4h4"/><path d="M9 12h6M9 16h6"/>',
+  // Arrow
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+};
+
+const d = paths[name] ?? paths.research;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.7"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+  set:html={d}
+></svg>

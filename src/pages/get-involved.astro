@@ -1,68 +1,80 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 
 // Contact email is on file (dudequa3@gmail.com) but intentionally left blank
-// for now. When you're ready to publish it, set `email` to that address — the
-// "email us" links and the contact line will appear automatically. While it's
-// empty, all contact routes through the form below. Social links omitted for now.
+// for now. When ready, set `email` to that address — the "email us" links and
+// the contact line appear automatically. While empty, contact routes through
+// the form. Social links omitted for now.
 const email = '';
 
+const paths = [
+  {
+    title: 'Students',
+    icon: 'education',
+    variant: 'cool',
+    body:
+      "Want to do real research or teach? We look for people who care more about the work than the title. Tell us what you'd want to work on.",
+  },
+  {
+    title: 'Schools & Partners',
+    icon: 'engagement',
+    variant: 'warm',
+    body:
+      "If you run a school or program serving underserved students, we'd like to work with you. We bring the curriculum, the volunteers, and the equipment.",
+  },
+  {
+    title: 'Everyone else',
+    icon: 'research',
+    variant: 'teal',
+    body: 'Press, collaboration, or questions — get in touch.',
+  },
+];
 ---
 
 <BaseLayout
   title="Get Involved"
   description="Join, partner, or get in touch with AI For Good — a student-led think tank in Hong Kong."
 >
-  <section class="section-tight">
+  <section class="section-tight gi-hero">
+    <div class="blob" style="background:#6ee7b7;width:18rem;height:18rem;top:-5rem;left:-3rem" data-parallax="0.6"></div>
     <div class="container prose">
-      <p class="eyebrow">Get Involved</p>
-      <h1>Get Involved</h1>
+      <p class="eyebrow" data-reveal>Get Involved</p>
+      <h1 data-reveal>Get <span class="gradient-text">Involved</span></h1>
     </div>
   </section>
 
   <!-- Three paths -->
   <section class="section-tight">
     <div class="container paths">
-      <div class="path">
-        <h2>Students</h2>
-        <p>
-          Want to do real research or teach? We look for people who care more
-          about the work than the title.
-          {email ? (
-            <Fragment> <a href={`mailto:${email}`}>Email us</a> to apply.</Fragment>
-          ) : (
-            <Fragment> Use the <a href="#contact">form below</a> to apply.</Fragment>
-          )}
-        </p>
-      </div>
-      <div class="path">
-        <h2>Schools &amp; Partners</h2>
-        <p>
-          If you run a school or program serving underserved students, we'd like
-          to work with you.
-          {email ? (
-            <Fragment> <a href={`mailto:${email}`}>Get in touch.</a></Fragment>
-          ) : (
-            <Fragment> Reach us through the <a href="#contact">form below</a>.</Fragment>
-          )}
-        </p>
-      </div>
-      <div class="path">
-        <h2>Everyone else</h2>
-        <p>
-          Press, collaboration, or just questions — get in touch using the form
-          below.
-        </p>
-      </div>
+      {
+        paths.map((p, i) => (
+          <div class={`path magnify variant-${p.variant}`} data-reveal style={`--reveal-delay:${i * 0.1}s`}>
+            <span class="path-badge" aria-hidden="true">
+              <Icon name={p.icon} />
+            </span>
+            <h2>{p.title}</h2>
+            <p>{p.body}</p>
+            <a class="path-link link-underline" href="#contact">
+              {p.title === 'Students'
+                ? 'Apply below'
+                : p.title === 'Schools & Partners'
+                  ? 'Partner with us'
+                  : 'Say hello'}{' '}
+              →
+            </a>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <!-- Contact form (Netlify Forms — no backend needed) -->
-  <section id="contact" class="section-tight contact">
+  <section id="contact" class="section-tight contact tint-cool">
     <div class="container">
       <div class="prose">
-        <h2>Contact us</h2>
-        <p class="contact-meta">
+        <h2 data-reveal>Contact us</h2>
+        <p class="contact-meta" data-reveal>
           {email && <>Email: <a href={`mailto:${email}`}>{email}</a><br /></>}
           Based in Hong Kong.
         </p>
@@ -71,9 +83,8 @@ const email = '';
       <!--
         Netlify Forms: the `data-netlify` attribute and the hidden `form-name`
         input let Netlify detect and capture submissions automatically at
-        deploy time — no server or backend required. The honeypot field
-        (`bot-field`) filters out simple spam bots. Submissions appear in your
-        Netlify dashboard under Forms.
+        deploy time — no server required. The honeypot field (`bot-field`)
+        filters simple spam bots. Submissions appear in your Netlify dashboard.
       -->
       <form
         name="contact"
@@ -81,6 +92,7 @@ const email = '';
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form"
+        data-reveal
       >
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden-field">
@@ -100,7 +112,7 @@ const email = '';
         </div>
 
         <div class="field">
-          <label for="organization">Organization <span class="optional">(optional)</span></label>
+          <label for="organization">Organisation <span class="optional">(optional)</span></label>
           <input id="organization" type="text" name="organization" />
         </div>
 
@@ -109,30 +121,70 @@ const email = '';
           <textarea id="message" name="message" rows="5" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Send message</button>
+        <button type="submit" class="btn btn-primary">
+          Send message <span class="arrow">→</span>
+        </button>
       </form>
     </div>
   </section>
 </BaseLayout>
 
 <style>
+  .gi-hero {
+    position: relative;
+    overflow: hidden;
+  }
+
   .paths {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .path {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 1.9rem;
+    box-shadow: var(--shadow-sm);
+    border-top: 5px solid var(--pbar, var(--indigo));
+  }
+
+  .path-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 14px;
+    color: #fff;
+    background: var(--pbar, var(--grad-cool));
+    margin-bottom: 1rem;
   }
 
   .path h2 {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     margin-bottom: 0.5rem;
   }
 
   .path p {
     color: var(--color-text-soft);
+    margin-bottom: 1rem;
   }
 
-  .contact {
-    border-top: 1px solid var(--color-border);
+  .path-link {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .variant-cool {
+    --pbar: linear-gradient(135deg, #4f46e5, #2563eb);
+  }
+  .variant-warm {
+    --pbar: linear-gradient(135deg, #f97316, #ec4899);
+  }
+  .variant-teal {
+    --pbar: linear-gradient(135deg, #0d9488, #059669);
   }
 
   .contact-meta {
@@ -152,7 +204,7 @@ const email = '';
   }
 
   .field label {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.95rem;
   }
 
@@ -165,24 +217,25 @@ const email = '';
   .field textarea {
     font-family: inherit;
     font-size: 1rem;
-    padding: 0.65rem 0.8rem;
+    padding: 0.75rem 0.9rem;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius);
+    border-radius: var(--radius-sm);
     background: var(--color-surface);
     color: var(--color-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .field input:focus,
   .field textarea:focus {
     border-color: var(--color-accent);
-    outline: 2px solid transparent;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+    outline: none;
   }
 
   .field textarea {
     resize: vertical;
   }
 
-  /* Honeypot field — hidden from real users */
   .hidden-field {
     position: absolute;
     left: -9999px;
@@ -191,7 +244,6 @@ const email = '';
   @media (max-width: 52rem) {
     .paths {
       grid-template-columns: 1fr;
-      gap: 1.75rem;
     }
   }
 </style>

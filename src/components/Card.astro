@@ -1,24 +1,78 @@
 ---
-// A simple content card used for the "What we do" and "Values" sections.
-// Pass a `title` and put the body text in the default slot.
+// A content card with an optional colourful icon badge. Tilts toward the
+// cursor and lifts on hover. Pass `icon` (an Icon name) and `variant`
+// (cool | warm | teal | amber | pink | violet) to colour the badge.
+import Icon from './Icon.astro';
+
 interface Props {
   title: string;
+  icon?: string;
+  variant?: string;
+  eyebrow?: string;
 }
-const { title } = Astro.props;
+const { title, icon, variant = 'cool', eyebrow } = Astro.props;
 ---
 
-<article class="card">
+<article class={`card tilt variant-${variant}`} data-tilt data-reveal>
+  {
+    icon && (
+      <span class="icon-badge" aria-hidden="true">
+        <Icon name={icon} />
+      </span>
+    )
+  }
+  {eyebrow && <p class="card-eyebrow">{eyebrow}</p>}
   <h3>{title}</h3>
   <div class="card-body"><slot /></div>
 </article>
 
 <style>
   .card {
+    position: relative;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    padding: 1.75rem;
+    padding: 1.9rem;
     height: 100%;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  /* Coloured top accent bar that reveals on hover */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: var(--bar, var(--grad-cool));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .icon-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    border-radius: 14px;
+    color: #fff;
+    background: var(--bar, var(--grad-cool));
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 1.1rem;
+  }
+
+  .card-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.3rem;
   }
 
   .card h3 {
@@ -27,5 +81,28 @@ const { title } = Astro.props;
 
   .card-body {
     color: var(--color-text-soft);
+  }
+
+  /* Colour variants drive the accent bar + badge */
+  .variant-cool {
+    --bar: var(--grad-cool);
+  }
+  .variant-warm {
+    --bar: var(--grad-warm);
+  }
+  .variant-teal {
+    --bar: linear-gradient(135deg, #0d9488, #059669);
+  }
+  .variant-amber {
+    --bar: linear-gradient(135deg, #f59e0b, #f97316);
+    --color-accent: #b45309;
+  }
+  .variant-pink {
+    --bar: linear-gradient(135deg, #ec4899, #db2777);
+    --color-accent: #be185d;
+  }
+  .variant-violet {
+    --bar: linear-gradient(135deg, #7c3aed, #4f46e5);
+    --color-accent: #6d28d9;
   }
 </style>

@@ -1,120 +1,330 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection, render } from 'astro:content';
 
-// Programs are content-collection entries (drafts excluded). Each .md file's
-// body becomes the program description. Add a program by creating a new file
-// in src/content/programs/.
-const programs = (await getCollection('programs'))
+// Teaching modules come from src/content/programs/ (drafts excluded). Each
+// .md file's body is the description; `why`, `icon`, and `variant` style it.
+const modules = (await getCollection('programs'))
   .filter((p) => !p.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 
-// Render the Markdown body of each program ahead of time.
 const rendered = await Promise.all(
-  programs.map(async (program) => ({
-    data: program.data,
-    Content: (await render(program)).Content,
+  modules.map(async (m) => ({
+    data: m.data,
+    Content: (await render(m)).Content,
   }))
 );
 
-// Impact figures. The first three are confirmed (as of June 2026).
-// "~40 sessions delivered" is a DRAFT estimate — confirm the real count before
-// publishing. Add any other truthful measurable outcome (returning students,
-// partner renewals, feedback) as a new array item.
-const impact = [
-  '350 children taught',
-  '10 partner institutions',
-  '3 years running',
-  '~40 sessions delivered', // DRAFT — confirm exact number
+// Numeric impact figures (animated count-up). Confirmed as of June 2026.
+const impactStats = [
+  { value: 350, suffix: '', label: 'children taught', variant: 'cool' },
+  { value: 10, suffix: '', label: 'partner institutions', variant: 'warm' },
+  { value: 3, suffix: '', label: 'years running', variant: 'teal' },
+  { value: 60, suffix: '+', label: 'workshops & sessions delivered', variant: 'violet' },
 ];
 ---
 
 <BaseLayout
   title="Education & Outreach"
-  description="Hands-on programs bringing AI and economic literacy to students who don't usually get access — 350 children taught across 10 institutions in Hong Kong."
+  description="We teach children who rarely get access to AI or economics — 350 to date, across 10 institutions in Hong Kong — by showing them how to use AI as a free, patient tutor."
 >
-  <section class="section-tight">
+  <section class="section-tight programs-hero">
+    <div class="blob" style="background:#fda4af;width:18rem;height:18rem;top:-5rem;left:-4rem" data-parallax="0.6"></div>
     <div class="container prose">
-      <p class="eyebrow">Education & Outreach</p>
-      <h1>Education &amp; Outreach</h1>
-      <p class="lead">
-        Understanding AI and the economy shouldn't be a privilege. We run
-        hands-on programs that bring AI and economic literacy to students who
-        don't usually get access — 350 children to date, across 10 institutions
-        in Hong Kong.
+      <p class="eyebrow" data-reveal>Education & Outreach</p>
+      <h1 data-reveal>Education &amp; <span class="gradient-text-warm">Outreach</span></h1>
+      <p class="lead" data-reveal style="--reveal-delay:0.1s">
+        Understanding AI and the economy shouldn't be a privilege. We teach
+        children who rarely get access to either — 350 to date, across 10
+        institutions in Hong Kong — and we do it through one simple idea.
       </p>
     </div>
   </section>
 
-  <!-- Programs -->
+  <!-- Our core idea -->
   <section class="section-tight">
     <div class="container">
-      {
-        rendered.map((program) => (
-          <article class="program prose">
-            <h2>{program.data.title}</h2>
-            <program.Content />
-          </article>
-        ))
-      }
+      <blockquote class="core-idea" data-reveal>
+        Affluent students in Hong Kong have private tutors, enrichment classes,
+        and devices at home. The children we work with often have none of these.
+        Taught well, AI can be a free, patient, personalised tutor — so we don't
+        just teach children <em>about</em> AI, we teach them to use AI as a
+        <strong>learning equaliser</strong>. Each module pairs a school subject
+        with AI in a way designed to close, rather than widen, the gap.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- How we teach — four modules -->
+  <section class="tint-cool">
+    <div class="container">
+      <p class="eyebrow" data-reveal>How we teach — four modules</p>
+      <div class="modules-grid">
+        {
+          rendered.map((m, i) => (
+            <article
+              class={`module tilt variant-${m.data.variant}`}
+              data-tilt
+              data-reveal
+              style={`--reveal-delay:${(i % 2) * 0.1}s`}
+            >
+              <span class="module-badge" aria-hidden="true">
+                <Icon name={m.data.icon} size={28} />
+              </span>
+              <h3>{m.data.title}</h3>
+              <div class="module-body">
+                <m.Content />
+              </div>
+              {m.data.why && (
+                <p class="module-why">
+                  <span>Why it closes the gap</span>
+                  {m.data.why}
+                </p>
+              )}
+            </article>
+          ))
+        }
+      </div>
     </div>
   </section>
 
   <!-- Impact -->
-  <section class="section-tight impact">
-    <div class="container prose">
-      <h2>Impact</h2>
-      <ul>
-        {impact.map((item) => <li>{item}</li>)}
+  <section>
+    <div class="container">
+      <p class="eyebrow" data-reveal>Impact</p>
+      <div class="impact-grid">
+        {
+          impactStats.map((s, i) => (
+            <div class={`impact-stat ivar-${s.variant} magnify`} data-reveal style={`--reveal-delay:${i * 0.08}s`}>
+              <p class="impact-figure">
+                <span class="count" data-count={s.value}>0</span>{s.suffix}
+              </p>
+              <p class="impact-label">{s.label}</p>
+            </div>
+          ))
+        }
+      </div>
+      <ul class="impact-notes" data-reveal>
+        <li>
+          Programs run at schools and community organisations including
+          <strong> Ling To Catholic School</strong> (Ho Man Tin) and
+          <strong> St. Barnabas' Home &amp; Society</strong>.
+        </li>
+        <li>Most partner schools have invited us back for a second year.</li>
       </ul>
     </div>
   </section>
 
-  <!-- Human texture / anecdote -->
+  <!-- A moment from the work -->
   <section class="anecdote">
     <div class="container prose">
-      <!-- DRAFT / EXAMPLE — swap in a true, specific anecdote (even two
-           sentences) before publishing, and replace [school] with the real
-           place. A real moment does more here than any statistic. -->
-      <blockquote class="anecdote-quote">
-        At a session at [school], a student who'd said economics "wasn't for
-        people like me" spent the whole hour arguing about whether a tax cut
-        would reach his neighbourhood. That's the point — not that he memorised
-        a definition, but that he saw the subject was about him.
+      <p class="eyebrow" data-reveal>A moment from the work</p>
+      <blockquote class="anecdote-quote" data-reveal>
+        We arrived at Ling To Catholic School in Ho Man Tin expecting to have to
+        convince a room of children that AI and current affairs had anything to
+        do with their lives. We were wrong. They weren't uninterested — they had
+        simply never been handed the spark. Within an hour they were arguing
+        about whether an algorithm could be fair. The gap was never curiosity.
+        It was access.
       </blockquote>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .program {
-    padding-block: 1.5rem;
+  .programs-hero {
+    position: relative;
+    overflow: hidden;
   }
 
-  .program + .program {
-    border-top: 1px solid var(--color-border);
+  .core-idea {
+    font-family: var(--font-serif);
+    font-size: clamp(1.3rem, 2.6vw, 1.85rem);
+    line-height: 1.45;
+    max-width: 38rem;
+    border-left: 5px solid var(--coral);
+    padding-left: 1.75rem;
   }
 
-  .program h2 {
-    margin-bottom: 0.75rem;
+  .core-idea strong {
+    background: var(--grad-warm);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
   }
 
-  .impact {
-    border-top: 1px solid var(--color-border);
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
   }
 
+  .module {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow-sm);
+    border-top: 5px solid var(--mbar, var(--indigo));
+  }
+
+  .module-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 14px;
+    color: #fff;
+    background: var(--mbar, var(--grad-cool));
+    margin-bottom: 1rem;
+  }
+
+  .module h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .module-body {
+    color: var(--color-text-soft);
+  }
+
+  .module-why {
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px dashed var(--color-border);
+    font-size: 0.95rem;
+    color: var(--color-text);
+  }
+
+  .module-why span {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mtext, var(--color-accent));
+    margin-bottom: 0.25rem;
+  }
+
+  /* Module colour variants */
+  .variant-cool {
+    --mbar: linear-gradient(135deg, #4f46e5, #2563eb);
+    --mtext: #4338ca;
+  }
+  .variant-teal {
+    --mbar: linear-gradient(135deg, #0d9488, #059669);
+    --mtext: #0f766e;
+  }
+  .variant-amber {
+    --mbar: linear-gradient(135deg, #f59e0b, #f97316);
+    --mtext: #b45309;
+  }
+  .variant-pink {
+    --mbar: linear-gradient(135deg, #ec4899, #db2777);
+    --mtext: #be185d;
+  }
+
+  /* Impact stats */
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .impact-stat {
+    text-align: center;
+    padding: 1.75rem 1rem;
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .impact-figure {
+    font-family: var(--font-serif);
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .ivar-cool .impact-figure {
+    background: var(--grad-cool);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ivar-warm .impact-figure {
+    background: var(--grad-warm);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ivar-teal .impact-figure {
+    background: linear-gradient(135deg, #0d9488, #059669);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ivar-violet .impact-figure {
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .impact-label {
+    color: var(--color-text-soft);
+    font-size: 0.92rem;
+  }
+
+  .impact-notes {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.75rem;
+    max-width: var(--measure);
+    color: var(--color-text-soft);
+  }
+
+  .impact-notes li {
+    padding-left: 1.5rem;
+    position: relative;
+    margin-bottom: 0.6rem;
+  }
+
+  .impact-notes li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--coral);
+  }
+
+  /* Anecdote */
   .anecdote {
-    padding-block: clamp(2.5rem, 6vw, 4rem);
     border-top: 1px solid var(--color-border);
   }
 
   .anecdote-quote {
     font-family: var(--font-serif);
-    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
-    line-height: 1.4;
-    border-left: 3px solid var(--color-accent);
-    padding-left: 1.5rem;
-    color: var(--color-text);
+    font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+    line-height: 1.45;
+    border-left: 5px solid var(--violet);
+    padding-left: 1.75rem;
     font-style: italic;
+    max-width: 42rem;
+  }
+
+  @media (max-width: 52rem) {
+    .modules-grid {
+      grid-template-columns: 1fr;
+    }
+    .impact-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>

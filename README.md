@@ -43,11 +43,16 @@ fields at the top (the "frontmatter" between the `---` lines).
 | --------------------------- | ----------------------------- |
 | A government submission     | `src/content/submissions/`    |
 | A publication / report      | `src/content/publications/`   |
-| An education program        | `src/content/programs/`       |
+| A teaching module           | `src/content/programs/`       |
 | A team member               | `src/content/team/`           |
 
-The example files in each folder show every available field. Delete the
-`example-…` files once you've added your real content.
+Open any existing file in a folder to see every available field. Teaching
+modules also take an `icon` (math, english, economics, science, education,
+research, engagement…), a `variant` colour (cool, warm, teal, amber, pink,
+violet), and a `why` line ("Why it closes the gap").
+
+Set `draft: true` on any file to keep it in the repo as a hidden template that
+won't appear on the live site (the `example-…` files use this).
 
 ### Adding a PDF
 
@@ -66,32 +71,44 @@ spot that still needs real information before launch.
 
 ## Before you publish — remaining checklist
 
-Confirmed facts are already in place. **Don't launch with any DRAFT copy or
-`[BRACKET]` still unverified** — for an org doing government work, one inflated
-claim costs more than ten modest true ones. Still to do:
+Confirmed facts are in place. The six policy submissions and three reports are
+written from your brief but are **checkable factual claims** — verify each
+before launch. For an org doing government work, one inflated claim costs more
+than ten modest true ones. Still to do:
 
-- [ ] Verify the tax-submission summary against the real document, and fill in
-  the exact month (`src/content/submissions/tax-relief-2025-26-budget.md`)
-- [ ] Confirm the program description and pick the real activity
-  (`src/content/programs/ai-literacy-workshops.md`)
-- [ ] Confirm the sessions-delivered number — "~40" is a DRAFT estimate
-  (`src/pages/programs.astro`)
-- [ ] Replace the Programs anecdote with a true one + the real school name
-  (`src/pages/programs.astro`)
+- [ ] Verify every submission's title, body, date, and what it argued against
+  the real documents (`src/content/submissions/` — each file is flagged)
+- [ ] Verify the three reports and add their PDFs to `public/research/`
+  (`src/content/publications/`)
+- [ ] Confirm the impact numbers — children, institutions, the 60+ sessions,
+  and the "invited back for a second year" claim (`src/pages/programs.astro`)
 - [ ] Confirm the team bios are accurate (focus areas + roles)
   (`src/content/team/`)
 - [ ] Add the contact email when ready — set `email` in both
   `src/pages/get-involved.astro` and `src/components/Footer.astro`
-- [ ] Add real PDFs to `public/research/` and link them from the submission /
-  publication frontmatter
 - [ ] Set your real domain in `astro.config.mjs` (`site:`)
 
 Already confirmed and in place: founding date (June 2023 / 3 years), 350
 children, 10 institutions, ~20 submissions a year, 4 recommendations a year in
-the Policy Address, the Five-Year Plan callout, research areas, and the team
-roster.
+the Policy Address, the Five-Year Plan callout, the four teaching modules,
+research areas, and the team roster.
 
-Tip: search the project for `DRAFT` and `[` to find everything still to verify.
+## Design & animation
+
+The site is intentionally colourful and motion-rich: an animated gradient hero
+with floating shapes, scroll-reveal on most elements, count-up statistics,
+cards that tilt toward the cursor and magnify on hover, gradient text, a
+scroll-progress bar, and a deep-gradient stats band and footer.
+
+- **All of it lives in two places:** the design tokens, palette, gradients, and
+  animation utilities in `src/styles/global.css`, and the small animation
+  engine (scroll-reveal, count-up, tilt, progress bar, parallax) in the
+  `<script>` at the bottom of `src/layouts/BaseLayout.astro`.
+- **Accessibility:** every animation is disabled for visitors who set
+  "reduce motion" in their OS, via `prefers-reduced-motion`. Numbers still show
+  their final value, content still appears — just without the movement.
+- **To tone it down or recolour,** edit the `:root` custom properties (palette
+  and gradients) and the `[data-reveal]` / `.magnify` rules in `global.css`.
 
 ---
 
