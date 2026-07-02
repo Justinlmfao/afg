@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
+import PageHero from '../components/PageHero.astro';
 ---
 
 <BaseLayout
   title="About"
   description="AI For Good ensures AI and economic policy develop to serve the public good — through rigorous research, direct engagement with government, and education that reaches the children policy overlooks."
 >
-  <section class="section-tight about-hero">
-    <div class="blob" style="background:#a5b4fc;width:18rem;height:18rem;top:-4rem;right:-4rem" data-parallax="0.6"></div>
-    <div class="container prose">
-      <p class="eyebrow" data-reveal>About</p>
-      <h1 data-reveal>About <span class="gradient-text">AI For Good</span></h1>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="About"
+    titlePre="About"
+    titleAccent="AI For Good"
+    lead="A student-led think tank in Hong Kong, working at the intersection of technology, economics, and policy since June 2023."
+  />
 
   <section class="section-tight">
     <div class="container prose">
@@ -133,11 +133,6 @@ import Card from '../components/Card.astro';
 </BaseLayout>
 
 <style>
-  .about-hero {
-    position: relative;
-    overflow: hidden;
-  }
-
   .fronts {
     display: grid;
     gap: 1.25rem;

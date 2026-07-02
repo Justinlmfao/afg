@@ -66,6 +66,40 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     border-bottom-color: var(--color-border);
   }
 
+  /* While a dark hero is in view the header becomes dark glass */
+  .site-header.on-dark,
+  .site-header.on-dark.scrolled {
+    background: rgba(10, 10, 32, 0.92);
+    backdrop-filter: blur(12px);
+    box-shadow: none;
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .site-header.on-dark .primary-nav a {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .site-header.on-dark .primary-nav a:hover {
+    color: #fff;
+  }
+
+  .site-header.on-dark .primary-nav a[aria-current='page'] {
+    color: #c7d2fe;
+  }
+
+  .site-header.on-dark .nav-toggle-bar {
+    background: #fff;
+  }
+
+  /* The opened mobile panel keeps its light background, so restore dark text */
+  .site-header.on-dark .primary-nav.is-open a {
+    color: var(--color-text-soft);
+  }
+
+  .site-header.on-dark .primary-nav.is-open a[aria-current='page'] {
+    color: var(--color-accent);
+  }
+
   .header-inner {
     display: flex;
     align-items: center;

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
 import { getCollection, render } from 'astro:content';
 
 // Teaching modules come from src/content/programs/ (drafts excluded). Each
@@ -60,18 +61,13 @@ const photos = [
   title="Education & Outreach"
   description="We teach children who rarely get access to AI or economics — 350 to date, across 10 institutions in Hong Kong — by showing them how to use AI as a free, patient tutor."
 >
-  <section class="section-tight programs-hero">
-    <div class="blob" style="background:#fda4af;width:18rem;height:18rem;top:-5rem;left:-4rem" data-parallax="0.6"></div>
-    <div class="container prose">
-      <p class="eyebrow" data-reveal>Education & Outreach</p>
-      <h1 data-reveal>Education &amp; <span class="gradient-text-warm">Outreach</span></h1>
-      <p class="lead" data-reveal style="--reveal-delay:0.1s">
-        Understanding AI and the economy shouldn't be a privilege. We teach
-        children who rarely get access to either — 350 to date, across 10
-        institutions in Hong Kong — and we do it through one simple idea.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Education & Outreach"
+    titlePre="Education &"
+    titleAccent="Outreach"
+    variant="warm"
+    lead="Understanding AI and the economy shouldn't be a privilege. We teach children who rarely get access to either — 350 to date, across 10 institutions in Hong Kong — and we do it through one simple idea."
+  />
 
   <!-- Our core idea -->
   <section class="section-tight">
@@ -193,11 +189,6 @@ const photos = [
 </BaseLayout>
 
 <style>
-  .programs-hero {
-    position: relative;
-    overflow: hidden;
-  }
-
   .core-idea {
     font-family: var(--font-serif);
     font-size: clamp(1.3rem, 2.6vw, 1.85rem);

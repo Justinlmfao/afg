@@ -37,7 +37,7 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -73,6 +73,17 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+
+      // While a dark hero is in view, the header goes transparent with light
+      // text; it returns to its glass-light state as soon as you scroll past.
+      const darkHero = document.querySelector('[data-dark-hero]');
+      const headerEl = document.getElementById('site-header');
+      if (darkHero && headerEl) {
+        new IntersectionObserver(
+          ([entry]) => headerEl.classList.toggle('on-dark', entry.isIntersecting),
+          { rootMargin: '-70px 0px 0px 0px' }
+        ).observe(darkHero);
+      }
 
       // Scroll-reveal via IntersectionObserver
       const revealEls = document.querySelectorAll('[data-reveal]');

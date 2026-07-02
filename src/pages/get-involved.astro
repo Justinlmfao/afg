@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
 
 // Contact email is on file (dudequa3@gmail.com) but intentionally left blank
 // for now. When ready, set `email` to that address — the "email us" links and
@@ -36,13 +37,12 @@ const paths = [
   title="Get Involved"
   description="Join, partner, or get in touch with AI For Good — a student-led think tank in Hong Kong."
 >
-  <section class="section-tight gi-hero">
-    <div class="blob" style="background:#6ee7b7;width:18rem;height:18rem;top:-5rem;left:-3rem" data-parallax="0.6"></div>
-    <div class="container prose">
-      <p class="eyebrow" data-reveal>Get Involved</p>
-      <h1 data-reveal>Get <span class="gradient-text">Involved</span></h1>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Get Involved"
+    titlePre="Get"
+    titleAccent="Involved"
+    lead="Join the work, partner with us, or just say hello — we bring the curriculum, the volunteers, and the equipment."
+  />
 
   <!-- Three paths -->
   <section class="section-tight">
@@ -130,11 +130,6 @@ const paths = [
 </BaseLayout>
 
 <style>
-  .gi-hero {
-    position: relative;
-    overflow: hidden;
-  }
-
   .paths {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

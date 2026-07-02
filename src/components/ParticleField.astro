@@ -3,9 +3,16 @@
 // a quiet nod to connection and intelligence, sized to fill its (positioned)
 // parent. It pauses when scrolled out of view and is disabled entirely for
 // visitors who prefer reduced motion. Decorative only, so aria-hidden.
+//
+// `color` is an "r,g,b" string — pass a bright value (e.g. "165,180,252")
+// when the field sits on a dark background.
+interface Props {
+  color?: string;
+}
+const { color = '99,102,241' } = Astro.props;
 ---
 
-<canvas class="particles" data-particles aria-hidden="true"></canvas>
+<canvas class="particles" data-particles data-color={color} aria-hidden="true"></canvas>
 
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,6 +30,7 @@
     let nodes: Node[] = [];
     const mouse = { x: -9999, y: -9999 };
     const MAX_DIST = 130;
+    const rgb = canvas.dataset.color || '99,102,241';
 
     const resize = () => {
       const r = parent.getBoundingClientRect();
@@ -67,7 +75,7 @@
           const d = Math.hypot(dx, dy);
           if (d < MAX_DIST) {
             const a = (1 - d / MAX_DIST) * 0.22;
-            ctx.strokeStyle = `rgba(99, 102, 241, ${a})`;
+            ctx.strokeStyle = `rgba(${rgb}, ${a})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
@@ -77,7 +85,7 @@
         }
       }
       // Nodes
-      ctx.fillStyle = 'rgba(79, 70, 229, 0.5)';
+      ctx.fillStyle = `rgba(${rgb}, 0.55)`;
       for (const n of nodes) {
         ctx.beginPath();
         ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);

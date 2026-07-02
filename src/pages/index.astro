@@ -38,12 +38,13 @@ const featured = [
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- Hero: particle network + floating blobs + cinematic headline reveal -->
-  <section class="hero">
-    <ParticleField />
-    <div class="blob blob-1" style="background:#818cf8" data-parallax="0.5"></div>
-    <div class="blob blob-2" style="background:#fb7185" data-parallax="0.9"></div>
-    <div class="blob blob-3" style="background:#2dd4bf" data-parallax="0.3"></div>
+  <!-- Hero: a dark cinematic opening — aurora light, glowing particle
+       network, and a word-by-word headline reveal -->
+  <section class="hero" data-dark-hero>
+    <ParticleField color="139,148,255" />
+    <div class="blob blob-1" style="background:#6366f1" data-parallax="0.5"></div>
+    <div class="blob blob-2" style="background:#db2777" data-parallax="0.9"></div>
+    <div class="blob blob-3" style="background:#14b8a6" data-parallax="0.3"></div>
 
     <div class="container hero-inner">
       <p class="eyebrow" data-reveal>Student-led · Hong Kong · since 2023</p>
@@ -55,7 +56,7 @@ const featured = [
             return (
               <span class="word">
                 <span
-                  class={grad ? 'word-inner gradient-text' : 'word-inner'}
+                  class={grad ? 'word-inner gradient-text-bright hero-accent' : 'word-inner'}
                   style={`--wd:${(0.2 + i * 0.05).toFixed(2)}s`}
                 >
                   {text}
@@ -75,10 +76,16 @@ const featured = [
         <a class="btn btn-primary" href="/research" data-magnetic>
           Read our research <span class="arrow">→</span>
         </a>
-        <a class="btn btn-secondary" href="/get-involved" data-magnetic>
+        <a class="btn btn-secondary btn-ghost" href="/get-involved" data-magnetic>
           Get involved <span class="arrow">→</span>
         </a>
       </div>
+    </div>
+
+    <div class="scroll-cue" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9l6 6 6-6" />
+      </svg>
     </div>
   </section>
 
@@ -88,7 +95,10 @@ const featured = [
   <!-- What we do -->
   <section class="tint-cool">
     <div class="container">
-      <p class="eyebrow" data-reveal>What we do</p>
+      <div class="section-head" data-reveal>
+        <span class="section-idx" aria-hidden="true">01</span>
+        <p class="eyebrow">What we do</p>
+      </div>
       <div class="cards-grid">
         <Card title="Research & Policy" icon="research" variant="cool">
           We research how AI and economic policy shape society, and submit
@@ -119,7 +129,10 @@ const featured = [
   <!-- Featured work -->
   <section>
     <div class="container">
-      <p class="eyebrow" data-reveal>Featured work</p>
+      <div class="section-head" data-reveal>
+        <span class="section-idx" aria-hidden="true">02</span>
+        <p class="eyebrow">Featured work</p>
+      </div>
       <ul class="featured-list">
         {
           featured.map((item, i) => (
@@ -138,24 +151,39 @@ const featured = [
     </div>
   </section>
 
-  <!-- Closing line -->
+  <!-- Closing: a dark, cinematic sign-off that mirrors the opening -->
   <section class="closing">
-    <div class="container prose">
+    <div class="container closing-inner">
       <p class="closing-line" data-reveal>
-        We're students. We think that's the point — the people who will inherit
-        these decisions should have a hand in shaping them.
+        We're students. We think that's{' '}
+        <span class="gradient-text-bright closing-accent">the point</span>.
       </p>
+      <p class="closing-sub" data-reveal style="--reveal-delay:0.12s">
+        The people who will inherit these decisions should have a hand in
+        shaping them.
+      </p>
+      <div class="closing-actions" data-reveal style="--reveal-delay:0.24s">
+        <a class="btn btn-primary" href="/get-involved" data-magnetic>
+          Join us <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    background: var(--grad-hero);
-    background-size: 300% 300%;
-    animation: gradientShift 20s ease infinite;
-    padding-block: clamp(4rem, 11vw, 9rem);
+    position: relative;
     overflow: hidden;
+    color: #fff;
+    padding-block: clamp(5rem, 13vw, 10rem);
+    /* Aurora light over deep indigo — ends on the stats band's colour so the
+       two sections read as one continuous cinematic opening. */
+    background:
+      radial-gradient(60rem 38rem at 85% -12%, rgba(99, 102, 241, 0.4), transparent 62%),
+      radial-gradient(48rem 32rem at -10% 112%, rgba(219, 39, 119, 0.22), transparent 60%),
+      radial-gradient(40rem 28rem at 68% 88%, rgba(20, 184, 166, 0.22), transparent 55%),
+      linear-gradient(180deg, #0a0a20, #14143c 62%, #0f1030);
   }
 
   .hero-inner {
@@ -165,11 +193,21 @@ const featured = [
 
   .hero h1 {
     max-width: 20ch;
+    color: #fff;
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    text-shadow: 0 2px 40px rgba(10, 10, 32, 0.6);
+  }
+
+  /* The gradient word gets an italic, editorial flourish */
+  .hero :global(.hero-accent) {
+    font-style: italic;
+    padding-right: 0.06em;
   }
 
   .hero-subhead {
     max-width: 50ch;
     margin-top: 1.5rem;
+    color: rgba(255, 255, 255, 0.78);
   }
 
   .hero-actions {
@@ -179,7 +217,24 @@ const featured = [
     margin-top: 2.5rem;
   }
 
-  /* Floating blobs */
+  /* Ghost secondary button for the dark hero */
+  .btn-ghost {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .btn-ghost:hover {
+    background: #fff;
+    color: #1e1b4b;
+    border-color: #fff;
+  }
+
+  /* Floating aurora blobs (screen-blended so they glow on the dark base) */
+  .hero .blob {
+    mix-blend-mode: screen;
+    opacity: 0.55;
+  }
   .blob-1 {
     width: 26rem;
     height: 26rem;
@@ -201,6 +256,29 @@ const featured = [
     right: 22%;
     opacity: 0.35;
     animation: floatY 7s ease-in-out infinite;
+  }
+
+  /* Bouncing scroll cue at the base of the hero */
+  .scroll-cue {
+    position: absolute;
+    bottom: 1.4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.55);
+    animation: cueBob 2.2s ease-in-out infinite;
+    z-index: 1;
+  }
+
+  @keyframes cueBob {
+    0%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translateX(-50%) translateY(8px);
+      opacity: 1;
+    }
   }
 
   .cards-grid {
@@ -257,16 +335,45 @@ const featured = [
     transform: translateX(6px);
   }
 
+  /* Dark cinematic closing that mirrors the hero */
   .closing {
     text-align: center;
+    color: #fff;
+    background:
+      radial-gradient(50rem 30rem at 50% 120%, rgba(99, 102, 241, 0.35), transparent 60%),
+      linear-gradient(180deg, #0b0b24, #14143c);
+    overflow: hidden;
+  }
+
+  .closing-inner {
+    position: relative;
+    z-index: 1;
   }
 
   .closing-line {
     font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
-    line-height: 1.35;
-    max-width: 24ch;
+    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+    line-height: 1.25;
+    max-width: 22ch;
     margin-inline: auto;
+  }
+
+  .closing :global(.closing-accent) {
+    font-style: italic;
+    padding-right: 0.06em;
+  }
+
+  .closing-sub {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    max-width: 44ch;
+    margin: 1.25rem auto 0;
+  }
+
+  .closing-actions {
+    margin-top: 2.25rem;
+    display: flex;
+    justify-content: center;
   }
 
   @media (max-width: 52rem) {
