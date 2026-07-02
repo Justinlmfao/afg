@@ -153,6 +153,25 @@ a:hover {
   animation: gradientShift 9s ease infinite;
 }
 
+/* Brighter variants that glow against the dark cinematic heroes */
+.gradient-text-bright {
+  background: linear-gradient(120deg, #a5b4fc, #67e8f9 40%, #f9a8d4 75%, #fcd34d);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 9s ease infinite;
+}
+
+.gradient-text-warmbright {
+  background: linear-gradient(120deg, #fcd34d, #fb923c 45%, #f9a8d4 85%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 9s ease infinite;
+}
+
 /* ---- Layout helpers ---------------------------------------------------- */
 .container {
   width: 100%;
@@ -220,6 +239,83 @@ section {
   color: var(--color-text-soft);
 }
 
+/* ---- Film grain — a whisper of texture over everything ------------------ */
+/* Kept beneath the lightbox (z 200) so expanded photos stay clean. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---- Editorial section headers: 01 / eyebrow / hairline ----------------- */
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1.75rem;
+}
+
+.section-idx {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-accent);
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+
+.section-head .eyebrow {
+  margin-bottom: 0;
+}
+
+.section-head::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-border), transparent);
+}
+
+/* ---- Dark cinematic page hero (shared by the inner pages) --------------- */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  padding-block: clamp(4rem, 9vw, 7rem);
+  background:
+    radial-gradient(55rem 35rem at 88% -12%, rgba(79, 70, 229, 0.4), transparent 62%),
+    radial-gradient(45rem 30rem at -8% 115%, rgba(236, 72, 153, 0.2), transparent 60%),
+    radial-gradient(38rem 26rem at 65% 90%, rgba(13, 148, 136, 0.22), transparent 55%),
+    linear-gradient(180deg, #0b0b22, #121235 65%, #0f1030);
+}
+
+.page-hero .blob {
+  mix-blend-mode: screen;
+  opacity: 0.45;
+}
+
+.page-hero h1 {
+  color: #fff;
+  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+}
+
+.page-hero .lead {
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 56ch;
+  margin-top: 1.25rem;
+}
+
+.page-hero .hero-content {
+  position: relative;
+  z-index: 1;
+}
+
 /* ---- Buttons ----------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -242,6 +338,8 @@ section {
 }
 
 .btn-primary {
+  position: relative;
+  overflow: hidden;
   background: var(--grad-cool);
   background-size: 160% 160%;
   color: #fff;
@@ -252,6 +350,30 @@ section {
   color: #fff;
   filter: saturate(1.2);
   animation: gradientShift 3s ease infinite;
+}
+
+/* Light sweep across the button on hover */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 65%
+  );
+  transform: translateX(-110%);
+}
+
+.btn-primary:hover::before {
+  animation: shimmer 0.9s ease;
+}
+
+@keyframes shimmer {
+  to {
+    transform: translateX(110%);
+  }
 }
 
 .btn-secondary {

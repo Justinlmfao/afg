@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import PageHero from '../components/PageHero.astro';
 import { getCollection } from 'astro:content';
 
 // Submissions + publications come from content collections (drafts excluded),
@@ -28,20 +29,12 @@ const researchAreas = [
   title="Research & Policy"
   description="Research on the economic, social, and ethical dimensions of AI — put to work through roughly twenty government submissions a year, with four recommendations a year reflected in the Policy Address."
 >
-  <section class="section-tight research-hero">
-    <div class="blob" style="background:#93c5fd;width:18rem;height:18rem;top:-5rem;right:-4rem" data-parallax="0.6"></div>
-    <div class="container prose">
-      <p class="eyebrow" data-reveal>Research & Policy</p>
-      <h1 data-reveal>Research &amp; <span class="gradient-text">Policy</span></h1>
-      <p class="lead" data-reveal style="--reveal-delay:0.1s">
-        We produce research on the economic, social, and ethical dimensions of
-        artificial intelligence — and we put it to work. Each year we make
-        roughly twenty submissions to government consultations and public
-        bodies, and on average four of our recommendations are reflected in the
-        Policy Address.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Research & Policy"
+    titlePre="Research &"
+    titleAccent="Policy"
+    lead="We produce research on the economic, social, and ethical dimensions of artificial intelligence — and we put it to work. Each year we make roughly twenty submissions to government consultations and public bodies, and on average four of our recommendations are reflected in the Policy Address."
+  />
 
   <!-- Currently in progress callout -->
   <section class="section-tight">
@@ -148,11 +141,6 @@ const researchAreas = [
 </BaseLayout>
 
 <style>
-  .research-hero {
-    position: relative;
-    overflow: hidden;
-  }
-
   /* Callout */
   .callout {
     position: relative;

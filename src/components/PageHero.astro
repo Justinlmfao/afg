@@ -1,0 +1,62 @@
+---
+// The dark cinematic hero used at the top of every inner page: aurora light,
+// a drifting particle field, and a headline with a glowing gradient accent.
+// The `data-dark-hero` attribute tells the header to go transparent/light
+// while this section is in view (see BaseLayout).
+import ParticleField from './ParticleField.astro';
+
+interface Props {
+  eyebrow: string;
+  titlePre?: string;
+  titleAccent: string;
+  titlePost?: string;
+  lead?: string;
+  variant?: 'cool' | 'warm';
+}
+
+const {
+  eyebrow,
+  titlePre = '',
+  titleAccent,
+  titlePost = '',
+  lead,
+  variant = 'cool',
+} = Astro.props;
+
+const accentClass = variant === 'warm' ? 'gradient-text-warmbright' : 'gradient-text-bright';
+---
+
+<section class="page-hero" data-dark-hero>
+  <ParticleField color="139,148,255" />
+  <div class="blob ph-blob" data-parallax="0.5"></div>
+
+  <div class="container hero-content">
+    <p class="eyebrow" data-reveal>{eyebrow}</p>
+    <h1 data-reveal style="--reveal-delay:0.08s">
+      {titlePre}{titlePre && ' '}<span class={`${accentClass} accent-italic`}>{titleAccent}</span>{titlePost && ' '}{titlePost}
+    </h1>
+    {
+      lead && (
+        <p class="lead" data-reveal style="--reveal-delay:0.16s">
+          {lead}
+        </p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .ph-blob {
+    width: 22rem;
+    height: 22rem;
+    top: -6rem;
+    right: -5rem;
+    background: #818cf8;
+    animation: floatY 9s ease-in-out infinite;
+  }
+
+  .accent-italic {
+    font-style: italic;
+    padding-right: 0.06em; /* room for the italic overhang */
+  }
+</style>

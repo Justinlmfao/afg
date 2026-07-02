@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
 import { getCollection } from 'astro:content';
 
 // Team members come from src/content/team/ (drafts excluded). The `group`
@@ -41,17 +42,12 @@ let avatarIndex = 0;
   title="Our Team"
   description="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
 >
-  <section class="section-tight team-hero">
-    <div class="blob" style="background:#c4b5fd;width:18rem;height:18rem;top:-5rem;right:-3rem" data-parallax="0.6"></div>
-    <div class="container prose">
-      <p class="eyebrow" data-reveal>Our Team</p>
-      <h1 data-reveal>Our <span class="gradient-text">Team</span></h1>
-      <p class="lead" data-reveal style="--reveal-delay:0.1s">
-        AI For Good is run entirely by students, organised into research,
-        partnerships, and education teams.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="Our Team"
+    titlePre="Our"
+    titleAccent="Team"
+    lead="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
+  />
 
   {
     grouped.map((section) => (
@@ -84,11 +80,6 @@ let avatarIndex = 0;
 </BaseLayout>
 
 <style>
-  .team-hero {
-    position: relative;
-    overflow: hidden;
-  }
-
   .people-grid {
     list-style: none;
     padding: 0;
