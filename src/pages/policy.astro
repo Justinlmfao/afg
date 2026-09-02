@@ -37,8 +37,9 @@ const submissions = (await getCollection('submissions'))
         <div class="ledger-row weighted">
           <dt class="ledger-figure">HK$50M</dt>
           <dd class="ledger-label">
-            government commitment to AI courses — the flagship outcome of our
-            submissions
+            allocated to <strong>AI for All</strong> in the 2026–27 Budget — the
+            inclusive AI programme we argued for.
+            <a class="link-quiet" href="#ai-for-all">What we submitted, and what we can claim →</a>
           </dd>
         </div>
         <div class="ledger-row">
@@ -56,6 +57,105 @@ const submissions = (await getCollection('submissions'))
           </dd>
         </div>
       </dl>
+    </div>
+  </section>
+
+  <!-- Flagship: AI for All.
+       Attribution is deliberately limited. AI for All is a government
+       programme; we recommended an inclusive AI programme and the Budget went
+       that way. Nothing here says we caused it, because that is not a claim
+       anyone could verify — and one unverifiable claim would put every other
+       number on this site in doubt.
+       TODO (Justin): link the Budget speech / Budget paper as the source for
+       the figures below, and attach the August 2025 submission as a PDF once
+       it is cleared for publication. -->
+  <section id="ai-for-all" class="flagship">
+    <div class="container">
+      <div class="prose">
+        <p class="kicker">Flagship</p>
+        <h2>AI for All</h2>
+        <p class="flagship-lede">
+          In February 2026, the Hong Kong Budget allocated HK$50 million to an
+          inclusive AI programme reaching an estimated 50,000 residents over two
+          years, through more than 200 courses, seminars and competitions. It is
+          delivered by Cyberport, HKSTP and the Hong Kong Productivity Council,
+          with Cyberport's share aimed at students, parents, the elderly and
+          underprivileged communities.
+        </p>
+      </div>
+
+      <!-- The credibility guard, stated before anything else -->
+      <p class="attribution">
+        <strong>What we can claim:</strong> we recommended it, and the Budget
+        went that way. AI for All is the government's programme, funded and
+        delivered by public bodies — we did not fund it, run it, or cause it.
+      </p>
+
+      <ol class="timeline">
+        <li>
+          <span class="t-date">2024</span>
+          <span class="t-body">
+            Teaching in schools with no AI curriculum and no budget to build
+            one, we started recording the same gap in every classroom.
+          </span>
+        </li>
+        <li>
+          <span class="t-date">August 2025</span>
+          <span class="t-body">
+            We filed the argument to the Policy Address consultation, and
+            repeated it in our Budget feedback.
+          </span>
+        </li>
+        <li>
+          <span class="t-date">February 2026</span>
+          <span class="t-body">
+            The 2026–27 Budget allocated HK$50 million to AI for All, and the
+            programme has since been expanded.
+          </span>
+        </li>
+      </ol>
+
+      <!-- Same three-part structure as every proposal, so the method is
+           visible on our own flagship result too. -->
+      <article class="proposal" aria-label="AI for All — our submission and our reading of it">
+        <div class="proposal-part">
+          <p class="part-label">Why we asked for it</p>
+          <p class="part-body">
+            We teach AI to primary students in schools that had no AI
+            curriculum and no budget to build one. The gap was not interest —
+            the children were quick — it was access. So our submissions argued
+            the same point each year: AI literacy funded only through schools
+            and employers will reach the households that already have it, and
+            miss the ones that don't. Public money had to be spent on the people
+            at the back of the queue, not the front.
+          </p>
+        </div>
+        <div class="proposal-part">
+          <p class="part-label">What we submitted</p>
+          <p class="part-body">
+            In August 2025 we put that argument to the Policy Address
+            consultation, and made it again in our Budget feedback: fund AI
+            literacy directly for the people least likely to encounter it —
+            children in under-resourced schools, their parents, and older
+            residents — instead of routing it through institutions that would
+            reach them last. We asked for public funding attached to that group
+            specifically, rather than a general commitment to AI skills.
+          </p>
+        </div>
+        <div class="proposal-part part-recommendation">
+          <p class="part-label">What it means, and what it doesn't</p>
+          <p class="part-body">
+            The allocation is a start, not a settlement. The government has
+            described HK$50 million as an initial figure and the
+            50,000-participant target as a baseline shaped by current resources;
+            officials have said more funding may follow if demand is there.
+            Fifty thousand people is a small fraction of Hong Kong. Our position
+            for the next cycle is that the demand exists and the funding should
+            follow it, and we intend to say so in our submission to the First
+            Five-Year Plan.
+          </p>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -162,6 +262,70 @@ const submissions = (await getCollection('submissions'))
   .ledger dt,
   .ledger dd {
     margin: 0;
+  }
+
+  /* ---- Flagship: AI for All -------------------------------------------- */
+  .flagship {
+    background: var(--policy-wash);
+    border-block: 1px solid var(--rule);
+  }
+
+  .flagship h2 {
+    margin-bottom: 0.75rem;
+  }
+
+  .flagship-lede {
+    font-size: 1.12rem;
+  }
+
+  /* The limit on what we claim, stated up front rather than buried */
+  .attribution {
+    max-width: var(--measure);
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--graphite);
+    border-radius: var(--radius);
+    color: var(--graphite);
+    font-size: 0.97rem;
+  }
+
+  .attribution strong {
+    color: var(--ink);
+  }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    margin: 1.75rem 0;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1.25rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .t-date {
+    font-weight: 650;
+    font-size: 0.95rem;
+    color: var(--policy);
+  }
+
+  .t-body {
+    color: var(--graphite);
+  }
+
+  @media (max-width: 34rem) {
+    .timeline li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
   }
 
   /* Process steps — a single ruled line, not three cards */

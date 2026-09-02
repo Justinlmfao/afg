@@ -67,10 +67,16 @@ submission's `pdf:` field, e.g. `pdf: "/research/my-submission.pdf"`.
 From `AFG-website-brief.md`:
 
 - **Every number is traceable to the brief**: founded June 2023 · 35+ members
-  · ~20 recommendations/year · HK$50M commitment · Policy Address & Budget
-  since 2024 · Five-Year Plan (2026–2030) · 350 children · 7 schools · 43
-  tutors · 86% band promotion since 2024. If a figure isn't on that list, it
-  doesn't go on a page.
+  · ~20 recommendations/year · HK$50M allocated to AI for All in the 2026–27
+  Budget · Policy Address & Budget since 2024 · Five-Year Plan (2026–2030) ·
+  350 children · 7 schools · 43 tutors · 86% band promotion since 2024. If a
+  figure isn't on that list, it doesn't go on a page.
+- **Attribution on AI for All is deliberately limited.** AI for All is a
+  government programme delivered by Cyberport, HKSTP and the Productivity
+  Council. The site says we recommended it and the Budget went that way — it
+  never says we caused it, secured it, or won it. Keep it that way unless
+  there is a citable acknowledgement from a bureau; one unverifiable claim
+  would put every other figure here in doubt.
 - **No invented output.** The submissions collection ships empty; the
   for/against/recommendation template waits for real filings.
 - **Never describe AFG as an official VSA club/ASA** — it is student-led and
