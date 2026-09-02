@@ -1,0 +1,292 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Real, filed submissions only (drafts are templates and never render).
+// While the collection is empty the page shows the filed-state note below —
+// inventing a think tank's output would discredit the whole page.
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Policy"
+  description="A student-led think tank that submits written recommendations to Hong Kong lawmakers — roughly twenty per year, to the Policy Address, the Budget, and the First Five-Year Plan."
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">Policy</p>
+      <h1>A think tank that writes to lawmakers</h1>
+      <p class="lead">
+        AI For Good's policy arm researches and drafts written recommendations
+        to the Hong Kong government. The work is real, filed, and ongoing.
+      </p>
+    </div>
+  </section>
+
+  <!-- The record, as a ruled ledger — one weighted row -->
+  <section class="record">
+    <div class="container">
+      <h2 class="section-title">The record</h2>
+      <dl class="ledger">
+        <div class="ledger-row">
+          <dt class="ledger-figure">~20</dt>
+          <dd class="ledger-label">recommendations submitted to government each year</dd>
+        </div>
+        <div class="ledger-row weighted">
+          <dt class="ledger-figure">HK$50M</dt>
+          <dd class="ledger-label">
+            government commitment to AI courses — the flagship outcome of our
+            submissions
+          </dd>
+        </div>
+        <div class="ledger-row">
+          <dt class="ledger-figure">2024–</dt>
+          <dd class="ledger-label">
+            submissions to Policy Address consultations and Budget proposal
+            feedback, every cycle since 2024
+          </dd>
+        </div>
+        <div class="ledger-row">
+          <dt class="ledger-figure">2026–2030</dt>
+          <dd class="ledger-label">
+            currently submitting to the First Five-Year Plan for Economic and
+            Social Development
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- The method, shown structurally -->
+  <section class="method">
+    <div class="container">
+      <h2 class="section-title">How a proposal is made</h2>
+      <ol class="steps">
+        <li><span class="step-num">1</span> Member interviews</li>
+        <li><span class="step-num">2</span> Research</li>
+        <li><span class="step-num">3</span> Proposal drafting</li>
+      </ol>
+
+      <p class="method-note prose">
+        Every proposal takes the same shape — and it's the shape, not the
+        length, that makes the work credible:
+      </p>
+
+      <!-- The standing proposal template. Real submissions below render in
+           exactly this structure; here it carries the method itself. -->
+      <article class="proposal proposal-demo" aria-label="The structure every proposal follows">
+        <header class="proposal-head">
+          <h3 class="proposal-title">Every proposal, the same shape</h3>
+          <p class="proposal-meta">The standing structure of an AFG submission</p>
+        </header>
+        <div class="proposal-part">
+          <p class="part-label">The case for</p>
+          <p class="part-body">
+            The strongest arguments in favour, steel-manned — what the policy
+            would achieve and for whom, grounded in evidence.
+          </p>
+        </div>
+        <div class="proposal-part">
+          <p class="part-label">The case against</p>
+          <p class="part-body">
+            The honest counter-case — costs, risks, and who bears them. If the
+            against-case wins, the proposal isn't filed.
+          </p>
+        </div>
+        <div class="proposal-part part-recommendation">
+          <p class="part-label">Recommendation</p>
+          <p class="part-body">
+            What we ask the government to do, stated plainly — only after both
+            cases have been made.
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Filed submissions -->
+  <section class="filings">
+    <div class="container">
+      <h2 class="section-title">Submissions</h2>
+      {
+        submissions.length === 0 ? (
+          <p class="empty-note">Submissions are published here after they are filed.</p>
+        ) : (
+          <div class="filed-list">
+            {submissions.map((s) => (
+              <article class="proposal">
+                <header class="proposal-head">
+                  <h3 class="proposal-title">{s.data.title}</h3>
+                  <p class="proposal-meta">
+                    Submitted to {s.data.submittedTo} · {s.data.date}
+                  </p>
+                </header>
+                <div class="proposal-part">
+                  <p class="part-label">The case for</p>
+                  <p class="part-body">{s.data.for}</p>
+                </div>
+                <div class="proposal-part">
+                  <p class="part-label">The case against</p>
+                  <p class="part-body">{s.data.against}</p>
+                </div>
+                <div class="proposal-part part-recommendation">
+                  <p class="part-label">Recommendation</p>
+                  <p class="part-body">{s.data.recommendation}</p>
+                </div>
+                {s.data.pdf && (
+                  <p class="proposal-pdf">
+                    <a class="link-quiet" href={s.data.pdf}>Read the full submission (PDF) →</a>
+                  </p>
+                )}
+              </article>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-top {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-title {
+    margin-bottom: 1.25rem;
+  }
+
+  /* Ledger dl reset */
+  .ledger dt,
+  .ledger dd {
+    margin: 0;
+  }
+
+  /* Process steps — a single ruled line, not three cards */
+  .steps {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 2.25rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+  }
+
+  .steps li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .steps li:not(:last-child)::after {
+    content: '→';
+    color: var(--graphite);
+    font-weight: 400;
+    margin-left: 2.25rem;
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    border: 1.5px solid var(--policy);
+    color: var(--policy);
+    font-size: 0.85rem;
+    font-weight: 650;
+  }
+
+  .method-note {
+    color: var(--graphite);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ---- The proposal template — the page's one bold element ------------- */
+  .proposal {
+    max-width: var(--measure);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .proposal + .proposal {
+    margin-top: 1.5rem;
+  }
+
+  .proposal-head {
+    padding: 1.5rem 1.75rem 1.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .proposal-title {
+    font-size: 1.35rem;
+  }
+
+  .proposal-meta {
+    color: var(--graphite);
+    font-size: 0.92rem;
+    margin-top: 0.3rem;
+  }
+
+  /* Marginal-label rows: label column | text, like a set document */
+  .proposal-part {
+    display: grid;
+    grid-template-columns: 9.5rem 1fr;
+    gap: 1.25rem;
+    padding: 1.1rem 1.75rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .proposal-part:last-of-type {
+    border-bottom: none;
+  }
+
+  .part-label {
+    font-weight: 650;
+    font-size: 0.92rem;
+    color: var(--graphite);
+    padding-top: 0.15rem;
+  }
+
+  .part-body {
+    color: var(--ink);
+  }
+
+  /* The recommendation carries the pillar's ink */
+  .part-recommendation {
+    background: var(--policy-wash);
+    border-left: 4px solid var(--policy);
+    padding-left: calc(1.75rem - 4px);
+  }
+
+  .part-recommendation .part-label {
+    color: var(--policy);
+  }
+
+  .proposal-pdf {
+    padding: 0 1.75rem 1.4rem;
+  }
+
+  .empty-note {
+    color: var(--graphite);
+    border-left: 3px solid var(--rule);
+    padding-left: 1rem;
+    max-width: var(--measure);
+  }
+
+  @media (max-width: 34rem) {
+    .proposal-part {
+      grid-template-columns: 1fr;
+      gap: 0.3rem;
+    }
+    .steps li:not(:last-child)::after {
+      content: none;
+    }
+  }
+</style>

@@ -2,12 +2,16 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
-// Static output by default — no server needed, deploys free to Netlify
-// or Cloudflare Pages. MDX is enabled so content pages can use components
-// if you ever want to, but plain Markdown works everywhere too.
+// Static output — no server needed, deploys free to Netlify or Cloudflare
+// Pages. MDX is enabled so content files can use components if ever needed.
 export default defineConfig({
-  // Set this to your final domain before launch (used for canonical URLs,
-  // sitemaps, and absolute links). Safe to leave as-is during development.
+  // Set this to the final domain before launch (canonical URLs, sitemaps).
   site: 'https://aiforgood.example',
   integrations: [mdx()],
+  // The site was restructured around its two pillars; keep old URLs working.
+  redirects: {
+    '/research': '/policy',
+    '/programs': '/teaching',
+    '/about': '/',
+  },
 });

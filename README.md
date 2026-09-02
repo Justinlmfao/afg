@@ -1,168 +1,87 @@
 # AI For Good — website
 
-The website for **AI For Good**, a student-led think tank in Hong Kong working
-at the intersection of technology, policy, and education.
+The website for **AI For Good (AFG)**, a student-led organisation in Hong Kong
+with two pillars: a **policy think tank** that submits written recommendations
+to lawmakers, and a **free tutoring programme** for underprivileged primary
+students.
 
 Built with [Astro](https://astro.build) as a fully static site — no server or
-backend needed. Content for the Research, Programs, and Team pages lives in
-Markdown files, so you can add new items without touching any code.
+backend. The design rationale (palette, type, wireframes, and what was
+deliberately cut) is in `DESIGN.md`; the content source of truth is
+`AFG-website-brief.md`.
 
 ---
 
 ## Run it locally
 
-You need [Node.js](https://nodejs.org) 18 or newer (this project is set up for
-Node 22).
+Requires [Node.js](https://nodejs.org) 18+ (set up for Node 22).
 
 ```bash
-npm install      # install dependencies (first time only)
-npm run dev      # start the dev server at http://localhost:4321
-```
-
-Other commands:
-
-```bash
-npm run build    # build the static site into dist/
-npm run preview  # preview the built site locally
+npm install      # first time only
+npm run dev      # dev server at http://localhost:4321
+npm run build    # static build into dist/
+npm run preview  # preview the built site
 ```
 
 ---
 
-## Editing content (no coding needed)
+## Pages
 
-Most of what you'll want to change lives in two places: **Markdown content
-files** and a handful of clearly-marked spots in the page files.
+| Route | What it is |
+| --- | --- |
+| `/` | Routes the reader to one of the two pillars |
+| `/policy` | The think tank: record, method, filed submissions |
+| `/teaching` | The tutoring programme: the 86% outcome, modules, partners, photos |
+| `/team` | The five leads + 35+ members |
+| `/get-involved` | Contact form + email |
 
-### Adding research, programs, or team members
+Old URLs (`/research`, `/programs`, `/about`) redirect to the new ones.
 
-Each of these is a folder of Markdown files under `src/content/`. To add an
-item, copy an existing file in the matching folder, rename it, and edit the
-fields at the top (the "frontmatter" between the `---` lines).
+## Editing content (no code needed)
 
-| What you want to add        | Folder                        |
-| --------------------------- | ----------------------------- |
-| A government submission     | `src/content/submissions/`    |
-| A publication / report      | `src/content/publications/`   |
-| A teaching module           | `src/content/programs/`       |
-| A team member               | `src/content/team/`           |
+| To add | Folder | Notes |
+| --- | --- | --- |
+| A policy submission | `src/content/submissions/` | Fields: `title`, `submittedTo`, `date`, **`for`**, **`against`**, **`recommendation`**, optional `pdf`. Copy `example-submission.md`, fill it in, set `draft: false`. **Real, filed submissions only** — while the folder has none, the Policy page shows "Submissions are published here after they are filed." |
+| A teaching module | `src/content/programs/` | Markdown body is the description; `why` is the "closes the gap" line; `icon` names a glyph in `Icon.astro`. |
+| A team member | `src/content/team/` | `name`, `role`, `order`. |
 
-Open any existing file in a folder to see every available field. Teaching
-modules also take an `icon` (math, english, economics, science, education,
-research, engagement…), a `variant` colour (cool, warm, teal, amber, pink,
-violet), and a `why` line ("Why it closes the gap").
+Set `draft: true` on any file to keep it as a hidden template.
 
-Set `draft: true` on any file to keep it in the repo as a hidden template that
-won't appear on the live site (the `example-…` files use this).
+### Photos
 
-### Adding a PDF
+The Teaching page's gallery expects five files in `public/programs/` —
+currently **labelled placeholders**. Replace each with the real photo, same
+filename (see `public/programs/README.md` for which is which).
 
-Put the file in `public/research/` and reference it from a content file's
-`pdf:` field, e.g. `pdf: "/research/my-report.pdf"`. See
-`public/research/README.md`.
+### PDFs
 
-### Editing fixed page copy
-
-Copy that isn't in a content collection (the home page, about page, stats,
-footer, contact details) lives in `src/pages/*.astro`, `src/components/`, and
-is clearly commented. Search the codebase for `[PLACEHOLDER]` to find every
-spot that still needs real information before launch.
+Put submission PDFs in `public/research/` and reference them from a
+submission's `pdf:` field, e.g. `pdf: "/research/my-submission.pdf"`.
 
 ---
 
-## Before you publish — remaining checklist
+## The rules this site follows
 
-Confirmed facts are in place. The six policy submissions and three reports are
-written from your brief but are **checkable factual claims** — verify each
-before launch. For an org doing government work, one inflated claim costs more
-than ten modest true ones. Still to do:
+From `AFG-website-brief.md`:
 
-- [ ] Verify every submission's title, body, date, and what it argued against
-  the real documents (`src/content/submissions/` — each file is flagged)
-- [ ] Verify the three reports and add their PDFs to `public/research/`
-  (`src/content/publications/`)
-- [ ] Confirm the impact numbers — children, institutions, the 60+ sessions,
-  and the "invited back for a second year" claim (`src/pages/programs.astro`)
-- [ ] Confirm the team bios are accurate (focus areas + roles)
-  (`src/content/team/`)
-- [ ] Add the contact email when ready — set `email` in both
-  `src/pages/get-involved.astro` and `src/components/Footer.astro`
-- [ ] Set your real domain in `astro.config.mjs` (`site:`)
-
-Already confirmed and in place: founding date (June 2023 / 3 years), 350
-children, 10 institutions, ~20 submissions a year, 4 recommendations a year in
-the Policy Address, the Five-Year Plan callout, the four teaching modules,
-research areas, and the team roster.
-
-## Design & animation
-
-The site is intentionally cinematic and motion-rich: **dark aurora heroes** on
-every page (`src/components/PageHero.astro`) with a drifting **particle
-network** (`src/components/ParticleField.astro`), a word-by-word **headline
-reveal** on the home hero, a header that turns to **dark glass** over heroes
-and light glass over content, a subtle **film-grain** texture site-wide, an
-auto-scrolling **topic marquee**, editorial **numbered section headers**,
-scroll-reveal on most elements, count-up statistics, cards that tilt toward
-the cursor with a **cursor-follow spotlight**, **magnetic** buttons with a
-shimmer sweep, gradient text, a scroll-progress bar, a dark closing CTA that
-bookends the opening, and a **lightbox** for the program photos (click a
-photo; arrow keys / Esc to navigate).
-
-- **All of it lives in two places:** the design tokens, palette, gradients, and
-  animation utilities in `src/styles/global.css`, and the small animation
-  engine (scroll-reveal, count-up, tilt, progress bar, parallax) in the
-  `<script>` at the bottom of `src/layouts/BaseLayout.astro`.
-- **Accessibility:** every animation is disabled for visitors who set
-  "reduce motion" in their OS, via `prefers-reduced-motion`. Numbers still show
-  their final value, content still appears — just without the movement.
-- **To tone it down or recolour,** edit the `:root` custom properties (palette
-  and gradients) and the `[data-reveal]` / `.magnify` rules in `global.css`.
-
----
+- **Every number is traceable to the brief**: founded June 2023 · 35+ members
+  · ~20 recommendations/year · HK$50M commitment · Policy Address & Budget
+  since 2024 · Five-Year Plan (2026–2030) · 350 children · 7 schools · 43
+  tutors · 86% band promotion since 2024. If a figure isn't on that list, it
+  doesn't go on a page.
+- **No invented output.** The submissions collection ships empty; the
+  for/against/recommendation template waits for real filings.
+- **Never describe AFG as an official VSA club/ASA** — it is student-led and
+  student-founded.
+- Sentence case, active voice, no promotional adjectives.
 
 ## Deploy (free)
 
-### Netlify (recommended — the contact form needs it)
+**Netlify (recommended — the contact form needs it):** import the repo;
+`netlify.toml` sets the build (`npm run build` → `dist`). Form submissions
+appear under **Forms** in the Netlify dashboard.
 
-The contact form on **Get Involved** uses [Netlify
-Forms](https://docs.netlify.com/forms/setup/), which requires Netlify to
-capture submissions (they appear in your Netlify dashboard under **Forms**).
+**Cloudflare Pages** also serves the static output, but the Netlify form won't
+receive submissions there — swap in Formspree or rely on the published email.
 
-1. Push this repo to GitHub/GitLab.
-2. In Netlify: **Add new site → Import an existing project**, pick the repo.
-3. Netlify reads `netlify.toml` automatically — build command `npm run build`,
-   publish directory `dist`. Just click deploy.
-
-### Cloudflare Pages (also works)
-
-Static output deploys fine, but the Netlify contact form won't receive
-submissions there. If you deploy to Cloudflare, swap the form for a service
-like [Formspree](https://formspree.io) or a `mailto:` link. Build command:
-`npm run build`, output directory: `dist`.
-
----
-
-## Project structure
-
-```
-public/
-  research/        PDFs you add (served at /research/…)
-  favicon.svg
-src/
-  components/      Header, Footer, Card, StatsBand
-  content/         Markdown content collections (see table above)
-  content.config.ts  Schema for the content collections
-  layouts/
-    BaseLayout.astro   Shared <head>, fonts, header/footer shell
-  pages/           One file per page (Home, About, Research, …)
-  styles/
-    global.css     Design tokens + typography (edit colours/fonts here)
-astro.config.mjs
-netlify.toml
-AFG-website-plan.md  The original content & design brief
-```
-
-## Design notes
-
-Editorial and restrained by intent: Newsreader (serif) headings + Inter (sans)
-body, a warm off-white background, near-black text, and one muted-blue accent.
-To re-theme, edit the custom properties at the top of `src/styles/global.css`.
+Before launch: set the real domain in `astro.config.mjs` (`site:`).
