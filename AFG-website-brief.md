@@ -61,7 +61,7 @@ Free tutoring for underprivileged primary students in Hong Kong, delivered by tr
 
 ### Verified facts
 
-- 300+ children taught across 7 schools *(see the open decision below — one number must be picked)*
+- **350 children taught across 7 schools** *(resolved: Justin confirmed 350 — it is used in every location on the site)*
 - 43 tutors trained
 - **86% of students promoted at least one class band since 2024**
 - Four teaching modules — take the names and descriptions from `AFG-website-plan.md`, do not invent new ones
@@ -101,10 +101,16 @@ The 86% band-promotion figure is the strongest thing on this page because it is 
 
 ## Open decisions — ask Justin before building, do not guess
 
-1. **Student count.** The site says 300+; the promo video caption says 350. Pick one and use it in every location, including any video captions and social copy in the repo.
-2. **Real policy submissions.** Which filed submissions can be published, and can any be linked or attached as PDFs?
-3. **The remaining 3 school names**, or approval to write "including".
-4. **Contact route** — form, or an address he'll supply.
+1. ~~**Student count.**~~ **Resolved: 350.** Justin confirmed 350 over 300+, and
+   it is now the only figure used on the site (home, About, Teaching). Any
+   remaining "300+" in video captions or social copy should be updated to match.
+2. ~~**Real policy submissions.**~~ **Resolved for now: none published.** The
+   submissions collection ships empty and the Policy page shows "Submissions are
+   published here after they are filed." Add real filings one `.md` at a time.
+3. ~~**The remaining 3 school names.**~~ **Resolved: "7 schools, including…"** —
+   the four named partners are listed, with no padding.
+4. ~~**Contact route.**~~ **Resolved:** Netlify form plus the school-affiliated
+   address `ps20153216@student.vsa.edu.hk`.
 
 ---
 
