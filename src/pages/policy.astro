@@ -114,13 +114,15 @@ const submissions = (await getCollection('submissions'))
           </span>
         </li>
         <li>
-          <span class="t-phase">What changed<span class="t-date">Feb 2026</span></span>
+          <span class="t-phase">What changed<span class="t-date">Feb–Jun 2026</span></span>
           <span class="t-body">
             The 2026–27 Budget allocated HK$50 million to AI for All, and the
-            programme has since been expanded. The argument we had been making
+            programme launched in June 2026. The argument we had been making
             was echoed in how it was built: Cyberport's share is aimed at
             students, parents, the elderly and underprivileged communities —
             the people we had said a general AI-skills push would reach last.
+            The sources are listed below; check them rather than take our word
+            for it.
           </span>
         </li>
       </ol>
@@ -166,6 +168,35 @@ const submissions = (await getCollection('submissions'))
           </p>
         </div>
       </article>
+
+      <!-- Sources for the figures above. A page that cites a government
+           allocation should show where the numbers come from — it is also
+           what lets a reader check the one claim that matters.
+           Justin: confirm each link still resolves before launch, and check
+           the wording above matches what these actually say. -->
+      <aside class="sources" aria-label="Sources for the AI for All figures">
+        <p class="sources-label">Sources</p>
+        <ul>
+          <li>
+            <a href="https://www.info.gov.hk/gia/general/202606/10/P2026061000476.htm" rel="noopener">
+              Government press release, 10 June 2026
+            </a>
+            <span>info.gov.hk</span>
+          </li>
+          <li>
+            <a href="https://www.thestandard.com.hk/news/article/334092/HK-launches-50m-AI-for-All-campaign-to-benefit-50000-residents" rel="noopener">
+              "HK launches $50m AI for All campaign to benefit 50,000 residents"
+            </a>
+            <span>The Standard</span>
+          </li>
+          <li>
+            <a href="https://www.scmp.com/news/hong-kong/hong-kong-economy/article/3365474/hong-kong-launch-free-ai-courses-tech-giants-google-microsoft-smes" rel="noopener">
+              "Hong Kong to launch free AI courses with tech giants Google, Microsoft for SMEs"
+            </a>
+            <span>South China Morning Post</span>
+          </li>
+        </ul>
+      </aside>
     </div>
   </section>
 
@@ -345,6 +376,39 @@ const submissions = (await getCollection('submissions'))
 
   .attribution strong {
     color: var(--ink);
+  }
+
+  /* Sources — the visible evidence for the figures above */
+  .sources {
+    max-width: var(--measure);
+    margin-top: 1.75rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .sources-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin-bottom: 0.6rem;
+  }
+
+  .sources ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .sources li {
+    padding-block: 0.45rem;
+    font-size: 0.95rem;
+  }
+
+  .sources li span {
+    display: block;
+    color: var(--graphite);
+    font-size: 0.85rem;
   }
 
   .timeline {

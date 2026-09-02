@@ -70,21 +70,41 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <strong>Oscar Zheng</strong>, and joined at a later stage by{' '}
           <strong>David Dong</strong> and <strong>Jackie Xue</strong>.
         </p>
-        <!-- Justin: this paragraph is the one thing on the site only you can
-             write. Replace it with your own account of why you started AFG —
-             the specific thing you saw or read that made a club feel
-             insufficient. Keep it short and factual; it will be the most
-             quoted paragraph on the page. -->
-        <p>
-          It started with a straightforward observation: decisions about
-          artificial intelligence in Hong Kong were being made quickly, and the
-          people who would live with them longest — students, and the children
-          now in primary school — had no part in making them. A club that only
-          discussed that felt insufficient. So we began writing submissions to
-          the consultations that were open to anyone who bothered to file, and
-          teaching in the schools that would have us. Three years on, both are
-          still running, and neither has stopped being useful to the other.
-        </p>
+      </div>
+
+      <!-- Justin's own account, in the first person and left in his words.
+           The voice shift from "we" to "I" is deliberate and attributed. -->
+      <div class="founder-note">
+        <div class="fn-part">
+          <p class="fn-label">Why the policy work</p>
+          <p>
+            AI arrived in Hong Kong faster than the city could decide who it was
+            for. I watched it show up in my school, then in my friends'
+            internships, then in the government's plans, and the pattern was
+            always the same: the people who already had the most access got it
+            first. Nobody was choosing that. It was just what happened when
+            nobody was asked to choose. I had spent two years learning how
+            public money gets allocated and who ends up bearing the cost of a
+            decision, and it seemed absurd to sit on that while the decisions
+            were being made a few kilometres away. So we started writing to the
+            people making them.
+          </p>
+        </div>
+        <div class="fn-part">
+          <p class="fn-label">Why the teaching</p>
+          <p>
+            This started as a group of us at school teaching each other AI,
+            mostly by playing with it. We built things that didn't work and a
+            few that did, and it was obvious how much you could get out of these
+            tools once someone showed you the first step. Then it became obvious
+            who wasn't getting shown. The children with the most to gain from AI
+            were the least likely to ever be handed it, and that gap wasn't
+            going to close on its own. So we took what we'd been doing for fun
+            in a classroom and brought it to schools where nobody else was
+            offering it.
+          </p>
+        </div>
+        <p class="fn-attrib">— Justin Lo, founder</p>
       </div>
       <figure class="origin-figure">
         <img
@@ -266,7 +286,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--graphite);
   }
 
-  /* 3. Origin */
+  /* 3. Origin — the founder's note, set apart from the institutional voice */
+  .founder-note {
+    max-width: var(--measure);
+    margin-top: 1.5rem;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--policy);
+    border-image: linear-gradient(180deg, var(--policy), var(--teaching)) 1;
+  }
+
+  .fn-part + .fn-part {
+    margin-top: 1.4rem;
+  }
+
+  .fn-label {
+    font-weight: 650;
+    font-size: 0.88rem;
+    letter-spacing: 0.02em;
+    color: var(--graphite);
+    margin-bottom: 0.3rem;
+  }
+
+  .fn-part p:last-child {
+    font-size: 1.06rem;
+  }
+
+  .fn-attrib {
+    margin-top: 1.1rem;
+    color: var(--graphite);
+    font-size: 0.95rem;
+  }
+
   .origin-figure {
     margin: 2rem 0 0;
     max-width: var(--measure);
