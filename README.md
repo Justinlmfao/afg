@@ -30,12 +30,13 @@ npm run preview  # preview the built site
 | Route | What it is |
 | --- | --- |
 | `/` | Routes the reader to one of the two pillars |
+| `/about` | What AFG is, why it does both, origin, method, impact, what's next |
 | `/policy` | The think tank: record, method, filed submissions |
 | `/teaching` | The tutoring programme: the 86% outcome, modules, partners, photos |
 | `/team` | The five leads + 35+ members |
 | `/get-involved` | Contact form + email |
 
-Old URLs (`/research`, `/programs`, `/about`) redirect to the new ones.
+Old URLs (`/research`, `/programs`) redirect to the new ones.
 
 ## Editing content (no code needed)
 
@@ -49,10 +50,10 @@ Set `draft: true` on any file to keep it as a hidden template.
 
 ### Photos
 
-The six real session photos live in `public/programs/` and fill the Teaching
-page's gallery grid exactly; the first also heads the Teaching panel on the
-home page. See `public/programs/README.md` to swap one, reorder them, or change
-a caption.
+Six real session photos fill the Teaching page's gallery grid exactly, and
+three team photos sit on the home hero, the Team page, and the About origin
+section. All live in `public/programs/` — see `public/programs/README.md` for
+which file goes where, and how to swap or reorder them.
 
 ### PDFs
 

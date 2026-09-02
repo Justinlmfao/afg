@@ -23,7 +23,29 @@ const members = (await getCollection('team'))
     </div>
   </section>
 
-  <section>
+  <!-- Team photographs -->
+  <section class="section-tight">
+    <div class="container team-photos">
+      <figure>
+        <img
+          src="/programs/team-classroom.jpg"
+          alt="Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School after a session."
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure>
+        <img
+          src="/programs/team-outside-school.jpg"
+          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-tight">
     <div class="container">
       <ul class="team-list">
         {
@@ -42,6 +64,31 @@ const members = (await getCollection('team'))
 <style>
   .page-top {
     border-bottom: 1px solid var(--rule);
+  }
+
+  .team-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .team-photos figure {
+    margin: 0;
+  }
+
+  .team-photos img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+  }
+
+  @media (max-width: 46rem) {
+    .team-photos {
+      grid-template-columns: 1fr;
+    }
   }
 
   .team-list {

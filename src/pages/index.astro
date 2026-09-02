@@ -1,265 +1,472 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Latest work, pulled from the collections so the page stays current as
+// entries are added — no layout edits needed. Submissions only appear once a
+// real, filed one is published (drafts never render), so until then this
+// section shows the teaching modules alone rather than placeholder cards.
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- Intro: one plain statement, then route the reader to a pillar -->
-  <section class="intro">
-    <div class="container">
-      <h1 class="intro-line">
-        AI For Good is a student-led organisation in Hong Kong, founded in June
-        2023. It does two things.
-      </h1>
+  <!-- 1. Hero — both halves in the first sentence -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>
+          A student-led think tank in Hong Kong writing AI policy for the
+          government, and teaching the children that policy affects.
+        </h1>
+      </div>
+      <img
+        class="hero-photo"
+        src="/programs/home-cover.jpg"
+        alt="Five AI For Good members in the courtyard of Ho Man Tin Ling To Catholic School."
+        decoding="async"
+      />
     </div>
   </section>
 
-  <!-- The two pillars. Same grid, different inks: policy is dense and ruled;
-       teaching is warm and airy. A reader knows which side they're on in
-       five seconds. -->
-  <section class="pillars-section">
-    <div class="container pillars">
-      <!-- Pillar 1: Policy -->
-      <a href="/policy" class="pillar pillar-policy" data-reveal>
-        <p class="pillar-kicker">1 · Policy</p>
-        <h2>A think tank that writes to lawmakers</h2>
-        <p class="pillar-desc">
-          Members research and draft written recommendations to the Hong Kong
-          government — each one stating the case for, the case against, then
-          the recommendation.
+  <!-- 2. The two doors — the routing decision this page exists to serve -->
+  <section class="doors-section">
+    <div class="container doors">
+      <a href="/policy" class="door door-policy">
+        <p class="door-name">Policy</p>
+        <p class="door-line">
+          Written recommendations to the Hong Kong government, filed to Policy
+          Address and Budget consultations since 2024.
         </p>
-        <ul class="pillar-facts">
-          <li><strong>~20</strong> recommendations submitted to government each year</li>
-          <li><strong>HK$50M</strong> government AI course commitment</li>
-          <li>Policy Address and Budget consultations since 2024; currently submitting to the First Five-Year Plan (2026–2030)</li>
-        </ul>
-        <span class="pillar-cta">Read the policy work <span class="arrow">→</span></span>
+        <p class="door-number">~20 <span>recommendations a year</span></p>
+        <span class="door-cta">Read the policy work <span class="arrow">→</span></span>
       </a>
 
-      <!-- Pillar 2: Teaching -->
-      <a href="/teaching" class="pillar pillar-teaching" data-reveal style="--reveal-delay:0.1s">
-        <img
-          class="pillar-photo"
-          src="/programs/teaching-classroom.jpg"
-          alt="A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer."
-          loading="lazy"
-          decoding="async"
-          width="1600"
-          height="1066"
-        />
-        <p class="pillar-kicker">2 · Teaching</p>
-        <h2>Free tutoring for children the system overlooks</h2>
-        <p class="pillar-desc">
-          Trained student tutors teach underprivileged primary students across
-          Hong Kong — maths, English, economics, and science, each paired with
-          AI as a learning tool.
+      <a href="/teaching" class="door door-teaching">
+        <p class="door-name">Teaching</p>
+        <p class="door-line">
+          Free tutoring for underprivileged primary students, delivered by
+          trained student tutors across seven schools.
         </p>
-        <p class="pillar-outcome">
-          <strong>86%</strong> of students moved up at least one class band
-          since 2024.
-        </p>
-        <ul class="pillar-facts">
-          <li><strong>350</strong> children taught across <strong>7</strong> schools</li>
-          <li><strong>43</strong> tutors trained</li>
-        </ul>
-        <span class="pillar-cta">See the teaching <span class="arrow">→</span></span>
+        <p class="door-number">350 <span>children taught</span></p>
+        <span class="door-cta">See the teaching <span class="arrow">→</span></span>
       </a>
     </div>
   </section>
 
-  <!-- Quiet strip -->
-  <div class="quiet-strip">
-    <div class="container">
-      <p>35+ members · student-led and student-founded · Hong Kong</p>
+  <!-- 3. Proof — two outcomes, not six stats -->
+  <section class="proof">
+    <div class="container proof-grid">
+      <div class="proof-item">
+        <p class="proof-figure proof-policy">HK$50M</p>
+        <p class="proof-label">
+          government commitment to AI courses, which our recommendations
+          contributed to
+        </p>
+      </div>
+      <div class="proof-item">
+        <p class="proof-figure proof-teaching">
+          <span data-count="86">86</span>%
+        </p>
+        <p class="proof-label">
+          of our students have moved up at least one class band since 2024
+        </p>
+      </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Short story — no club-status claims, present tense -->
-  <section>
+  <!-- 4. The short version -->
+  <section class="section-tight">
     <div class="container prose">
-      <p class="kicker">Where it comes from</p>
-      <h2>Students who didn't wait for permission</h2>
       <p>
-        AI For Good was founded in June 2023 by Justin Lo, a secondary school
-        student in Hong Kong. The questions raised by AI and by economic policy
-        — about fairness, access, and who gets a say — will land hardest on the
-        generation now in school. So the organisation works on them directly:
-        it writes to the people making the decisions, and it teaches the
-        children with the least access to the tools.
+        AI For Good is student-led and student-founded, started in Hong Kong in
+        June 2023 and run entirely by students — 35+ of them. We began as a
+        school club and now do two things at once: file evidence-based
+        recommendations to government, and teach the children those decisions
+        will reach first.{' '}
+        <a class="link-quiet" href="/about">Read about us →</a>
       </p>
+    </div>
+  </section>
+
+  <!-- 5. Current work -->
+  <section class="section-tight current">
+    <div class="container">
+      <h2 class="h-sm">Current work</h2>
+      <ul class="current-list">
+        <li>
+          <span class="current-tag current-policy">Policy</span>
+          <span class="current-body">
+            Submitting to the First Five-Year Plan for Economic and Social
+            Development (2026–2030) — consultation open to 14 August 2026.
+          </span>
+        </li>
+        <li>
+          <span class="current-tag current-teaching">Teaching</span>
+          <span class="current-body">
+            Returning to Ho Man Tin Ling To Catholic School next year, with a
+            new cohort of tutors.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. Latest work, straight from the collections -->
+  <section class="section-tight latest">
+    <div class="container">
+      <h2 class="h-sm">
+        {submissions.length > 0 ? 'Latest submissions and programmes' : 'What we teach'}
+      </h2>
+      <ul class="latest-list">
+        {
+          submissions.map((s) => (
+            <li>
+              <a href="/policy">
+                <span class="latest-kind latest-policy">Submission</span>
+                <span class="latest-title">{s.data.title}</span>
+                <span class="latest-meta">{s.data.date}</span>
+              </a>
+            </li>
+          ))
+        }
+        {
+          modules.map((m) => (
+            <li>
+              <a href="/teaching">
+                <span class="latest-kind latest-teaching">Module</span>
+                <span class="latest-title">{m.data.title}</span>
+                <span class="latest-meta">Teaching</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. Partners, as text -->
+  <section class="section-tight partners">
+    <div class="container prose">
+      <h2 class="h-sm">Partners</h2>
       <p>
-        Two habits hold across both pillars: every claim is grounded in
-        evidence, and every argument states its own counter-case before it asks
-        for anything.
+        Ho Man Tin Ling To Catholic School · St. Barnabas' Home &amp; Society ·
+        Kennedy Town School · 10% Organisation
       </p>
+    </div>
+  </section>
+
+  <!-- 8. Two calls to action -->
+  <section class="ctas">
+    <div class="container cta-grid">
+      <div class="cta">
+        <h2 class="h-sm">Schools and organisations</h2>
+        <p>
+          If you work with underprivileged students and want tutors, we bring
+          the curriculum, the tutors, and the equipment.
+        </p>
+        <a class="btn btn-teaching" href="/get-involved">
+          Work with us <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="cta">
+        <h2 class="h-sm">Students</h2>
+        <p>
+          We have opened recruitment at Victoria Shanghai Academy for students
+          interested in policy, economics, and AI.
+        </p>
+        <a class="btn btn-policy" href="/get-involved">
+          Join us <span class="arrow">→</span>
+        </a>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .intro {
-    padding-block: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 3vw, 2.5rem);
+  .h-sm {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 
-  .intro-line {
+  /* 1. Hero */
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.9rem, 3.9vw, 3rem);
     font-weight: 400;
-    max-width: 24ch;
+    line-height: 1.18;
   }
 
-  .pillars-section {
+  .hero-photo {
+    width: 100%;
+    /* `height: auto` matters: an HTML height attribute would otherwise beat
+       aspect-ratio and stretch the photo. */
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+  }
+
+  /* 2. The two doors */
+  .doors-section {
     padding-top: 0;
   }
 
-  .pillars {
+  .doors {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
-    align-items: stretch;
   }
 
-  .pillar {
+  .door {
     display: flex;
     flex-direction: column;
-    gap: 0.9rem;
-    padding: 2.1rem 2.2rem 1.9rem;
-    border-radius: var(--radius);
+    gap: 0.7rem;
+    padding: 1.9rem 2rem 1.7rem;
     border: 1px solid var(--rule);
     border-top-width: 4px;
+    border-radius: var(--radius);
     text-decoration: none;
     color: var(--ink);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    overflow: hidden;
   }
 
-  /* Teaching carries a photograph; policy stays ruled and textual — the two
-     pillars are meant to look different. */
-  .pillar-photo {
-    width: calc(100% + 4.4rem);
-    margin: -2.1rem -2.2rem 0.4rem;
-    height: 11rem;
-    object-fit: cover;
-    object-position: center 38%;
-  }
-
-  .pillar:hover {
+  .door:hover {
     transform: translateY(-4px);
     box-shadow: 0 14px 34px rgba(28, 27, 24, 0.1);
     color: var(--ink);
   }
 
-  .pillar h2 {
-    font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  .door-name {
+    font-family: var(--serif);
+    font-size: 1.75rem;
   }
 
-  .pillar-desc {
+  .door-line {
     color: var(--graphite);
   }
 
-  .pillar-kicker {
-    font-weight: 650;
-    font-size: 0.92rem;
-  }
-
-  /* Policy: cool wash, ruled, denser */
-  .pillar-policy {
-    background: var(--policy-wash);
-    border-top-color: var(--policy);
-  }
-
-  .pillar-policy .pillar-kicker {
-    color: var(--policy);
-  }
-
-  .pillar-policy .pillar-facts {
-    list-style: none;
-    padding: 0;
-    margin-top: 0.25rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .pillar-policy .pillar-facts li {
-    padding-block: 0.55rem;
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.95rem;
-    color: var(--graphite);
-  }
-
-  .pillar-policy .pillar-facts strong {
-    color: var(--policy-deep);
-    font-weight: 650;
-  }
-
-  .pillar-policy .pillar-cta {
-    color: var(--policy);
-  }
-
-  /* Teaching: warm wash, airier */
-  .pillar-teaching {
-    background: var(--teaching-wash);
-    border-top-color: var(--teaching);
-  }
-
-  .pillar-teaching .pillar-kicker {
-    color: var(--teaching);
-  }
-
-  .pillar-outcome {
-    font-size: 1.05rem;
-    border-left: 3px solid var(--teaching);
-    padding-left: 0.9rem;
-  }
-
-  .pillar-outcome strong {
+  .door-number {
     font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--teaching-deep);
+    font-size: 1.9rem;
+    letter-spacing: -0.02em;
+    margin-top: 0.2rem;
   }
 
-  .pillar-teaching .pillar-facts {
-    list-style: none;
-    padding: 0;
-    color: var(--graphite);
+  .door-number span {
     font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--graphite);
+    letter-spacing: 0;
   }
 
-  .pillar-teaching .pillar-facts li + li {
-    margin-top: 0.3rem;
-  }
-
-  .pillar-teaching .pillar-facts strong {
-    color: var(--ink);
-    font-weight: 650;
-  }
-
-  .pillar-teaching .pillar-cta {
-    color: var(--teaching-deep);
-  }
-
-  .pillar-cta {
+  .door-cta {
     margin-top: auto;
+    padding-top: 0.6rem;
     font-weight: 650;
-    display: inline-flex;
-    gap: 0.4rem;
-    align-items: center;
   }
 
-  .pillar-cta .arrow {
+  .door-cta .arrow {
     transition: transform 0.15s ease;
+    display: inline-block;
   }
 
-  .pillar:hover .pillar-cta .arrow {
+  .door:hover .door-cta .arrow {
     transform: translateX(4px);
   }
 
-  .quiet-strip {
+  .door-policy {
+    background: var(--policy-wash);
+    border-top-color: var(--policy);
+  }
+  .door-policy .door-number,
+  .door-policy .door-cta {
+    color: var(--policy);
+  }
+
+  .door-teaching {
+    background: var(--teaching-wash);
+    border-top-color: var(--teaching);
+  }
+  .door-teaching .door-number,
+  .door-teaching .door-cta {
+    color: var(--teaching-deep);
+  }
+
+  /* 3. Proof */
+  .proof {
     border-block: 1px solid var(--rule);
-    padding-block: 0.9rem;
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 50rem;
+  }
+
+  .proof-figure {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 6.5vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .proof-policy {
+    color: var(--policy);
+  }
+
+  .proof-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .proof-label {
     color: var(--graphite);
-    font-size: 0.95rem;
+    max-width: 26ch;
+  }
+
+  /* 5. Current work */
+  .current-list {
+    list-style: none;
+    padding: 0;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .current-list li {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .current-tag {
+    font-size: 0.85rem;
+    font-weight: 650;
+  }
+
+  .current-policy {
+    color: var(--policy);
+  }
+
+  .current-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .current-body {
+    color: var(--graphite);
+  }
+
+  /* 6. Latest */
+  .latest-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+    max-width: var(--measure);
+  }
+
+  .latest-list a {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+
+  .latest-list a:hover {
+    border-color: var(--graphite);
+    color: var(--ink);
+  }
+
+  .latest-kind {
+    font-size: 0.78rem;
+    font-weight: 650;
+  }
+
+  .latest-policy {
+    color: var(--policy);
+  }
+
+  .latest-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .latest-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+  }
+
+  .latest-meta {
+    color: var(--graphite);
+    font-size: 0.88rem;
+  }
+
+  /* 7 & 8 */
+  .partners p {
+    color: var(--graphite);
+  }
+
+  .ctas {
+    border-top: 1px solid var(--rule);
+  }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .cta p {
+    color: var(--graphite);
+    margin-bottom: 1.1rem;
+    max-width: 34ch;
   }
 
   @media (max-width: 52rem) {
-    .pillars {
+    .hero-grid,
+    .doors,
+    .proof-grid,
+    .cta-grid {
       grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .latest-list a {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+
+    .current-list li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
     }
   }
 </style>

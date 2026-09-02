@@ -72,7 +72,9 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
         revealEls.forEach((el) => io.observe(el));
       }
 
-      // Count-up for [data-count] — used once, on the 86% hero figure.
+      // Count-up for [data-count] on the 86% figures. The real number is in
+      // the HTML, so it stays correct with no JS or if the observer never
+      // fires; the animation only ever starts from 0 once it is on screen.
       const countEls = document.querySelectorAll<HTMLElement>('[data-count]');
       const runCount = (el: HTMLElement) => {
         const target = parseFloat(el.dataset.count || '0');
@@ -80,6 +82,7 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
           el.textContent = String(target);
           return;
         }
+        el.textContent = '0';
         const dur = 1400;
         const start = performance.now();
         const tick = (now: number) => {

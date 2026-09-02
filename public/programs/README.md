@@ -13,6 +13,14 @@ also heads the Teaching panel on the home page).
 | `teaching-exploring-interests.jpg` | Using AI to explore interests — dinosaurs, space, music |
 | `teaching-english-careers.jpg` | The English module: how English opens career doors |
 
+Team and cover photographs:
+
+| Filename | Where it appears |
+| --- | --- |
+| `home-cover.jpg` | Home page hero — five members in the school courtyard |
+| `team-classroom.jpg` | Team page — six members in the classroom |
+| `team-outside-school.jpg` | Team page and the About origin section — outside Ling To |
+
 Notes:
 
 - All six are 1600 px wide, roughly 3:2, and 155–190 KB. They're displayed with
