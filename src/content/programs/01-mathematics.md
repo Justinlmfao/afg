@@ -1,7 +1,6 @@
 ---
 title: "Mathematics & AI"
 icon: "math"
-variant: "cool"
 why: "It puts a private maths tutor in the pocket of a child who could never afford one."
 order: 1
 ---
