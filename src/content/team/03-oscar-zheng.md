@@ -1,5 +1,5 @@
 ---
 name: "Oscar Zheng"
-role: "Partnerships"
-order: 4
+role: "Co-founder, Research"
+order: 3
 ---

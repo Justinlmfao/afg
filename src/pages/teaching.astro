@@ -16,31 +16,37 @@ const rendered = await Promise.all(
 );
 
 // Photos from sessions at Ho Man Tin Ling To Catholic School. Files live in
-// public/programs/ — see public/programs/README.md for which photo goes where.
+// public/programs/. Six photos fill the grid exactly: the first spans two
+// columns and two rows, the rest fill the remaining cells.
 const photos = [
   {
     src: '/programs/teaching-classroom.jpg',
-    alt: 'An AI For Good tutor leads a session at Ho Man Tin Ling To Catholic School while a student raises her hand to answer.',
+    alt: 'A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer.',
     span: true,
   },
   {
-    src: '/programs/teaching-ai-word-problems.jpg',
-    alt: 'A tutor holds a laptop and explains how to use AI to work through a real-life maths word problem.',
+    src: '/programs/teaching-chalkboard-maths.jpg',
+    alt: 'A tutor works through a mental-arithmetic shortcut for 1117 × 1117 on the chalkboard.',
     span: false,
   },
   {
-    src: '/programs/teaching-maths-module.jpg',
-    alt: 'Two tutors run the maths module — a slide on shape, space and measurement on screen.',
+    src: '/programs/teaching-ai-study-partner.jpg',
+    alt: 'A tutor, laptop in hand, shows pupils how to explain a maths idea aloud to an AI to check they have understood it.',
     span: false,
   },
   {
-    src: '/programs/teaching-chalkboard.jpg',
-    alt: 'A tutor works through a mental-arithmetic shortcut on the chalkboard during a maths session.',
+    src: '/programs/teaching-ai-tools.jpg',
+    alt: 'Two tutors introduce what an AI assistant can do: find information, break down hard questions, and help with writing.',
     span: false,
   },
   {
-    src: '/programs/teaching-prompting.jpg',
-    alt: 'A tutor teaches students how to ask an AI good questions, with worked examples on screen.',
+    src: '/programs/teaching-exploring-interests.jpg',
+    alt: 'A tutor shows pupils how to use AI to explore their own interests, from dinosaurs to space to music.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-english-careers.jpg',
+    alt: 'Two tutors run the English module, with a slide on how English opens career doors in healthcare, trade, technology, and tourism.',
     span: false,
   },
 ];

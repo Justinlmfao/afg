@@ -49,9 +49,10 @@ Set `draft: true` on any file to keep it as a hidden template.
 
 ### Photos
 
-The Teaching page's gallery expects five files in `public/programs/` —
-currently **labelled placeholders**. Replace each with the real photo, same
-filename (see `public/programs/README.md` for which is which).
+The six real session photos live in `public/programs/` and fill the Teaching
+page's gallery grid exactly; the first also heads the Teaching panel on the
+home page. See `public/programs/README.md` to swap one, reorder them, or change
+a caption.
 
 ### PDFs
 

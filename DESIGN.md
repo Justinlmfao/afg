@@ -100,9 +100,15 @@ class band since 2024.
 
 How we teach — four modules (ruled list, not cards)
 Partners — "7 schools, including…" (text, no logo wall)
-In the classroom — photos (lightbox)
+In the classroom — 6 real photos (lightbox)
 A moment from the work — anecdote
 ```
+
+Photographs belong to the teaching pillar only: the six real session photos
+carry the gallery, and one of them heads the Teaching panel on the home page.
+Policy stays entirely typographic and ruled. That asymmetry is the point — it
+is how a reader knows which side of the organisation they are on before they
+read a word.
 
 ## 4. Principles specific to this brief
 

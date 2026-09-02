@@ -1,5 +1,5 @@
 ---
 name: "Ka Hei Ng"
-role: "Research"
+role: "Co-founder & Vice President"
 order: 2
 ---
