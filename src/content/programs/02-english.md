@@ -1,7 +1,6 @@
 ---
 title: "English & AI"
 icon: "english"
-variant: "pink"
 why: "Patient feedback and language exposure on demand, for children who have neither at home."
 order: 2
 ---
