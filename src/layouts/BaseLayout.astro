@@ -1,8 +1,7 @@
 ---
-// Base layout shared by every page.
-// Handles <head>, font loading, the skip link, the header/footer shell, and
-// the site-wide animation engine (scroll-reveal, count-up numbers, card tilt,
-// scroll-progress bar, light parallax).
+// Base layout shared by every page: <head>, fonts, skip link, header/footer
+// shell, and the three pieces of behaviour the site actually uses —
+// selective entrances, the one count-up figure, and the photo lightbox.
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -14,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'AI For Good is a student-led think tank in Hong Kong producing policy research, engaging government, and teaching children to use AI to close the educational wealth gap.',
+  description = 'AI For Good is a student-led organisation in Hong Kong: a policy think tank that submits recommendations to lawmakers, and a free tutoring programme for underprivileged primary students.',
 } = Astro.props;
 
 const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
@@ -33,17 +32,16 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
 
-    <!-- Fonts: Newsreader (serif headings) + Inter (sans body) -->
+    <!-- Newsreader (headings) + Inter (body, UI, numbers) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <Header />
     <main id="main">
       <slot />
@@ -51,41 +49,11 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <Footer />
 
     <script>
-      // ---- Animation engine -------------------------------------------------
       const reduceMotion = window.matchMedia(
         '(prefers-reduced-motion: reduce)'
       ).matches;
 
-      // Scroll progress bar
-      const progress = document.getElementById('scroll-progress');
-      const onScroll = () => {
-        const h = document.documentElement;
-        const max = h.scrollHeight - h.clientHeight;
-        const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
-        if (progress) progress.style.width = pct + '%';
-        // Light parallax on flagged elements
-        if (!reduceMotion) {
-          document.querySelectorAll<HTMLElement>('[data-parallax]').forEach((el) => {
-            const speed = parseFloat(el.dataset.parallax || '0.2');
-            el.style.transform = `translateY(${h.scrollTop * speed * -0.1}px)`;
-          });
-        }
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-
-      // While a dark hero is in view, the header goes transparent with light
-      // text; it returns to its glass-light state as soon as you scroll past.
-      const darkHero = document.querySelector('[data-dark-hero]');
-      const headerEl = document.getElementById('site-header');
-      if (darkHero && headerEl) {
-        new IntersectionObserver(
-          ([entry]) => headerEl.classList.toggle('on-dark', entry.isIntersecting),
-          { rootMargin: '-70px 0px 0px 0px' }
-        ).observe(darkHero);
-      }
-
-      // Scroll-reveal via IntersectionObserver
+      // Selective entrances — only elements that opt in with [data-reveal].
       const revealEls = document.querySelectorAll('[data-reveal]');
       if (reduceMotion) {
         revealEls.forEach((el) => el.classList.add('is-visible'));
@@ -99,12 +67,14 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
               }
             });
           },
-          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+          { threshold: 0.15, rootMargin: '0px 0px -6% 0px' }
         );
         revealEls.forEach((el) => io.observe(el));
       }
 
-      // Count-up numbers — animate [data-count] from 0 to its target on view
+      // Count-up for [data-count] on the 86% figures. The real number is in
+      // the HTML, so it stays correct with no JS or if the observer never
+      // fires; the animation only ever starts from 0 once it is on screen.
       const countEls = document.querySelectorAll<HTMLElement>('[data-count]');
       const runCount = (el: HTMLElement) => {
         const target = parseFloat(el.dataset.count || '0');
@@ -112,11 +82,12 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
           el.textContent = String(target);
           return;
         }
-        const dur = 1600;
+        el.textContent = '0';
+        const dur = 1400;
         const start = performance.now();
         const tick = (now: number) => {
           const p = Math.min((now - start) / dur, 1);
-          const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+          const eased = 1 - Math.pow(1 - p, 3);
           el.textContent = String(Math.round(target * eased));
           if (p < 1) requestAnimationFrame(tick);
           else el.textContent = String(target);
@@ -136,40 +107,7 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
       );
       countEls.forEach((el) => countIO.observe(el));
 
-      // 3D tilt on [data-tilt] cards + cursor spotlight (fine pointer + motion ok)
-      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (finePointer && !reduceMotion) {
-        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
-          card.style.perspective = '900px';
-          card.addEventListener('mousemove', (e) => {
-            const r = card.getBoundingClientRect();
-            const px = (e.clientX - r.left) / r.width - 0.5;
-            const py = (e.clientY - r.top) / r.height - 0.5;
-            card.style.transform = `rotateY(${px * 9}deg) rotateX(${py * -9}deg) translateY(-6px) scale(1.03)`;
-            // Feed the spotlight (.spotlight::after) the cursor position.
-            card.style.setProperty('--mx', `${(px + 0.5) * 100}%`);
-            card.style.setProperty('--my', `${(py + 0.5) * 100}%`);
-          });
-          card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-          });
-        });
-
-        // Magnetic buttons — drift slightly toward the cursor.
-        document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
-          btn.addEventListener('mousemove', (e) => {
-            const r = btn.getBoundingClientRect();
-            const dx = e.clientX - (r.left + r.width / 2);
-            const dy = e.clientY - (r.top + r.height / 2);
-            btn.style.transform = `translate(${dx * 0.25}px, ${dy * 0.35}px) scale(1.04)`;
-          });
-          btn.addEventListener('mouseleave', () => {
-            btn.style.transform = '';
-          });
-        });
-      }
-
-      // ---- Lightbox for [data-lightbox] images ------------------------------
+      // Lightbox for [data-lightbox] photos (teaching page).
       const triggers = Array.from(
         document.querySelectorAll<HTMLElement>('[data-lightbox]')
       );
