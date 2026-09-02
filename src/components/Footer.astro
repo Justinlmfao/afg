@@ -1,34 +1,37 @@
 ---
-// Site footer. Deep gradient background to bookend the stats band.
-// Contact email is on file (dudequa3@gmail.com) but left blank for now. Set
-// `email` to that address when ready and the contact line will appear.
+// Site footer — quiet, ruled, document-like.
 const year = new Date().getFullYear();
-const email = '';
+const email = 'ps20153216@student.vsa.edu.hk';
 ---
 
 <footer class="site-footer">
   <div class="container footer-inner">
     <div>
       <p class="footer-brand">
-        <span class="brand-dot" aria-hidden="true"></span> AI For Good
+        <span class="brand-mark" aria-hidden="true">
+          <span class="brand-block brand-policy"></span>
+          <span class="brand-block brand-teaching"></span>
+        </span>
+        AI For Good
       </p>
       <p class="footer-tagline">
-        A student-led think tank in Hong Kong working at the intersection of
-        technology, economics, and policy.
+        A student-led and student-founded organisation in Hong Kong: policy
+        research submitted to lawmakers, and free tutoring for underprivileged
+        primary students.
       </p>
     </div>
 
     <nav class="footer-nav" aria-label="Footer">
       <a href="/about">About</a>
-      <a href="/research">Research</a>
-      <a href="/programs">Programs</a>
+      <a href="/policy">Policy</a>
+      <a href="/teaching">Teaching</a>
       <a href="/team">Team</a>
-      <a href="/get-involved">Get Involved</a>
+      <a href="/get-involved">Contact</a>
     </nav>
 
     <div class="footer-contact">
-      {email && <a href={`mailto:${email}`}>{email}</a>}
-      <p class="footer-meta">Based in Hong Kong · &copy; {year} AI For Good</p>
+      <a href={`mailto:${email}`}>{email}</a>
+      <p class="footer-meta">Hong Kong · Founded June 2023 · &copy; {year} AI For Good</p>
     </div>
   </div>
 </footer>
@@ -36,28 +39,14 @@ const email = '';
 <style>
   .site-footer {
     margin-top: auto;
-    padding-block: 3.5rem;
+    border-top: 1px solid var(--rule);
+    padding-block: 3rem;
     font-size: 0.95rem;
-    background: linear-gradient(135deg, #0f1030, #1e1b4b 55%, #0b3b3a);
-    color: rgba(255, 255, 255, 0.78);
-    position: relative;
-  }
-
-  .site-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--grad-rainbow);
-    background-size: 200% 100%;
-    animation: gradientShift 6s linear infinite;
   }
 
   .footer-inner {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: 1.5fr 0.7fr 1.1fr;
     gap: 2rem;
     align-items: start;
   }
@@ -65,53 +54,65 @@ const email = '';
   .footer-brand {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    color: #fff;
+    gap: 0.6rem;
+    font-family: var(--serif);
+    font-size: 1.15rem;
     margin-bottom: 0.5rem;
   }
 
-  .brand-dot {
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 50%;
-    background: var(--grad-rainbow);
-    background-size: 200% 200%;
-    animation: gradientShift 5s ease infinite;
+  .brand-mark {
+    display: inline-flex;
+    gap: 3px;
+    align-items: flex-end;
+  }
+
+  .brand-block {
+    display: block;
+    border-radius: 2px;
+  }
+
+  .brand-policy {
+    width: 0.55rem;
+    height: 0.85rem;
+    background: var(--policy);
+  }
+
+  .brand-teaching {
+    width: 0.55rem;
+    height: 0.6rem;
+    background: var(--teaching);
   }
 
   .footer-tagline {
-    max-width: 28rem;
+    color: var(--graphite);
+    max-width: 30rem;
   }
 
   .footer-nav {
     display: flex;
     flex-direction: column;
-    gap: 0.55rem;
+    gap: 0.5rem;
   }
 
   .footer-nav a {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--graphite);
     text-decoration: none;
     width: fit-content;
-    transition: color 0.15s ease, transform 0.15s ease;
   }
 
   .footer-nav a:hover {
-    color: #fff;
-    transform: translateX(4px);
+    color: var(--ink);
   }
 
   .footer-contact a {
-    color: #fff;
     font-weight: 600;
+    overflow-wrap: anywhere;
   }
 
   .footer-meta {
+    color: var(--graphite);
     margin-top: 0.75rem;
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
   }
 
   @media (max-width: 46rem) {

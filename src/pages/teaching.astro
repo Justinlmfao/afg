@@ -1,0 +1,362 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { getCollection, render } from 'astro:content';
+
+// The four teaching modules (from src/content/programs/; drafts excluded).
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  modules.map(async (m) => ({
+    data: m.data,
+    Content: (await render(m)).Content,
+  }))
+);
+
+// Photos from sessions at Ho Man Tin Ling To Catholic School. Files live in
+// public/programs/. Six photos fill the grid exactly: the first spans two
+// columns and two rows, the rest fill the remaining cells.
+const photos = [
+  {
+    src: '/programs/teaching-classroom.jpg',
+    alt: 'A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer.',
+    span: true,
+  },
+  {
+    src: '/programs/teaching-chalkboard-maths.jpg',
+    alt: 'A tutor works through a mental-arithmetic shortcut for 1117 × 1117 on the chalkboard.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-ai-study-partner.jpg',
+    alt: 'A tutor, laptop in hand, shows pupils how to explain a maths idea aloud to an AI to check they have understood it.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-ai-tools.jpg',
+    alt: 'Two tutors introduce what an AI assistant can do: find information, break down hard questions, and help with writing.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-exploring-interests.jpg',
+    alt: 'A tutor shows pupils how to use AI to explore their own interests, from dinosaurs to space to music.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-english-careers.jpg',
+    alt: 'Two tutors run the English module, with a slide on how English opens career doors in healthcare, trade, technology, and tourism.',
+    span: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Teaching"
+  description="Free tutoring for underprivileged primary students in Hong Kong — 350 children taught across 7 schools by 43 trained student tutors; 86% of students moved up at least one class band since 2024."
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker kicker-teaching">Teaching</p>
+      <h1>Free tutoring for children the system overlooks</h1>
+      <p class="lead">
+        Trained student tutors teach underprivileged primary students across
+        Hong Kong, pairing school subjects with AI as a free, patient learning
+        tool.
+      </p>
+    </div>
+  </section>
+
+  <!-- The outcome — the one figure this page leads with -->
+  <section class="outcome">
+    <div class="container">
+      <p class="outcome-figure" data-reveal>
+        <span class="outcome-number"><span data-count="86">86</span>%</span>
+        <span class="outcome-rule" aria-hidden="true"></span>
+      </p>
+      <p class="outcome-sentence" data-reveal style="--reveal-delay:0.15s">
+        of our students have moved up at least one class band since 2024.
+      </p>
+      <p class="quiet-facts" data-reveal style="--reveal-delay:0.25s">
+        350 children taught · 7 schools · 43 tutors trained
+      </p>
+    </div>
+  </section>
+
+  <!-- How we teach — four modules as a ruled list, not cards -->
+  <section class="modules">
+    <div class="container">
+      <h2 class="section-title">How we teach — four modules</h2>
+      <p class="modules-note prose">
+        Each module pairs a school subject with AI, designed to close — not
+        widen — the gap between our students and their wealthier peers.
+      </p>
+      <ol class="module-list">
+        {
+          rendered.map((m) => (
+            <li class="module">
+              <div class="module-side">
+                <span class="module-glyph" aria-hidden="true">
+                  <Icon name={m.data.icon} size={22} />
+                </span>
+                <h3>{m.data.title}</h3>
+              </div>
+              <div class="module-main">
+                <div class="module-body">
+                  <m.Content />
+                </div>
+                {m.data.why && (
+                  <p class="module-why">
+                    <span>Why it closes the gap —</span> {m.data.why}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Partners — a text list, not a logo wall -->
+  <section class="partners">
+    <div class="container prose">
+      <h2 class="section-title">Where we teach</h2>
+      <p>
+        We teach across 7 schools, including
+        <strong> Ho Man Tin Ling To Catholic School</strong> and
+        <strong> Kennedy Town School</strong>, and with community partners
+        <strong> St. Barnabas' Home &amp; Society</strong> and
+        <strong> "10% Organisation"</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- In the classroom — photos -->
+  <section class="classroom">
+    <div class="container">
+      <h2 class="section-title">In the classroom</h2>
+      <p class="modules-note prose">
+        Tutors running sessions at Ho Man Tin Ling To Catholic School.
+      </p>
+      <div class="gallery">
+        {
+          photos.map((photo, i) => (
+            <button
+              type="button"
+              class={`shot ${photo.span ? 'shot-wide' : ''}`}
+              data-lightbox
+              data-src={photo.src}
+              data-alt={photo.alt}
+              aria-label={`Expand photo: ${photo.alt}`}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- A moment from the work -->
+  <section class="anecdote">
+    <div class="container prose">
+      <h2 class="section-title">A moment from the work</h2>
+      <blockquote class="anecdote-quote">
+        We arrived at Ling To expecting to have to convince a room of children
+        that AI and current affairs had anything to do with their lives. We
+        were wrong. They weren't uninterested — they had simply never been
+        handed the spark. Within an hour they were arguing about whether an
+        algorithm could be fair. The gap was never curiosity. It was access.
+      </blockquote>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-top {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-title {
+    margin-bottom: 1rem;
+  }
+
+  /* ---- The 86% — this page's one bold element -------------------------- */
+  /* Hero figure per the dataviz spec: the sans face, huge, exactly one. */
+  .outcome {
+    background: var(--teaching-wash);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .outcome-figure {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .outcome-number {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(4.5rem, 12vw, 8.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--teaching-deep);
+  }
+
+  .outcome-rule {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--teaching);
+    max-width: 16rem;
+  }
+
+  .outcome-sentence {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+    max-width: 26ch;
+    margin-top: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .quiet-facts {
+    margin-top: 1.75rem;
+    color: var(--graphite);
+    font-size: 0.98rem;
+  }
+
+  /* ---- Modules as a ruled two-column list ------------------------------- */
+  .modules-note {
+    color: var(--graphite);
+    margin-bottom: 1.75rem;
+  }
+
+  .module-list {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .module {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: 2rem;
+    padding-block: 1.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .module-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+
+  .module-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    background: var(--teaching);
+    color: #fff;
+  }
+
+  .module-side h3 {
+    font-size: 1.3rem;
+  }
+
+  .module-main {
+    max-width: var(--measure);
+  }
+
+  .module-body {
+    color: var(--ink);
+  }
+
+  .module-why {
+    margin-top: 0.9rem;
+    color: var(--graphite);
+    font-size: 0.97rem;
+  }
+
+  .module-why span {
+    color: var(--teaching-deep);
+    font-weight: 650;
+  }
+
+  /* ---- Gallery ----------------------------------------------------------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 13rem;
+    gap: 0.9rem;
+  }
+
+  .shot {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--rule);
+    font: inherit;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .shot-wide {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .shot:hover img,
+  .shot:focus-visible img {
+    transform: scale(1.05);
+  }
+
+  /* ---- Anecdote ----------------------------------------------------------- */
+  .anecdote-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    line-height: 1.45;
+    border-left: 4px solid var(--teaching);
+    padding-left: 1.5rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 52rem) {
+    .module {
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 10.5rem;
+    }
+    .shot-wide {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+    .shot-wide {
+      grid-column: span 1;
+    }
+  }
+</style>

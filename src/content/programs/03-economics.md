@@ -1,7 +1,6 @@
 ---
 title: "Economics & AI"
 icon: "economics"
-variant: "teal"
 why: "Economic literacy is itself a form of capital, and we hand it to children who would otherwise inherit it from no one."
 order: 3
 ---
