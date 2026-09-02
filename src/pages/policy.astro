@@ -93,24 +93,34 @@ const submissions = (await getCollection('submissions'))
 
       <ol class="timeline">
         <li>
-          <span class="t-date">2024</span>
+          <span class="t-phase">What we noticed<span class="t-date">2024</span></span>
           <span class="t-body">
             Teaching in schools with no AI curriculum and no budget to build
-            one, we started recording the same gap in every classroom.
+            one, we kept recording the same thing in every classroom. The
+            children were quick; what they didn't have was access. The families
+            most likely to be left behind by AI were the ones least likely to
+            be reached by any programme that ran through schools and employers.
           </span>
         </li>
         <li>
-          <span class="t-date">August 2025</span>
+          <span class="t-phase">What we did<span class="t-date">Aug 2025</span></span>
           <span class="t-body">
-            We filed the argument to the Policy Address consultation, and
-            repeated it in our Budget feedback.
+            We turned what we had seen into a written argument: interviews with
+            the members who teach, research on what public provision already
+            existed and who it missed, then a proposal stating the case for, the
+            case against, and the recommendation. We filed it to the Policy
+            Address consultation in August 2025 and made the same case again in
+            our Budget feedback.
           </span>
         </li>
         <li>
-          <span class="t-date">February 2026</span>
+          <span class="t-phase">What changed<span class="t-date">Feb 2026</span></span>
           <span class="t-body">
             The 2026–27 Budget allocated HK$50 million to AI for All, and the
-            programme has since been expanded.
+            programme has since been expanded. The argument we had been making
+            was echoed in how it was built: Cyberport's share is aimed at
+            students, parents, the elderly and underprivileged communities —
+            the people we had said a general AI-skills push would reach last.
           </span>
         </li>
       </ol>
@@ -163,10 +173,52 @@ const submissions = (await getCollection('submissions'))
   <section class="method">
     <div class="container">
       <h2 class="section-title">How a proposal is made</h2>
-      <ol class="steps">
-        <li><span class="step-num">1</span> Member interviews</li>
-        <li><span class="step-num">2</span> Research</li>
-        <li><span class="step-num">3</span> Proposal drafting</li>
+      <!-- Justin: adjust the detail under each step to match how the team
+           actually works — this is the section a sceptical reader uses to
+           decide whether the work is systematic or ad hoc. -->
+      <ol class="steps-detail">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>Member interviews</h3>
+            <p>
+              Topics come from what members have seen, not from whatever is in
+              the news. We interview the people who teach: what they ran into in
+              a classroom, which children it affected, and whether it happened
+              once or every week. A problem that only one person has noticed
+              goes back for more evidence before it becomes a proposal.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>Research</h3>
+            <p>
+              We then test whether it is a policy problem at all. What does the
+              government already fund in this area, who does that provision
+              reach, and who does it miss? What have comparable jurisdictions
+              tried, and what did it cost? If existing policy already covers the
+              problem, we say so and stop — the point of this step is to kill
+              proposals, not to justify them.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>Drafting and filing</h3>
+            <p>
+              A member drafts the proposal in the three-part shape below, and
+              the case against is written to be as strong as we can honestly
+              make it. If it wins, the proposal does not go out. What survives
+              is filed to whichever consultation is open — the Policy Address
+              consultation, Budget proposal feedback, or a bureau's own call for
+              views — with the recommendation stated plainly enough to be
+              actioned.
+            </p>
+          </div>
+        </li>
       </ol>
 
       <p class="method-note prose">
@@ -311,10 +363,18 @@ const submissions = (await getCollection('submissions'))
     border-bottom: 1px solid var(--rule);
   }
 
-  .t-date {
+  .t-phase {
     font-weight: 650;
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     color: var(--policy);
+  }
+
+  .t-date {
+    display: block;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--graphite);
+    margin-top: 0.1rem;
   }
 
   .t-body {
@@ -363,6 +423,32 @@ const submissions = (await getCollection('submissions'))
     color: var(--policy);
     font-size: 0.85rem;
     font-weight: 650;
+  }
+
+  /* Expanded process — one ruled row per step */
+  .steps-detail {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2.25rem;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .steps-detail li {
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 1.1rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .steps-detail h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .steps-detail p {
+    color: var(--graphite);
   }
 
   .method-note {

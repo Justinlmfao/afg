@@ -21,6 +21,16 @@ Team and cover photographs:
 | `team-classroom.jpg` | Team page — six members in the classroom |
 | `team-outside-school.jpg` | Team page and the About origin section — outside Ling To |
 
+Sessions at Victoria Shanghai Academy (Teaching page, six per year):
+
+| Prefix | Year |
+| --- | --- |
+| `vsa-2024-25-*.jpg` | 2024–25 — AI in local communities |
+| `vsa-2025-26-*.jpg` | 2025–26 — AI ethics and using AI on community problems |
+
+Six per year fills the 3-column grid evenly; to add or remove a year, edit the
+`cohorts` array at the top of `src/pages/teaching.astro`.
+
 Notes:
 
 - All six are 1600 px wide, roughly 3:2, and 155–190 KB. They're displayed with
