@@ -1,148 +1,155 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import StatsBand from '../components/StatsBand.astro';
-import Card from '../components/Card.astro';
-import Icon from '../components/Icon.astro';
-import ParticleField from '../components/ParticleField.astro';
+import { getCollection } from 'astro:content';
 
-// Hero headline, split into word tokens for a cinematic staggered reveal.
-// Each token keeps its trailing space; `grad` marks the gradient word.
-const headline = [
-  'Technology ', 'and ', 'policy ', 'should ', 'serve ',
-  { t: 'everyone. ', grad: true },
-  'We ', 'do ', 'the ', 'work ', 'to ', 'make ', 'sure ', 'they ', 'do.',
-];
+// Latest work, pulled from the collections so the page stays current as
+// entries are added — no layout edits needed. Submissions only appear once a
+// real, filed one is published (drafts never render), so until then this
+// section shows the teaching modules alone rather than placeholder cards.
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
 
-// Policy areas scrolled in the marquee band (decorative breadth cue).
-const topics = [
-  'Taxation', 'AI governance', 'Education', 'Labour', 'Public health',
-  'Human capital', 'Innovation', 'Algorithmic accountability',
-  'The Greater Bay Area', 'The future of work',
-];
-
-// Featured work shown on the home page (links into /research).
-const featured = [
-  {
-    title: "Submission to Hong Kong's First Five-Year Plan (2026–2030)",
-    tag: 'In progress',
-  },
-  {
-    title: 'Tax Relief and Household Resilience — Submission to the 2025–26 Budget',
-    tag: 'Submission',
-  },
-  {
-    title: 'The Spark Gap: AI Literacy and Educational Inequality in Hong Kong',
-    tag: 'Report',
-  },
-];
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- Hero: a dark cinematic opening — aurora light, glowing particle
-       network, and a word-by-word headline reveal -->
-  <section class="hero" data-dark-hero>
-    <ParticleField color="139,148,255" />
-    <div class="blob blob-1" style="background:#6366f1" data-parallax="0.5"></div>
-    <div class="blob blob-2" style="background:#db2777" data-parallax="0.9"></div>
-    <div class="blob blob-3" style="background:#14b8a6" data-parallax="0.3"></div>
+  <!-- 1. Hero — both halves in the first sentence -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>
+          A student-led think tank in Hong Kong writing AI policy for the
+          government, and teaching the children that policy affects.
+        </h1>
+      </div>
+      <img
+        class="hero-photo"
+        src="/programs/home-cover.jpg"
+        alt="Five AI For Good members in the courtyard of Ho Man Tin Ling To Catholic School."
+        decoding="async"
+      />
+    </div>
+  </section>
 
-    <div class="container hero-inner">
-      <p class="eyebrow" data-reveal>Student-led · Hong Kong · since 2023</p>
-      <h1 class="reveal-words">
-        {
-          headline.map((word, i) => {
-            const text = typeof word === 'string' ? word : word.t;
-            const grad = typeof word !== 'string' && word.grad;
-            return (
-              <span class="word">
-                <span
-                  class={grad ? 'word-inner gradient-text-bright hero-accent' : 'word-inner'}
-                  style={`--wd:${(0.2 + i * 0.05).toFixed(2)}s`}
-                >
-                  {text}
-                </span>
-              </span>
-            );
-          })
-        }
-      </h1>
-      <p class="lead hero-subhead" data-reveal style="--reveal-delay:0.85s">
-        AI For Good is a student-led think tank in Hong Kong. We produce policy
-        research, submit evidence-based recommendations to government, and teach
-        children to use AI as a tool to close the gap that wealth would
-        otherwise decide.
+  <!-- 2. The two doors — the routing decision this page exists to serve -->
+  <section class="doors-section">
+    <div class="container doors">
+      <a href="/policy" class="door door-policy">
+        <p class="door-name">Policy</p>
+        <p class="door-line">
+          Written recommendations to the Hong Kong government, filed to Policy
+          Address and Budget consultations since 2024.
+        </p>
+        <p class="door-number">~20 <span>recommendations a year</span></p>
+        <span class="door-cta">Read the policy work <span class="arrow">→</span></span>
+      </a>
+
+      <a href="/teaching" class="door door-teaching">
+        <p class="door-name">Teaching</p>
+        <p class="door-line">
+          Free tutoring for underprivileged primary students, delivered by
+          trained student tutors across seven schools.
+        </p>
+        <p class="door-number">350 <span>children taught</span></p>
+        <span class="door-cta">See the teaching <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 3. Proof — two outcomes, not six stats -->
+  <section class="proof">
+    <div class="container proof-grid">
+      <div class="proof-item">
+        <p class="proof-figure proof-policy">HK$50M</p>
+        <p class="proof-label">
+          allocated to AI for All in the 2026–27 Budget — the inclusive AI
+          programme we argued for
+        </p>
+      </div>
+      <div class="proof-item">
+        <p class="proof-figure proof-teaching">
+          <span data-count="86">86</span>%
+        </p>
+        <p class="proof-label">
+          of our students have moved up at least one class band since 2024
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. The short version -->
+  <section class="section-tight">
+    <div class="container prose">
+      <p>
+        AI For Good is student-led and student-founded, started in Hong Kong in
+        June 2023 and run entirely by students — 35+ of them. We began outside
+        school as an independent think tank, and have since expanded into
+        partnerships with schools across the city. We do two things at once:
+        file evidence-based recommendations to government, and teach the
+        children those decisions will reach first.{' '}
+        <a class="link-quiet" href="/about">Read about us →</a>
       </p>
-      <div class="hero-actions" data-reveal style="--reveal-delay:1s">
-        <a class="btn btn-primary" href="/research" data-magnetic>
-          Read our research <span class="arrow">→</span>
-        </a>
-        <a class="btn btn-secondary btn-ghost" href="/get-involved" data-magnetic>
-          Get involved <span class="arrow">→</span>
-        </a>
-      </div>
-    </div>
-
-    <div class="scroll-cue" aria-hidden="true">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M6 9l6 6 6-6" />
-      </svg>
     </div>
   </section>
 
-  <!-- Stats band (animated count-up) -->
-  <StatsBand />
-
-  <!-- What we do -->
-  <section class="tint-cool">
+  <!-- 5. Current work -->
+  <section class="section-tight current">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <span class="section-idx" aria-hidden="true">01</span>
-        <p class="eyebrow">What we do</p>
-      </div>
-      <div class="cards-grid">
-        <Card title="Research & Policy" icon="research" variant="cool">
-          We research how AI and economic policy shape society, and submit
-          roughly twenty evidence-based recommendations a year to government —
-          from the annual Budget to Hong Kong's First Five-Year Plan.
-        </Card>
-        <Card title="Education & Outreach" icon="education" variant="warm">
-          We teach AI and economic literacy to underprivileged students across
-          Hong Kong — 350 children and counting — by showing them how to use AI
-          as a free, patient tutor, the kind their wealthier peers pay for.
-        </Card>
-        <Card title="Public Engagement" icon="engagement" variant="teal">
-          We bring students, educators, and policymakers into the same room, on
-          the conviction that the people who will live longest with these
-          decisions should help shape them.
-        </Card>
-      </div>
+      <h2 class="h-sm">Current work</h2>
+      <ul class="current-list">
+        <li>
+          <span class="current-tag current-policy">Policy</span>
+          <!-- The 2026-30 consultation window closed on 14 August 2026, so
+               this no longer claims it is open. Justin: if the submission has
+               been filed, say so here — "Filed to the First Five-Year Plan…"
+               is stronger than "working on". -->
+          <span class="current-body">
+            Our submission to the First Five-Year Plan for Economic and Social
+            Development (2026–2030), arguing that AI funding should follow
+            demand rather than existing provision.
+          </span>
+        </li>
+        <li>
+          <span class="current-tag current-teaching">Teaching</span>
+          <span class="current-body">
+            Returning to Ho Man Tin Ling To Catholic School next year, with a
+            new cohort of tutors.
+          </span>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <!-- Topic marquee — the breadth of policy areas, quietly in motion -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {[...topics, ...topics].map((t) => <span class="marquee-item">{t}</span>)}
-    </div>
-  </div>
-
-  <!-- Featured work -->
-  <section>
+  <!-- 6. Latest work, straight from the collections -->
+  <section class="section-tight latest">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <span class="section-idx" aria-hidden="true">02</span>
-        <p class="eyebrow">Featured work</p>
-      </div>
-      <ul class="featured-list">
+      <h2 class="h-sm">
+        {submissions.length > 0 ? 'Latest submissions and programmes' : 'What we teach'}
+      </h2>
+      <ul class="latest-list">
         {
-          featured.map((item, i) => (
-            <li class="featured-item magnify" data-reveal style={`--reveal-delay:${i * 0.08}s`}>
-              <a href="/research">
-                <span class="featured-tag">{item.tag}</span>
-                <span class="featured-title">{item.title}</span>
-                <span class="featured-arrow" aria-hidden="true">
-                  <Icon name="arrow" size={22} />
-                </span>
+          submissions.map((s) => (
+            <li>
+              <a href="/policy">
+                <span class="latest-kind latest-policy">Submission</span>
+                <span class="latest-title">{s.data.title}</span>
+                <span class="latest-meta">{s.data.date}</span>
+              </a>
+            </li>
+          ))
+        }
+        {
+          modules.map((m) => (
+            <li>
+              <a href="/teaching">
+                <span class="latest-kind latest-teaching">Module</span>
+                <span class="latest-title">{m.data.title}</span>
+                <span class="latest-meta">Teaching</span>
               </a>
             </li>
           ))
@@ -151,19 +158,37 @@ const featured = [
     </div>
   </section>
 
-  <!-- Closing: a dark, cinematic sign-off that mirrors the opening -->
-  <section class="closing">
-    <div class="container closing-inner">
-      <p class="closing-line" data-reveal>
-        We're students. We think that's{' '}
-        <span class="gradient-text-bright closing-accent">the point</span>.
+  <!-- 7. Partners, as text -->
+  <section class="section-tight partners">
+    <div class="container prose">
+      <h2 class="h-sm">Partners</h2>
+      <p>
+        Ho Man Tin Ling To Catholic School · St. Barnabas' Home &amp; Society ·
+        Kennedy Town School · 10% Organisation
       </p>
-      <p class="closing-sub" data-reveal style="--reveal-delay:0.12s">
-        The people who will inherit these decisions should have a hand in
-        shaping them.
-      </p>
-      <div class="closing-actions" data-reveal style="--reveal-delay:0.24s">
-        <a class="btn btn-primary" href="/get-involved" data-magnetic>
+    </div>
+  </section>
+
+  <!-- 8. Two calls to action -->
+  <section class="ctas">
+    <div class="container cta-grid">
+      <div class="cta">
+        <h2 class="h-sm">Schools and organisations</h2>
+        <p>
+          If you work with underprivileged students and want tutors, we bring
+          the curriculum, the tutors, and the equipment.
+        </p>
+        <a class="btn btn-teaching" href="/get-involved">
+          Work with us <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="cta">
+        <h2 class="h-sm">Students</h2>
+        <p>
+          We have opened recruitment at Victoria Shanghai Academy for students
+          interested in policy, economics, and AI.
+        </p>
+        <a class="btn btn-policy" href="/get-involved">
           Join us <span class="arrow">→</span>
         </a>
       </div>
@@ -172,217 +197,282 @@ const featured = [
 </BaseLayout>
 
 <style>
-  .hero {
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    padding-block: clamp(5rem, 13vw, 10rem);
-    /* Aurora light over deep indigo — ends on the stats band's colour so the
-       two sections read as one continuous cinematic opening. */
-    background:
-      radial-gradient(60rem 38rem at 85% -12%, rgba(99, 102, 241, 0.4), transparent 62%),
-      radial-gradient(48rem 32rem at -10% 112%, rgba(219, 39, 119, 0.22), transparent 60%),
-      radial-gradient(40rem 28rem at 68% 88%, rgba(20, 184, 166, 0.22), transparent 55%),
-      linear-gradient(180deg, #0a0a20, #14143c 62%, #0f1030);
+  .h-sm {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
   }
 
-  .hero-inner {
-    position: relative;
-    z-index: 1;
+  /* 1. Hero */
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2.5rem;
+    align-items: center;
   }
 
   .hero h1 {
-    max-width: 20ch;
-    color: #fff;
-    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
-    text-shadow: 0 2px 40px rgba(10, 10, 32, 0.6);
+    font-size: clamp(1.9rem, 3.9vw, 3rem);
+    font-weight: 400;
+    line-height: 1.18;
   }
 
-  /* The gradient word gets an italic, editorial flourish */
-  .hero :global(.hero-accent) {
-    font-style: italic;
-    padding-right: 0.06em;
+  .hero-photo {
+    width: 100%;
+    /* `height: auto` matters: an HTML height attribute would otherwise beat
+       aspect-ratio and stretch the photo. */
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
   }
 
-  .hero-subhead {
-    max-width: 50ch;
-    margin-top: 1.5rem;
-    color: rgba(255, 255, 255, 0.78);
+  /* 2. The two doors */
+  .doors-section {
+    padding-top: 0;
   }
 
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.9rem;
-    margin-top: 2.5rem;
-  }
-
-  /* Ghost secondary button for the dark hero */
-  .btn-ghost {
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.45);
-    background: rgba(255, 255, 255, 0.07);
-  }
-
-  .btn-ghost:hover {
-    background: #fff;
-    color: #1e1b4b;
-    border-color: #fff;
-  }
-
-  /* Floating aurora blobs (screen-blended so they glow on the dark base) */
-  .hero .blob {
-    mix-blend-mode: screen;
-    opacity: 0.55;
-  }
-  .blob-1 {
-    width: 26rem;
-    height: 26rem;
-    top: -8rem;
-    right: -6rem;
-    animation: floatY 9s ease-in-out infinite;
-  }
-  .blob-2 {
-    width: 20rem;
-    height: 20rem;
-    bottom: -8rem;
-    left: -5rem;
-    animation: floatX 11s ease-in-out infinite;
-  }
-  .blob-3 {
-    width: 14rem;
-    height: 14rem;
-    top: 30%;
-    right: 22%;
-    opacity: 0.35;
-    animation: floatY 7s ease-in-out infinite;
-  }
-
-  /* Bouncing scroll cue at the base of the hero */
-  .scroll-cue {
-    position: absolute;
-    bottom: 1.4rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.55);
-    animation: cueBob 2.2s ease-in-out infinite;
-    z-index: 1;
-  }
-
-  @keyframes cueBob {
-    0%,
-    100% {
-      transform: translateX(-50%) translateY(0);
-      opacity: 0.55;
-    }
-    50% {
-      transform: translateX(-50%) translateY(8px);
-      opacity: 1;
-    }
-  }
-
-  .cards-grid {
+  .doors {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
   }
 
-  /* Featured work list */
-  .featured-list {
+  .door {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.9rem 2rem 1.7rem;
+    border: 1px solid var(--rule);
+    border-top-width: 4px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .door:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(28, 27, 24, 0.1);
+    color: var(--ink);
+  }
+
+  .door-name {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+  }
+
+  .door-line {
+    color: var(--graphite);
+  }
+
+  .door-number {
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: -0.02em;
+    margin-top: 0.2rem;
+  }
+
+  .door-number span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--graphite);
+    letter-spacing: 0;
+  }
+
+  .door-cta {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    font-weight: 650;
+  }
+
+  .door-cta .arrow {
+    transition: transform 0.15s ease;
+    display: inline-block;
+  }
+
+  .door:hover .door-cta .arrow {
+    transform: translateX(4px);
+  }
+
+  .door-policy {
+    background: var(--policy-wash);
+    border-top-color: var(--policy);
+  }
+  .door-policy .door-number,
+  .door-policy .door-cta {
+    color: var(--policy);
+  }
+
+  .door-teaching {
+    background: var(--teaching-wash);
+    border-top-color: var(--teaching);
+  }
+  .door-teaching .door-number,
+  .door-teaching .door-cta {
+    color: var(--teaching-deep);
+  }
+
+  /* 3. Proof */
+  .proof {
+    border-block: 1px solid var(--rule);
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 50rem;
+  }
+
+  .proof-figure {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 6.5vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .proof-policy {
+    color: var(--policy);
+  }
+
+  .proof-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .proof-label {
+    color: var(--graphite);
+    max-width: 26ch;
+  }
+
+  /* 5. Current work */
+  .current-list {
+    list-style: none;
+    padding: 0;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .current-list li {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .current-tag {
+    font-size: 0.85rem;
+    font-weight: 650;
+  }
+
+  .current-policy {
+    color: var(--policy);
+  }
+
+  .current-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .current-body {
+    color: var(--graphite);
+  }
+
+  /* 6. Latest */
+  .latest-list {
     list-style: none;
     padding: 0;
     display: grid;
+    gap: 0.6rem;
+    max-width: var(--measure);
+  }
+
+  .latest-list a {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr auto;
     gap: 1rem;
-  }
-
-  .featured-item a {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.4rem 1.75rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    align-items: baseline;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--rule);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-sm);
+    background: var(--surface);
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--ink);
+    transition: border-color 0.15s ease;
   }
 
-  .featured-tag {
-    flex-shrink: 0;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: #fff;
-    background: var(--grad-cool);
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
+  .latest-list a:hover {
+    border-color: var(--graphite);
+    color: var(--ink);
   }
 
-  .featured-title {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    flex: 1;
+  .latest-kind {
+    font-size: 0.78rem;
+    font-weight: 650;
   }
 
-  .featured-arrow {
-    color: var(--color-accent);
-    transition: transform 0.2s ease;
+  .latest-policy {
+    color: var(--policy);
   }
 
-  .featured-item:hover .featured-arrow {
-    transform: translateX(6px);
+  .latest-teaching {
+    color: var(--teaching-deep);
   }
 
-  /* Dark cinematic closing that mirrors the hero */
-  .closing {
-    text-align: center;
-    color: #fff;
-    background:
-      radial-gradient(50rem 30rem at 50% 120%, rgba(99, 102, 241, 0.35), transparent 60%),
-      linear-gradient(180deg, #0b0b24, #14143c);
-    overflow: hidden;
+  .latest-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
   }
 
-  .closing-inner {
-    position: relative;
-    z-index: 1;
+  .latest-meta {
+    color: var(--graphite);
+    font-size: 0.88rem;
   }
 
-  .closing-line {
-    font-family: var(--font-serif);
-    font-size: clamp(1.9rem, 4.5vw, 3.2rem);
-    line-height: 1.25;
-    max-width: 22ch;
-    margin-inline: auto;
+  /* 7 & 8 */
+  .partners p {
+    color: var(--graphite);
   }
 
-  .closing :global(.closing-accent) {
-    font-style: italic;
-    padding-right: 0.06em;
+  .ctas {
+    border-top: 1px solid var(--rule);
   }
 
-  .closing-sub {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-    max-width: 44ch;
-    margin: 1.25rem auto 0;
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
   }
 
-  .closing-actions {
-    margin-top: 2.25rem;
-    display: flex;
-    justify-content: center;
+  .cta p {
+    color: var(--graphite);
+    margin-bottom: 1.1rem;
+    max-width: 34ch;
   }
 
   @media (max-width: 52rem) {
-    .cards-grid {
+    .hero-grid,
+    .doors,
+    .proof-grid,
+    .cta-grid {
       grid-template-columns: 1fr;
+      gap: 1.75rem;
     }
-    .featured-item a {
-      flex-wrap: wrap;
-      gap: 0.75rem;
+
+    .latest-list a {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+
+    .current-list li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
     }
   }
 </style>
