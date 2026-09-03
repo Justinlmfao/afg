@@ -1,5 +1,7 @@
 ---
 // Site footer — quiet, ruled, document-like.
+import Logo from './Logo.astro';
+
 const year = new Date().getFullYear();
 const email = 'ps20153216@student.vsa.edu.hk';
 ---
@@ -8,10 +10,7 @@ const email = 'ps20153216@student.vsa.edu.hk';
   <div class="container footer-inner">
     <div>
       <p class="footer-brand">
-        <span class="brand-mark" aria-hidden="true">
-          <span class="brand-block brand-policy"></span>
-          <span class="brand-block brand-teaching"></span>
-        </span>
+        <Logo size={20} />
         AI For Good
       </p>
       <p class="footer-tagline">
@@ -58,29 +57,6 @@ const email = 'ps20153216@student.vsa.edu.hk';
     font-family: var(--serif);
     font-size: 1.15rem;
     margin-bottom: 0.5rem;
-  }
-
-  .brand-mark {
-    display: inline-flex;
-    gap: 3px;
-    align-items: flex-end;
-  }
-
-  .brand-block {
-    display: block;
-    border-radius: 2px;
-  }
-
-  .brand-policy {
-    width: 0.55rem;
-    height: 0.85rem;
-    background: var(--policy);
-  }
-
-  .brand-teaching {
-    width: 0.55rem;
-    height: 0.6rem;
-    background: var(--teaching);
   }
 
   .footer-tagline {

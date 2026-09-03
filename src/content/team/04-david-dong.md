@@ -1,5 +1,5 @@
 ---
 name: "David Dong"
-role: "Research advisor"
+role: "Quantitative STEM Specialist Researcher"
 order: 4
 ---

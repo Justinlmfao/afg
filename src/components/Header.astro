@@ -1,7 +1,9 @@
 ---
-// Site header. The brand mark is two offset blocks — policy blue and
-// teaching vermilion — the organisation's two pillars in four pixels of
-// geometry. Mobile menu is progressively enhanced.
+// Site header. The brand mark (see Logo.astro) is three rules descending in
+// length — the shape of every proposal we file. Mobile menu is progressively
+// enhanced.
+import Logo from './Logo.astro';
+
 const links = [
   { href: '/about', label: 'About' },
   { href: '/policy', label: 'Policy' },
@@ -16,10 +18,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href="/" class="brand" aria-label="AI For Good — home">
-      <span class="brand-mark" aria-hidden="true">
-        <span class="brand-block brand-policy"></span>
-        <span class="brand-block brand-teaching"></span>
-      </span>
+      <Logo size={22} />
       AI For Good
     </a>
 
@@ -81,38 +80,6 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     color: var(--ink);
     text-decoration: none;
     letter-spacing: -0.01em;
-  }
-
-  .brand-mark {
-    display: inline-flex;
-    gap: 3px;
-    align-items: flex-end;
-  }
-
-  .brand-block {
-    display: block;
-    border-radius: 2px;
-    transition: transform 0.2s ease;
-  }
-
-  .brand-policy {
-    width: 0.62rem;
-    height: 0.95rem;
-    background: var(--policy);
-  }
-
-  .brand-teaching {
-    width: 0.62rem;
-    height: 0.68rem;
-    background: var(--teaching);
-  }
-
-  .brand:hover .brand-policy {
-    transform: translateY(-2px);
-  }
-
-  .brand:hover .brand-teaching {
-    transform: translateY(-1px);
   }
 
   .primary-nav ul {

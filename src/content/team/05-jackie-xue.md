@@ -1,5 +1,5 @@
 ---
 name: "Jackie Xue"
-role: "Research"
+role: "Social Sciences Researcher"
 order: 5
 ---
