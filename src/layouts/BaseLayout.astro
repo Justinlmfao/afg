@@ -5,11 +5,19 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
-import { getLangFromUrl, localizePath, ui } from '../i18n';
+import {
+  getLangFromUrl,
+  localizePath,
+  ui,
+  langOrder,
+  htmlLangs,
+  hreflangs,
+} from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = ui[lang];
-const htmlLang = lang === 'zh' ? 'zh-Hant-HK' : 'en';
+const htmlLang = htmlLangs[lang];
+const ogLocale = { en: 'en', zh: 'zh_HK', hans: 'zh_CN' }[lang];
 
 interface Props {
   title: string;
@@ -39,11 +47,18 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content={lang === 'zh' ? 'zh_HK' : 'en'} />
+    <meta property="og:locale" content={ogLocale} />
 
-    <!-- Each page exists in both languages; tell search engines which is which -->
-    <link rel="alternate" hreflang="en" href={new URL(localizePath(Astro.url.pathname, 'en'), Astro.site ?? Astro.url)} />
-    <link rel="alternate" hreflang="zh-Hant" href={new URL(localizePath(Astro.url.pathname, 'zh'), Astro.site ?? Astro.url)} />
+    <!-- Each page exists in all three languages; tell search engines which is which -->
+    {
+      langOrder.map((code) => (
+        <link
+          rel="alternate"
+          hreflang={hreflangs[code]}
+          href={new URL(localizePath(Astro.url.pathname, code), Astro.site ?? Astro.url)}
+        />
+      ))
+    }
     <link rel="alternate" hreflang="x-default" href={new URL(localizePath(Astro.url.pathname, 'en'), Astro.site ?? Astro.url)} />
 
     <!-- Newsreader (headings) + Inter (body, UI, numbers) -->

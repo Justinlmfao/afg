@@ -1,0 +1,204 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// Simplified Chinese home page. Shares the English page's stylesheet
+// (src/styles/pages/home.css) via pageClass, so layout changes stay in one
+// place; only the prose differs.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/home.css';
+import { getCollection } from 'astro:content';
+
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="AI For Good"
+  pageClass="page-home"
+  description="AI For Good 是香港一个由学生创办及运营的组织：向政府提交政策建议，并为基层小学生提供免费补习。"
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow-mono">
+        <span class="eyebrow-rule" aria-hidden="true"></span>学生主导的政策研究
+      </p>
+
+      <h1>为我们终将继承的科技，制订政策。</h1>
+
+      <p class="hero-sub">
+        我们研究人工智能与经济政策如何形塑香港，每年就政府咨询提交约二十项建议；同时免费教授基层小学生人工智能与经济素养——这些决策最先影响的，正是他们。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-policy" href="/zh-hans/policy">
+          阅读政策研究 <span class="arrow">→</span>
+        </a><a class="hero-secondary" href="/zh-hans/teaching">
+          我们的教学计划 <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <dl class="stat-strip">
+        <div>
+          <dt>~20</dt>
+          <dd>每年向政府提交的建议</dd>
+        </div>
+        <div>
+          <dt>350</dt>
+          <dd>已教授的儿童人数</dd>
+        </div>
+        <div>
+          <dt>7</dt>
+          <dd>伙伴学校</dd>
+        </div>
+        <div>
+          <dt>43</dt>
+          <dd>已受训的学生导师</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <figure class="hero-photo-band">
+    <img
+      src="/programs/teaching-classroom.jpg"
+      alt="导师在天主教领岛学校授课，一名学生举手回答。"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>天主教领岛学校（何文田）——补习计划的一节课。</figcaption>
+  </figure>
+
+  <section class="doors-section">
+    <div class="container doors">
+      <a href="/zh-hans/policy" class="door door-policy">
+        <p class="door-name">政策研究</p>
+        <p class="door-line">
+          向香港政府提交书面建议；自 2024 年起，每年参与施政报告及财政预算案咨询。
+        </p>
+        <p class="door-number">~20 <span>每年提交的建议</span></p>
+        <span class="door-cta">阅读政策研究 <span class="arrow">→</span></span>
+      </a>
+
+      <a href="/zh-hans/teaching" class="door door-teaching">
+        <p class="door-name">教学计划</p>
+        <p class="door-line">
+          由受训的学生导师，为七所学校的基层小学生提供免费补习。
+        </p>
+        <p class="door-number">350 <span>已教授的儿童</span></p>
+        <span class="door-cta">查看教学计划 <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="container proof-grid">
+      <div class="proof-item">
+        <p class="proof-figure proof-policy">HK$50M</p>
+        <p class="proof-label">
+          2026–27 年度财政预算案拨予 AI for All 的款项——我们一直倡议的普及人工智能计划
+        </p>
+      </div>
+      <div class="proof-item">
+        <p class="proof-figure proof-teaching">
+          <span data-count="86">86</span>%
+        </p>
+        <p class="proof-label">
+          自 2024 年起，我们的学生中至少上升一个组别的比例
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container prose">
+      <p>
+        AI For Good 由香港学生创办，并全数由学生运营，现时成员超过 35 人。我们于 2023 年 6 月在校外独立成立，是一个智库而非任何学校的学会，其后才逐步与全港学校建立伙伴关系。我们同时做两件事：向政府提交以证据为本的建议，并教导最先受这些决策影响的儿童。<a class="link-quiet" href="/zh-hans/about">关于我们 →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section-tight current">
+    <div class="container">
+      <h2 class="h-sm">正在进行的工作</h2>
+      <ul class="current-list">
+        <li>
+          <span class="current-tag current-policy">政策</span><span class="current-body">
+            就《香港特别行政区经济和社会发展第一个五年规划（2026–2030）》提交意见，主张人工智能的资源应按需求分配，而非沿用既有的供给。
+          </span>
+        </li>
+        <li>
+          <span class="current-tag current-teaching">教学</span><span class="current-body">
+            明年将重返天主教领岛学校，由新一批学生导师接手。
+          </span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-tight latest">
+    <div class="container">
+      <h2 class="h-sm">
+        {submissions.length > 0 ? '最新意见书与教学单元' : '我们教什么'}
+      </h2>
+      <ul class="latest-list">
+        {
+          submissions.map((s) => (
+            <li>
+              <a href="/zh-hans/policy">
+                <span class="latest-kind latest-policy">意见书</span><span class="latest-title">{s.data.title_hans ?? s.data.title}</span><span class="latest-meta">{s.data.date}</span>
+              </a>
+            </li>
+          ))
+        }{
+          modules.map((m) => (
+            <li>
+              <a href="/zh-hans/teaching">
+                <span class="latest-kind latest-teaching">单元</span><span class="latest-title">{m.data.title_hans ?? m.data.title}</span><span class="latest-meta">教学</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-tight partners">
+    <div class="container prose">
+      <h2 class="h-sm">合作伙伴</h2>
+      <p>
+        天主教领岛学校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
+        10% Organisation
+      </p>
+    </div>
+  </section>
+
+  <section class="ctas">
+    <div class="container cta-grid">
+      <div class="cta">
+        <h2 class="h-sm">学校与机构</h2>
+        <p>
+          如果贵机构服务基层学生并希望有导师支援，我们可提供课程、导师与器材。
+        </p>
+        <a class="btn btn-teaching" href="/zh-hans/get-involved">
+          与我们合作 <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="cta">
+        <h2 class="h-sm">学生</h2>
+        <p>
+          我们已在沪江维多利亚学校展开招募，欢迎对政策、经济与人工智能有兴趣的同学。
+        </p>
+        <a class="btn btn-policy" href="/zh-hans/get-involved">
+          加入我们 <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

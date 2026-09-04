@@ -1,0 +1,66 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/team.css';
+import { getCollection } from 'astro:content';
+
+// Same team collection as the English page; only the role line is translated
+// (role_hans in src/content/team/*.md), and it falls back to English if absent.
+const members = (await getCollection('team'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="团队"
+  pageClass="page-team"
+  description="AI For Good 全数由学生运营——超过 35 名成员，分布于研究、伙伴关系与技术团队。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">团队</p>
+      <h1>全数由学生运营</h1>
+      <p class="lead">
+        超过 35 名成员分别参与政策研究与补习计划。以下是带领这些工作的人：
+      </p>
+    </div>
+  </section>
+
+  <!-- Team photographs -->
+  <section class="section-tight">
+    <div class="container team-photos">
+      <figure>
+        <img
+          src="/programs/team-classroom.jpg"
+          alt="六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure>
+        <img
+          src="/programs/team-outside-school.jpg"
+          alt="五位 AI For Good 成员在天主教领岛学校门外。"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <ul class="team-list">
+        {
+          members.map((person) => (
+            <li class="member">
+              <p class="member-name">{person.data.name}</p>
+              <p class="member-role">{person.data.role_hans ?? person.data.role}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

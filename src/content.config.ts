@@ -31,12 +31,19 @@ const submissions = defineCollection({
     against: z.string(),
     recommendation: z.string(),
     // Optional Traditional Chinese. Anything omitted falls back to English
-    // on the /zh pages, so a half-translated entry still renders.
+    // on the /zh pages, so a half-translated entry still renders. The _hans
+    // twins are generated from these by `npm run zh-hans` — write the
+    // Traditional and run the script; don't translate twice.
     title_zh: z.string().optional(),
     submittedTo_zh: z.string().optional(),
     for_zh: z.string().optional(),
     against_zh: z.string().optional(),
     recommendation_zh: z.string().optional(),
+    title_hans: z.string().optional(),
+    submittedTo_hans: z.string().optional(),
+    for_hans: z.string().optional(),
+    against_hans: z.string().optional(),
+    recommendation_hans: z.string().optional(),
     // Optional PDF in /public/research/, referenced as "/research/file.pdf".
     pdf: z.string().optional(),
     draft: z.boolean().default(false),
@@ -54,10 +61,14 @@ const programs = defineCollection({
     icon: z.string().default('education'),
     why: z.string().optional(),
     // Traditional Chinese for the /zh pages. `body_zh` replaces the Markdown
-    // body, which is English-only; it is a single paragraph.
+    // body, which is English-only; it is a single paragraph. The _hans twins
+    // are generated from these by `npm run zh-hans`.
     title_zh: z.string().optional(),
     body_zh: z.string().optional(),
     why_zh: z.string().optional(),
+    title_hans: z.string().optional(),
+    body_hans: z.string().optional(),
+    why_hans: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
@@ -70,6 +81,7 @@ const team = defineCollection({
     name: z.string(),
     role: z.string(),
     role_zh: z.string().optional(),
+    role_hans: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),

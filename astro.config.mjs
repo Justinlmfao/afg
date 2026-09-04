@@ -13,5 +13,7 @@ export default defineConfig({
   redirects: {
     '/research': '/policy',
     '/programs': '/teaching',
+    // Traditional Chinese lives at /zh; catch the explicit script code too.
+    '/zh-hant': '/zh',
   },
 });

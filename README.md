@@ -38,35 +38,51 @@ npm run preview  # preview the built site
 
 Old URLs (`/research`, `/programs`) redirect to the new ones.
 
-Every page also exists in Traditional Chinese under `/zh` — `/zh`,
-`/zh/about`, `/zh/policy`, `/zh/teaching`, `/zh/team`, `/zh/get-involved`.
+Every page also exists in Traditional Chinese under `/zh` and Simplified
+Chinese under `/zh-hans`.
 
 ## Languages
 
-English is the default and sits at the root; Traditional Chinese lives under
-`/zh`. The link at the right of the header always names the language it takes
-you to, and it lands on the same page you were reading, so `/policy` ⇄
-`/zh/policy`.
+Three: English (the default, at the root), Traditional Chinese (`/zh`) and
+Simplified Chinese (`/zh-hans`). The switcher at the right of the header —
+`EN · 繁體 · 简体` — marks the one you are reading and links the other two to
+the same page, so `/policy` ⇄ `/zh/policy` ⇄ `/zh-hans/policy`.
+
+**Traditional is the source of the Chinese.** Write it once in Traditional and
+run:
+
+```bash
+npm run zh-hans
+```
+
+That converts `src/pages/zh/` into `src/pages/zh-hans/` and fills in the
+`*_hans` fields beside every `*_zh` field in the content collections. The
+output is committed so you can read it in review, but it is regenerated from
+scratch each run — **fix the Traditional and re-run rather than editing a
+`/zh-hans` file**, or your edit disappears. Nothing in the site build depends
+on the script; it is a tool you run when the Chinese changes.
 
 | To change | File |
 | --- | --- |
-| Nav labels, footer, skip link, the switcher | `src/i18n.ts` |
-| Chinese page copy | `src/pages/zh/*.astro` |
-| Chinese for a module, submission, or role | the `*_zh` fields in `src/content/**` |
+| Nav labels, footer, skip link, the switcher | `src/i18n.ts` (all three languages) |
+| Chinese page copy | `src/pages/zh/*.astro`, then `npm run zh-hans` |
+| Chinese for a module, submission, or role | the `*_zh` fields in `src/content/**`, then `npm run zh-hans` |
+| A Hong Kong word that should read differently on the mainland | the `TERMS` list in `scripts/generate-simplified.mjs` |
 
-The `/zh` pages are separate `.astro` files but they **import the same
+The Chinese pages are separate `.astro` files but they **import the same
 stylesheet** as their English twin (`src/styles/pages/*.css`, applied through
-the `pageClass` prop), so a design change lands in both languages at once and
-only the words are duplicated. Anything without a `*_zh` value falls back to
-English rather than going blank.
+the `pageClass` prop), so a design change lands in all three languages at once
+and only the words are duplicated. Anything without a `*_zh` / `*_hans` value
+falls back to English rather than going blank.
 
 Two things to know when writing Chinese in these files:
 
 - **Keep each Chinese paragraph on one source line.** Astro turns a line break
   inside a paragraph into a space, which is invisible in English and shows up
-  as a gap between characters in Chinese.
+  as a gap between characters in Chinese. Put a space either side of Latin
+  words and names sitting in a Chinese sentence.
 - **A measure set in `ch` holds about half as many characters in Chinese.** A
-  couple of them are widened for `/zh` at the bottom of the Chinese block in
+  couple of them are widened for Chinese at the bottom of the Chinese block in
   `src/styles/global.css`; add to that block rather than changing the shared
   value.
 

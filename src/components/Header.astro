@@ -3,13 +3,21 @@
 // length — the shape of every proposal we file. Mobile menu is progressively
 // enhanced. Nav links and the language switcher follow the current locale.
 import Logo from './Logo.astro';
-import { getLangFromUrl, localizePath, ui, navItems } from '../i18n';
+import {
+  getLangFromUrl,
+  localizePath,
+  ui,
+  navItems,
+  langOrder,
+  langShort,
+  htmlLangs,
+  switchLabels,
+} from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = ui[lang];
-const other = lang === 'en' ? 'zh' : 'en';
 
-// Current path with any /zh prefix removed, so it matches navItems paths.
+// Current path with any language prefix removed, so it matches navItems paths.
 const path = localizePath(Astro.url.pathname, 'en');
 ---
 
@@ -46,14 +54,34 @@ const path = localizePath(Astro.url.pathname, 'en');
           ))
         }
         <li class="lang-item">
-          <a
-            class="lang-switch"
-            href={localizePath(Astro.url.pathname, other)}
-            lang={other === 'zh' ? 'zh-Hant' : 'en'}
-            aria-label={t.switchLabel}
-          >
-            {t.switchTo}
-          </a>
+          {/*
+            Three languages don't fit as full names, so the switcher is a short
+            group with the current language marked rather than linked. Each
+            link keeps you on the page you were reading.
+          */}
+          <span class="lang-group" role="group" aria-label={t.langLabel}>
+            {
+              langOrder.map((code, i) => (
+                <>
+                  {i > 0 && <span class="lang-sep" aria-hidden="true">·</span>}
+                  {code === lang ? (
+                    <span class="lang-current" aria-current="true" lang={htmlLangs[code]}>
+                      {langShort[code]}
+                    </span>
+                  ) : (
+                    <a
+                      class="lang-switch"
+                      href={localizePath(Astro.url.pathname, code)}
+                      lang={htmlLangs[code]}
+                      aria-label={switchLabels[lang][code]}
+                    >
+                      {langShort[code]}
+                    </a>
+                  )}
+                </>
+              ))
+            }
+          </span>
         </li>
       </ul>
     </nav>
@@ -128,6 +156,12 @@ const path = localizePath(Astro.url.pathname, 'en');
     border-left: 1px solid var(--rule);
   }
 
+  .lang-group {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.45rem;
+  }
+
   .lang-switch {
     font-size: 0.9rem !important;
     font-weight: 500 !important;
@@ -136,6 +170,19 @@ const path = localizePath(Astro.url.pathname, 'en');
 
   .lang-switch:hover {
     color: var(--policy-deep) !important;
+  }
+
+  /* The language you are already reading: shown, not offered */
+  .lang-current {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .lang-sep {
+    font-size: 0.9rem;
+    color: var(--graphite);
+    opacity: 0.45;
   }
 
   .nav-toggle {
@@ -202,6 +249,13 @@ const path = localizePath(Astro.url.pathname, 'en');
     .lang-item {
       padding-left: 0;
       border-left: none;
+      padding-block: 0.85rem;
+    }
+
+    /* Keep the three languages on one row inside the stacked mobile menu */
+    .lang-item .lang-switch {
+      display: inline;
+      padding: 0;
     }
   }
 </style>
