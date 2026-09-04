@@ -38,6 +38,38 @@ npm run preview  # preview the built site
 
 Old URLs (`/research`, `/programs`) redirect to the new ones.
 
+Every page also exists in Traditional Chinese under `/zh` — `/zh`,
+`/zh/about`, `/zh/policy`, `/zh/teaching`, `/zh/team`, `/zh/get-involved`.
+
+## Languages
+
+English is the default and sits at the root; Traditional Chinese lives under
+`/zh`. The link at the right of the header always names the language it takes
+you to, and it lands on the same page you were reading, so `/policy` ⇄
+`/zh/policy`.
+
+| To change | File |
+| --- | --- |
+| Nav labels, footer, skip link, the switcher | `src/i18n.ts` |
+| Chinese page copy | `src/pages/zh/*.astro` |
+| Chinese for a module, submission, or role | the `*_zh` fields in `src/content/**` |
+
+The `/zh` pages are separate `.astro` files but they **import the same
+stylesheet** as their English twin (`src/styles/pages/*.css`, applied through
+the `pageClass` prop), so a design change lands in both languages at once and
+only the words are duplicated. Anything without a `*_zh` value falls back to
+English rather than going blank.
+
+Two things to know when writing Chinese in these files:
+
+- **Keep each Chinese paragraph on one source line.** Astro turns a line break
+  inside a paragraph into a space, which is invisible in English and shows up
+  as a gap between characters in Chinese.
+- **A measure set in `ch` holds about half as many characters in Chinese.** A
+  couple of them are widened for `/zh` at the bottom of the Chinese block in
+  `src/styles/global.css`; add to that block rather than changing the shared
+  value.
+
 ## Editing content (no code needed)
 
 | To add | Folder | Notes |

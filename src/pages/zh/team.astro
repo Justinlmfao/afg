@@ -1,26 +1,26 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import '../styles/pages/team.css';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/team.css';
 import { getCollection } from 'astro:content';
 
-// Team members from src/content/team/ (drafts excluded), sorted by `order`.
+// Same team collection as the English page; only the role line is translated
+// (role_zh in src/content/team/*.md), and it falls back to English if absent.
 const members = (await getCollection('team'))
   .filter((m) => !m.data.draft)
   .sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout
-  title="Team"
-  description="AI For Good is run entirely by students — 35+ members across research, partnerships, and technical teams."
-
-  pageClass="page-team">
+  title="團隊"
+  pageClass="page-team"
+  description="AI For Good 全數由學生營運——超過 35 名成員，分佈於研究、夥伴關係與技術團隊。"
+>
   <section class="page-top">
     <div class="container prose">
-      <p class="kicker">Team</p>
-      <h1>Run entirely by students</h1>
+      <p class="kicker">團隊</p>
+      <h1>全數由學生營運</h1>
       <p class="lead">
-        35+ members work across policy research and the tutoring programme.
-        The people who lead it:
+        超過 35 名成員分別參與政策研究與補習計劃。以下是帶領這些工作的人：
       </p>
     </div>
   </section>
@@ -31,7 +31,7 @@ const members = (await getCollection('team'))
       <figure>
         <img
           src="/programs/team-classroom.jpg"
-          alt="Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School after a session."
+          alt="六位 AI For Good 成員在天主教領島學校的課室內，攝於一節課之後。"
           loading="lazy"
           decoding="async"
         />
@@ -39,7 +39,7 @@ const members = (await getCollection('team'))
       <figure>
         <img
           src="/programs/team-outside-school.jpg"
-          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          alt="五位 AI For Good 成員在天主教領島學校門外。"
           loading="lazy"
           decoding="async"
         />
@@ -54,7 +54,7 @@ const members = (await getCollection('team'))
           members.map((person) => (
             <li class="member">
               <p class="member-name">{person.data.name}</p>
-              <p class="member-role">{person.data.role}</p>
+              <p class="member-role">{person.data.role_zh ?? person.data.role}</p>
             </li>
           ))
         }
@@ -62,4 +62,3 @@ const members = (await getCollection('team'))
     </div>
   </section>
 </BaseLayout>
-

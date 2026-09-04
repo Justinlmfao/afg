@@ -25,8 +25,12 @@
   --surface: #fffdf9;          /* raised cards/panels */
 
   /* Type */
-  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Latin faces first; the CJK families after them are what Traditional
+     Chinese falls back to per-glyph, so no CJK webfont is downloaded. */
+  --serif: 'Newsreader', Georgia, 'Times New Roman', 'Noto Serif TC',
+    'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', 'PingFang TC',
+    'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
   /* System mono — used only for the hero eyebrow and photo captions, so it
      costs nothing to load. */
   --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
@@ -130,6 +134,33 @@ a:hover {
 .lead {
   font-size: clamp(1.1rem, 1.9vw, 1.3rem);
   color: var(--graphite);
+}
+
+/* Chinese needs a little more leading and no tight Latin tracking */
+:lang(zh-Hant) body,
+html[lang^='zh'] body {
+  line-height: 1.85;
+}
+
+html[lang^='zh'] h1,
+html[lang^='zh'] h2,
+html[lang^='zh'] h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/*
+  A `ch` is the width of "0", so a Chinese character is about two of them: a
+  measure tuned to read well in English holds roughly half as many characters
+  in Chinese. Headlines are fine that way — short lines suit them — but the two
+  standfirst-sized lines below turn into narrow columns, so widen those.
+*/
+html[lang^='zh'] .page-teaching .outcome-sentence {
+  max-width: 40ch;
+}
+
+html[lang^='zh'] .page-about .why-claim {
+  max-width: 46ch;
 }
 
 /* ---- Layout ------------------------------------------------------------ */

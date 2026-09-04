@@ -30,6 +30,13 @@ const submissions = defineCollection({
     for: z.string(),
     against: z.string(),
     recommendation: z.string(),
+    // Optional Traditional Chinese. Anything omitted falls back to English
+    // on the /zh pages, so a half-translated entry still renders.
+    title_zh: z.string().optional(),
+    submittedTo_zh: z.string().optional(),
+    for_zh: z.string().optional(),
+    against_zh: z.string().optional(),
+    recommendation_zh: z.string().optional(),
     // Optional PDF in /public/research/, referenced as "/research/file.pdf".
     pdf: z.string().optional(),
     draft: z.boolean().default(false),
@@ -46,6 +53,11 @@ const programs = defineCollection({
     title: z.string(),
     icon: z.string().default('education'),
     why: z.string().optional(),
+    // Traditional Chinese for the /zh pages. `body_zh` replaces the Markdown
+    // body, which is English-only; it is a single paragraph.
+    title_zh: z.string().optional(),
+    body_zh: z.string().optional(),
+    why_zh: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
@@ -57,6 +69,7 @@ const team = defineCollection({
   schema: z.object({
     name: z.string(),
     role: z.string(),
+    role_zh: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),

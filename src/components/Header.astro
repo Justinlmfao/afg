@@ -1,23 +1,21 @@
 ---
 // Site header. The brand mark (see Logo.astro) is three rules descending in
 // length — the shape of every proposal we file. Mobile menu is progressively
-// enhanced.
+// enhanced. Nav links and the language switcher follow the current locale.
 import Logo from './Logo.astro';
+import { getLangFromUrl, localizePath, ui, navItems } from '../i18n';
 
-const links = [
-  { href: '/about', label: 'About' },
-  { href: '/policy', label: 'Policy' },
-  { href: '/teaching', label: 'Teaching' },
-  { href: '/team', label: 'Team' },
-  { href: '/get-involved', label: 'Contact' },
-];
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
+const other = lang === 'en' ? 'zh' : 'en';
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Current path with any /zh prefix removed, so it matches navItems paths.
+const path = localizePath(Astro.url.pathname, 'en');
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
-    <a href="/" class="brand" aria-label="AI For Good — home">
+    <a href={localizePath('/', lang)} class="brand" aria-label={t.home}>
       <Logo size={22} />
       AI For Good
     </a>
@@ -26,7 +24,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
       class="nav-toggle"
       aria-expanded="false"
       aria-controls="primary-nav"
-      aria-label="Toggle navigation menu"
+      aria-label="Menu"
     >
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
@@ -36,17 +34,27 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     <nav id="primary-nav" class="primary-nav" aria-label="Primary">
       <ul>
         {
-          links.map((link) => (
+          navItems.map((item) => (
             <li>
               <a
-                href={link.href}
-                aria-current={path === link.href ? 'page' : undefined}
+                href={localizePath(item.path, lang)}
+                aria-current={path === item.path ? 'page' : undefined}
               >
-                {link.label}
+                {t.nav[item.key]}
               </a>
             </li>
           ))
         }
+        <li class="lang-item">
+          <a
+            class="lang-switch"
+            href={localizePath(Astro.url.pathname, other)}
+            lang={other === 'zh' ? 'zh-Hant' : 'en'}
+            aria-label={t.switchLabel}
+          >
+            {t.switchTo}
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
@@ -85,6 +93,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   .primary-nav ul {
     list-style: none;
     display: flex;
+    align-items: center;
     gap: 1.7rem;
     padding: 0;
     margin: 0;
@@ -109,8 +118,24 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
   }
 
   /* The Teaching link underlines in its own ink when current */
-  .primary-nav a[href='/teaching'][aria-current='page'] {
+  .primary-nav a[href$='/teaching'][aria-current='page'] {
     border-bottom-color: var(--teaching);
+  }
+
+  /* Language switch sits apart from the nav proper */
+  .lang-item {
+    padding-left: 1.7rem;
+    border-left: 1px solid var(--rule);
+  }
+
+  .lang-switch {
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    color: var(--policy) !important;
+  }
+
+  .lang-switch:hover {
+    color: var(--policy-deep) !important;
   }
 
   .nav-toggle {
@@ -134,7 +159,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
     border-radius: 2px;
   }
 
-  @media (max-width: 46rem) {
+  @media (max-width: 52rem) {
     .nav-toggle {
       display: flex;
     }
@@ -155,6 +180,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     .primary-nav ul {
       flex-direction: column;
+      align-items: stretch;
       gap: 0;
       padding: 0.5rem 1.5rem 1rem;
     }
@@ -171,6 +197,11 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     .primary-nav a[aria-current='page'] {
       color: var(--policy);
+    }
+
+    .lang-item {
+      padding-left: 0;
+      border-left: none;
     }
   }
 </style>

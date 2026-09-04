@@ -1,7 +1,10 @@
 ---
 // Site footer — quiet, ruled, document-like.
 import Logo from './Logo.astro';
+import { getLangFromUrl, localizePath, ui, navItems } from '../i18n';
 
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
 const year = new Date().getFullYear();
 const email = 'ps20153216@student.vsa.edu.hk';
 ---
@@ -13,24 +16,20 @@ const email = 'ps20153216@student.vsa.edu.hk';
         <Logo size={20} />
         AI For Good
       </p>
-      <p class="footer-tagline">
-        A student-led and student-founded organisation in Hong Kong: policy
-        research submitted to lawmakers, and free tutoring for underprivileged
-        primary students.
-      </p>
+      <p class="footer-tagline">{t.footerTagline}</p>
     </div>
 
     <nav class="footer-nav" aria-label="Footer">
-      <a href="/about">About</a>
-      <a href="/policy">Policy</a>
-      <a href="/teaching">Teaching</a>
-      <a href="/team">Team</a>
-      <a href="/get-involved">Contact</a>
+      {
+        navItems.map((item) => (
+          <a href={localizePath(item.path, lang)}>{t.nav[item.key]}</a>
+        ))
+      }
     </nav>
 
     <div class="footer-contact">
       <a href={`mailto:${email}`}>{email}</a>
-      <p class="footer-meta">Hong Kong · Founded June 2023 · &copy; {year} AI For Good</p>
+      <p class="footer-meta">{t.footerMeta} · &copy; {year} AI For Good</p>
     </div>
   </div>
 </footer>

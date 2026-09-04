@@ -1,0 +1,68 @@
+/* Styles for the team page, shared by the English and Chinese
+   versions. Wrapped in .page-team so class names cannot collide with
+   another page's stylesheet. */
+
+.page-team {
+  .page-top {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .team-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  .team-photos figure {
+    margin: 0;
+  }
+
+  .team-photos img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--rule);
+  }
+
+  @media (max-width: 46rem) {
+    .team-photos {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .team-list {
+    list-style: none;
+    padding: 0;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .member {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .member-name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+  }
+
+  .member-role {
+    color: var(--graphite);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 34rem) {
+    .member {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+}

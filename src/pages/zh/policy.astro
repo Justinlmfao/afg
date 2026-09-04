@@ -1,0 +1,238 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/policy.css';
+import { getCollection } from 'astro:content';
+
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="政策研究"
+  pageClass="page-policy"
+  description="由學生主導的智庫，向香港的立法與決策者提交書面建議——每年約二十項，涵蓋施政報告、財政預算案及五年規劃諮詢。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">政策研究</p>
+      <h1>一個向決策者遞交建議的智庫</h1>
+      <p class="lead">
+        AI For Good 的政策部門研究並撰寫向香港政府提交的書面建議。這些工作是真實的、已經遞交的，而且仍在繼續。
+      </p>
+    </div>
+  </section>
+
+  <section class="record">
+    <div class="container">
+      <h2 class="section-title">紀錄</h2>
+      <dl class="ledger">
+        <div class="ledger-row">
+          <dt class="ledger-figure">~20</dt>
+          <dd class="ledger-label">每年向政府提交的建議</dd>
+        </div>
+        <div class="ledger-row weighted">
+          <dt class="ledger-figure">HK$50M</dt>
+          <dd class="ledger-label">
+            2026–27 年度財政預算案撥予 <strong>AI for All</strong> 的款項——我們一直倡議的普及人工智能計劃。<a class="link-quiet" href="#ai-for-all">我們提交了什麼，又能說什麼 →</a>
+          </dd>
+        </div>
+        <div class="ledger-row">
+          <dt class="ledger-figure">2024–</dt>
+          <dd class="ledger-label">
+            自 2024 年起，每個週期均就施政報告諮詢及財政預算案建議提交意見
+          </dd>
+        </div>
+        <div class="ledger-row">
+          <dt class="ledger-figure">2026–2030</dt>
+          <dd class="ledger-label">
+            正就《經濟和社會發展第一個五年規劃》提交意見
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="ai-for-all" class="flagship">
+    <div class="container">
+      <div class="prose">
+        <p class="kicker">代表作</p>
+        <h2>AI for All</h2>
+        <p class="flagship-lede">
+          2026 年 2 月，香港財政預算案撥款五千萬港元推行一項普及人工智能計劃，預計兩年內透過超過 200 項課程、講座與比賽，接觸約 50,000 名市民。計劃由數碼港、香港科技園公司及香港生產力促進局推行，其中數碼港的部分以學生、家長、長者及基層社群為對象。
+        </p>
+      </div>
+
+      <p class="attribution">
+        <strong>我們能說的是：</strong>我們提出了這項建議，而預算案朝這個方向走。
+        AI for All 是政府的計劃，由公營機構撥款及推行——我們沒有出資、沒有營運，也不能說是我們促成的。
+      </p>
+
+      <ol class="timeline">
+        <li>
+          <span class="t-phase">我們看見的問題<span class="t-date">2024</span></span><span class="t-body">
+            在沒有人工智能課程、也沒有預算開設課程的學校授課時，我們在每一間課室都記錄到同一件事：孩子學得很快，缺的是接觸的機會。最可能被人工智能拋離的家庭，恰恰最難被任何經由學校與僱主推行的計劃觸及。
+          </span>
+        </li>
+        <li>
+          <span class="t-phase">我們做了什麼<span class="t-date">2025 年 8 月</span></span><span class="t-body">
+            我們把看見的變成書面論證：先訪問前線授課的成員，再研究既有的公共供給覆蓋了誰、又遺漏了誰，然後寫成一份先列出支持理由、再列出反對理由、最後才提出建議的意見書。我們於 2025 年 8 月就施政報告諮詢提交，並在財政預算案的意見中重申同一論點。
+          </span>
+        </li>
+        <li>
+          <span class="t-phase">結果如何<span class="t-date">2026 年 2–6 月</span></span><span class="t-body">
+            2026–27 年度財政預算案撥款五千萬港元予 AI for All，計劃並於 2026 年 6 月啟動。我們一直提出的論點，在計劃的設計中得到呼應：數碼港的部分以學生、家長、長者及基層社群為對象——正是我們指出一般人工智能技能推廣最遲才會照顧到的一群。資料來源列於下方，請自行查證，不必只聽我們說。
+          </span>
+        </li>
+      </ol>
+
+      <article class="proposal" aria-label="AI for All — 我們的意見書及我們的判斷">
+        <div class="proposal-part">
+          <p class="part-label">我們為何提出</p>
+          <p class="part-body">
+            我們在沒有人工智能課程、也沒有預算開設課程的學校裡教小學生。問題不在興趣——孩子學得很快——而在機會。因此我們歷年的意見書都提出同一點：若人工智能素養只透過學校與僱主資助，最終只會抵達本來已經擁有的家庭，錯過真正需要的一群。公帑應該花在隊伍最後的人身上，而不是最前面的人。
+          </p>
+        </div>
+        <div class="proposal-part">
+          <p class="part-label">我們提交了什麼</p>
+          <p class="part-body">
+            2025 年 8 月，我們就施政報告諮詢提出這項論點，並在財政預算案的意見中重申：應直接資助最不可能接觸到人工智能的一群——資源不足學校的兒童、他們的家長，以及長者——而不是透過最遲才會照顧到他們的機構層層轉介。我們要求的是專門針對這群人的公共撥款，而非一項籠統的人工智能技能承諾。
+          </p>
+        </div>
+        <div class="proposal-part part-recommendation">
+          <p class="part-label">這代表什麼，又不代表什麼</p>
+          <p class="part-body">
+            這筆撥款是起點，不是終點。政府形容五千萬港元為初步款項，
+            50,000 名參加者亦只是按現有資源訂立的基準；官員表示若需求存在，可能會有進一步撥款。五萬人只佔香港人口的一小部分。我們在下一個週期的立場是：需求確實存在，撥款應該跟上，而我們會在五年規劃的意見書中如此陳述。
+          </p>
+        </div>
+      </article>
+
+      <aside class="sources" aria-label="AI for All 數據來源">
+        <p class="sources-label">資料來源</p>
+        <ul>
+          <li>
+            <a href="https://www.info.gov.hk/gia/general/202606/10/P2026061000476.htm" rel="noopener">
+              政府新聞公報，2026 年 6 月 10 日
+            </a><span>info.gov.hk</span>
+          </li>
+          <li>
+            <a href="https://www.thestandard.com.hk/news/article/334092/HK-launches-50m-AI-for-All-campaign-to-benefit-50000-residents" rel="noopener">
+              「HK launches $50m AI for All campaign to benefit 50,000 residents」
+            </a><span>The Standard</span>
+          </li>
+          <li>
+            <a href="https://www.scmp.com/news/hong-kong/hong-kong-economy/article/3365474/hong-kong-launch-free-ai-courses-tech-giants-google-microsoft-smes" rel="noopener">
+              「Hong Kong to launch free AI courses with tech giants Google, Microsoft for SMEs」
+            </a><span>South China Morning Post</span>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="method">
+    <div class="container">
+      <h2 class="section-title">一份建議是怎樣寫成的</h2>
+      <ol class="steps-detail">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>成員訪談</h3>
+            <p>
+              議題來自成員親眼見到的事，而不是新聞上有什麼。我們訪問前線授課的人：在課室裡遇到了什麼、影響了哪些孩子、是偶發一次還是每週如此。若一個問題只有一個人注意到，就要再找證據，才會成為提案。
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>研究</h3>
+            <p>
+              接著檢驗它是否真的是一個政策問題。政府在這個範疇已經資助了什麼？現有供給觸及誰、又遺漏誰？其他可比司法管轄區試過什麼、成本多少？如果既有政策已經涵蓋這個問題，我們就直說並停止——這一步的用意是否決提案，而不是為提案背書。
+            </p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>撰寫與遞交</h3>
+            <p>
+              由成員按下方的三段結構起草，而反對理由會寫到我們誠實能寫的最強程度。若反對一方勝出，提案就不會發出。通過的則遞交至當時開放的諮詢——施政報告諮詢、財政預算案建議，或個別政策局的意見徵集——建議會寫得足夠具體，讓對方可以據以行動。
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <p class="method-note prose">
+        每一份提案都是同一個形狀——讓這份工作站得住腳的是這個形狀，而不是篇幅：
+      </p>
+
+      <article class="proposal proposal-demo" aria-label="每份提案共用的結構">
+        <header class="proposal-head">
+          <h3 class="proposal-title">每一份提案，同一個形狀</h3>
+          <p class="proposal-meta">AI For Good 意見書的固定結構</p>
+        </header>
+        <div class="proposal-part">
+          <p class="part-label">支持的理由</p>
+          <p class="part-body">
+            以最有力的方式陳述贊成的論點：這項政策會達成什麼、惠及誰，並以證據支撐。
+          </p>
+        </div>
+        <div class="proposal-part">
+          <p class="part-label">反對的理由</p>
+          <p class="part-body">
+            誠實地寫出反面：成本、風險，以及由誰承擔。若反對一方勝出，這份提案不會遞交。
+          </p>
+        </div>
+        <div class="proposal-part part-recommendation">
+          <p class="part-label">建議</p>
+          <p class="part-body">
+            在雙方理由都陳述過之後，才平實地寫出我們希望政府做什麼。
+          </p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="filings">
+    <div class="container">
+      <h2 class="section-title">已遞交的意見書</h2>
+      {
+        submissions.length === 0 ? (
+          <p class="empty-note">意見書會在正式遞交後於此發布。</p>
+        ) : (
+          <div class="filed-list">
+            {submissions.map((s) => (
+              <article class="proposal">
+                <header class="proposal-head">
+                  <h3 class="proposal-title">{s.data.title_zh ?? s.data.title}</h3>
+                  <p class="proposal-meta">
+                    遞交予 {s.data.submittedTo_zh ?? s.data.submittedTo} · {s.data.date}
+                  </p>
+                </header>
+                <div class="proposal-part">
+                  <p class="part-label">支持的理由</p>
+                  <p class="part-body">{s.data.for_zh ?? s.data.for}</p>
+                </div>
+                <div class="proposal-part">
+                  <p class="part-label">反對的理由</p>
+                  <p class="part-body">{s.data.against_zh ?? s.data.against}</p>
+                </div>
+                <div class="proposal-part part-recommendation">
+                  <p class="part-label">建議</p>
+                  <p class="part-body">{s.data.recommendation_zh ?? s.data.recommendation}</p>
+                </div>
+                {s.data.pdf && (
+                  <p class="proposal-pdf">
+                    <a class="link-quiet" href={s.data.pdf}>閱讀意見書全文（PDF）→</a>
+                  </p>
+                )}
+              </article>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

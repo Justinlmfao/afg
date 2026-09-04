@@ -1,0 +1,202 @@
+---
+// Traditional Chinese home page. Shares the English page's stylesheet
+// (src/styles/pages/home.css) via pageClass, so layout changes stay in one
+// place; only the prose differs.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/home.css';
+import { getCollection } from 'astro:content';
+
+const submissions = (await getCollection('submissions'))
+  .filter((s) => !s.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 2);
+
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="AI For Good"
+  pageClass="page-home"
+  description="AI For Good 是香港一個由學生創辦及營運的組織：向政府提交政策建議，並為基層小學生提供免費補習。"
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow-mono">
+        <span class="eyebrow-rule" aria-hidden="true"></span>學生主導的政策研究
+      </p>
+
+      <h1>為我們終將繼承的科技，制訂政策。</h1>
+
+      <p class="hero-sub">
+        我們研究人工智能與經濟政策如何形塑香港，每年就政府諮詢提交約二十項建議；同時免費教授基層小學生人工智能與經濟素養——這些決策最先影響的，正是他們。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-policy" href="/zh/policy">
+          閱讀政策研究 <span class="arrow">→</span>
+        </a><a class="hero-secondary" href="/zh/teaching">
+          我們的教學計劃 <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <dl class="stat-strip">
+        <div>
+          <dt>~20</dt>
+          <dd>每年向政府提交的建議</dd>
+        </div>
+        <div>
+          <dt>350</dt>
+          <dd>已教授的兒童人數</dd>
+        </div>
+        <div>
+          <dt>7</dt>
+          <dd>夥伴學校</dd>
+        </div>
+        <div>
+          <dt>43</dt>
+          <dd>已受訓的學生導師</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <figure class="hero-photo-band">
+    <img
+      src="/programs/teaching-classroom.jpg"
+      alt="導師在天主教領島學校授課，一名學生舉手回答。"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>天主教領島學校（何文田）——補習計劃的一節課。</figcaption>
+  </figure>
+
+  <section class="doors-section">
+    <div class="container doors">
+      <a href="/zh/policy" class="door door-policy">
+        <p class="door-name">政策研究</p>
+        <p class="door-line">
+          向香港政府提交書面建議；自 2024 年起，每年參與施政報告及財政預算案諮詢。
+        </p>
+        <p class="door-number">~20 <span>每年提交的建議</span></p>
+        <span class="door-cta">閱讀政策研究 <span class="arrow">→</span></span>
+      </a>
+
+      <a href="/zh/teaching" class="door door-teaching">
+        <p class="door-name">教學計劃</p>
+        <p class="door-line">
+          由受訓的學生導師，為七所學校的基層小學生提供免費補習。
+        </p>
+        <p class="door-number">350 <span>已教授的兒童</span></p>
+        <span class="door-cta">查看教學計劃 <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="container proof-grid">
+      <div class="proof-item">
+        <p class="proof-figure proof-policy">HK$50M</p>
+        <p class="proof-label">
+          2026–27 年度財政預算案撥予 AI for All 的款項——我們一直倡議的普及人工智能計劃
+        </p>
+      </div>
+      <div class="proof-item">
+        <p class="proof-figure proof-teaching">
+          <span data-count="86">86</span>%
+        </p>
+        <p class="proof-label">
+          自 2024 年起，我們的學生中至少上升一個組別的比例
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container prose">
+      <p>
+        AI For Good 由香港學生創辦，並全數由學生營運，現時成員超過 35 人。我們於 2023 年 6 月在校外獨立成立，是一個智庫而非任何學校的學會，其後才逐步與全港學校建立夥伴關係。我們同時做兩件事：向政府提交以證據為本的建議，並教導最先受這些決策影響的兒童。<a class="link-quiet" href="/zh/about">關於我們 →</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section-tight current">
+    <div class="container">
+      <h2 class="h-sm">正在進行的工作</h2>
+      <ul class="current-list">
+        <li>
+          <span class="current-tag current-policy">政策</span><span class="current-body">
+            就《香港特別行政區經濟和社會發展第一個五年規劃（2026–2030）》提交意見，主張人工智能的資源應按需求分配，而非沿用既有的供給。
+          </span>
+        </li>
+        <li>
+          <span class="current-tag current-teaching">教學</span><span class="current-body">
+            明年將重返天主教領島學校，由新一批學生導師接手。
+          </span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-tight latest">
+    <div class="container">
+      <h2 class="h-sm">
+        {submissions.length > 0 ? '最新意見書與教學單元' : '我們教什麼'}
+      </h2>
+      <ul class="latest-list">
+        {
+          submissions.map((s) => (
+            <li>
+              <a href="/zh/policy">
+                <span class="latest-kind latest-policy">意見書</span><span class="latest-title">{s.data.title_zh ?? s.data.title}</span><span class="latest-meta">{s.data.date}</span>
+              </a>
+            </li>
+          ))
+        }{
+          modules.map((m) => (
+            <li>
+              <a href="/zh/teaching">
+                <span class="latest-kind latest-teaching">單元</span><span class="latest-title">{m.data.title_zh ?? m.data.title}</span><span class="latest-meta">教學</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-tight partners">
+    <div class="container prose">
+      <h2 class="h-sm">合作夥伴</h2>
+      <p>
+        天主教領島學校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
+        10% Organisation
+      </p>
+    </div>
+  </section>
+
+  <section class="ctas">
+    <div class="container cta-grid">
+      <div class="cta">
+        <h2 class="h-sm">學校與機構</h2>
+        <p>
+          如果貴機構服務基層學生並希望有導師支援，我們可提供課程、導師與器材。
+        </p>
+        <a class="btn btn-teaching" href="/zh/get-involved">
+          與我們合作 <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="cta">
+        <h2 class="h-sm">學生</h2>
+        <p>
+          我們已在滬江維多利亞學校展開招募，歡迎對政策、經濟與人工智能有興趣的同學。
+        </p>
+        <a class="btn btn-policy" href="/zh/get-involved">
+          加入我們 <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

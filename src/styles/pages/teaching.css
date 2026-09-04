@@ -1,0 +1,350 @@
+/* Styles for the teaching page, shared by the English and Chinese
+   versions. Wrapped in .page-teaching so class names cannot collide with
+   another page's stylesheet. */
+
+.page-teaching {
+  .page-top {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-title {
+    margin-bottom: 1rem;
+  }
+
+  /* ---- The 86% — this page's one bold element -------------------------- */
+  /* Hero figure per the dataviz spec: the sans face, huge, exactly one. */
+  .outcome {
+    background: var(--teaching-wash);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .outcome-figure {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .outcome-number {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(4.5rem, 12vw, 8.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--teaching-deep);
+  }
+
+  .outcome-rule {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--teaching);
+    max-width: 16rem;
+  }
+
+  .outcome-sentence {
+    font-family: var(--serif);
+    font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+    max-width: 26ch;
+    margin-top: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .quiet-facts {
+    margin-top: 1.75rem;
+    color: var(--graphite);
+    font-size: 0.98rem;
+  }
+
+  /* ---- Modules as a ruled two-column list ------------------------------- */
+  .modules-note {
+    color: var(--graphite);
+    margin-bottom: 1.75rem;
+  }
+
+  .module-list {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .module {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+    gap: 2rem;
+    padding-block: 1.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .module-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+
+  .module-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+    background: var(--teaching);
+    color: #fff;
+  }
+
+  .module-side h3 {
+    font-size: 1.3rem;
+  }
+
+  .module-main {
+    max-width: var(--measure);
+  }
+
+  .module-body {
+    color: var(--ink);
+  }
+
+  .module-why {
+    margin-top: 0.9rem;
+    color: var(--graphite);
+    font-size: 0.97rem;
+  }
+
+  .module-why span {
+    color: var(--teaching-deep);
+    font-weight: 650;
+  }
+
+  /* ---- Gallery ----------------------------------------------------------- */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 13rem;
+    gap: 0.9rem;
+  }
+
+  .shot {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--rule);
+    font: inherit;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .shot-wide {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .shot:hover img,
+  .shot:focus-visible img {
+    transform: scale(1.05);
+  }
+
+  /* ---- Sample lesson ---------------------------------------------------- */
+  .tint-sample {
+    background: var(--teaching-wash);
+    border-block: 1px solid var(--rule);
+  }
+
+  .sample-note {
+    color: var(--graphite);
+    margin-bottom: 1rem;
+  }
+
+  .sample-meta {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 2rem;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .sample-meta span {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 650;
+    color: var(--teaching-deep);
+  }
+
+  .parts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .part {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--teaching);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+
+  .part-tag {
+    font-size: 0.82rem;
+    font-weight: 650;
+    color: var(--teaching-deep);
+    margin-bottom: 0.4rem;
+  }
+
+  .part h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  .part p + p,
+  .part ul + p {
+    margin-top: 0.85rem;
+  }
+
+  .objective,
+  .aside {
+    font-size: 0.97rem;
+  }
+
+  .objective span,
+  .aside span {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--graphite);
+  }
+
+  .objective {
+    padding-left: 0.9rem;
+    border-left: 3px solid var(--teaching);
+    margin-bottom: 1rem;
+  }
+
+  .aside {
+    margin-top: 1rem;
+    padding: 0.75rem 0.95rem;
+    background: var(--teaching-wash);
+    border-radius: var(--radius);
+    color: var(--ink);
+  }
+
+  .aside.watch {
+    background: transparent;
+    border: 1px dashed var(--rule);
+  }
+
+  .frames {
+    margin-top: 0.6rem;
+    padding-left: 1.1rem;
+    color: var(--graphite);
+    font-size: 0.97rem;
+  }
+
+  .frames li + li {
+    margin-top: 0.25rem;
+  }
+
+  .sample-link {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    max-width: var(--measure);
+  }
+
+  /* ---- Cohort galleries -------------------------------------------------- */
+  .cohorts {
+    border-top: 1px solid var(--rule);
+  }
+
+  .cohort {
+    margin-top: 2.25rem;
+  }
+
+  .cohort-head {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: 1.25rem;
+    align-items: baseline;
+    padding-bottom: 0.9rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cohort-head h3 {
+    font-size: 1.4rem;
+    color: var(--teaching-deep);
+  }
+
+  .cohort-head p {
+    color: var(--graphite);
+    max-width: var(--measure);
+  }
+
+  .cohort-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+  }
+
+  .cohort-grid .shot img {
+    aspect-ratio: 3 / 2;
+    height: auto;
+  }
+
+  /* ---- Anecdote ----------------------------------------------------------- */
+  .anecdote-quote {
+    font-family: var(--serif);
+    font-size: clamp(1.25rem, 2.4vw, 1.6rem);
+    line-height: 1.45;
+    border-left: 4px solid var(--teaching);
+    padding-left: 1.5rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 52rem) {
+    .module {
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+    .parts {
+      grid-template-columns: 1fr;
+    }
+    .cohort-head {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+    .cohort-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 10.5rem;
+    }
+    .shot-wide {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+    .shot-wide {
+      grid-column: span 1;
+    }
+  }
+}

@@ -5,14 +5,22 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getLangFromUrl, localizePath, ui } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
+const htmlLang = lang === 'zh' ? 'zh-Hant-HK' : 'en';
 
 interface Props {
   title: string;
   description?: string;
+  /** Scopes that page's stylesheet, e.g. "page-home". */
+  pageClass?: string;
 }
 
 const {
   title,
+  pageClass,
   description = 'AI For Good is a student-led organisation in Hong Kong: a policy think tank that submits recommendations to lawmakers, and a free tutoring programme for underprivileged primary students.',
 } = Astro.props;
 
@@ -20,7 +28,7 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,6 +39,12 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={lang === 'zh' ? 'zh_HK' : 'en'} />
+
+    <!-- Each page exists in both languages; tell search engines which is which -->
+    <link rel="alternate" hreflang="en" href={new URL(localizePath(Astro.url.pathname, 'en'), Astro.site ?? Astro.url)} />
+    <link rel="alternate" hreflang="zh-Hant" href={new URL(localizePath(Astro.url.pathname, 'zh'), Astro.site ?? Astro.url)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(localizePath(Astro.url.pathname, 'en'), Astro.site ?? Astro.url)} />
 
     <!-- Newsreader (headings) + Inter (body, UI, numbers) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,9 +55,9 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     />
   </head>
   <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main">{t.skip}</a>
     <Header />
-    <main id="main">
+    <main id="main" class={pageClass}>
       <slot />
     </main>
     <Footer />

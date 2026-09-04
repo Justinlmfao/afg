@@ -1,0 +1,410 @@
+/* Styles for the home page, shared by the English and Chinese
+   versions. Wrapped in .page-home so class names cannot collide with
+   another page's stylesheet. */
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.page-home {
+  .h-sm {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  /* 1. Hero — single column, left-aligned, generous air */
+  .hero {
+    padding-block: 4.5rem 3rem;
+  }
+
+  @media (min-width: 52rem) {
+    .hero {
+      padding-block: 7.5rem 5rem;
+    }
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+  }
+
+  /* Mono eyebrow with a short hairline lead-in */
+  .eyebrow-mono {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow-rule {
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--ink);
+    flex-shrink: 0;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 15ch;
+  }
+
+  .hero-sub {
+    margin-top: 1.75rem;
+    max-width: 56ch;
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: var(--graphite);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-secondary {
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease;
+  }
+
+  .hero-secondary:hover {
+    border-bottom-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .hero-secondary .arrow,
+  .hero-actions .arrow {
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+
+  .hero-secondary:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Four verified figures under a hairline */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem 2rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stat-strip dt {
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .stat-strip dd {
+    margin: 0.45rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--graphite);
+    max-width: 20ch;
+  }
+
+  /* Full-bleed photograph */
+  .hero-photo-band {
+    margin: 0;
+  }
+
+  .hero-photo-band img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 7;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-photo-band figcaption {
+    max-width: var(--wide);
+    margin-inline: auto;
+    padding: 0.85rem 1.5rem 0;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--graphite);
+  }
+
+  /* Motion: one sequence, fade up 12px with a 60ms stagger */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-inner > * {
+      animation: heroIn 0.4s ease-out both;
+    }
+    .hero-inner > *:nth-child(1) { animation-delay: 0ms; }
+    .hero-inner > *:nth-child(2) { animation-delay: 60ms; }
+    .hero-inner > *:nth-child(3) { animation-delay: 120ms; }
+    .hero-inner > *:nth-child(4) { animation-delay: 180ms; }
+    .hero-inner > *:nth-child(5) { animation-delay: 240ms; }
+  }
+
+
+  /* 2. The two doors — full padding now that the photo band sits above */
+  .doors-section {
+    padding-top: clamp(2.75rem, 6vw, 4.5rem);
+  }
+
+  .doors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .door {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1.9rem 2rem 1.7rem;
+    border: 1px solid var(--rule);
+    border-top-width: 4px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .door:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 34px rgba(28, 27, 24, 0.1);
+    color: var(--ink);
+  }
+
+  .door-name {
+    font-family: var(--serif);
+    font-size: 1.75rem;
+  }
+
+  .door-line {
+    color: var(--graphite);
+  }
+
+  .door-number {
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: -0.02em;
+    margin-top: 0.2rem;
+  }
+
+  .door-number span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--graphite);
+    letter-spacing: 0;
+  }
+
+  .door-cta {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    font-weight: 650;
+  }
+
+  .door-cta .arrow {
+    transition: transform 0.15s ease;
+    display: inline-block;
+  }
+
+  .door:hover .door-cta .arrow {
+    transform: translateX(4px);
+  }
+
+  .door-policy {
+    background: var(--policy-wash);
+    border-top-color: var(--policy);
+  }
+  .door-policy .door-number,
+  .door-policy .door-cta {
+    color: var(--policy);
+  }
+
+  .door-teaching {
+    background: var(--teaching-wash);
+    border-top-color: var(--teaching);
+  }
+  .door-teaching .door-number,
+  .door-teaching .door-cta {
+    color: var(--teaching-deep);
+  }
+
+  /* 3. Proof */
+  .proof {
+    border-block: 1px solid var(--rule);
+  }
+
+  .proof-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    max-width: 50rem;
+  }
+
+  .proof-figure {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 6.5vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+  }
+
+  .proof-policy {
+    color: var(--policy);
+  }
+
+  .proof-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .proof-label {
+    color: var(--graphite);
+    max-width: 26ch;
+  }
+
+  /* 5. Current work */
+  .current-list {
+    list-style: none;
+    padding: 0;
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .current-list li {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .current-tag {
+    font-size: 0.85rem;
+    font-weight: 650;
+  }
+
+  .current-policy {
+    color: var(--policy);
+  }
+
+  .current-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .current-body {
+    color: var(--graphite);
+  }
+
+  /* 6. Latest */
+  .latest-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+    max-width: var(--measure);
+  }
+
+  .latest-list a {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+
+  .latest-list a:hover {
+    border-color: var(--graphite);
+    color: var(--ink);
+  }
+
+  .latest-kind {
+    font-size: 0.78rem;
+    font-weight: 650;
+  }
+
+  .latest-policy {
+    color: var(--policy);
+  }
+
+  .latest-teaching {
+    color: var(--teaching-deep);
+  }
+
+  .latest-title {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+  }
+
+  .latest-meta {
+    color: var(--graphite);
+    font-size: 0.88rem;
+  }
+
+  /* 7 & 8 */
+  .partners p {
+    color: var(--graphite);
+  }
+
+  .ctas {
+    border-top: 1px solid var(--rule);
+  }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .cta p {
+    color: var(--graphite);
+    margin-bottom: 1.1rem;
+    max-width: 34ch;
+  }
+
+  @media (max-width: 52rem) {
+    .stat-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .doors,
+    .proof-grid,
+    .cta-grid {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .latest-list a {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+
+    .current-list li {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+}

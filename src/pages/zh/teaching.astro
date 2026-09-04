@@ -1,0 +1,257 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/teaching.css';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+
+// Chinese module copy comes from title_zh / body_zh / why_zh in the same
+// content files as the English, falling back to English if not translated.
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const cohorts = [
+  {
+    years: '2024–25',
+    summary:
+      '教學生如何在自己的社區裡運用人工智能——這些工具擅長什麼，以及怎樣把它們用在有用的事情上。',
+    photos: [
+      { src: '/programs/vsa-2024-25-group.jpg', alt: '2024/25 年度課程結束時，導師與學生在感謝參加者的投影片前合照。' },
+      { src: '/programs/vsa-2024-25-presenting.jpg', alt: '兩位導師在 2024/25 年度的一節課上向使用手提電腦的學生講解。' },
+      { src: '/programs/vsa-2024-25-activity.jpg', alt: '導師在螢幕上展示範例，說明人工智能影像工具如何把一張圖片轉換成另一張。' },
+      { src: '/programs/vsa-2024-25-helping-pair.jpg', alt: '導師俯身協助兩名一起使用手提電腦的學生。' },
+      { src: '/programs/vsa-2024-25-helping.jpg', alt: '導師協助一名使用手提電腦的年幼學生。' },
+      { src: '/programs/vsa-2024-25-side-by-side.jpg', alt: '導師與學生並肩在手提電腦前完成練習。' },
+    ],
+  },
+  {
+    years: '2025–26',
+    summary:
+      '教社區裡的孩子人工智能可以改善什麼——以及如何辨識並避開不合乎倫理的用法。',
+    photos: [
+      { src: '/programs/vsa-2025-26-group.jpg', alt: '年度結束時，導師在寫著「Thanks for joining — A.I. For Good 25–26」的白板前合照。' },
+      { src: '/programs/vsa-2025-26-cohort.jpg', alt: '2025/26 年度的學生與導師在課室內合照。' },
+      { src: '/programs/vsa-2025-26-uses.jpg', alt: '導師展示人工智能的用途例子，包括紓緩交通、預測天災，以及為基層學生提供輔導。' },
+      { src: '/programs/vsa-2025-26-poster.jpg', alt: '學生製作海報，列出問題、人工智能的解決方案，以及實行方式。' },
+      { src: '/programs/vsa-2025-26-discussion.jpg', alt: '導師與學生在手提電腦前討論作業。' },
+      { src: '/programs/vsa-2025-26-helping.jpg', alt: '導師在課堂上協助一名使用手提電腦的學生。' },
+    ],
+  },
+];
+
+const photos = [
+  { src: '/programs/teaching-classroom.jpg', alt: '導師在天主教領島學校授課，一名學生舉手回答。', span: true },
+  { src: '/programs/teaching-chalkboard-maths.jpg', alt: '導師在黑板上示範 1117 × 1117 的心算捷徑。', span: false },
+  { src: '/programs/teaching-ai-study-partner.jpg', alt: '導師手持手提電腦，示範如何向人工智能大聲講解一個數學概念，藉此檢查自己是否真的明白。', span: false },
+  { src: '/programs/teaching-ai-tools.jpg', alt: '兩位導師介紹人工智能助理可以做什麼：查找資料、拆解難題，以及協助寫作。', span: false },
+  { src: '/programs/teaching-exploring-interests.jpg', alt: '導師示範如何用人工智能探索自己的興趣，由恐龍、太空到音樂。', span: false },
+  { src: '/programs/teaching-english-careers.jpg', alt: '兩位導師教授英文單元，投影片說明英文如何在醫療、貿易、科技與旅遊業打開職業大門。', span: false },
+];
+---
+
+<BaseLayout
+  title="教學計劃"
+  pageClass="page-teaching"
+  description="為香港基層小學生提供免費補習——已教授 350 名兒童、覆蓋 7 所學校、43 位受訓學生導師；自 2024 年起，86% 學生至少上升一個組別。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker kicker-teaching">教學計劃</p>
+      <h1>為被制度忽略的孩子提供免費補習</h1>
+      <p class="lead">
+        受訓的學生導師為全港基層小學生授課，把學科與人工智能結合，讓它成為免費而有耐性的學習工具。
+      </p>
+    </div>
+  </section>
+
+  <section class="outcome">
+    <div class="container">
+      <p class="outcome-figure" data-reveal>
+        <span class="outcome-number"><span data-count="86">86</span>%</span><span class="outcome-rule" aria-hidden="true"></span>
+      </p>
+      <p class="outcome-sentence" data-reveal style="--reveal-delay:0.15s">
+        自 2024 年起，我們的學生至少上升一個組別。
+      </p>
+      <p class="quiet-facts" data-reveal style="--reveal-delay:0.25s">
+        已教授 350 名兒童 · 7 所學校 · 43 位受訓導師
+      </p>
+    </div>
+  </section>
+
+  <section class="modules">
+    <div class="container">
+      <h2 class="section-title">我們怎樣教——四個單元</h2>
+      <p class="modules-note prose">
+        每個單元把一個學科與人工智能配對，目的是收窄——而非拉闊——我們的學生與家境較佳的同齡人之間的差距。
+      </p>
+      <ol class="module-list">
+        {
+          modules.map((m) => (
+            <li class="module">
+              <div class="module-side">
+                <span class="module-glyph" aria-hidden="true">
+                  <Icon name={m.data.icon} size={22} />
+                </span>
+                <h3>{m.data.title_zh ?? m.data.title}</h3>
+              </div>
+              <div class="module-main">
+                <div class="module-body">
+                  <p>{m.data.body_zh}</p>
+                </div>
+                {m.data.why_zh && (
+                  <p class="module-why">
+                    <span>它如何收窄差距 —</span> {m.data.why_zh}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="sample tint-sample">
+    <div class="container">
+      <div class="prose">
+        <p class="kicker kicker-teaching">示範課堂</p>
+        <h2>數字大，不代表比較強</h2>
+        <p class="sample-note">
+          一節課，取材自上方的<strong>數學</strong>與<strong>英文</strong>單元。在此公開作為示範，讓學校在接待我們之前，先看見一節課是怎樣設計的。
+        </p>
+        <ul class="sample-meta">
+          <li><span>程度</span> 小五至小六</li>
+          <li><span>時長</span> 60 分鐘</li>
+          <li><span>人手</span> 每 8–10 名學生配 2 位導師</li>
+        </ul>
+      </div>
+
+      <div class="parts">
+        <article class="part">
+          <p class="part-tag">第一部分 · 數學 · 30 分鐘</p>
+          <h3>數字大，不代表比較強</h3>
+          <p class="objective">
+            <span>學習目標</span> 學生計算一個比率，並解釋為何較大的單一數值可能敗給較小的。
+          </p>
+          <p>
+            每位學生選兩個自己真的會玩的《Brawl Stars》角色，從自己的畫面上讀出每發傷害與裝彈速度。他們幾乎總會選一個慢而重、一個快而輕的，也幾乎總會以為數字大的那個會贏。
+          </p>
+          <p>
+            然後他們計算每秒傷害。通常是快的那個勝出。這一課的重點，就落在他們的假設與計算結果之間的落差：一個脫離脈絡的數字說明不了什麼，真正有用的數字幾乎都是比率。
+          </p>
+          <p class="aside">
+            <span>延伸</span> 裝彈速度要變成多少，答案才會倒過來？這是他們第一次解未知數——出於好奇，而不是出於課本。
+          </p>
+          <p class="aside watch">
+            <span>留意</span> 算式做對、卻說不出為何答案出乎意料的學生。解釋才是目標，乘數只是載體。
+          </p>
+        </article>
+
+        <article class="part">
+          <p class="part-tag">第二部分 · 英文 · 30 分鐘</p>
+          <h3>把理由寫出來</h3>
+          <p class="objective">
+            <span>學習目標</span> 學生寫一段短論證，包含主張、證據、公平陳述的反面觀點，以及建議。
+          </p>
+          <p>
+            他們用剛才算出的數字作證據，論證兩個角色之中哪一個較好。唯一的硬性規定：必須寫出一句真誠的句子，說明為什麼有人會合理地選另一個。寫不出來的，就是還未真正理解自己的論點。
+          </p>
+          <p>黑板上為以英文為第二語言的學生寫出句式：</p>
+          <ul class="frames">
+            <li>I think ______ is better because ______.</li>
+            <li>The evidence is ______.</li>
+            <li>Someone might choose ______ instead, because ______.</li>
+            <li>Even so, I would recommend ______ because ______.</li>
+          </ul>
+          <p>
+            四至五句就是一份完整的作品。請兩三位學生讀出自己的一份；其他人的任務是找出反面觀點，而不是評判誰贏。
+          </p>
+          <p class="aside watch">
+            <span>留意</span> 把反面觀點寫成稻草人的情況——例如「有人會選它，因為他玩得差」。退回重寫。學會誠實地陳述對方的立場，正是這個練習的全部意義。
+          </p>
+        </article>
+      </div>
+
+      <p class="sample-link">
+        主張、證據、誠實的反面理由、建議——這正是我們<a class="link-quiet" href="/zh/policy">向政府遞交每一份提案</a>所用的結構。我們在兩端教同一套方法：對十一歲的孩子，也對政策局。
+      </p>
+    </div>
+  </section>
+
+  <section class="partners">
+    <div class="container prose">
+      <h2 class="section-title">我們在哪裡教</h2>
+      <p>
+        我們於 7 所學校授課，包括<strong>天主教領島學校</strong>（何文田）與<strong>Kennedy Town School</strong>，並與社區夥伴<strong>St. Barnabas' Home &amp; Society</strong> 及<strong>10% Organisation</strong> 合作。
+      </p>
+    </div>
+  </section>
+
+  <section class="classroom">
+    <div class="container">
+      <h2 class="section-title">課室裡</h2>
+      <p class="modules-note prose">導師在天主教領島學校授課的情況。</p>
+      <div class="gallery">
+        {
+          photos.map((photo) => (
+            <button
+              type="button"
+              class={`shot ${photo.span ? 'shot-wide' : ''}`}
+              data-lightbox
+              data-src={photo.src}
+              data-alt={photo.alt}
+              aria-label={`放大相片：${photo.alt}`}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cohorts">
+    <div class="container">
+      <div class="prose">
+        <h2 class="section-title">與滬江維多利亞學校合辦</h2>
+        <p class="modules-note">
+          除小學計劃外，我們亦與滬江維多利亞學校合辦課程，對象為社區內的學生。
+        </p>
+      </div>
+
+      {
+        cohorts.map((cohort) => (
+          <div class="cohort">
+            <div class="cohort-head">
+              <h3>{cohort.years}</h3>
+              <p>{cohort.summary}</p>
+            </div>
+            <div class="cohort-grid">
+              {cohort.photos.map((photo) => (
+                <button
+                  type="button"
+                  class="shot"
+                  data-lightbox
+                  data-src={photo.src}
+                  data-alt={photo.alt}
+                  aria-label={`放大相片：${photo.alt}`}
+                >
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="anecdote">
+    <div class="container prose">
+      <h2 class="section-title">課堂上的一刻</h2>
+      <blockquote class="anecdote-quote">
+        我們到天主教領島學校時，原以為要花力氣說服一室的孩子，人工智能和時事跟他們的生活有關。我們錯了。他們並非不感興趣——只是從來沒有人把火種遞給他們。一小時之內，他們已經在爭論一個演算法能不能算是公平。缺的從來不是好奇心，而是機會。
+      </blockquote>
+    </div>
+  </section>
+</BaseLayout>
