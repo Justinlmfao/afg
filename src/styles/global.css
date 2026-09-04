@@ -27,6 +27,9 @@
   /* Type */
   --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* System mono — used only for the hero eyebrow and photo captions, so it
+     costs nothing to load. */
+  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
   /* Layout */
   --measure: 44rem;

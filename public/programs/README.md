@@ -17,8 +17,8 @@ Team and cover photographs:
 
 | Filename | Where it appears |
 | --- | --- |
-| `home-cover.jpg` | Home page hero — five members in the school courtyard |
 | `team-classroom.jpg` | Team page — six members in the classroom |
+| `teaching-classroom.jpg` | Also the full-bleed band under the home page hero |
 | `team-outside-school.jpg` | Team page and the About origin section — outside Ling To |
 
 Sessions at Victoria Shanghai Academy (Teaching page, six per year):

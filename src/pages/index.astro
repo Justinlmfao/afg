@@ -18,23 +18,71 @@ const modules = (await getCollection('programs'))
 ---
 
 <BaseLayout title="AI For Good">
-  <!-- 1. Hero — both halves in the first sentence -->
+  <!-- 1. Hero — editorial and quiet. No AI imagery: serif headline, one
+       accent, four verified figures under a hairline. The HK$50M is
+       deliberately kept out of the hero; it needs a sentence of context and
+       gets one further down and in full on /policy. -->
   <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-text">
-        <h1>
-          A student-led think tank in Hong Kong writing AI policy for the
-          government, and teaching the children that policy affects.
-        </h1>
+    <div class="container hero-inner">
+      <p class="eyebrow-mono">
+        <span class="eyebrow-rule" aria-hidden="true"></span>
+        Student-led policy research
+      </p>
+
+      <h1>Policy for a technology we'll inherit.</h1>
+
+      <p class="hero-sub">
+        We research how AI and economic policy shape Hong Kong, and file around
+        twenty recommendations a year to government consultations. We also
+        teach AI and economic literacy, free, to underprivileged primary
+        students — the children those decisions reach first.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-policy" href="/policy">
+          Read the policy work <span class="arrow">→</span>
+        </a>
+        <a class="hero-secondary" href="/teaching">
+          Our teaching programme <span class="arrow">→</span>
+        </a>
       </div>
-      <img
-        class="hero-photo"
-        src="/programs/home-cover.jpg"
-        alt="Five AI For Good members in the courtyard of Ho Man Tin Ling To Catholic School."
-        decoding="async"
-      />
+
+      <dl class="stat-strip">
+        <div>
+          <dt>~20</dt>
+          <dd>recommendations to government each year</dd>
+        </div>
+        <div>
+          <dt>350</dt>
+          <dd>children taught</dd>
+        </div>
+        <div>
+          <dt>7</dt>
+          <dd>partner schools</dd>
+        </div>
+        <div>
+          <dt>43</dt>
+          <dd>tutors trained</dd>
+        </div>
+      </dl>
     </div>
   </section>
+
+  <!-- One real photograph, full-bleed. Justin: add the month and year to the
+       caption below once you have them — a dated caption is worth more than
+       an undated one. -->
+  <figure class="hero-photo-band">
+    <img
+      src="/programs/teaching-classroom.jpg"
+      alt="A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer."
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>
+      Ho Man Tin Ling To Catholic School — a session from the tutoring
+      programme.
+    </figcaption>
+  </figure>
 
   <!-- 2. The two doors — the routing decision this page exists to serve -->
   <section class="doors-section">
@@ -202,38 +250,160 @@ const modules = (await getCollection('programs'))
     margin-bottom: 1rem;
   }
 
-  /* 1. Hero */
+  /* 1. Hero — single column, left-aligned, generous air */
   .hero {
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    padding-block: 4.5rem 3rem;
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 2.5rem;
+  @media (min-width: 52rem) {
+    .hero {
+      padding-block: 7.5rem 5rem;
+    }
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+  }
+
+  /* Mono eyebrow with a short hairline lead-in */
+  .eyebrow-mono {
+    display: flex;
     align-items: center;
+    gap: 0.7rem;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--graphite);
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow-rule {
+    display: block;
+    width: 18px;
+    height: 1px;
+    background: var(--ink);
+    flex-shrink: 0;
   }
 
   .hero h1 {
-    font-size: clamp(1.9rem, 3.9vw, 3rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 400;
-    line-height: 1.18;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 15ch;
   }
 
-  .hero-photo {
+  .hero-sub {
+    margin-top: 1.75rem;
+    max-width: 56ch;
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: var(--graphite);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .hero-secondary {
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1.5px solid var(--rule);
+    padding-bottom: 2px;
+    transition: border-color 0.15s ease;
+  }
+
+  .hero-secondary:hover {
+    border-bottom-color: var(--ink);
+    color: var(--ink);
+  }
+
+  .hero-secondary .arrow,
+  .hero-actions .arrow {
+    display: inline-block;
+    transition: transform 0.15s ease;
+  }
+
+  .hero-secondary:hover .arrow {
+    transform: translateX(3px);
+  }
+
+  /* Four verified figures under a hairline */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem 2rem;
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .stat-strip dt {
+    font-size: 1.75rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .stat-strip dd {
+    margin: 0.45rem 0 0;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--graphite);
+    max-width: 20ch;
+  }
+
+  /* Full-bleed photograph */
+  .hero-photo-band {
+    margin: 0;
+  }
+
+  .hero-photo-band img {
     width: 100%;
-    /* `height: auto` matters: an HTML height attribute would otherwise beat
-       aspect-ratio and stretch the photo. */
     height: auto;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 7;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--rule);
+    display: block;
   }
 
-  /* 2. The two doors */
+  .hero-photo-band figcaption {
+    max-width: var(--wide);
+    margin-inline: auto;
+    padding: 0.85rem 1.5rem 0;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: var(--graphite);
+  }
+
+  /* Motion: one sequence, fade up 12px with a 60ms stagger */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-inner > * {
+      animation: heroIn 0.4s ease-out both;
+    }
+    .hero-inner > *:nth-child(1) { animation-delay: 0ms; }
+    .hero-inner > *:nth-child(2) { animation-delay: 60ms; }
+    .hero-inner > *:nth-child(3) { animation-delay: 120ms; }
+    .hero-inner > *:nth-child(4) { animation-delay: 180ms; }
+    .hero-inner > *:nth-child(5) { animation-delay: 240ms; }
+  }
+
+  @keyframes heroIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+  }
+
+  /* 2. The two doors — full padding now that the photo band sits above */
   .doors-section {
-    padding-top: 0;
+    padding-top: clamp(2.75rem, 6vw, 4.5rem);
   }
 
   .doors {
@@ -457,7 +627,10 @@ const modules = (await getCollection('programs'))
   }
 
   @media (max-width: 52rem) {
-    .hero-grid,
+    .stat-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     .doors,
     .proof-grid,
     .cta-grid {
