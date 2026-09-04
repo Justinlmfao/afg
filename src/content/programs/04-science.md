@@ -1,7 +1,6 @@
 ---
 title: "Science & AI"
 icon: "science"
-variant: "amber"
 why: "It turns a borrowed smartphone into a laboratory, democratising the expensive lab access that separates well-resourced schools from under-resourced ones."
 order: 4
 ---
