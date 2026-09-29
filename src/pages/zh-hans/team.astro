@@ -3,13 +3,23 @@
 // Run `npm run zh-hans` to rebuild this from src/pages/zh/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/team.css';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-// Same team collection as the English page; only the role line is translated
-// (role_hans in src/content/team/*.md), and it falls back to English if absent.
-const members = (await getCollection('team'))
-  .filter((m) => !m.data.draft)
-  .sort((a, b) => a.data.order - b.data.order);
+// Same team collection and order as the English page. Role and bio come from
+// role_hans and bio_hans in src/content/team/*.md (bio_hans is one string per
+// paragraph). Anything untranslated falls back to English rather than
+// disappearing; anyone without a bio is listed without the toggle.
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role_hans ?? m.data.role,
+      paras: m.data.bio_hans,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
 ---
 
 <BaseLayout
@@ -49,18 +59,37 @@ const members = (await getCollection('team'))
     </div>
   </section>
 
+  <!-- The leads. Each name opens its bio: native <details>, so it works
+       without JavaScript and from the keyboard. -->
   <section class="section-tight">
     <div class="container">
-      <ul class="team-list">
+      <div class="people">
         {
-          members.map((person) => (
-            <li class="member">
-              <p class="member-name">{person.data.name}</p>
-              <p class="member-role">{person.data.role_hans ?? person.data.role}</p>
-            </li>
-          ))
+          members.map(({ name, role, paras, Bio }) =>
+            paras || Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2 class="person-name">{name}</h2>
+                    <span class="person-role">{role}</span>
+                  </span>
+                  <span class="person-toggle" aria-hidden="true" />
+                </summary>
+                <div class="person-bio" lang={paras ? undefined : 'en'}>
+                  {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
+                </div>
+              </details>
+            ) : (
+              <div class="person person-static">
+                <span class="person-head">
+                  <h2 class="person-name">{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
         }
-      </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>

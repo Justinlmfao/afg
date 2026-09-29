@@ -92,7 +92,7 @@ Two things to know when writing Chinese in these files:
 | --- | --- | --- |
 | A policy submission | `src/content/submissions/` | Fields: `title`, `submittedTo`, `date`, **`for`**, **`against`**, **`recommendation`**, optional `pdf`. Copy `example-submission.md`, fill it in, set `draft: false`. **Real, filed submissions only** — while the folder has none, the Policy page shows "Submissions are published here after they are filed." |
 | A teaching module | `src/content/programs/` | Markdown body is the description; `why` is the "closes the gap" line; `icon` names a glyph in `Icon.astro`. |
-| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio: anyone with one appears in **Who leads it** on the About page, where their name opens it. `bio_zh` is the Traditional Chinese, one quoted line per paragraph; run `npm run zh-hans` for the Simplified. Titles come from `role` / `role_zh`, so About and Team always agree. |
+| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens when you press their name on the Team page. `bio_zh` is the Traditional Chinese, one quoted line per paragraph; run `npm run zh-hans` for the Simplified. A member with no bio is listed without the toggle. |
 
 Set `draft: true` on any file to keep it as a hidden template.
 

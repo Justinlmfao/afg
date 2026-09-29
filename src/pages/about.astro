@@ -1,17 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/about.css';
-import { getCollection, render } from 'astro:content';
-
-// Everyone in src/content/team/ who has a bio (the Markdown body), in the same
-// order as the Team page. Name and title come from the same fields the Team
-// page uses, so the two pages can't disagree.
-const people = await Promise.all(
-  (await getCollection('team'))
-    .filter((m) => !m.data.draft && m.body?.trim())
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (m) => ({ ...m.data, Bio: (await render(m)).Content }))
-);
 ---
 
 <BaseLayout
@@ -197,33 +186,7 @@ const people = await Promise.all(
     </div>
   </section>
 
-  <!-- 6. The people — each name opens their bio. Native <details>, so it
-       works without JavaScript and with a keyboard. -->
-  <section class="people-section">
-    <div class="container">
-      <h2 class="mb">Who leads it</h2>
-      <div class="people">
-        {
-          people.map(({ name, role, Bio }) => (
-            <details class="person">
-              <summary>
-                <span class="person-head">
-                  <h3 class="person-name">{name}</h3>
-                  <span class="person-role">{role}</span>
-                </span>
-                <span class="person-toggle" aria-hidden="true" />
-              </summary>
-              <div class="person-bio">
-                <Bio />
-              </div>
-            </details>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Impact — the account first, then the two outcomes it rests on -->
+  <!-- 6. Impact — the account first, then the two outcomes it rests on -->
   <section class="impact">
     <div class="container">
       <h2 class="mb">Our impact</h2>
@@ -259,7 +222,7 @@ const people = await Promise.all(
     </div>
   </section>
 
-  <!-- 8. Partners -->
+  <!-- 7. Partners -->
   <section class="section-tight">
     <div class="container prose">
       <h2>Partners</h2>
@@ -270,7 +233,7 @@ const people = await Promise.all(
     </div>
   </section>
 
-  <!-- 9. Where we're going -->
+  <!-- 8. Where we're going -->
   <section class="section-tight ahead">
     <div class="container prose">
       <h2>What's next</h2>
@@ -290,7 +253,7 @@ const people = await Promise.all(
     </div>
   </section>
 
-  <!-- 10. Get involved -->
+  <!-- 9. Get involved -->
   <section class="section-tight">
     <div class="container prose">
       <h2>Get involved</h2>

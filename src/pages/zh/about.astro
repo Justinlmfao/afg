@@ -1,22 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/about.css';
-import { getCollection, render } from 'astro:content';
-
-// Same people, same order as the English page. The bio is bio_zh from
-// src/content/team/, one string per paragraph; anyone without one falls back
-// to their English bio rather than disappearing.
-const people = await Promise.all(
-  (await getCollection('team'))
-    .filter((m) => !m.data.draft && (m.body?.trim() || m.data.bio_zh?.length))
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (m) => ({
-      name: m.data.name,
-      role: m.data.role_zh ?? m.data.role,
-      paras: m.data.bio_zh,
-      Bio: (await render(m)).Content,
-    }))
-);
 ---
 
 <BaseLayout
@@ -134,30 +118,6 @@ const people = await Promise.all(
             導師必須先受訓才可授課，並依照圍繞四個單元編寫的教材施教；因此不論在哪一所學校、由哪一位導師任教，孩子得到的都是同一水準的課堂。
           </p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="people-section">
-    <div class="container">
-      <h2 class="mb">帶領我們的人</h2>
-      <div class="people">
-        {
-          people.map(({ name, role, paras, Bio }) => (
-            <details class="person">
-              <summary>
-                <span class="person-head">
-                  <h3 class="person-name">{name}</h3>
-                  <span class="person-role">{role}</span>
-                </span>
-                <span class="person-toggle" aria-hidden="true" />
-              </summary>
-              <div class="person-bio" lang={paras ? undefined : 'en'}>
-                {paras ? paras.map((p) => <p>{p}</p>) : <Bio />}
-              </div>
-            </details>
-          ))
-        }
       </div>
     </div>
   </section>

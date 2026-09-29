@@ -1,12 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/team.css';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
 // Team members from src/content/team/ (drafts excluded), sorted by `order`.
-const members = (await getCollection('team'))
-  .filter((m) => !m.data.draft)
-  .sort((a, b) => a.data.order - b.data.order);
+// The Markdown body of each file is that person's bio; pressing their name
+// opens it. Anyone without a bio is still listed, just without the toggle.
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
 ---
 
 <BaseLayout
@@ -47,19 +56,37 @@ const members = (await getCollection('team'))
     </div>
   </section>
 
+  <!-- The leads. Each name opens its bio: native <details>, so it works
+       without JavaScript and from the keyboard. -->
   <section class="section-tight">
     <div class="container">
-      <ul class="team-list">
+      <div class="people">
         {
-          members.map((person) => (
-            <li class="member">
-              <p class="member-name">{person.data.name}</p>
-              <p class="member-role">{person.data.role}</p>
-            </li>
-          ))
+          members.map(({ name, role, Bio }) =>
+            Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2 class="person-name">{name}</h2>
+                    <span class="person-role">{role}</span>
+                  </span>
+                  <span class="person-toggle" aria-hidden="true" />
+                </summary>
+                <div class="person-bio">
+                  <Bio />
+                </div>
+              </details>
+            ) : (
+              <div class="person person-static">
+                <span class="person-head">
+                  <h2 class="person-name">{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
         }
-      </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>
-

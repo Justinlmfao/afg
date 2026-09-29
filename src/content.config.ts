@@ -74,7 +74,7 @@ const programs = defineCollection({
   }),
 });
 
-// Team members (Team page; About page for anyone with a bio). The Markdown
+// Team members (Team page, where pressing a name opens the bio). The Markdown
 // body is the English bio. `bio_zh` is the Traditional Chinese, one string per
 // paragraph; `bio_hans` is generated from it by `npm run zh-hans`.
 const team = defineCollection({
