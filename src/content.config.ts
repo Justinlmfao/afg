@@ -74,7 +74,9 @@ const programs = defineCollection({
   }),
 });
 
-// Team members (Team page).
+// Team members (Team page; About page for anyone with a bio). The Markdown
+// body is the English bio. `bio_zh` is the Traditional Chinese, one string per
+// paragraph; `bio_hans` is generated from it by `npm run zh-hans`.
 const team = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/team' }),
   schema: z.object({
@@ -82,6 +84,8 @@ const team = defineCollection({
     role: z.string(),
     role_zh: z.string().optional(),
     role_hans: z.string().optional(),
+    bio_zh: z.array(z.string()).optional(),
+    bio_hans: z.array(z.string()).optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),

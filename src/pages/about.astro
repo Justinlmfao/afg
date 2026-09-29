@@ -1,6 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/about.css';
+import { getCollection, render } from 'astro:content';
+
+// Everyone in src/content/team/ who has a bio (the Markdown body), in the same
+// order as the Team page. Name and title come from the same fields the Team
+// page uses, so the two pages can't disagree.
+const people = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft && m.body?.trim())
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({ ...m.data, Bio: (await render(m)).Content }))
+);
 ---
 
 <BaseLayout
@@ -186,10 +197,50 @@ import '../styles/pages/about.css';
     </div>
   </section>
 
-  <!-- 6. Impact — outcomes lead, inputs sit smaller -->
+  <!-- 6. The people — each name opens their bio. Native <details>, so it
+       works without JavaScript and with a keyboard. -->
+  <section class="people-section">
+    <div class="container">
+      <h2 class="mb">Who leads it</h2>
+      <div class="people">
+        {
+          people.map(({ name, role, Bio }) => (
+            <details class="person">
+              <summary>
+                <span class="person-head">
+                  <h3 class="person-name">{name}</h3>
+                  <span class="person-role">{role}</span>
+                </span>
+                <span class="person-toggle" aria-hidden="true" />
+              </summary>
+              <div class="person-bio">
+                <Bio />
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Impact — the account first, then the two outcomes it rests on -->
   <section class="impact">
     <div class="container">
-      <h2 class="mb">Impact</h2>
+      <h2 class="mb">Our impact</h2>
+      <p class="impact-body">
+        What began as a small group of students in 2023 is now a movement of
+        35+ students who believe young people can change the world through
+        their own advocacy. Each year, AFG submits around 20 policy
+        recommendations to the Hong Kong government. We have contributed to the
+        Policy Address and Budget consultations since 2024, and are now
+        contributing to the First Five-Year Plan for Economic and Social
+        Development (2026–2030). Alongside this policy work, we have brought
+        education to 350 underprivileged children across our partner schools
+        and trained 43 student tutors. Since 2024, 86% of the students we teach
+        have moved up at least one class band. For us, policy and teaching come
+        from the same belief: that a better world is built by people who decide
+        not to wait.
+      </p>
       <div class="outcomes">
         <div class="outcome outcome-policy">
           <p class="outcome-figure">HK$50M</p>
@@ -205,14 +256,10 @@ import '../styles/pages/about.css';
           </p>
         </div>
       </div>
-      <p class="inputs">
-        350 children taught · 7 schools · 43 tutors trained · 35+ members ·
-        ~20 recommendations a year
-      </p>
     </div>
   </section>
 
-  <!-- 7. Partners -->
+  <!-- 8. Partners -->
   <section class="section-tight">
     <div class="container prose">
       <h2>Partners</h2>
@@ -223,7 +270,7 @@ import '../styles/pages/about.css';
     </div>
   </section>
 
-  <!-- 8. Where we're going -->
+  <!-- 9. Where we're going -->
   <section class="section-tight ahead">
     <div class="container prose">
       <h2>What's next</h2>
@@ -243,7 +290,7 @@ import '../styles/pages/about.css';
     </div>
   </section>
 
-  <!-- 9. Get involved -->
+  <!-- 10. Get involved -->
   <section class="section-tight">
     <div class="container prose">
       <h2>Get involved</h2>

@@ -1,6 +1,22 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/about.css';
+import { getCollection, render } from 'astro:content';
+
+// Same people, same order as the English page. The bio is bio_zh from
+// src/content/team/, one string per paragraph; anyone without one falls back
+// to their English bio rather than disappearing.
+const people = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft && (m.body?.trim() || m.data.bio_zh?.length))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role_zh ?? m.data.role,
+      paras: m.data.bio_zh,
+      Bio: (await render(m)).Content,
+    }))
+);
 ---
 
 <BaseLayout
@@ -122,9 +138,36 @@ import '../../styles/pages/about.css';
     </div>
   </section>
 
+  <section class="people-section">
+    <div class="container">
+      <h2 class="mb">帶領我們的人</h2>
+      <div class="people">
+        {
+          people.map(({ name, role, paras, Bio }) => (
+            <details class="person">
+              <summary>
+                <span class="person-head">
+                  <h3 class="person-name">{name}</h3>
+                  <span class="person-role">{role}</span>
+                </span>
+                <span class="person-toggle" aria-hidden="true" />
+              </summary>
+              <div class="person-bio" lang={paras ? undefined : 'en'}>
+                {paras ? paras.map((p) => <p>{p}</p>) : <Bio />}
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="impact">
     <div class="container">
-      <h2 class="mb">成效</h2>
+      <h2 class="mb">我們的成效</h2>
+      <p class="impact-body">
+        AI For Good 於 2023 年由一小群學生開始，如今已成為一股由超過 35 名學生組成的力量——我們相信，年輕人能夠透過自己的倡議改變世界。AFG 每年向香港政府提交約 20 項政策建議；自 2024 年起參與施政報告及財政預算案諮詢，現正就《經濟和社會發展第一個五年規劃（2026–2030）》提交意見。在政策工作以外，我們已為夥伴學校中 350 名基層兒童提供教育，並培訓了 43 位學生導師。自 2024 年起，我們所教的學生中有 86% 至少上升了一個組別。對我們而言，政策與教學源於同一個信念：更好的世界，是由那些決定不再等待的人建立起來的。
+      </p>
       <div class="outcomes">
         <div class="outcome outcome-policy">
           <p class="outcome-figure">HK$50M</p>
@@ -139,10 +182,6 @@ import '../../styles/pages/about.css';
           </p>
         </div>
       </div>
-      <p class="inputs">
-        已教授 350 名兒童 · 7 所學校 · 43 位受訓導師 · 超過 35 名成員 ·
-        每年約 20 份建議
-      </p>
     </div>
   </section>
 

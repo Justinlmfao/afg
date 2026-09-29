@@ -47,12 +47,18 @@ const TERMS = {
   有装置: '有设备',
   联络: '联系',
   营运: '运营',
+  持份者: '利益相关方',
+  透过: '通过',
+  轮候名单: '候诊名单',
   // 著 as an aspect particle is 着 in mainland Simplified; opencc leaves it,
-  // and a blanket swap would break 著作 and 顯著, so list the actual uses.
+  // and a blanket swap would break 著作 and 显著, so list the actual uses.
+  // Keys are the already-converted form (带著, not 帶著).
   看著: '看着',
   接著: '接着',
   跟著: '跟着',
-  帶著: '带着',
+  带著: '带着',
+  写著: '写着',
+  隔著: '隔着',
   沿著: '沿着',
   // Mainland Simplified sets quotations in “ ”, not 「 」.
   '「': '“',
@@ -105,8 +111,23 @@ for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
 // --- Content collections -------------------------------------------------
 
 // For each *_zh field in a collection file, write the Simplified twin beside
-// it. Existing *_hans lines are replaced, so this is idempotent.
+// it. Existing *_hans fields are replaced, so this is idempotent.
+//
+// A field is its key line plus any indented lines under it, so a list such as
+//   bio_zh:
+//     - "第一段"
+//     - "第二段"
+// is copied whole, the same way as a one-line `role_zh: "…"`.
 const COLLECTIONS = ['src/content/programs', 'src/content/team', 'src/content/submissions'];
+
+function splitFields(front) {
+  const fields = [];
+  for (const line of front.split('\n')) {
+    if (/^\s/.test(line) && fields.length) fields[fields.length - 1].push(line);
+    else fields.push([line]);
+  }
+  return fields;
+}
 
 for (const dir of COLLECTIONS) {
   if (!fs.existsSync(dir)) continue;
@@ -119,14 +140,15 @@ for (const dir of COLLECTIONS) {
     const front = text.slice(4, end);
     const rest = text.slice(end);
 
-    const lines = front.split('\n').filter((l) => !/^\w+_hans:/.test(l));
-    const withHans = lines.flatMap((line) => {
-      const m = line.match(/^(\w+)_zh:\s*(.*)$/);
-      if (!m) return [line];
-      return [line, `${m[1]}_hans: ${toHans(m[2])}`];
+    const fields = splitFields(front).filter(([first]) => !/^\w+_hans:/.test(first));
+    const withHans = fields.flatMap((field) => {
+      const m = field[0].match(/^(\w+)_zh:(.*)$/);
+      if (!m) return [field];
+      const twin = [`${m[1]}_hans:${toHans(m[2])}`, ...field.slice(1).map(toHans)];
+      return [field, twin];
     });
 
-    const next = '---\n' + withHans.join('\n') + rest;
+    const next = '---\n' + withHans.flat().join('\n') + rest;
     if (next !== text) {
       fs.writeFileSync(file, next);
       console.log(file);

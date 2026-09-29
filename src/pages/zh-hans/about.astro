@@ -3,6 +3,22 @@
 // Run `npm run zh-hans` to rebuild this from src/pages/zh/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/about.css';
+import { getCollection, render } from 'astro:content';
+
+// Same people, same order as the English page. The bio is bio_hans from
+// src/content/team/, one string per paragraph; anyone without one falls back
+// to their English bio rather than disappearing.
+const people = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft && (m.body?.trim() || m.data.bio_hans?.length))
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role_hans ?? m.data.role,
+      paras: m.data.bio_hans,
+      Bio: (await render(m)).Content,
+    }))
+);
 ---
 
 <BaseLayout
@@ -124,9 +140,36 @@ import '../../styles/pages/about.css';
     </div>
   </section>
 
+  <section class="people-section">
+    <div class="container">
+      <h2 class="mb">带领我们的人</h2>
+      <div class="people">
+        {
+          people.map(({ name, role, paras, Bio }) => (
+            <details class="person">
+              <summary>
+                <span class="person-head">
+                  <h3 class="person-name">{name}</h3>
+                  <span class="person-role">{role}</span>
+                </span>
+                <span class="person-toggle" aria-hidden="true" />
+              </summary>
+              <div class="person-bio" lang={paras ? undefined : 'en'}>
+                {paras ? paras.map((p) => <p>{p}</p>) : <Bio />}
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <section class="impact">
     <div class="container">
-      <h2 class="mb">成效</h2>
+      <h2 class="mb">我们的成效</h2>
+      <p class="impact-body">
+        AI For Good 于 2023 年由一小群学生开始，如今已成为一股由超过 35 名学生组成的力量——我们相信，年轻人能够通过自己的倡议改变世界。AFG 每年向香港政府提交约 20 项政策建议；自 2024 年起参与施政报告及财政预算案咨询，现正就《经济和社会发展第一个五年规划（2026–2030）》提交意见。在政策工作以外，我们已为伙伴学校中 350 名基层儿童提供教育，并培训了 43 位学生导师。自 2024 年起，我们所教的学生中有 86% 至少上升了一个组别。对我们而言，政策与教学源于同一个信念：更好的世界，是由那些决定不再等待的人建立起来的。
+      </p>
       <div class="outcomes">
         <div class="outcome outcome-policy">
           <p class="outcome-figure">HK$50M</p>
@@ -141,10 +184,6 @@ import '../../styles/pages/about.css';
           </p>
         </div>
       </div>
-      <p class="inputs">
-        已教授 350 名儿童 · 7 所学校 · 43 位受训导师 · 超过 35 名成员 ·
-        每年约 20 份建议
-      </p>
     </div>
   </section>
 
@@ -166,7 +205,7 @@ import '../../styles/pages/about.css';
           <span class="ahead-tag ahead-policy">政策</span>我们正就《经济和社会发展第一个五年规划（2026–2030）》提交意见，论述人工智能与经济政策应如何扩阔而非缩小机会。
         </li>
         <li>
-          <span class="ahead-tag ahead-teaching">教学</span>明年重返天主教领岛学校，带著四个单元与新一批导师。
+          <span class="ahead-tag ahead-teaching">教学</span>明年重返天主教领岛学校，带着四个单元与新一批导师。
         </li>
       </ul>
     </div>
