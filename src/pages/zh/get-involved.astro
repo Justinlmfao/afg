@@ -1,0 +1,92 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/contact.css';
+
+// Contact address chosen by Justin (school-affiliated).
+const email = 'ps20153216@student.vsa.edu.hk';
+---
+
+<BaseLayout
+  title="聯絡我們"
+  pageClass="page-contact"
+  description="聯絡 AI For Good：歡迎想參與研究或教學的學生、學校和合作夥伴，以及任何查詢。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">聯絡我們</p>
+      <h1>與我們聯絡</h1>
+      <p class="lead">
+        歡迎電郵至{' '}<a href={`mailto:${email}`}>{email}</a>，或填寫下面的表格。我們在香港。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <ul class="routes">
+        <li>
+          <h2>學生</h2>
+          <p>
+            想做真正的研究或教學？比起頭銜，我們更在乎你想做什麼。告訴我們你想參與哪方面的工作。
+          </p>
+        </li>
+        <li>
+          <h2>學校與夥伴</h2>
+          <p>
+            如果你的學校或機構服務基層家庭的孩子，我們很希望和你合作。課程、導師和器材都由我們負責。
+          </p>
+        </li>
+        <li>
+          <h2>其他查詢</h2>
+          <p>傳媒查詢、合作建議，或者只是想問問題，都歡迎來信。</p>
+        </li>
+      </ul>
+
+      <!--
+        Netlify Forms: `data-netlify` + the hidden `form-name` input let
+        Netlify capture submissions with no backend; the honeypot filters
+        simple bots. This form shares the name "contact" with the English
+        page, so both languages land in the same inbox in the Netlify
+        dashboard under Forms.
+      -->
+      <form
+        name="contact"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        class="contact-form"
+      >
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden-field">
+          <label>
+            如果您是真人，請勿填寫此欄： <input name="bot-field" />
+          </label>
+        </p>
+
+        <div class="field">
+          <label for="name">姓名</label>
+          <input id="name" type="text" name="name" required />
+        </div>
+
+        <div class="field">
+          <label for="email">電郵地址</label>
+          <input id="email" type="email" name="email" required />
+        </div>
+
+        <div class="field">
+          <label for="organization">機構 <span class="optional">（選填）</span></label>
+          <input id="organization" type="text" name="organization" />
+        </div>
+
+        <div class="field">
+          <label for="message">訊息</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-policy">
+          發送訊息 <span class="arrow">→</span>
+        </button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

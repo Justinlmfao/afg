@@ -1,0 +1,347 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/teaching.css';
+import Icon from '../../components/Icon.astro';
+import { getCollection } from 'astro:content';
+
+// Chinese module copy comes from title_zh / body_zh / why_zh in the same
+// content files as the English, falling back to English if not translated.
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const cohorts = [
+  {
+    years: '2024–25',
+    summary:
+      '教學生在自己的社區裡運用人工智能：這些工具擅長做什麼，以及怎樣用它們做些真正有用的事。',
+    photos: [
+      { src: '/programs/vsa-2024-25-group.jpg', alt: '2024/25 年度課程結束時，導師與學生在感謝參加者的投影片前合照。' },
+      { src: '/programs/vsa-2024-25-presenting.jpg', alt: '兩位導師在 2024/25 年度的一節課上向使用手提電腦的學生講解。' },
+      { src: '/programs/vsa-2024-25-activity.jpg', alt: '導師在螢幕上展示範例，說明人工智能影像工具如何把一張圖片轉換成另一張。' },
+      { src: '/programs/vsa-2024-25-helping-pair.jpg', alt: '導師俯身協助兩名一起使用手提電腦的學生。' },
+      { src: '/programs/vsa-2024-25-helping.jpg', alt: '導師協助一名使用手提電腦的年幼學生。' },
+      { src: '/programs/vsa-2024-25-side-by-side.jpg', alt: '導師與學生並肩在手提電腦前完成練習。' },
+    ],
+  },
+  {
+    years: '2025–26',
+    summary:
+      '教社區裡的孩子，人工智能可以令哪些事情變得更好，以及怎樣分辨和避開它被濫用的情況。',
+    photos: [
+      { src: '/programs/vsa-2025-26-group.jpg', alt: '年度結束時，導師在寫著「Thanks for joining — A.I. For Good 25–26」的白板前合照。' },
+      { src: '/programs/vsa-2025-26-cohort.jpg', alt: '2025/26 年度的學生與導師在課室內合照。' },
+      { src: '/programs/vsa-2025-26-uses.jpg', alt: '導師展示人工智能的用途例子，包括紓緩交通、預測天災，以及為基層學生提供輔導。' },
+      { src: '/programs/vsa-2025-26-poster.jpg', alt: '學生製作海報，列出問題、人工智能的解決方案，以及實行方式。' },
+      { src: '/programs/vsa-2025-26-discussion.jpg', alt: '導師與學生在手提電腦前討論作業。' },
+      { src: '/programs/vsa-2025-26-helping.jpg', alt: '導師在課堂上協助一名使用手提電腦的學生。' },
+    ],
+  },
+];
+
+const photos = [
+  { src: '/programs/teaching-classroom.jpg', alt: '導師在天主教領島學校授課，一名學生舉手回答。', span: true },
+  { src: '/programs/teaching-chalkboard-maths.jpg', alt: '導師在黑板上示範 1117 × 1117 的心算捷徑。', span: false },
+  { src: '/programs/teaching-ai-study-partner.jpg', alt: '導師手持手提電腦，示範如何向人工智能大聲講解一個數學概念，藉此檢查自己是否真的明白。', span: false },
+  { src: '/programs/teaching-ai-tools.jpg', alt: '兩位導師介紹人工智能助理可以做什麼：查找資料、拆解難題，以及協助寫作。', span: false },
+  { src: '/programs/teaching-exploring-interests.jpg', alt: '導師示範如何用人工智能探索自己的興趣，由恐龍、太空到音樂。', span: false },
+  { src: '/programs/teaching-english-careers.jpg', alt: '兩位導師教授英文單元，投影片說明英文如何在醫療、貿易、科技與旅遊業打開職業大門。', span: false },
+];
+---
+
+<BaseLayout
+  title="教學計劃"
+  pageClass="page-teaching"
+  description="為香港基層家庭的小學生提供免費補習。43 位受訓學生導師在 7 間學校教過 350 個孩子；自 2024 年起，86% 的學生至少升了一個組別。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker kicker-teaching">教學計劃</p>
+      <h1><span class="phrase">每個請不起補習的孩子，</span><span class="phrase">都值得一位免費導師</span></h1>
+      <p class="lead">
+        我們的學生導師在全港各區為基層家庭的小學生上課。每個科目都配上人工智能，讓孩子多了一個免費、有耐性、課後也能繼續用的學習夥伴。
+      </p>
+    </div>
+  </section>
+
+  <section class="outcome">
+    <div class="container">
+      <p class="outcome-figure" data-reveal>
+        <span class="outcome-number"><span data-count="86">86</span>%</span><span class="outcome-rule" aria-hidden="true"></span>
+      </p>
+      <p class="outcome-sentence" data-reveal style="--reveal-delay:0.15s">
+        的學生自 2024 年起，至少升了一個組別。
+      </p>
+      <p class="quiet-facts" data-reveal style="--reveal-delay:0.25s">
+        教過 350 個孩子 · 7 間學校 · 43 位受訓導師
+      </p>
+      <p class="outcome-note">
+        這 86% 不是我們一個人的功勞。老師、家長和學生自己都付出了努力。但這是我們用來要求自己的數字。
+      </p>
+    </div>
+  </section>
+
+  <section class="why-teach">
+    <div class="container prose">
+      <h2 class="section-title">我們為什麼教</h2>
+      <p>
+        在香港，課後的額外輔導通常要花錢。付得起補習費的家庭會請補習，付不起的，只能看著孩子落後。人工智能改變了這一點：第一次，一位能用五種方法解釋同一條題目、又有耐性的導師，可以免費得到。
+      </p>
+      <p>
+        但工具有多大用處，要看孩子懂不懂得好好使用。一個直接問人工智能要答案的孩子，什麼也學不到；一個先自己嘗試、再問提示、最後用自己的話解釋答案的孩子，學到的會比自己一個人學更多。教會孩子分辨這兩種用法，就是我們的導師在做的事。
+      </p>
+    </div>
+  </section>
+
+  <section class="think-first">
+    <div class="container">
+      <div class="prose">
+        <h2 class="section-title">我們怎樣教：Think First 先想後問</h2>
+        <p class="modules-note">每一節用到人工智能的課，都跟從同樣的四個步驟。</p>
+      </div>
+      <ol class="tf-steps">
+        <li>
+          <span class="tf-num">1</span>
+          <div><h3>嘗試</h3><p>孩子先自己試著解題。</p></div>
+        </li>
+        <li>
+          <span class="tf-num">2</span>
+          <div><h3>提問</h3><p>他們只問人工智能要提示或核對，永遠不直接問答案。</p></div>
+        </li>
+        <li>
+          <span class="tf-num">3</span>
+          <div><h3>核對</h3><p>他們比較人工智能的回應和自己的做法，找出不同之處。</p></div>
+        </li>
+        <li>
+          <span class="tf-num">4</span>
+          <div><h3>解釋</h3><p>關掉人工智能後，用自己的話解釋答案。</p></div>
+        </li>
+      </ol>
+      <div class="prose tf-after">
+        <p>
+          孩子能在沒有人工智能的情況下解釋，就代表學會了；做不到的話，我們就退回上一步。
+        </p>
+        <p>
+          我們不把人工智能當作獨立的科目來教。我們教數學、英文、經濟和科學，再讓孩子看到人工智能可以怎樣幫助他們學好每一科。我們的導師都是中學生，完成 AFG 的培訓後才開始教學，並以小組形式上課，讓每個孩子都得到照顧。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="modules">
+    <div class="container">
+      <h2 class="section-title">我們的四個單元</h2>
+      <p class="modules-note prose">
+        每個單元都把一個學科和人工智能配合起來，目的是縮窄我們的學生和家境較好的同齡人之間的差距，而不是令它擴大。
+      </p>
+      <ol class="module-list">
+        {
+          modules.map((m) => (
+            <li class="module">
+              <div class="module-side">
+                <span class="module-glyph" aria-hidden="true">
+                  <Icon name={m.data.icon} size={22} />
+                </span>
+                <h3>{m.data.title_zh ?? m.data.title}</h3>
+              </div>
+              <div class="module-main">
+                <div class="module-body">
+                  <p>{m.data.body_zh}</p>
+                </div>
+                {m.data.why_zh && (
+                  <p class="module-why">
+                    <span>有什麼幫助：</span>{m.data.why_zh}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="sample tint-sample">
+    <div class="container">
+      <div class="prose">
+        <p class="kicker kicker-teaching">示範課堂</p>
+        <h2>數字大，不代表比較強</h2>
+        <p class="sample-note">
+          這節課用上了上面的<strong>數學</strong>和<strong>英文</strong>單元。我們把它公開，讓學校在邀請我們之前，先看看一節課是怎樣設計的。
+        </p>
+        <ul class="sample-meta">
+          <li><span>程度</span> 小五至小六</li>
+          <li><span>時長</span> 60 分鐘</li>
+          <li><span>人手</span> 每 8–10 位學生配 2 位導師</li>
+        </ul>
+      </div>
+
+      <div class="parts">
+        <article class="part">
+          <p class="part-tag">第一部分 · 數學 · 30 分鐘</p>
+          <h3>數字大，不代表比較強</h3>
+          <p class="objective">
+            <span>學習目標</span> 學生計算一個比率，並解釋為什麼一個較大的數字，也可能輸給較小的那個。
+          </p>
+          <p>
+            每位學生選兩個自己真的會玩的《Brawl Stars》角色，從自己的手機畫面讀出每發傷害和裝彈速度。他們幾乎總會選一個又慢又重、一個又快又輕的角色，也幾乎總以為數字大的那個會贏。
+          </p>
+          <p>
+            然後他們計算每秒傷害，結果通常是快的那個勝出。這份意外就是這一課的重點：單看一個數字說明不了太多，真正重要的數字往往是一個比率。
+          </p>
+          <p>
+            然後是轉折：快的那個角色只能攻擊近距離的敵人。它還是較好的選擇嗎？現在答案要視乎你怎樣玩，而這正是第二部分要處理的。
+          </p>
+          <p class="aside">
+            <span>延伸</span> 裝彈速度要改變多少，答案才會倒過來？這是他們第一次解未知數，推動他們的是好奇心，而不是課本。
+          </p>
+          <p class="aside watch">
+            <span>留意</span> 算式做對、卻說不出為什麼答案出乎意料的學生。能解釋才是目標，乘法只是過程。
+          </p>
+        </article>
+
+        <article class="part">
+          <p class="part-tag">第二部分 · 英文 · 30 分鐘</p>
+          <h3>把理由寫出來</h3>
+          <p class="objective">
+            <span>學習目標</span> 學生寫一段短論證，包括主張、證據、公平地寫出對方的看法，以及建議。
+          </p>
+          <p>
+            他們用剛才算出的數字做證據，論證兩個角色之中哪一個較好。只有一條硬性規定：必須誠實地寫一句，說明為什麼有人會合理地選另一個角色。寫不出來的話，就代表還未真正明白自己的論點。
+          </p>
+          <p>我們會在黑板上寫好句子開頭，幫助以英文為第二語言的學生：</p>
+          <ul class="frames">
+            <li>I think ______ is better because ______.</li>
+            <li>The evidence is ______.</li>
+            <li>Someone might choose ______ instead, because ______.</li>
+            <li>Even so, I would recommend ______ because ______.</li>
+          </ul>
+          <p>
+            接著他們跟從 Think First 的步驟：每位學生請人工智能工具核對自己的計算，並給一個提示讓論點更有力，再自己判斷這些意見對不對。最後關掉人工智能，用自己的話向組員解釋自己的建議。
+          </p>
+          <p>
+            寫四、五句就是一份完整的作品。我們會請兩三位學生讀出自己寫的，其他人的任務是找出當中的反方論點，而不是判斷誰贏。
+          </p>
+          <p class="aside watch">
+            <span>留意</span> 把反方論點寫成貶低別人的話，例如「有人會選它，因為他玩得差」。這要退回重寫。學會公平地說出對方的立場，正是這個練習的意義。
+          </p>
+        </article>
+      </div>
+
+      <p class="sample-link">
+        主張、證據、誠實的反方理由，然後是建議：這正是我們<a class="link-quiet" href="/zh/policy">向政府提交每一份提案</a>時用的結構。我們教十一歲孩子的方法，和我們寫給決策者的方法是同一套。
+      </p>
+      <p class="sample-link">
+        反過來也一樣。我們在 2025 年 12 月提交的<a class="link-quiet" href="/zh/policy#think-first">《Think First 先想後問》提案</a>，就是把導師每星期都在用的方法，建議推廣到全港每一間小學。
+      </p>
+    </div>
+  </section>
+
+  <section class="partners">
+    <div class="container prose">
+      <h2 class="section-title">我們在哪裡教</h2>
+      <p>
+        我們在七間學校上課，包括何文田的<strong>天主教領島學校</strong>和 <strong>Kennedy Town School</strong>，也和社區夥伴 <strong>St. Barnabas' Home &amp; Society</strong> 及 <strong>10% Organisation</strong> 合作。
+      </p>
+    </div>
+  </section>
+
+  <section class="commitments">
+    <div class="container prose">
+      <h2 class="section-title">我們對學校和家長的承諾</h2>
+      <ul class="promise-list">
+        <li>導師上課時，一定有學校或中心的職員在場。</li>
+        <li>我們不收集兒童的個人資料。</li>
+        <li>我們只使用合作學校批准的人工智能工具。</li>
+        <li>教學永遠免費。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="classroom">
+    <div class="container">
+      <h2 class="section-title">課室裡</h2>
+      <p class="modules-note prose">我們的導師在天主教領島學校上課。</p>
+      <div class="gallery">
+        {
+          photos.map((photo) => (
+            <button
+              type="button"
+              class={`shot ${photo.span ? 'shot-wide' : ''}`}
+              data-lightbox
+              data-src={photo.src}
+              data-alt={photo.alt}
+              aria-label={`放大相片：${photo.alt}`}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cohorts">
+    <div class="container">
+      <div class="prose">
+        <h2 class="section-title">與滬江維多利亞學校合作</h2>
+        <p class="modules-note">
+          除了在小學上課，我們也和滬江維多利亞學校合辦課程，對象是社區裡的年輕人。
+        </p>
+      </div>
+
+      {
+        cohorts.map((cohort) => (
+          <div class="cohort">
+            <div class="cohort-head">
+              <h3>{cohort.years}</h3>
+              <p>{cohort.summary}</p>
+            </div>
+            <div class="cohort-grid">
+              {cohort.photos.map((photo) => (
+                <button
+                  type="button"
+                  class="shot"
+                  data-lightbox
+                  data-src={photo.src}
+                  data-alt={photo.alt}
+                  aria-label={`放大相片：${photo.alt}`}
+                >
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="anecdote">
+    <div class="container prose">
+      <h2 class="section-title">課堂上的一刻</h2>
+      <blockquote class="anecdote-quote">
+        我們去天主教領島學校之前，以為要花很多力氣，才能說服一班孩子人工智能和時事跟他們有關。我們錯了。他們不是沒有興趣，只是從來沒有人給過他們機會。不到一小時，他們已經在爭論一個演算法算不算公平。他們從來不缺好奇心，缺的是機會。
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="teach-ctas">
+    <div class="container teach-cta-grid">
+      <div>
+        <h2 class="h-cta">邀請我們到你的學校</h2>
+        <p>
+          如果你負責一間小學、社區中心或兒童計劃，希望為學生提供免費補習，歡迎聯絡我們。
+        </p>
+        <a class="btn btn-teaching" href="/zh/get-involved">聯絡我們 <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h2 class="h-cta">成為導師</h2>
+        <p>
+          如果你是想教學的中學生，我們會先為你提供培訓。
+        </p>
+        <a class="btn btn-policy" href="/zh/get-involved">報名 <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

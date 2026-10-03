@@ -8,10 +8,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "zh-hans": "node scripts/generate-simplified.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",
     "astro": "^7.0.3"
+  },
+  "devDependencies": {
+    "opencc-js": "^1.4.2"
   }
 }
