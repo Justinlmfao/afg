@@ -8,9 +8,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/home.css';
 import { getCollection } from 'astro:content';
+import { getLangFromUrl } from '../../i18n';
 
+const lang = getLangFromUrl(Astro.url);
 const submissions = (await getCollection('submissions'))
-  .filter((s) => !s.data.draft)
+  .filter((s) => !s.data.draft && s.data.lang === lang)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 2);
 
@@ -153,8 +155,8 @@ const modules = (await getCollection('programs'))
         {
           submissions.map((s) => (
             <li>
-              <a href="/zh-hans/policy">
-                <span class="latest-kind latest-policy">意见书</span><span class="latest-title">{s.data.title_hans ?? s.data.title}</span><span class="latest-meta">{s.data.date}</span>
+              <a href={`/zh-hans/policy#${s.data.key}`}>
+                <span class="latest-kind latest-policy">提案</span><span class="latest-title">{s.data.title}</span><span class="latest-meta">{s.data.date}</span>
               </a>
             </li>
           ))

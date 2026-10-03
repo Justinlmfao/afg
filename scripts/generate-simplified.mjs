@@ -51,6 +51,11 @@ const TERMS = {
   营运: '运营',
   持份者: '利益相关方',
   倾谈: '交谈',
+  打工仔: '上班族',
+  前线人员: '一线人员',
+  安老: '养老',
+  宽频: '宽带',
+  入息: '收入',
   楼价: '房价',
   缩窄: '缩小',
   筛走: '筛掉',
@@ -58,16 +63,6 @@ const TERMS = {
   间学校: '所学校',
   透过: '通过',
   轮候名单: '候诊名单',
-  // 著 as an aspect particle is 着 in mainland Simplified; opencc leaves it,
-  // and a blanket swap would break 著作 and 显著, so list the actual uses.
-  // Keys are the already-converted form (带著, not 帶著).
-  看著: '看着',
-  接著: '接着',
-  跟著: '跟着',
-  带著: '带着',
-  写著: '写着',
-  隔著: '隔着',
-  沿著: '沿着',
   // Mainland Simplified sets quotations in “ ”, not 「 」.
   '「': '“',
   '」': '”',
@@ -77,10 +72,24 @@ const TERMS = {
 
 const termPairs = Object.entries(TERMS).sort((a, b) => b[0].length - a[0].length);
 
+// 著 as an aspect particle (看著, 試著, 隨著) is 着 in mainland Simplified, and
+// opencc leaves it alone. It stays 著 only when it means "notable" or
+// "authored", so convert every 著 except inside these words.
+const ZHU_KEEP = /(著作|著名|显著|著重|著称|著述|著者|土著|卓著|名著|巨著|原著|专著|编著|论著)/g;
+
+function fixZhu(text) {
+  const kept = [];
+  const masked = text.replace(ZHU_KEEP, (m) => {
+    kept.push(m);
+    return `\u0000${kept.length - 1}\u0000`;
+  });
+  return masked.replace(/著/g, '着').replace(/\u0000(\d+)\u0000/g, (_, i) => kept[+i]);
+}
+
 function toHans(text) {
   let out = convert(text);
   for (const [from, to] of termPairs) out = out.split(from).join(to);
-  return out;
+  return fixZhu(out);
 }
 
 // --- Pages ---------------------------------------------------------------
@@ -102,6 +111,7 @@ for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
     // Links point at the Simplified pages.
     .replaceAll('"/zh/', '"/zh-hans/')
     .replaceAll("'/zh/", "'/zh-hans/")
+    .replaceAll('`/zh/', '`/zh-hans/')
     .replaceAll('href="/zh"', 'href="/zh-hans"')
     // Collection fields come from the *_hans columns, not the Traditional ones.
     .replace(/\b(\w+)_zh\b/g, '$1_hans')
@@ -114,6 +124,21 @@ for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
 
   fs.writeFileSync(path.join(OUT, name), out);
   console.log(`${OUT}/${name}`);
+}
+
+// --- Proposals -----------------------------------------------------------
+
+// Each proposal is a whole Markdown file per language. name.zh.md becomes
+// name.hans.md, converted in full and marked as generated.
+const PROPOSALS = 'src/content/submissions';
+for (const name of fs.readdirSync(PROPOSALS).filter((f) => f.endsWith('.zh.md'))) {
+  const source = fs.readFileSync(path.join(PROPOSALS, name), 'utf8');
+  const out = toHans(source)
+    .replace(/^lang: zh$/m, 'lang: hans')
+    .replace(/^---\n/, '---\n# GENERATED FILE: run `npm run zh-hans` to rebuild this from the .zh.md.\n');
+  const target = path.join(PROPOSALS, name.replace(/\.zh\.md$/, '.hans.md'));
+  fs.writeFileSync(target, out);
+  console.log(target);
 }
 
 // --- Content collections -------------------------------------------------

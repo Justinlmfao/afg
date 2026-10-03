@@ -90,7 +90,7 @@ Two things to know when writing Chinese in these files:
 
 | To add | Folder | Notes |
 | --- | --- | --- |
-| A policy submission | `src/content/submissions/` | Fields: `title`, `submittedTo`, `date`, **`for`**, **`against`**, **`recommendation`**, optional `pdf`. Copy `example-submission.md`, fill it in, set `draft: false`. **Real, filed submissions only** — while the folder has none, the Policy page shows "Submissions are published here after they are filed." |
+| A policy proposal | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. Copy `think-first.en.md` / `think-first.zh.md` as a starting point. Front matter: `title`, `lang`, `key`, `date`, `area`, `summary`, `order` (lower shows first, so give the newest the lowest number), optional `pdf`. The Markdown body is the full paper, using `####` for headings. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real proposals only.** |
 | A teaching module | `src/content/programs/` | Markdown body is the description; `why` is the "closes the gap" line; `icon` names a glyph in `Icon.astro`. |
 | A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens when you press their name on the Team page. `bio_zh` is the Traditional Chinese, one quoted line per paragraph; run `npm run zh-hans` for the Simplified. A member with no bio is listed without the toggle. |
 

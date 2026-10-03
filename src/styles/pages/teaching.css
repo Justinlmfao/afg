@@ -264,6 +264,139 @@
     max-width: var(--measure);
   }
 
+  .sample-link + .sample-link {
+    margin-top: 0.9rem;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  /* ---- The honest note under the 86% -------------------------------------- */
+  .outcome-note {
+    max-width: var(--measure);
+    margin-top: 1rem;
+    color: var(--graphite);
+    font-size: 0.95rem;
+  }
+
+  /* ---- Why we teach / Think First ----------------------------------------- */
+  .why-teach p {
+    color: var(--graphite);
+  }
+
+  .think-first {
+    border-top: 1px solid var(--rule);
+  }
+
+  .tf-steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 0.5rem 0 1.75rem;
+  }
+
+  .tf-steps li {
+    display: flex;
+    gap: 0.8rem;
+    padding-top: 1rem;
+    border-top: 3px solid var(--teaching);
+  }
+
+  .tf-num {
+    flex: none;
+    font-weight: 700;
+    color: var(--teaching-deep);
+  }
+
+  .tf-steps h3 {
+    font-size: 1.15rem;
+  }
+
+  .tf-steps p {
+    margin-top: 0.3rem;
+    color: var(--graphite);
+    font-size: 0.97rem;
+  }
+
+  .tf-after p {
+    color: var(--graphite);
+  }
+
+  @media (max-width: 52rem) {
+    .tf-steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .tf-steps {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- Promises to schools and families ------------------------------------ */
+  .commitments {
+    border-top: 1px solid var(--rule);
+  }
+
+  .promise-list {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .prose .promise-list {
+    padding-left: 0;
+  }
+
+  .promise-list li {
+    margin: 0;
+    padding: 0.7rem 0 0.7rem 1.6rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .prose .promise-list li + li {
+    margin-top: 0;
+  }
+
+  .promise-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--teaching-deep);
+    font-weight: 700;
+  }
+
+  /* ---- Two ways in --------------------------------------------------------- */
+  .teach-ctas {
+    border-top: 1px solid var(--rule);
+  }
+
+  .teach-cta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .h-cta {
+    font-size: 1.3rem;
+  }
+
+  .teach-cta-grid p {
+    color: var(--graphite);
+    margin-bottom: 1.1rem;
+    max-width: 36ch;
+  }
+
+  @media (max-width: 52rem) {
+    .teach-cta-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
   /* ---- Cohort galleries -------------------------------------------------- */
   .cohorts {
     border-top: 1px solid var(--rule);

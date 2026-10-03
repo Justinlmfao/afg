@@ -10,43 +10,35 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Policy submissions (Policy page).
+// Policy proposals (Policy page, and "Latest work" on the home page).
 //
-// Every proposal states the case for, then the case against, then the
-// recommendation — so those are first-class fields, and the page renders all
-// three in the standing proposal template. Only real, filed submissions
-// belong here; while the folder holds none (drafts excluded), the page shows
-// "Submissions are published here after they are filed."
+// One Markdown file per proposal per language, sharing a `key`:
+//   think-first.en.md    English
+//   think-first.zh.md    Traditional Chinese
+//   think-first.hans.md  Simplified, generated from the .zh.md by
+//                        `npm run zh-hans` (don't edit it by hand)
+// The front matter holds what the summary card shows; the Markdown body is the
+// full paper, which opens beneath it. Use #### for headings inside the body.
+// Only real proposals belong here.
 const submissions = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/submissions' }),
   schema: z.object({
     title: z.string(),
-    // The body / consultation the submission was made to,
-    // e.g. "the 2025–26 Budget consultation".
-    submittedTo: z.string(),
-    // Month + Year as you want it displayed, e.g. "February 2025".
+    lang: z.enum(['en', 'zh', 'hans']),
+    // Shared across the language versions; also the link anchor on /policy,
+    // e.g. /policy#think-first. (Not called `slug`: Astro would treat that as
+    // the entry's ID, and the language versions would collide.)
+    key: z.string(),
+    // As displayed, e.g. "December 2025".
     date: z.string(),
-    // The three parts of every proposal.
-    for: z.string(),
-    against: z.string(),
-    recommendation: z.string(),
-    // Optional Traditional Chinese. Anything omitted falls back to English
-    // on the /zh pages, so a half-translated entry still renders. The _hans
-    // twins are generated from these by `npm run zh-hans` — write the
-    // Traditional and run the script; don't translate twice.
-    title_zh: z.string().optional(),
-    submittedTo_zh: z.string().optional(),
-    for_zh: z.string().optional(),
-    against_zh: z.string().optional(),
-    recommendation_zh: z.string().optional(),
-    title_hans: z.string().optional(),
-    submittedTo_hans: z.string().optional(),
-    for_hans: z.string().optional(),
-    against_hans: z.string().optional(),
-    recommendation_hans: z.string().optional(),
+    // Policy area, e.g. "Education & inequality".
+    area: z.string(),
+    // Two or three sentences for the card.
+    summary: z.string(),
     // Optional PDF in /public/research/, referenced as "/research/file.pdf".
     pdf: z.string().optional(),
     draft: z.boolean().default(false),
+    // Lower first; newest proposals should get the lowest numbers.
     order: z.number().default(0),
   }),
 });

@@ -257,6 +257,168 @@
     padding: 0 1.75rem 1.4rem;
   }
 
+  /* ---- AI for All: why it matters / what we're watching ---------------- */
+  .flagship-more {
+    max-width: var(--measure);
+    margin-top: 2rem;
+  }
+
+  .flagship-more h3 {
+    font-size: 1.15rem;
+  }
+
+  .flagship-more p + h3 {
+    margin-top: 1.75rem;
+  }
+
+  .flagship-more p {
+    color: var(--graphite);
+  }
+
+  .watch-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .watch-list li {
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--graphite);
+  }
+
+  .watch-list strong {
+    color: var(--ink);
+  }
+
+  /* ---- Example proposals: a summary card that opens to the full paper -- */
+  .filings-note {
+    color: var(--graphite);
+    margin-bottom: 1.5rem;
+  }
+
+  .filed {
+    max-width: var(--measure);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--policy);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.75rem 1.2rem;
+    scroll-margin-top: 5rem;
+  }
+
+  .filed + .filed {
+    margin-top: 1.5rem;
+  }
+
+  .filed-meta {
+    font-size: 0.88rem;
+    color: var(--graphite);
+  }
+
+  .filed-meta time {
+    font-weight: 650;
+    color: var(--policy);
+  }
+
+  .filed-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin-top: 0.35rem;
+  }
+
+  .filed-summary {
+    margin-top: 0.75rem;
+    color: var(--ink);
+  }
+
+  .filed-more {
+    margin-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .filed-more summary {
+    cursor: pointer;
+    padding-top: 0.85rem;
+    font-weight: 650;
+    color: var(--policy);
+    list-style: none;
+  }
+
+  .filed-more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .filed-more summary::after {
+    content: ' ↓';
+  }
+
+  .filed-more[open] summary::after {
+    content: ' ↑';
+  }
+
+  /* The full paper: plain, readable document styles */
+  .filed-body {
+    padding-top: 0.5rem;
+    color: var(--ink);
+  }
+
+  .filed-body h4 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    margin: 1.75rem 0 0.6rem;
+  }
+
+  .filed-body p + p,
+  .filed-body p + ul,
+  .filed-body p + ol,
+  .filed-body ul + p,
+  .filed-body ol + p,
+  .filed-body table + p,
+  .filed-body p + table {
+    margin-top: 0.9rem;
+  }
+
+  .filed-body ul,
+  .filed-body ol {
+    padding-left: 1.25rem;
+  }
+
+  .filed-body li + li {
+    margin-top: 0.45rem;
+  }
+
+  /* Tables scroll sideways on a phone rather than squashing their text */
+  .filed-body table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .filed-body th,
+  .filed-body td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.55rem 0.75rem 0.55rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .filed-body th {
+    font-weight: 650;
+    color: var(--graphite);
+    border-bottom-color: var(--graphite);
+  }
+
+  /* The references list always closes the paper */
+  .filed-body > ul:last-child li {
+    font-size: 0.9rem;
+    color: var(--graphite);
+  }
+
   .empty-note {
     color: var(--graphite);
     border-left: 3px solid var(--rule);

@@ -1,14 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/policy.css';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import { getLangFromUrl } from '../i18n';
 
-// Real, filed submissions only (drafts are templates and never render).
-// While the collection is empty the page shows the filed-state note below —
-// inventing a think tank's output would discredit the whole page.
-const submissions = (await getCollection('submissions'))
-  .filter((s) => !s.data.draft)
-  .sort((a, b) => a.data.order - b.data.order);
+// Real proposals only, in this page's language (src/content/submissions/,
+// one file per language). Each renders as a summary card that opens to the
+// full paper. Inventing a think tank's output would discredit the whole page.
+const lang = getLangFromUrl(Astro.url);
+const proposals = await Promise.all(
+  (await getCollection('submissions'))
+    .filter((s) => !s.data.draft && s.data.lang === lang)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
+);
 ---
 
 <BaseLayout
@@ -172,6 +177,37 @@ const submissions = (await getCollection('submissions'))
         </div>
       </article>
 
+      <!-- Why AI for All matters to us, and what we'll judge it on. Kept to
+           two short blocks; the full argument is in the Think First paper. -->
+      <div class="flagship-more">
+        <h3>Why it matters</h3>
+        <p>
+          Access is only half the problem. In 2019, 94% of Hong Kong households
+          had internet access, but only 71% of households earning under HK$10,000
+          a month did. And even with a device, a child with nobody to show them
+          how to use AI well can end up leaning on it instead of learning from
+          it. That second gap is what our{' '}
+          <a href="#think-first">Think First proposal</a> is about.
+        </p>
+        <h3>What we're watching next</h3>
+        <ul class="watch-list">
+          <li>
+            <strong>Who it reaches.</strong> Whether the places really go to
+            students, parents and older people from low-income households, and
+            whether the government publishes who took part.
+          </li>
+          <li>
+            <strong>How it's taught.</strong> Whether the courses for children
+            teach them to think with AI, not just to use it.
+          </li>
+          <li>
+            <strong>Whether it grows.</strong> HK$50 million and 50,000 people is
+            a start. We'll keep arguing that the funding should follow the
+            demand.
+          </li>
+        </ul>
+      </div>
+
       <!-- Sources for the figures above. A page that cites a government
            allocation should show where the numbers come from — it is also
            what lets a reader check the one claim that matters.
@@ -214,13 +250,15 @@ const submissions = (await getCollection('submissions'))
         <li>
           <span class="step-num">1</span>
           <div>
-            <h3>Talking to our members</h3>
+            <h3>Talking to the people it affects</h3>
             <p>
-              Our topics come from what our members have actually seen, not from
-              the news. We ask the people who teach what happened in the
-              classroom, which children it affected, and whether it happened
-              once or every week. If only one person has noticed a problem, we
-              look for more evidence before turning it into a proposal.
+              Every proposal starts with the people a policy touches. Our topics
+              come from what our members have actually seen, not from the news,
+              and we interview teachers, parents, workers and frontline staff as
+              well as our own tutors: what happened, who it affected, and
+              whether it happens once or every week. If only one person has
+              noticed a problem, we look for more evidence before turning it
+              into a proposal.
             </p>
           </div>
         </li>
@@ -282,50 +320,47 @@ const submissions = (await getCollection('submissions'))
           <p class="part-label">Recommendation</p>
           <p class="part-body">
             What we're asking the government to do, in plain words, once both
-            sides have been heard.
+            sides have been heard, with what it would cost and how we'd know
+            whether it worked.
           </p>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- Filed submissions -->
+  <!-- Example proposals, newest first. Each card opens to the full paper. -->
   <section class="filings">
     <div class="container">
-      <h2 class="section-title">Submissions</h2>
+      <h2 class="section-title">Two of our proposals</h2>
+      <p class="filings-note prose">
+        Two examples of what we send to the government, newest first. Each one
+        makes the case for and against, then recommends something with a cost
+        and a way to measure whether it worked.
+      </p>
       {
-        submissions.length === 0 ? (
-          <p class="empty-note">We publish submissions here once they've been sent in.</p>
+        proposals.length === 0 ? (
+          <p class="empty-note">We publish proposals here once they've been sent in.</p>
         ) : (
-          <div class="filed-list">
-            {submissions.map((s) => (
-              <article class="proposal">
-                <header class="proposal-head">
-                  <h3 class="proposal-title">{s.data.title}</h3>
-                  <p class="proposal-meta">
-                    Submitted to {s.data.submittedTo} · {s.data.date}
-                  </p>
-                </header>
-                <div class="proposal-part">
-                  <p class="part-label">The case for</p>
-                  <p class="part-body">{s.data.for}</p>
+          proposals.map(({ key, title, date, area, summary, pdf, Body }) => (
+            <article class="filed" id={key}>
+              <p class="filed-meta">
+                <time>{date}</time> · {area}
+              </p>
+              <h3 class="filed-title">{title}</h3>
+              <p class="filed-summary">{summary}</p>
+              <details class="filed-more">
+                <summary>Read the full proposal</summary>
+                <div class="filed-body">
+                  <Body />
+                  {pdf && (
+                    <p>
+                      <a class="link-quiet" href={pdf}>Download the PDF →</a>
+                    </p>
+                  )}
                 </div>
-                <div class="proposal-part">
-                  <p class="part-label">The case against</p>
-                  <p class="part-body">{s.data.against}</p>
-                </div>
-                <div class="proposal-part part-recommendation">
-                  <p class="part-label">Recommendation</p>
-                  <p class="part-body">{s.data.recommendation}</p>
-                </div>
-                {s.data.pdf && (
-                  <p class="proposal-pdf">
-                    <a class="link-quiet" href={s.data.pdf}>Read the full submission (PDF) →</a>
-                  </p>
-                )}
-              </article>
-            ))}
-          </div>
+              </details>
+            </article>
+          ))
         )
       }
     </div>
