@@ -179,9 +179,17 @@ const modules = (await getCollection('programs'))
   <section class="section-tight latest">
     <div class="container">
       <h2 class="h-sm">
-        {submissions.length > 0 ? 'Latest work' : 'What we teach'}
+        Latest work
       </h2>
       <ul class="latest-list">
+        <!-- The flagship always leads the list -->
+        <li>
+          <a href="/policy#ai-for-all">
+            <span class="latest-kind latest-policy">Flagship</span>
+            <span class="latest-title">AI for All: HK$50 million in the 2026–27 Budget</span>
+            <span class="latest-meta">2026</span>
+          </a>
+        </li>
         {
           submissions.map((s) => (
             <li>

@@ -149,9 +149,17 @@ const modules = (await getCollection('programs'))
   <section class="section-tight latest">
     <div class="container">
       <h2 class="h-sm">
-        {submissions.length > 0 ? '最新工作' : '我们教什么'}
+        最新工作
       </h2>
       <ul class="latest-list">
+        <!-- The flagship always leads the list -->
+        <li>
+          <a href="/zh-hans/policy#ai-for-all">
+            <span class="latest-kind latest-policy">主要项目</span>
+            <span class="latest-title">AI for All：2026–27 年度财政预算案拨款五千万港元</span>
+            <span class="latest-meta">2026 年</span>
+          </a>
+        </li>
         {
           submissions.map((s) => (
             <li>

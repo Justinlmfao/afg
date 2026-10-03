@@ -257,10 +257,29 @@
     padding: 0 1.75rem 1.4rem;
   }
 
-  /* ---- AI for All: why it matters / what we're watching ---------------- */
+  /* ---- AI for All: even gaps between its groups -------------------------
+     intro → claim → timeline → our proposal → why / watching → sources.
+     Each group is separated by the same 2.5rem so none of them crowd or
+     float apart. */
+  .flagship .attribution {
+    margin-top: 2rem;
+  }
+
+  .flagship .timeline {
+    margin: 2.5rem 0 0;
+  }
+
+  .flagship .proposal {
+    margin-top: 2.5rem;
+  }
+
   .flagship-more {
     max-width: var(--measure);
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .flagship .sources {
+    margin-top: 2.5rem;
   }
 
   .flagship-more h3 {
