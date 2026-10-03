@@ -264,11 +264,15 @@
   }
 
   .flagship-more h3 {
-    font-size: 1.15rem;
+    font-size: 1.3rem;
+  }
+
+  .flagship-more h3 + p {
+    margin-top: 0.5rem;
   }
 
   .flagship-more p + h3 {
-    margin-top: 1.75rem;
+    margin-top: 2rem;
   }
 
   .flagship-more p {
@@ -286,6 +290,11 @@
     padding-block: 0.75rem;
     border-bottom: 1px solid var(--rule);
     color: var(--graphite);
+  }
+
+  /* The Sources block below brings its own rule */
+  .watch-list li:last-child {
+    border-bottom: none;
   }
 
   .watch-list strong {

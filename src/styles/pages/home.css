@@ -110,15 +110,15 @@
   }
 
   .stat-strip dt {
-    font-size: 1.75rem;
+    font-size: clamp(2rem, 4vw, 2.6rem);
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1;
   }
 
   .stat-strip dd {
-    margin: 0.45rem 0 0;
-    font-size: 0.75rem;
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
     line-height: 1.45;
     color: var(--graphite);
     max-width: 20ch;
