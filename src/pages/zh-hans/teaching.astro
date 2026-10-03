@@ -16,7 +16,7 @@ const cohorts = [
   {
     years: '2024–25',
     summary:
-      '教学生如何在自己的社区里运用人工智能——这些工具擅长什么，以及怎样把它们用在有用的事情上。',
+      '教学生在自己的社区里运用人工智能：这些工具擅长做什么，以及怎样用它们做些真正有用的事。',
     photos: [
       { src: '/programs/vsa-2024-25-group.jpg', alt: '2024/25 年度课程结束时，导师与学生在感谢参加者的幻灯片前合照。' },
       { src: '/programs/vsa-2024-25-presenting.jpg', alt: '两位导师在 2024/25 年度的一节课上向使用笔记本电脑的学生讲解。' },
@@ -29,7 +29,7 @@ const cohorts = [
   {
     years: '2025–26',
     summary:
-      '教社区里的孩子人工智能可以改善什么——以及如何识别并避开不合乎伦理的用法。',
+      '教社区里的孩子，人工智能可以令哪些事情变得更好，以及怎样分辨和避开它被滥用的情况。',
     photos: [
       { src: '/programs/vsa-2025-26-group.jpg', alt: '年度结束时，导师在写着“Thanks for joining — A.I. For Good 25–26”的白板前合照。' },
       { src: '/programs/vsa-2025-26-cohort.jpg', alt: '2025/26 年度的学生与导师在教室内合照。' },
@@ -54,14 +54,14 @@ const photos = [
 <BaseLayout
   title="教学计划"
   pageClass="page-teaching"
-  description="为香港基层小学生提供免费补习——已教授 350 名儿童、覆盖 7 所学校、43 位受训学生导师；自 2024 年起，86% 学生至少上升一个组别。"
+  description="为香港基层家庭的小学生提供免费补习。43 位受训学生导师在 7 所学校教过 350 个孩子；自 2024 年起，86% 的学生至少升了一个组别。"
 >
   <section class="page-top">
     <div class="container prose">
       <p class="kicker kicker-teaching">教学计划</p>
-      <h1>为被制度忽略的孩子提供免费补习</h1>
+      <h1><span class="phrase">为平时得不到补习的孩子，</span><span class="phrase">免费补习</span></h1>
       <p class="lead">
-        受训的学生导师为全港基层小学生授课，把学科与人工智能结合，让它成为免费而有耐性的学习工具。
+        我们的学生导师在全港各区为基层家庭的小学生上课。每个科目都配上人工智能，让孩子多了一个免费、有耐性、课后也能继续用的学习伙伴。
       </p>
     </div>
   </section>
@@ -72,19 +72,19 @@ const photos = [
         <span class="outcome-number"><span data-count="86">86</span>%</span><span class="outcome-rule" aria-hidden="true"></span>
       </p>
       <p class="outcome-sentence" data-reveal style="--reveal-delay:0.15s">
-        自 2024 年起，我们的学生至少上升一个组别。
+        的学生自 2024 年起，至少升了一个组别。
       </p>
       <p class="quiet-facts" data-reveal style="--reveal-delay:0.25s">
-        已教授 350 名儿童 · 7 所学校 · 43 位受训导师
+        教过 350 个孩子 · 7 所学校 · 43 位受训导师
       </p>
     </div>
   </section>
 
   <section class="modules">
     <div class="container">
-      <h2 class="section-title">我们怎样教——四个单元</h2>
+      <h2 class="section-title">我们怎样教：四个单元</h2>
       <p class="modules-note prose">
-        每个单元把一个学科与人工智能配对，目的是缩小——而非拉大——我们的学生与家境较佳的同龄人之间的差距。
+        每个单元都把一个学科和人工智能配合起来，目的是缩小我们的学生和家境较好的同龄人之间的差距，而不是令它扩大。
       </p>
       <ol class="module-list">
         {
@@ -102,7 +102,7 @@ const photos = [
                 </div>
                 {m.data.why_hans && (
                   <p class="module-why">
-                    <span>它如何缩小差距 —</span> {m.data.why_hans}
+                    <span>有什么帮助：</span>{m.data.why_hans}
                   </p>
                 )}
               </div>
@@ -119,12 +119,12 @@ const photos = [
         <p class="kicker kicker-teaching">示范课堂</p>
         <h2>数字大，不代表比较强</h2>
         <p class="sample-note">
-          一节课，取材自上方的<strong>数学</strong>与<strong>英文</strong>单元。在此公开作为示范，让学校在接待我们之前，先看见一节课是怎样设计的。
+          这节课用上了上面的<strong>数学</strong>和<strong>英文</strong>单元。我们把它公开，让学校在邀请我们之前，先看看一节课是怎样设计的。
         </p>
         <ul class="sample-meta">
           <li><span>程度</span> 小五至小六</li>
           <li><span>时长</span> 60 分钟</li>
-          <li><span>人手</span> 每 8–10 名学生配 2 位导师</li>
+          <li><span>人手</span> 每 8–10 位学生配 2 位导师</li>
         </ul>
       </div>
 
@@ -133,19 +133,19 @@ const photos = [
           <p class="part-tag">第一部分 · 数学 · 30 分钟</p>
           <h3>数字大，不代表比较强</h3>
           <p class="objective">
-            <span>学习目标</span> 学生计算一个比率，并解释为何较大的单一数值可能败给较小的。
+            <span>学习目标</span> 学生计算一个比率，并解释为什么一个较大的数字，也可能输给较小的那个。
           </p>
           <p>
-            每位学生选两个自己真的会玩的《Brawl Stars》角色，从自己的画面上读出每发伤害与装弹速度。他们几乎总会选一个慢而重、一个快而轻的，也几乎总会以为数字大的那个会赢。
+            每位学生选两个自己真的会玩的《Brawl Stars》角色，从自己的手机画面读出每发伤害和装弹速度。他们几乎总会选一个又慢又重、一个又快又轻的角色，也几乎总以为数字大的那个会赢。
           </p>
           <p>
-            然后他们计算每秒伤害。通常是快的那个胜出。这一课的重点，就落在他们的假设与计算结果之间的落差：一个脱离脉络的数字说明不了什么，真正有用的数字几乎都是比率。
+            然后他们计算每秒伤害，结果通常是快的那个胜出。这份意外就是这一课的重点：单看一个数字说明不了太多，真正重要的数字往往是一个比率。
           </p>
           <p class="aside">
-            <span>延伸</span> 装弹速度要变成多少，答案才会倒过来？这是他们第一次解未知数——出于好奇，而不是出于课本。
+            <span>延伸</span> 装弹速度要改变多少，答案才会倒过来？这是他们第一次解未知数，推动他们的是好奇心，而不是课本。
           </p>
           <p class="aside watch">
-            <span>留意</span> 算式做对、却说不出为何答案出乎意料的学生。解释才是目标，乘数只是载体。
+            <span>留意</span> 算式做对、却说不出为什么答案出乎意料的学生。能解释才是目标，乘法只是过程。
           </p>
         </article>
 
@@ -153,12 +153,12 @@ const photos = [
           <p class="part-tag">第二部分 · 英文 · 30 分钟</p>
           <h3>把理由写出来</h3>
           <p class="objective">
-            <span>学习目标</span> 学生写一段短论证，包含主张、证据、公平陈述的反面观点，以及建议。
+            <span>学习目标</span> 学生写一段短论证，包括主张、证据、公平地写出对方的看法，以及建议。
           </p>
           <p>
-            他们用刚才算出的数字作证据，论证两个角色之中哪一个较好。唯一的硬性规定：必须写出一句真诚的句子，说明为什么有人会合理地选另一个。写不出来的，就是还未真正理解自己的论点。
+            他们用刚才算出的数字做证据，论证两个角色之中哪一个较好。只有一条硬性规定：必须诚实地写一句，说明为什么有人会合理地选另一个角色。写不出来的话，就代表还未真正明白自己的论点。
           </p>
-          <p>黑板上为以英文为第二语言的学生写出句式：</p>
+          <p>我们会在黑板上写好句子开头，帮助以英文为第二语言的学生：</p>
           <ul class="frames">
             <li>I think ______ is better because ______.</li>
             <li>The evidence is ______.</li>
@@ -166,16 +166,16 @@ const photos = [
             <li>Even so, I would recommend ______ because ______.</li>
           </ul>
           <p>
-            四至五句就是一份完整的作品。请两三位学生读出自己的一份；其他人的任务是找出反面观点，而不是评判谁赢。
+            写四、五句就是一份完整的作品。我们会请两三位学生读出自己写的，其他人的任务是找出当中的反方论点，而不是判断谁赢。
           </p>
           <p class="aside watch">
-            <span>留意</span> 把反面观点写成稻草人的情况——例如“有人会选它，因为他玩得差”。退回重写。学会诚实地陈述对方的立场，正是这个练习的全部意义。
+            <span>留意</span> 把反方论点写成贬低别人的话，例如“有人会选它，因为他玩得差”。这要退回重写。学会公平地说出对方的立场，正是这个练习的意义。
           </p>
         </article>
       </div>
 
       <p class="sample-link">
-        主张、证据、诚实的反面理由、建议——这正是我们<a class="link-quiet" href="/zh-hans/policy">向政府递交每一份提案</a>所用的结构。我们在两端教同一套方法：对十一岁的孩子，也对政策局。
+        主张、证据、诚实的反方理由，然后是建议：这正是我们<a class="link-quiet" href="/zh-hans/policy">向政府提交每一份提案</a>时用的结构。我们教十一岁孩子的方法，和我们写给决策者的方法是同一套。
       </p>
     </div>
   </section>
@@ -184,7 +184,7 @@ const photos = [
     <div class="container prose">
       <h2 class="section-title">我们在哪里教</h2>
       <p>
-        我们于 7 所学校授课，包括<strong>天主教领岛学校</strong>（何文田）与 <strong>Kennedy Town School</strong>，并与社区伙伴 <strong>St. Barnabas' Home &amp; Society</strong> 及 <strong>10% Organisation</strong> 合作。
+        我们在七所学校上课，包括何文田的<strong>天主教领岛学校</strong>和 <strong>Kennedy Town School</strong>，也和社区伙伴 <strong>St. Barnabas' Home &amp; Society</strong> 及 <strong>10% Organisation</strong> 合作。
       </p>
     </div>
   </section>
@@ -192,7 +192,7 @@ const photos = [
   <section class="classroom">
     <div class="container">
       <h2 class="section-title">教室里</h2>
-      <p class="modules-note prose">导师在天主教领岛学校授课的情况。</p>
+      <p class="modules-note prose">我们的导师在天主教领岛学校上课。</p>
       <div class="gallery">
         {
           photos.map((photo) => (
@@ -215,9 +215,9 @@ const photos = [
   <section class="cohorts">
     <div class="container">
       <div class="prose">
-        <h2 class="section-title">与沪江维多利亚学校合办</h2>
+        <h2 class="section-title">与沪江维多利亚学校合作</h2>
         <p class="modules-note">
-          除小学计划外，我们亦与沪江维多利亚学校合办课程，对象为社区内的学生。
+          除了在小学上课，我们也和沪江维多利亚学校合办课程，对象是社区里的年轻人。
         </p>
       </div>
 
@@ -252,7 +252,7 @@ const photos = [
     <div class="container prose">
       <h2 class="section-title">课堂上的一刻</h2>
       <blockquote class="anecdote-quote">
-        我们到天主教领岛学校时，原以为要花力气说服一室的孩子，人工智能和时事跟他们的生活有关。我们错了。他们并非不感兴趣——只是从来没有人把火种递给他们。一小时之内，他们已经在争论一个演算法能不能算是公平。缺的从来不是好奇心，而是机会。
+        我们去天主教领岛学校之前，以为要花很多力气，才能说服一班孩子人工智能和时事跟他们有关。我们错了。他们不是没有兴趣，只是从来没有人给过他们机会。不到一小时，他们已经在争论一个演算法算不算公平。他们从来不缺好奇心，缺的是机会。
       </blockquote>
     </div>
   </section>

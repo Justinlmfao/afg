@@ -155,8 +155,19 @@ html[lang^='zh'] h3 {
   in Chinese. Headlines are fine that way — short lines suit them — but the two
   standfirst-sized lines below turn into narrow columns, so widen those.
 */
+/* Chinese has no spaces, so a headline can break in the middle of a word.
+   Wrap each phrase in .phrase: it moves to the next line as a unit, and still
+   wraps inside itself if it is wider than a narrow screen. */
+.phrase {
+  display: inline-block;
+}
+
 html[lang^='zh'] .page-teaching .outcome-sentence {
   max-width: 40ch;
+}
+
+html[lang^='zh'] .page-home .hero h1 {
+  max-width: 12em;
 }
 
 html[lang^='zh'] .page-about .why-claim {
@@ -175,6 +186,18 @@ html[lang^='zh'] .page-about .why-claim {
   max-width: var(--measure);
 }
 
+/* A narrow column inside the standard container keeps the container's left
+   edge: the width limit goes on the content, not on the box. Without this a
+   `container prose` block centres itself and sits indented from everything
+   around it. */
+.container.prose {
+  max-width: var(--wide);
+}
+
+.container.prose > * {
+  max-width: var(--measure);
+}
+
 .prose p + p,
 .prose p + ul,
 .prose ul + p {
@@ -189,8 +212,23 @@ html[lang^='zh'] .page-about .why-claim {
   margin-top: 0.4rem;
 }
 
+/* A heading always gets a little air before the text it introduces. */
+h1 + :is(p, ul, ol, dl, blockquote, form) {
+  margin-top: 1rem;
+}
+
+:is(h2, h3) + :is(p, ul, ol, dl, blockquote, form, figure) {
+  margin-top: 0.75rem;
+}
+
 section {
   padding-block: clamp(2.75rem, 6vw, 4.5rem);
+}
+
+/* For short sections that follow on from the one above, so a page of small
+   blocks reads as one run instead of a string of islands. */
+section.section-tight {
+  padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 hr {

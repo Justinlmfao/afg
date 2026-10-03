@@ -50,6 +50,12 @@ const TERMS = {
   联络: '联系',
   营运: '运营',
   持份者: '利益相关方',
+  倾谈: '交谈',
+  楼价: '房价',
+  缩窄: '缩小',
+  筛走: '筛掉',
+  // 間 as the counter for schools is HK usage; the mainland says 所.
+  间学校: '所学校',
   透过: '通过',
   轮候名单: '候诊名单',
   // 著 as an aspect particle is 着 in mainland Simplified; opencc leaves it,

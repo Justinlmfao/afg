@@ -44,7 +44,7 @@
   .outcome-sentence {
     font-family: var(--serif);
     font-size: clamp(1.3rem, 2.8vw, 1.9rem);
-    max-width: 26ch;
+    max-width: 32ch;
     margin-top: 0.75rem;
     line-height: 1.3;
   }

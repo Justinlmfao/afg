@@ -86,7 +86,7 @@ export const ui = {
     langLabel: 'Language',
     home: 'AI For Good — home',
     footerTagline:
-      'A student-led and student-founded organisation in Hong Kong: policy research submitted to lawmakers, and free tutoring for underprivileged primary students.',
+      'Students in Hong Kong writing policy recommendations for the government and running free tutoring for primary school children from underprivileged families.',
     footerMeta: 'Hong Kong · Founded June 2023',
   },
   zh: {
@@ -101,7 +101,7 @@ export const ui = {
     langLabel: '語言',
     home: 'AI For Good — 首頁',
     footerTagline:
-      'AI For Good 是一個由香港學生創辦並營運的組織：向政府提交政策建議，並為基層小學生提供免費補習。',
+      '一群香港學生，為政府撰寫政策建議，也為基層家庭的小學生提供免費補習。',
     footerMeta: '香港 · 於 2023 年 6 月創立',
   },
   hans: {
@@ -116,7 +116,7 @@ export const ui = {
     langLabel: '语言',
     home: 'AI For Good — 首页',
     footerTagline:
-      'AI For Good 是一个由香港学生创办并运营的组织：向政府提交政策建议，并为基层小学生提供免费补习。',
+      '一群香港学生，为政府撰写政策建议，也为基层家庭的小学生提供免费补习。',
     footerMeta: '香港 · 于 2023 年 6 月创立',
   },
 } as const;

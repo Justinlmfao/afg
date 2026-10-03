@@ -29,12 +29,17 @@ const email = 'ps20153216@student.vsa.edu.hk';
 
     <div class="footer-contact">
       <a href={`mailto:${email}`}>{email}</a>
-      <p class="footer-meta">{t.footerMeta} · &copy; {year} AI For Good</p>
+      <p class="footer-meta">{t.footerMeta} · <span class="nowrap">&copy; {year} AI For Good</span></p>
     </div>
   </div>
 </footer>
 
 <style>
+  /* Keep the copyright line in one piece when the column is narrow */
+  .nowrap {
+    white-space: nowrap;
+  }
+
   .site-footer {
     margin-top: auto;
     border-top: 1px solid var(--rule);

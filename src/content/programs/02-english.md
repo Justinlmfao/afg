@@ -1,19 +1,20 @@
 ---
 title: "English & AI"
 icon: "english"
-why: "Patient feedback and language exposure on demand, for children who have neither at home."
+why: "Patient feedback and plenty of English practice, for children who don't get either at home."
 title_zh: "英文與人工智能"
 title_hans: "英文与人工智能"
-body_zh: "學生把人工智能當作寫作夥伴：起草、索取意見、再修改。更重要的是，我們教他們批判 AI 寫出來的東西——找出薄弱的論點、事實錯誤與偏見。這正是家境較好的同齡人從補習老師和善於討論的家庭中吸收到的細讀與批判思考。對以英文為第二語言的學生而言，AI 夥伴提供的是無限次、不會被取笑的練習。"
-body_hans: "学生把人工智能当作写作伙伴：起草、索取意见、再修改。更重要的是，我们教他们批判 AI 写出来的东西——找出薄弱的论点、事实错误与偏见。这正是家境较好的同龄人从补习老师和善于讨论的家庭中吸收到的细读与批判思考。对以英文为第二语言的学生而言，AI 伙伴提供的是无限次、不会被取笑的练习。"
-why_zh: "隨時可得的耐心回饋與語言接觸，給本來兩者皆無的孩子。"
-why_hans: "随时可得的耐心回馈与语言接触，给本来两者皆无的孩子。"
+body_zh: "學生把人工智能當作寫作夥伴：先起稿，再請它給意見，然後修改。同樣重要的是，我們教他們質疑人工智能寫出來的東西，找出薄弱的論點、錯誤和偏見。家境較好的孩子，往往從補習老師和家中的討論學到這種細讀和批判思考。對以英文為第二語言的孩子來說，人工智能夥伴也代表可以無限次練習，不怕被人取笑。"
+body_hans: "学生把人工智能当作写作伙伴：先起稿，再请它给意见，然后修改。同样重要的是，我们教他们质疑人工智能写出来的东西，找出薄弱的论点、错误和偏见。家境较好的孩子，往往从补习老师和家中的讨论学到这种细读和批判思考。对以英文为第二语言的孩子来说，人工智能伙伴也代表可以无限次练习，不怕被人取笑。"
+why_zh: "給在家裡得不到耐心回饋、也少有機會練英文的孩子，多一個練習的對象。"
+why_hans: "给在家里得不到耐心回馈、也少有机会练英文的孩子，多一个练习的对象。"
 order: 2
 ---
 
-Students use AI as a writing partner: drafting, asking for feedback, and
-revising. Crucially, we teach them to critique what the AI produces — spotting
-weak arguments, factual errors, and bias — which builds the close-reading and
-critical-thinking skills wealthier peers absorb from tutors and discussion-rich
-homes. For second-language learners, an AI partner offers unlimited,
-judgement-free practice.
+Students use AI as a writing partner: they draft, ask for feedback and revise.
+Just as importantly, we teach them to question what the AI writes, spotting
+weak arguments, mistakes and bias. That builds the close reading and critical
+thinking that children from better-off families often pick up from tutors and
+conversations at home. For children learning English as a second language, an
+AI partner also means unlimited practice without anyone laughing at their
+mistakes.
