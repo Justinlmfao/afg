@@ -32,7 +32,17 @@ const {
   description = 'AI For Good is a student-run organisation in Hong Kong. We write policy recommendations for the government and run free tutoring for primary school children from underprivileged families.',
 } = Astro.props;
 
-const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
+// Each page's title ends with the site name, which says "Hong Kong" so it
+// can't be confused with the many other organisations called AI for Good.
+// A title that already starts with the name (the home pages) is used as is.
+const fullTitle = title.startsWith('AI For Good') ? title : `${title} — ${t.siteName}`;
+
+// Absolute URLs for the <head>. Always with a trailing slash, matching how
+// the pages are built (/policy/index.html), served and listed in the sitemap,
+// so every signal points search engines at the same address for each page.
+const site = Astro.site ?? Astro.url;
+const absolute = (path: string) => new URL(path.endsWith('/') ? path : `${path}/`, site).href;
+const canonical = absolute(Astro.url.pathname);
 ---
 
 <!doctype html>
@@ -44,7 +54,12 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
 
+    <!-- The one address this page should be indexed under -->
+    <link rel="canonical" href={canonical} />
+
     <meta property="og:title" content={fullTitle} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={t.siteName} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={ogLocale} />
@@ -55,11 +70,11 @@ const fullTitle = title === 'AI For Good' ? title : `${title} — AI For Good`;
         <link
           rel="alternate"
           hreflang={hreflangs[code]}
-          href={new URL(localizePath(Astro.url.pathname, code), Astro.site ?? Astro.url)}
+          href={absolute(localizePath(Astro.url.pathname, code))}
         />
       ))
     }
-    <link rel="alternate" hreflang="x-default" href={new URL(localizePath(Astro.url.pathname, 'en'), Astro.site ?? Astro.url)} />
+    <link rel="alternate" hreflang="x-default" href={absolute(localizePath(Astro.url.pathname, 'en'))} />
 
     <!-- Newsreader (headings) + Inter (body, UI, numbers) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

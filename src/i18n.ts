@@ -76,6 +76,7 @@ export function localizePath(pathname: string, lang: Lang): string {
 export const ui = {
   en: {
     skip: 'Skip to content',
+    siteName: 'AI For Good Hong Kong',
     nav: {
       about: 'About',
       policy: 'Policy',
@@ -91,6 +92,7 @@ export const ui = {
   },
   zh: {
     skip: '跳至主要內容',
+    siteName: 'AI For Good 香港',
     nav: {
       about: '關於我們',
       policy: '政策研究',
@@ -106,6 +108,7 @@ export const ui = {
   },
   hans: {
     skip: '跳至主要内容',
+    siteName: 'AI For Good 香港',
     nav: {
       about: '关于我们',
       policy: '政策研究',

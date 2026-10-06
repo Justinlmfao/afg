@@ -140,4 +140,12 @@ appear under **Forms** in the Netlify dashboard.
 **Cloudflare Pages** also serves the static output, but the Netlify form won't
 receive submissions there — swap in Formspree or rely on the published email.
 
-Before launch: set the real domain in `astro.config.mjs` (`site:`).
+The site's domain is **aiforgoodhk.org**, set as `site:` in `astro.config.mjs`.
+Canonical URLs, the language links in each page's `<head>`, the sitemap
+(`/sitemap-index.xml`) and `robots.txt` are all built from it, so if the domain
+ever changes, change it there and in `public/robots.txt`.
+
+After the first deploy, add the site to
+[Google Search Console](https://search.google.com/search-console) and submit
+`https://aiforgoodhk.org/sitemap-index.xml` so Google finds every page in all
+three languages.
