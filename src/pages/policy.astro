@@ -1,0 +1,397 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/pages/policy.css';
+import { render } from 'astro:content';
+import { getLangFromUrl } from '../i18n';
+import { getPapers, formatMonth, paperLabels } from '../papers';
+
+// Real papers only, in this page's language (src/content/submissions/, one
+// file per language), oldest first. Each renders as a summary card that opens
+// to the full paper. Inventing a think tank's output would discredit the whole
+// page, so only a paper actually sent is labelled a submission.
+const lang = getLangFromUrl(Astro.url);
+const label = paperLabels[lang];
+const papers = await Promise.all(
+  (await getPapers(lang)).map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
+);
+// For "Builds on" / "Led to" links, which appear only when both papers exist
+const titles = new Map(papers.map((p) => [p.key, p.title]));
+---
+
+<BaseLayout
+  title="Policy"
+  description="AI For Good's policy work: written recommendations to the Hong Kong government, about twenty a year, for the Policy Address, the Budget and the First Five-Year Plan."
+
+  pageClass="page-policy">
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">Policy</p>
+      <h1>We write to the people who make the decisions</h1>
+      <p class="lead">
+        Our policy team looks into problems we see in Hong Kong and writes
+        recommendations to the government. Everything marked as a submission
+        was actually sent to the government, and there's more on the way.
+      </p>
+    </div>
+  </section>
+
+  <!-- The record, as a ruled ledger — one weighted row -->
+  <section class="record rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">So far</h2>
+      <div class="rail-body">
+        <dl class="ledger">
+          <div class="ledger-row">
+            <dt class="ledger-figure">~20</dt>
+            <dd class="ledger-label">recommendations sent to the government each year</dd>
+          </div>
+          <div class="ledger-row weighted">
+            <dt class="ledger-figure">HK$50M</dt>
+            <dd class="ledger-label">
+              allocated to <strong>AI for All</strong> in the 2026–27 Budget, the
+              kind of inclusive AI programme we'd been arguing for.{' '}
+              <a class="link-quiet" href="#ai-for-all">What we sent, and what we can claim →</a>
+            </dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-figure">2024–</dt>
+            <dd class="ledger-label">
+              responses to every Policy Address and Budget consultation since 2024
+            </dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-figure">2026–2030</dt>
+            <dd class="ledger-label">
+              our submission to the First Five-Year Plan for Economic and Social
+              Development, in progress
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flagship: AI for All.
+       Attribution is deliberately limited: AI for All is a government
+       programme. We say we recommended it and the Budget went that way, and
+       nothing stronger, because a stronger claim is one nobody could verify,
+       and one unverifiable claim would put every other number here in doubt.
+       TODO (Justin): link the Budget speech / Budget paper as the source for
+       the figures below, and attach the August 2025 submission as a PDF once
+       it is cleared for publication. -->
+  <section id="ai-for-all" class="flagship rail-section">
+    <div class="container rail">
+      <div class="rail-head">
+        <p class="kicker">Our main project</p>
+        <h2>AI for All</h2>
+      </div>
+      <div class="rail-body">
+        <p class="flagship-lede">
+          In February 2026, the Hong Kong Budget set aside HK$50 million for an
+          inclusive AI programme. Over two years it aims to reach about 50,000
+          people through more than 200 courses, seminars and competitions. It's
+          run by Cyberport, HKSTP and the Hong Kong Productivity Council, and
+          Cyberport's part is aimed at students, parents, older people and
+          underprivileged communities.
+        </p>
+
+      <!-- The credibility guard, stated before anything else -->
+      <p class="attribution">
+        <strong>What we can claim:</strong> we recommended it, and the Budget
+        went that way. AI for All is a government programme, paid for and run by
+        public bodies. We didn't fund it and we don't run it.
+      </p>
+
+      <ol class="timeline">
+        <li>
+          <span class="t-phase">What we noticed<span class="t-date">2024</span></span>
+          <span class="t-body">
+            We were teaching in schools that had no AI lessons and no money to
+            start any, and we saw the same thing in every classroom. The
+            children picked things up fast. What they were missing was access.
+            The families most likely to be left behind by AI were also the ones
+            that programmes run through schools and employers were least likely
+            to reach.
+          </span>
+        </li>
+        <li>
+          <span class="t-phase">What we did<span class="t-date">Aug 2025</span></span>
+          <span class="t-body">
+            We turned what we'd seen into a written argument. We interviewed
+            the members who teach, looked at what public support already existed
+            and who it was missing, and wrote a proposal with the case for, the
+            case against and our recommendation. We sent it to the Policy
+            Address consultation in August 2025, then made the same case again
+            in our Budget submission.
+          </span>
+        </li>
+        <li>
+          <span class="t-phase">What changed<span class="t-date">Feb–Jun 2026</span></span>
+          <span class="t-body">
+            The 2026–27 Budget allocated HK$50 million to AI for All, and the
+            programme launched in June 2026. The argument we'd been making was
+            echoed in how it was designed: Cyberport's part is aimed at
+            students, parents, older people and underprivileged communities,
+            the same groups we said a general push on AI skills would reach
+            last. The sources are listed below, so you can check this yourself.
+          </span>
+        </li>
+      </ol>
+
+      <!-- Same three-part structure as every proposal, so the method is
+           visible on our own flagship result too. -->
+      <article class="proposal" aria-label="AI for All: our submission and how we read the result">
+        <div class="proposal-part">
+          <p class="part-label">Why we asked for it</p>
+          <p class="part-body">
+            We teach AI to primary school children in schools with no AI lessons
+            and no budget for them. The children were interested and quick to
+            learn. What they lacked was access. So every year our submissions
+            made the same point: if AI training only comes through schools and
+            employers, it reaches families who already have it and misses the
+            ones who don't. Public money should reach the people at the back of
+            the queue first.
+          </p>
+        </div>
+        <div class="proposal-part">
+          <p class="part-label">What we submitted</p>
+          <p class="part-body">
+            In August 2025 we made this argument to the Policy Address
+            consultation, and again in our Budget submission. We asked the
+            government to fund AI learning directly for the people least likely
+            to come across it, such as children in under-resourced schools,
+            their parents and older residents, instead of going through
+            organisations that would reach them last. We asked for money set
+            aside for that group in particular, not a general promise about AI
+            skills.
+          </p>
+        </div>
+        <div class="proposal-part part-recommendation">
+          <p class="part-label">What it means, and what it doesn't</p>
+          <p class="part-body">
+            This is a start, not the finish. The government has called HK$50
+            million an initial amount, and the 50,000-participant target a
+            baseline based on current resources. Officials have said more money
+            could follow if there's demand. Fifty thousand people is a small
+            share of Hong Kong. Our view for the next round is that the demand is
+            there and the funding should follow, and we plan to say so in our
+            submission to the First Five-Year Plan.
+          </p>
+        </div>
+      </article>
+
+      <!-- Why AI for All matters to us, and what we'll judge it on. Kept to
+           two short blocks; the full argument is in the Think First paper. -->
+      <div class="flagship-more">
+        <h3>Why it matters</h3>
+        <p>
+          Access is only half the problem. In 2019, 94% of Hong Kong households
+          had internet access, but only 71% of households earning under HK$10,000
+          a month did. And even with a device, a child with nobody to show them
+          how to use AI well can end up leaning on it instead of learning from
+          it. That second gap is what our{' '}
+          <a href="#think-first">Think First proposal</a> is about.
+        </p>
+        <h3>What we're watching next</h3>
+        <ul class="watch-list">
+          <li>
+            <strong>Who it reaches.</strong> Whether the places really go to
+            students, parents and older people from low-income households, and
+            whether the government publishes who took part.
+          </li>
+          <li>
+            <strong>How it's taught.</strong> Whether the courses for children
+            teach them to think with AI, not just to use it.
+          </li>
+          <li>
+            <strong>Whether it grows.</strong> HK$50 million and 50,000 people is
+            a start. We'll keep arguing that the funding should follow the
+            demand.
+          </li>
+        </ul>
+      </div>
+
+      <!-- Sources for the figures above. A page that cites a government
+           allocation should show where the numbers come from — it is also
+           what lets a reader check the one claim that matters.
+           Justin: confirm each link still resolves before launch, and check
+           the wording above matches what these actually say. -->
+      <aside class="sources" aria-label="Sources for the AI for All figures">
+        <p class="sources-label">Sources</p>
+        <ul>
+          <li>
+            <a href="https://www.info.gov.hk/gia/general/202606/10/P2026061000476.htm" rel="noopener">
+              Government press release, 10 June 2026
+            </a>
+            <span>info.gov.hk</span>
+          </li>
+          <li>
+            <a href="https://www.thestandard.com.hk/news/article/334092/HK-launches-50m-AI-for-All-campaign-to-benefit-50000-residents" rel="noopener">
+              "HK launches $50m AI for All campaign to benefit 50,000 residents"
+            </a>
+            <span>The Standard</span>
+          </li>
+          <li>
+            <a href="https://www.scmp.com/news/hong-kong/hong-kong-economy/article/3365474/hong-kong-launch-free-ai-courses-tech-giants-google-microsoft-smes" rel="noopener">
+              "Hong Kong to launch free AI courses with tech giants Google, Microsoft for SMEs"
+            </a>
+            <span>South China Morning Post</span>
+          </li>
+        </ul>
+      </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- The method, shown structurally -->
+  <section class="method rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How we write a proposal</h2>
+      <div class="rail-body">
+        <!-- Justin: adjust the detail under each step to match how the team
+             actually works — this is the section a sceptical reader uses to
+             decide whether the work is systematic or ad hoc. -->
+        <ol class="steps-detail">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <h3>Talking to the people it affects</h3>
+              <p>
+                Every proposal starts with the people a policy touches. Our topics
+                come from what our members have actually seen, not from the news,
+                and we interview teachers, parents, workers and frontline staff as
+                well as our own tutors: what happened, who it affected, and
+                whether it happens once or every week. If only one person has
+                noticed a problem, we look for more evidence before turning it
+                into a proposal.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <h3>Research</h3>
+              <p>
+                Next we check whether it's really a policy problem. What does the
+                government already fund in this area? Who does that help, and who
+                does it miss? What have similar places tried, and what did it
+                cost? If an existing policy already covers it, we say so and drop
+                it. This step is meant to rule proposals out, not to justify them.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <h3>Writing and submitting</h3>
+              <p>
+                A member writes the proposal in the three-part format below, and
+                we make the case against as strong as we honestly can. If it wins,
+                the proposal doesn't go out. The ones that survive go to whichever
+                consultation is open, whether that's the Policy Address, the
+                Budget or a bureau's own call for views, with a recommendation
+                clear enough to act on.
+              </p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="method-note">
+          Every proposal follows the same three-part format:
+        </p>
+
+        <!-- The standing proposal template. Real submissions below render in
+             exactly this structure; here it carries the method itself. -->
+        <article class="proposal proposal-demo" aria-label="The format every proposal follows">
+          <header class="proposal-head">
+            <h3 class="proposal-title">The format every proposal follows</h3>
+            <p class="proposal-meta">How we structure every AFG submission</p>
+          </header>
+          <div class="proposal-part">
+            <p class="part-label">The case for</p>
+            <p class="part-body">
+              The strongest arguments in favour: what the policy would achieve,
+              who it would help, and the evidence for it.
+            </p>
+          </div>
+          <div class="proposal-part">
+            <p class="part-label">The case against</p>
+            <p class="part-body">
+              The honest arguments against: the costs, the risks and who would
+              bear them. If these win, we don't submit.
+            </p>
+          </div>
+          <div class="proposal-part part-recommendation">
+            <p class="part-label">Recommendation</p>
+            <p class="part-body">
+              What we're asking the government to do, in plain words, once both
+              sides have been heard, with what it would cost and how we'd know
+              whether it worked.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our papers, oldest first. Each card opens to the full paper. -->
+  <section class="filings rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Our papers</h2>
+      <div class="rail-body">
+        <p class="filings-note">
+          Oldest first. A <strong>submission</strong> is a proposal we sent to a
+          government consultation. A <strong>look back</strong> is a review we
+          wrote later of a measure the government has already taken: what
+          changed, who it reaches, and what we'd change now. Look-backs show
+          when the measure was announced and when we wrote about it, and are
+          listed by the first date. Every paper makes the case for and against
+          before it recommends anything.
+        </p>
+        {
+          papers.length === 0 ? (
+            <p class="empty-note">We publish papers here once they're finished.</p>
+          ) : (
+            papers.map(({ key, title, kind, measureDate, written, area, summary, builtOn, ledTo, pdf, Body }) => (
+              <article class={`filed filed-${kind}`} id={key}>
+                <p class="filed-meta">
+                  <span class="filed-kind">{label.kind[kind]}</span>
+                  {measureDate && (
+                    <>
+                      {' · '}
+                      {label.announced}<time datetime={measureDate}>{formatMonth(measureDate, lang)}</time>
+                    </>
+                  )}
+                  {' · '}
+                  {label.written}<time datetime={written}>{formatMonth(written, lang)}</time>
+                  {' · '}
+                  {area}
+                </p>
+                <h3 class="filed-title">{title}</h3>
+                <p class="filed-summary">{summary}</p>
+                {[['builtOn', builtOn], ['ledTo', ledTo]].map(([rel, target]) =>
+                  target && titles.has(target) ? (
+                    <p class="filed-link">
+                      {label[rel as 'builtOn' | 'ledTo']}<a href={`#${target}`}>{titles.get(target)}</a>
+                    </p>
+                  ) : null
+                )}
+                <details class="filed-more">
+                  <summary>Read the full paper</summary>
+                  <div class="filed-body">
+                    <Body />
+                    {pdf && (
+                      <p>
+                        <a class="link-quiet" href={pdf}>Download the PDF →</a>
+                      </p>
+                    )}
+                  </div>
+                </details>
+              </article>
+            ))
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,175 @@
+// Trilingual routing and shared UI strings.
+//
+// English is the default and lives at the root (/, /about, /policy…).
+// Traditional Chinese lives under /zh, Simplified under /zh-hans.
+// Page prose lives in the page files themselves — only chrome and shared
+// labels are here, so translating a page means editing that page.
+//
+// Traditional is the source of the Chinese: the /zh-hans pages are generated
+// from /zh by `npm run zh-hans`. See scripts/generate-simplified.mjs.
+
+export const languages = {
+  en: 'English',
+  zh: '繁體中文',
+  hans: '简体中文',
+} as const;
+
+export type Lang = keyof typeof languages;
+
+export const defaultLang: Lang = 'en';
+
+/** The URL prefix each language sits under. English is the bare root. */
+export const prefixes: Record<Lang, string> = {
+  en: '',
+  zh: '/zh',
+  hans: '/zh-hans',
+};
+
+/** Display order of the language switcher — English first, as the default. */
+export const langOrder: Lang[] = ['en', 'zh', 'hans'];
+
+/** The `lang` attribute for each language. */
+export const htmlLangs: Record<Lang, string> = {
+  en: 'en',
+  zh: 'zh-Hant-HK',
+  hans: 'zh-Hans',
+};
+
+/** The hreflang each language is advertised under. */
+export const hreflangs: Record<Lang, string> = {
+  en: 'en',
+  zh: 'zh-Hant',
+  hans: 'zh-Hans',
+};
+
+/** Which language a URL is in. Anything outside a known prefix is English. */
+export function getLangFromUrl(url: URL): Lang {
+  const first = '/' + url.pathname.split('/')[1];
+  if (first === prefixes.hans) return 'hans';
+  if (first === prefixes.zh) return 'zh';
+  return 'en';
+}
+
+/**
+ * The same page in the given language.
+ * localizePath('/policy', 'zh')        -> '/zh/policy'
+ * localizePath('/zh/policy', 'hans')   -> '/zh-hans/policy'
+ * localizePath('/zh-hans/policy', 'en') -> '/policy'
+ */
+export function localizePath(pathname: string, lang: Lang): string {
+  // Strip whichever language prefix is on the path, longest first so that
+  // /zh-hans isn't mistaken for /zh.
+  let base = pathname;
+  for (const prefix of ['/zh-hans', '/zh']) {
+    if (base === prefix || base.startsWith(prefix + '/')) {
+      base = base.slice(prefix.length);
+      break;
+    }
+  }
+  const clean = base.replace(/\/$/, '') || '/';
+  const prefix = prefixes[lang];
+  if (clean === '/') return prefix || '/';
+  return `${prefix}${clean}`;
+}
+
+/** Nav and shared chrome, per language. */
+export const ui = {
+  en: {
+    skip: 'Skip to content',
+    siteName: 'AI For Good Hong Kong',
+    nav: {
+      about: 'About',
+      policy: 'Policy',
+      teaching: 'Teaching',
+      team: 'Team',
+      contact: 'Contact',
+    },
+    langLabel: 'Language',
+    home: 'AI For Good — home',
+    menu: 'Menu',
+    navPrimary: 'Main',
+    navFooter: 'Footer',
+    photoViewer: 'Photo viewer',
+    photoClose: 'Close',
+    photoPrev: 'Previous photo',
+    photoNext: 'Next photo',
+    sending: 'Sending…',
+    footerTagline:
+      'Students in Hong Kong writing policy recommendations for the government and running free tutoring for primary school children from underprivileged families.',
+    footerMeta: 'Hong Kong · Founded June 2023',
+  },
+  zh: {
+    skip: '跳至主要內容',
+    siteName: 'AI For Good 香港',
+    nav: {
+      about: '關於我們',
+      policy: '政策研究',
+      teaching: '教學計劃',
+      team: '團隊',
+      contact: '聯絡我們',
+    },
+    langLabel: '語言',
+    home: 'AI For Good — 首頁',
+    menu: '選單',
+    navPrimary: '主要導覽',
+    navFooter: '頁尾導覽',
+    photoViewer: '相片檢視器',
+    photoClose: '關閉',
+    photoPrev: '上一張相片',
+    photoNext: '下一張相片',
+    sending: '傳送中…',
+    footerTagline:
+      '一群香港學生，為政府撰寫政策建議，也為基層家庭的小學生提供免費補習。',
+    footerMeta: '香港 · 於 2023 年 6 月創立',
+  },
+  hans: {
+    skip: '跳至主要内容',
+    siteName: 'AI For Good 香港',
+    nav: {
+      about: '关于我们',
+      policy: '政策研究',
+      teaching: '教学计划',
+      team: '团队',
+      contact: '联系我们',
+    },
+    langLabel: '语言',
+    home: 'AI For Good — 首页',
+    menu: '菜单',
+    navPrimary: '主导航',
+    navFooter: '页脚导航',
+    photoViewer: '照片查看器',
+    photoClose: '关闭',
+    photoPrev: '上一张照片',
+    photoNext: '下一张照片',
+    sending: '发送中…',
+    footerTagline:
+      '一群香港学生，为政府撰写政策建议，也为基层家庭的小学生提供免费补习。',
+    footerMeta: '香港 · 于 2023 年 6 月创立',
+  },
+} as const;
+
+/**
+ * Short labels for the switcher. Full names are too long to sit three abreast
+ * in the header, and these read unambiguously to anyone who needs them.
+ */
+export const langShort: Record<Lang, string> = {
+  en: 'EN',
+  zh: '繁體',
+  hans: '简体',
+};
+
+/** Accessible name for each switcher link, in the language you are leaving. */
+export const switchLabels: Record<Lang, Record<Lang, string>> = {
+  en: { en: 'English', zh: 'Switch to Traditional Chinese', hans: 'Switch to Simplified Chinese' },
+  zh: { en: '切換至英文版', zh: '繁體中文', hans: '切換至簡體中文版' },
+  hans: { en: '切换至英文版', zh: '切换至繁体中文版', hans: '简体中文' },
+};
+
+/** Nav items in display order, with their English (root) paths. */
+export const navItems = [
+  { key: 'about', path: '/about' },
+  { key: 'policy', path: '/policy' },
+  { key: 'teaching', path: '/teaching' },
+  { key: 'team', path: '/team' },
+  { key: 'contact', path: '/get-involved' },
+] as const;

@@ -1,0 +1,31 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// Where the contact form lands once Netlify has accepted a message
+// (the form's action attribute points here).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/utility.css';
+
+const email = 'ps20153216@student.vsa.edu.hk';
+---
+
+<BaseLayout
+  title="留言已送出"
+  description="你给 AI For Good 的留言已经送出。"
+  pageClass="page-utility"
+  noindex
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">联系我们</p>
+      <h1>谢谢，我们已收到你的留言</h1>
+      <p class="lead">
+        我们会回复到你提供的电子邮箱。如需补充，可以直接发电子邮件至{' '}<a href={`mailto:${email}`}>{email}</a>。
+      </p>
+      <ul class="next-links">
+        <li><a class="link-quiet" href="/zh-hans/">返回首页 →</a></li>
+        <li><a class="link-quiet" href="/zh-hans/policy">阅读我们的政策研究 →</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
