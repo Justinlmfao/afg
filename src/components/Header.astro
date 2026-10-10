@@ -19,6 +19,8 @@ const t = ui[lang];
 
 // Current path with any language prefix removed, so it matches navItems paths.
 const path = localizePath(Astro.url.pathname, 'en');
+// The 404 page exists only once, so its language links go to each home page
+const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.url.pathname;
 ---
 
 <header class="site-header" id="site-header">
@@ -32,14 +34,14 @@ const path = localizePath(Astro.url.pathname, 'en');
       class="nav-toggle"
       aria-expanded="false"
       aria-controls="primary-nav"
-      aria-label="Menu"
+      aria-label={t.menu}
     >
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
       <span class="nav-toggle-bar"></span>
     </button>
 
-    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+    <nav id="primary-nav" class="primary-nav" aria-label={t.navPrimary}>
       <ul>
         {
           navItems.map((item) => (
@@ -71,7 +73,7 @@ const path = localizePath(Astro.url.pathname, 'en');
                   ) : (
                     <a
                       class="lang-switch"
-                      href={localizePath(Astro.url.pathname, code)}
+                      href={localizePath(switchPath, code)}
                       lang={htmlLangs[code]}
                       aria-label={switchLabels[lang][code]}
                     >
@@ -263,8 +265,18 @@ const path = localizePath(Astro.url.pathname, 'en');
 <script>
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.getElementById('primary-nav');
+  const setOpen = (open: boolean) => {
+    nav?.classList.toggle('is-open', open);
+    toggle?.setAttribute('aria-expanded', String(open));
+  };
   toggle?.addEventListener('click', () => {
-    const open = nav?.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', String(Boolean(open)));
+    setOpen(!nav?.classList.contains('is-open'));
+  });
+  // Escape closes the open menu and puts focus back on its button
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav?.classList.contains('is-open')) {
+      setOpen(false);
+      (toggle as HTMLElement | null)?.focus();
+    }
   });
 </script>

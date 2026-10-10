@@ -19,7 +19,7 @@ const email = 'ps20153216@student.vsa.edu.hk';
       <p class="footer-tagline">{t.footerTagline}</p>
     </div>
 
-    <nav class="footer-nav" aria-label="Footer">
+    <nav class="footer-nav" aria-label={t.navFooter}>
       {
         navItems.map((item) => (
           <a href={localizePath(item.path, lang)}>{t.nav[item.key]}</a>
@@ -80,9 +80,11 @@ const email = 'ps20153216@student.vsa.edu.hk';
     color: var(--ink);
   }
 
+  /* Padding on the inline link widens its tap target without moving text */
   .footer-contact a {
     font-weight: 600;
     overflow-wrap: anywhere;
+    padding-block: 0.3rem;
   }
 
   .footer-meta {

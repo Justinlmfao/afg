@@ -11,7 +11,7 @@
 
 .page-home {
   .h-sm {
-    font-size: 1.3rem;
+    font-size: var(--h3);
     margin-bottom: 1rem;
   }
 
@@ -29,15 +29,13 @@
   /* The hero keeps the standard container width, so its left edge lines up
      with every section below it. */
 
-  /* Mono eyebrow with a short hairline lead-in */
-  .eyebrow-mono {
+  /* Sentence-case eyebrow with a short hairline lead-in */
+  .eyebrow {
     display: flex;
     align-items: center;
     gap: 0.7rem;
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: var(--graphite);
     margin-bottom: 1.5rem;
   }
@@ -140,9 +138,7 @@
     max-width: var(--wide);
     margin-inline: auto;
     padding: 0.85rem 1.5rem 0;
-    font-family: var(--mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.04em;
+    font-size: 0.85rem;
     color: var(--graphite);
   }
 
@@ -375,6 +371,7 @@
   .latest-meta {
     color: var(--graphite);
     font-size: 0.88rem;
+    font-variant-numeric: tabular-nums;
   }
 
   /* 7 & 8 */

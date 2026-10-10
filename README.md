@@ -135,7 +135,9 @@ From `AFG-website-brief.md`:
 
 **Netlify (recommended — the contact form needs it):** import the repo;
 `netlify.toml` sets the build (`npm run build` → `dist`). Form submissions
-appear under **Forms** in the Netlify dashboard.
+appear under **Forms** in the Netlify dashboard. After sending, visitors land
+on `/thanks/` (or `/zh/thanks/`, `/zh-hans/thanks/`); unknown addresses show
+`404.html`. Both are kept out of search results and the sitemap.
 
 **Cloudflare Pages** also serves the static output, but the Netlify form won't
 receive submissions there — swap in Formspree or rely on the published email.

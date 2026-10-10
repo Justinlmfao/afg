@@ -29,6 +29,14 @@ policy wash ≈ `#EFF3F8`, teaching wash ≈ `#FAF0E9`.
 - **Inter** (sans) — body, UI, labels, and **every number**. Per the dataviz
   hero-figure spec, the big 86% is set in Inter, not the serif; large standalone
   numbers keep proportional figures, and only aligned columns get `tabular-nums`.
+- **No third face.** Captions, eyebrows and small labels are Inter, in
+  sentence case; nothing is set in capitals or monospace.
+- **One size per heading role** (tokens in `global.css`): `--h2` for section
+  headings, `--h3` for sub-sections and card or module titles, `--h4` for
+  headings inside dense rows such as process steps.
+- While the web fonts load, Arial and Times stand in, resized to Inter's and
+  Newsreader's metrics (`Inter fallback`, `Newsreader fallback`), so the page
+  doesn't reflow when the real fonts arrive.
 
 ## 3. Layout concept
 

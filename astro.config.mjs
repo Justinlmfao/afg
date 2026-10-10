@@ -21,9 +21,15 @@ export default defineConfig({
     mdx(),
     // sitemap-index.xml, listing every page with its other-language versions
     // so search engines can pair them up.
+    // Redirects and the noindex thank-you pages are left out.
     sitemap({
-      filter: (page) =>
-        !Object.keys(redirects).some((from) => new URL(page).pathname === `${from}/`),
+      filter: (page) => {
+        const path = new URL(page).pathname;
+        return (
+          !Object.keys(redirects).some((from) => path === `${from}/`) &&
+          !path.endsWith('/thanks/')
+        );
+      },
       i18n: {
         defaultLocale: 'en',
         locales: { en: 'en', zh: 'zh-Hant', 'zh-hans': 'zh-Hans' },

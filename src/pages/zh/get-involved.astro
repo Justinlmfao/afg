@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getLangFromUrl, ui } from '../../i18n';
 import '../../styles/pages/contact.css';
 
 // Contact address chosen by Justin (school-affiliated).
 const email = 'ps20153216@student.vsa.edu.hk';
+const t = ui[getLangFromUrl(Astro.url)];
 ---
 
 <BaseLayout
@@ -53,30 +55,31 @@ const email = 'ps20153216@student.vsa.edu.hk';
       <form
         name="contact"
         method="POST"
+        action="/zh/thanks/"
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form rail-body"
       >
         <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden-field">
+        <p class="hidden-field" aria-hidden="true">
           <label>
-            如果您是真人，請勿填寫此欄： <input name="bot-field" />
+            如果您是真人，請勿填寫此欄： <input name="bot-field" tabindex="-1" autocomplete="off" />
           </label>
         </p>
 
         <div class="field">
           <label for="name">姓名</label>
-          <input id="name" type="text" name="name" required />
+          <input id="name" type="text" name="name" autocomplete="name" required />
         </div>
 
         <div class="field">
           <label for="email">電郵地址</label>
-          <input id="email" type="email" name="email" required />
+          <input id="email" type="email" name="email" autocomplete="email" required />
         </div>
 
         <div class="field">
           <label for="organization">機構 <span class="optional">（選填）</span></label>
-          <input id="organization" type="text" name="organization" />
+          <input id="organization" type="text" name="organization" autocomplete="organization" />
         </div>
 
         <div class="field">
@@ -84,10 +87,32 @@ const email = 'ps20153216@student.vsa.edu.hk';
           <textarea id="message" name="message" rows="5" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-policy">
-          發送訊息 <span class="arrow">→</span>
+        <button type="submit" class="btn btn-policy" data-sending={t.sending}>
+          <span class="btn-label">發送訊息</span> <span class="arrow" aria-hidden="true">→</span>
         </button>
       </form>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // While the form sends, the button says so and can't be pressed twice.
+  // The browser's own checks run first, so this only fires on a valid form.
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  const buttonLabel = button?.querySelector('.btn-label');
+  const idleText = buttonLabel?.textContent;
+  form?.addEventListener('submit', () => {
+    if (!button || !buttonLabel) return;
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    buttonLabel.textContent = button.dataset.sending || '';
+  });
+  // Coming back with the browser's Back button restores a usable form
+  window.addEventListener('pageshow', () => {
+    if (!button || !buttonLabel) return;
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+    buttonLabel.textContent = idleText || '';
+  });
+</script>

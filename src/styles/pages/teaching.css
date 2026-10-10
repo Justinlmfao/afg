@@ -89,7 +89,7 @@
   }
 
   .module-side h3 {
-    font-size: 1.3rem;
+    font-size: var(--h3);
   }
 
   .module-main {
@@ -214,10 +214,8 @@
   .objective span,
   .aside span {
     display: block;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 650;
     color: var(--graphite);
   }
 
@@ -301,7 +299,7 @@
   }
 
   .tf-steps h3 {
-    font-size: 1.15rem;
+    font-size: var(--h4);
   }
 
   .tf-steps p {
@@ -354,7 +352,7 @@
   }
 
   .h-cta {
-    font-size: 1.3rem;
+    font-size: var(--h3);
   }
 
   .teach-cta-grid p {
@@ -385,7 +383,7 @@
   }
 
   .cohort-head h3 {
-    font-size: 1.4rem;
+    font-size: var(--h3);
     color: var(--teaching-deep);
   }
 

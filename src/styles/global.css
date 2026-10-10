@@ -26,19 +26,44 @@
 
   /* Type */
   /* Latin faces first; the CJK families after them are what Traditional
-     Chinese falls back to per-glyph, so no CJK webfont is downloaded. */
-  --serif: 'Newsreader', Georgia, 'Times New Roman', 'Noto Serif TC',
-    'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', 'PingFang TC',
-    'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
-  /* System mono — used only for the hero eyebrow and photo captions, so it
-     costs nothing to load. */
-  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+     Chinese falls back to per-glyph, so no CJK webfont is downloaded. The
+     "fallback" faces (below) stand in while the web fonts load. */
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman',
+    'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --sans: 'Inter', 'Inter fallback', system-ui, -apple-system, 'Segoe UI',
+    'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+  /* Heading scale. One size per role, so a section heading or a heading
+     inside a row looks the same wherever it appears. */
+  --h2: clamp(1.4rem, 1.05rem + 0.75vw, 1.65rem); /* section headings */
+  --h3: 1.3rem;  /* sub-sections, card and module titles */
+  --h4: 1.15rem; /* headings inside dense rows: steps, method lists */
 
   /* Layout */
   --measure: 44rem;
   --wide: 68rem;
   --radius: 6px;
+}
+
+/* ---- Font fallbacks ---------------------------------------------------- */
+/* Arial and Times resized to match Inter and Newsreader, so text keeps the
+   same line breaks when the web fonts arrive instead of jumping. Inter's
+   values are the published ones; Newsreader's were measured against Times. */
+@font-face {
+  font-family: 'Inter fallback';
+  src: local('Arial'), local('Liberation Sans');
+  size-adjust: 107.12%;
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Newsreader fallback';
+  src: local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 110.2%;
+  ascent-override: 67.15%;
+  descent-override: 24.5%;
+  line-gap-override: 0%;
 }
 
 /* ---- Reset ------------------------------------------------------------- */
@@ -54,6 +79,19 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* The parts of the page the browser draws, in the site's palette */
+  accent-color: var(--policy);
+  scrollbar-color: #cdc5b6 var(--paper);
+}
+
+::selection {
+  background: #d6e1ee;
+  color: var(--ink);
+}
+
+input,
+textarea {
+  caret-color: var(--policy);
 }
 
 body {
@@ -91,11 +129,11 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: var(--h2);
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: var(--h3);
 }
 
 p {
@@ -127,8 +165,10 @@ a:hover {
   margin-bottom: 0.75rem;
 }
 
+/* Small text in the teaching accent uses the deep shade, which keeps AA
+   contrast on the teaching wash as well as on paper */
 .kicker-teaching {
-  color: var(--teaching);
+  color: var(--teaching-deep);
 }
 
 .lead {
@@ -243,11 +283,6 @@ section.section-tight {
 .rail {
   display: grid;
   gap: 0.75rem;
-}
-
-h2.rail-head,
-.rail-head h2 {
-  font-size: clamp(1.4rem, 1.05rem + 0.75vw, 1.65rem);
 }
 
 .rail-head .kicker {
@@ -377,6 +412,13 @@ hr {
   transform: translateY(-1px);
 }
 
+/* Sending: the button stays visible but stops responding */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+  transform: none;
+}
+
 .btn-policy {
   background: var(--policy);
   color: #fff;
@@ -464,9 +506,12 @@ hr {
   transition: opacity 0.25s ease, visibility 0.25s;
 }
 
+/* Visible at once when opening (only the fade animates), so focus can move
+   into the viewer straight away; closing keeps the fade before hiding. */
 .lightbox.open {
   opacity: 1;
   visibility: visible;
+  transition: opacity 0.25s ease;
 }
 
 .lightbox img {
@@ -487,9 +532,18 @@ hr {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.14);
   color: #fff;
-  font-size: 1.4rem;
   cursor: pointer;
   transition: background 0.15s ease;
+}
+
+.lightbox-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* The blue ring disappears on the dark backdrop, so it turns white here */
+.lightbox :focus-visible {
+  outline-color: #fff;
 }
 
 .lightbox-btn:hover {
@@ -525,6 +579,11 @@ hr {
 }
 
 /* ---- Utility ------------------------------------------------------------ */
+/* Keeps a short link and its arrow together at the end of a paragraph */
+.nowrap {
+  white-space: nowrap;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
