@@ -117,16 +117,25 @@ read a word.
    June 2023), and the strongest figure on each pillar gets the weight: HK$50M
    on policy, 86% on teaching.
 2. **The method is shown structurally.** The for/against/recommendation shape
-   is a real template (content-collection fields `for` / `against` /
-   `recommendation`), rendered with marginal labels like a set document — never
-   three matching cards.
-3. **No invented output.** The submissions collection ships empty with a plain
-   filed-state note; the template exists in code, waiting for real entries.
+   is rendered with marginal labels like a set document (the standing format
+   on /policy), never three matching cards; each real proposal follows it in
+   its full text.
+3. **No invented output.** Only real proposals go in the submissions
+   collection; each shows a summary card that opens to the full paper.
 4. **Motion only where it carries meaning**: the 86% counts up once, photos
    open in a lightbox, links underline on hover, and a handful of entrances on
    the two pillar panels. Nothing ambient.
 5. **Sentence case everywhere.** No all-caps eyebrow chips, no promotional
    adjectives; active voice, plain verbs.
+6. **One left edge, two section patterns.** Every block starts at the
+   container's left edge (`container prose` limits its content, not its box).
+   Long narrative sections put the heading above the text. Short reference
+   sections (what we're working on, latest work, partners, what's next,
+   promises) use the **rail**: on wide screens the heading sits in a 15rem
+   margin column with the content beside it, separated from the next rail
+   section by a hairline, like rows in a ledger. Below 60rem the rail folds
+   back to heading-above. Figures that sit under cards share the cards'
+   columns and inset.
 
 ## 5. Review — what was cut, and why
 

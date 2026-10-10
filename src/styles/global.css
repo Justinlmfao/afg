@@ -231,6 +231,48 @@ section.section-tight {
   padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
+/* ---- Rail: heading in the margin, content beside it ---------------------
+   For short reference sections (what we're working on, partners, what's
+   next), so they use the page's width and read as one index rather than a
+   stack of thin strips. Long narrative sections keep the heading above the
+   text. Below 60rem the rail folds back to heading-above-content. */
+.rail {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.rail-head {
+  font-size: 1.3rem;
+}
+
+.rail-body {
+  min-width: 0;
+  max-width: var(--measure);
+}
+
+@media (min-width: 60rem) {
+  .rail {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  /* A list beside the heading starts level with it: no rule on top and no
+     padding above the first item. The section hairline already separates. */
+  .rail-body > :is(ul, ol):first-child {
+    border-top: none;
+  }
+
+  .rail-body > :is(ul, ol):first-child > li:first-child {
+    padding-top: 0;
+  }
+}
+
+/* Consecutive rail sections share a hairline, like rows in a ledger */
+.rail-section + .rail-section {
+  border-top: 1px solid var(--rule);
+}
+
 hr {
   border: none;
   border-top: 1px solid var(--rule);

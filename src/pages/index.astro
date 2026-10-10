@@ -133,97 +133,104 @@ const modules = (await getCollection('programs'))
   </section>
 
   <!-- 4. The short version -->
-  <section class="section-tight">
-    <div class="container prose">
-      <p>
-        AI For Good was started by students in June 2023, and it's still run
-        entirely by students. There are more than 35 of us now. We began
-        outside school as an independent think tank, and since then we've
-        teamed up with schools across Hong Kong. We do two things side by side:
-        we write evidence-based recommendations for the government, and we teach
-        the children who feel the effects of those decisions first.{' '}
-        <a class="link-quiet" href="/about">More about us →</a>
-      </p>
+  <section class="section-tight rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Who we are</h2>
+      <div class="rail-body prose">
+        <p>
+          AI For Good was started by students in June 2023, and it's still run
+          entirely by students. There are more than 35 of us now. We began
+          outside school as an independent think tank, and since then we've
+          teamed up with schools across Hong Kong. We do two things side by side:
+          we write evidence-based recommendations for the government, and we teach
+          the children who feel the effects of those decisions first.{' '}
+          <a class="link-quiet" href="/about">More about us →</a>
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- 5. Current work -->
-  <section class="section-tight current">
-    <div class="container">
-      <h2 class="h-sm">What we're working on</h2>
-      <ul class="current-list">
-        <li>
-          <span class="current-tag current-policy">Policy</span>
-          <!-- The 2026-30 consultation window closed on 14 August 2026, so
-               this no longer claims it is open. Justin: if the submission has
-               been filed, say so here — "Filed to the First Five-Year Plan…"
-               is stronger than "working on". -->
-          <span class="current-body">
-            Our submission to the First Five-Year Plan for Economic and Social
-            Development (2026–2030). We're arguing that AI funding should go
-            where the need is, not just where programmes already exist.
-          </span>
-        </li>
-        <li>
-          <span class="current-tag current-teaching">Teaching</span>
-          <span class="current-body">
-            Going back to Ho Man Tin Ling To Catholic School next year with a
-            new group of tutors.
-          </span>
-        </li>
-      </ul>
+  <section class="section-tight current rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">What we're working on</h2>
+      <div class="rail-body">
+        <ul class="current-list">
+          <li>
+            <span class="current-tag current-policy">Policy</span>
+            <!-- The 2026-30 consultation window closed on 14 August 2026, so
+                 this no longer claims it is open. Justin: if the submission has
+                 been filed, say so here — "Filed to the First Five-Year Plan…"
+                 is stronger than "working on". -->
+            <span class="current-body">
+              Our submission to the First Five-Year Plan for Economic and Social
+              Development (2026–2030). We're arguing that AI funding should go
+              where the need is, not just where programmes already exist.
+            </span>
+          </li>
+          <li>
+            <span class="current-tag current-teaching">Teaching</span>
+            <span class="current-body">
+              Going back to Ho Man Tin Ling To Catholic School next year with a
+              new group of tutors.
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- 6. Latest work, straight from the collections -->
-  <section class="section-tight latest">
-    <div class="container">
-      <h2 class="h-sm">
-        Latest work
-      </h2>
-      <ul class="latest-list">
-        <!-- The flagship always leads the list -->
-        <li>
-          <a href="/policy#ai-for-all">
-            <span class="latest-kind latest-policy">Flagship</span>
-            <span class="latest-title">AI for All: HK$50 million in the 2026–27 Budget</span>
-            <span class="latest-meta">2024–2026</span>
-          </a>
-        </li>
-        {
-          submissions.map((s) => (
-            <li>
-              <a href={`/policy#${s.data.key}`}>
-                <span class="latest-kind latest-policy">Proposal</span>
-                <span class="latest-title">{s.data.title}</span>
-                <span class="latest-meta">{s.data.date}</span>
-              </a>
-            </li>
-          ))
-        }
-        {
-          modules.map((m) => (
-            <li>
-              <a href="/teaching">
-                <span class="latest-kind latest-teaching">Module</span>
-                <span class="latest-title">{m.data.title}</span>
-                <span class="latest-meta">Teaching</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+  <section class="section-tight latest rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Latest work</h2>
+      <div class="rail-body">
+        <ul class="latest-list">
+          <!-- The flagship always leads the list -->
+          <li>
+            <a href="/policy#ai-for-all">
+              <span class="latest-kind latest-policy">Flagship</span>
+              <span class="latest-title">AI for All: HK$50 million in the 2026–27 Budget</span>
+              <span class="latest-meta">2024–2026</span>
+            </a>
+          </li>
+          {
+            submissions.map((s) => (
+              <li>
+                <a href={`/policy#${s.data.key}`}>
+                  <span class="latest-kind latest-policy">Proposal</span>
+                  <span class="latest-title">{s.data.title}</span>
+                  <span class="latest-meta">{s.data.date}</span>
+                </a>
+              </li>
+            ))
+          }
+          {
+            modules.map((m) => (
+              <li>
+                <a href="/teaching">
+                  <span class="latest-kind latest-teaching">Module</span>
+                  <span class="latest-title">{m.data.title}</span>
+                  <span class="latest-meta">Teaching</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
   <!-- 7. Partners, as text -->
-  <section class="section-tight partners">
-    <div class="container prose">
-      <h2 class="h-sm">Who we work with</h2>
-      <p>
-        Ho Man Tin Ling To Catholic School · St. Barnabas' Home &amp; Society ·
-        Kennedy Town School · 10% Organisation
-      </p>
+  <section class="section-tight partners rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Who we work with</h2>
+      <div class="rail-body prose">
+        <p>
+          Ho Man Tin Ling To Catholic School · St. Barnabas' Home &amp; Society ·
+          Kennedy Town School · 10% Organisation
+        </p>
+      </div>
     </div>
   </section>
 

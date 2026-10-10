@@ -170,7 +170,7 @@
 
   .outcome-label {
     color: var(--graphite);
-    max-width: 24ch;
+    max-width: 20rem;
   }
 
   /* 8. What's next */

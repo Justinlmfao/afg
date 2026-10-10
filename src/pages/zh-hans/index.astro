@@ -120,74 +120,81 @@ const modules = (await getCollection('programs'))
     </div>
   </section>
 
-  <section class="section-tight">
-    <div class="container prose">
-      <p>
-        AI For Good 由学生在 2023 年 6 月创立，到今天仍然全由学生运营，现在已有超过 35 人。我们一开始是校外的独立智库，后来才陆续和全港各区的学校合作。我们同时做两件事：为政府撰写有证据支持的建议，也去教那些最先感受到这些决定影响的孩子。<a class="link-quiet" href="/zh-hans/about">了解更多 →</a>
-      </p>
+  <section class="section-tight rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我们是谁</h2>
+      <div class="rail-body prose">
+        <p>
+          AI For Good 由学生在 2023 年 6 月创立，到今天仍然全由学生运营，现在已有超过 35 人。我们一开始是校外的独立智库，后来才陆续和全港各区的学校合作。我们同时做两件事：为政府撰写有证据支持的建议，也去教那些最先感受到这些决定影响的孩子。<a class="link-quiet" href="/zh-hans/about">了解更多 →</a>
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="section-tight current">
-    <div class="container">
-      <h2 class="h-sm">我们正在做的事</h2>
-      <ul class="current-list">
-        <li>
-          <span class="current-tag current-policy">政策</span><span class="current-body">
-            就《香港特别行政区经济和社会发展第一个五年规划（2026–2030）》撰写意见书。我们主张人工智能的资源应该投放到有需要的地方，而不只是沿用现有的计划。
-          </span>
-        </li>
-        <li>
-          <span class="current-tag current-teaching">教学</span><span class="current-body">
-            明年会带着新一批导师重返天主教领岛学校。
-          </span>
-        </li>
-      </ul>
+  <section class="section-tight current rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我们正在做的事</h2>
+      <div class="rail-body">
+        <ul class="current-list">
+          <li>
+            <span class="current-tag current-policy">政策</span><span class="current-body">
+              就《香港特别行政区经济和社会发展第一个五年规划（2026–2030）》撰写意见书。我们主张人工智能的资源应该投放到有需要的地方，而不只是沿用现有的计划。
+            </span>
+          </li>
+          <li>
+            <span class="current-tag current-teaching">教学</span><span class="current-body">
+              明年会带着新一批导师重返天主教领岛学校。
+            </span>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section-tight latest">
-    <div class="container">
-      <h2 class="h-sm">
-        最新工作
-      </h2>
-      <ul class="latest-list">
-        <!-- The flagship always leads the list -->
-        <li>
-          <a href="/zh-hans/policy#ai-for-all">
-            <span class="latest-kind latest-policy">主要项目</span>
-            <span class="latest-title">AI for All：2026–27 年度财政预算案拨款五千万港元</span>
-            <span class="latest-meta">2024–2026 年</span>
-          </a>
-        </li>
-        {
-          submissions.map((s) => (
-            <li>
-              <a href={`/zh-hans/policy#${s.data.key}`}>
-                <span class="latest-kind latest-policy">提案</span><span class="latest-title">{s.data.title}</span><span class="latest-meta">{s.data.date}</span>
-              </a>
-            </li>
-          ))
-        }{
-          modules.map((m) => (
-            <li>
-              <a href="/zh-hans/teaching">
-                <span class="latest-kind latest-teaching">单元</span><span class="latest-title">{m.data.title_hans ?? m.data.title}</span><span class="latest-meta">教学</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+  <section class="section-tight latest rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">最新工作</h2>
+      <div class="rail-body">
+        <ul class="latest-list">
+          <!-- The flagship always leads the list -->
+          <li>
+            <a href="/zh-hans/policy#ai-for-all">
+              <span class="latest-kind latest-policy">主要项目</span>
+              <span class="latest-title">AI for All：2026–27 年度财政预算案拨款五千万港元</span>
+              <span class="latest-meta">2024–2026 年</span>
+            </a>
+          </li>
+          {
+            submissions.map((s) => (
+              <li>
+                <a href={`/zh-hans/policy#${s.data.key}`}>
+                  <span class="latest-kind latest-policy">提案</span><span class="latest-title">{s.data.title}</span><span class="latest-meta">{s.data.date}</span>
+                </a>
+              </li>
+            ))
+          }{
+            modules.map((m) => (
+              <li>
+                <a href="/zh-hans/teaching">
+                  <span class="latest-kind latest-teaching">单元</span><span class="latest-title">{m.data.title_hans ?? m.data.title}</span><span class="latest-meta">教学</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section class="section-tight partners">
-    <div class="container prose">
-      <h2 class="h-sm">合作伙伴</h2>
-      <p>
-        天主教领岛学校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
-        10% Organisation
-      </p>
+  <section class="section-tight partners rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">合作伙伴</h2>
+      <div class="rail-body prose">
+        <p>
+          天主教领岛学校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
+          10% Organisation
+        </p>
+      </div>
     </div>
   </section>
 
