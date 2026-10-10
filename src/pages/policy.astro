@@ -1,19 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/policy.css';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import { getLangFromUrl } from '../i18n';
+import { getPapers, formatMonth, paperLabels } from '../papers';
 
-// Real proposals only, in this page's language (src/content/submissions/,
-// one file per language). Each renders as a summary card that opens to the
-// full paper. Inventing a think tank's output would discredit the whole page.
+// Real papers only, in this page's language (src/content/submissions/, one
+// file per language), oldest first. Each renders as a summary card that opens
+// to the full paper. Inventing a think tank's output would discredit the whole
+// page, so only a paper actually sent is labelled a submission.
 const lang = getLangFromUrl(Astro.url);
-const proposals = await Promise.all(
-  (await getCollection('submissions'))
-    .filter((s) => !s.data.draft && s.data.lang === lang)
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
+const label = paperLabels[lang];
+const papers = await Promise.all(
+  (await getPapers(lang)).map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
 );
+// For "Builds on" / "Led to" links, which appear only when both papers exist
+const titles = new Map(papers.map((p) => [p.key, p.title]));
 ---
 
 <BaseLayout
@@ -27,8 +29,8 @@ const proposals = await Promise.all(
       <h1>We write to the people who make the decisions</h1>
       <p class="lead">
         Our policy team looks into problems we see in Hong Kong and writes
-        recommendations to the government. Everything here has actually been
-        submitted, and there's more on the way.
+        recommendations to the government. Everything marked as a submission
+        was actually sent to the government, and there's more on the way.
       </p>
     </div>
   </section>
@@ -332,29 +334,50 @@ const proposals = await Promise.all(
     </div>
   </section>
 
-  <!-- Example proposals, newest first. Each card opens to the full paper. -->
+  <!-- Our papers, oldest first. Each card opens to the full paper. -->
   <section class="filings rail-section">
     <div class="container rail">
-      <h2 class="rail-head">Two of our proposals</h2>
+      <h2 class="rail-head">Our papers</h2>
       <div class="rail-body">
         <p class="filings-note">
-          Two examples of what we send to the government, newest first. Each one
-          makes the case for and against, then recommends something with a cost
-          and a way to measure whether it worked.
+          Oldest first. A <strong>submission</strong> is a proposal we sent to a
+          government consultation. A <strong>look back</strong> is a review we
+          wrote later of a measure the government has already taken: what
+          changed, who it reaches, and what we'd change now. Look-backs show
+          when the measure was announced and when we wrote about it, and are
+          listed by the first date. Every paper makes the case for and against
+          before it recommends anything.
         </p>
         {
-          proposals.length === 0 ? (
-            <p class="empty-note">We publish proposals here once they've been sent in.</p>
+          papers.length === 0 ? (
+            <p class="empty-note">We publish papers here once they're finished.</p>
           ) : (
-            proposals.map(({ key, title, date, area, summary, pdf, Body }) => (
-              <article class="filed" id={key}>
+            papers.map(({ key, title, kind, measureDate, written, area, summary, builtOn, ledTo, pdf, Body }) => (
+              <article class={`filed filed-${kind}`} id={key}>
                 <p class="filed-meta">
-                  <time>{date}</time> · {area}
+                  <span class="filed-kind">{label.kind[kind]}</span>
+                  {measureDate && (
+                    <>
+                      {' · '}
+                      {label.announced}<time datetime={measureDate}>{formatMonth(measureDate, lang)}</time>
+                    </>
+                  )}
+                  {' · '}
+                  {label.written}<time datetime={written}>{formatMonth(written, lang)}</time>
+                  {' · '}
+                  {area}
                 </p>
                 <h3 class="filed-title">{title}</h3>
                 <p class="filed-summary">{summary}</p>
+                {[['builtOn', builtOn], ['ledTo', ledTo]].map(([rel, target]) =>
+                  target && titles.has(target) ? (
+                    <p class="filed-link">
+                      {label[rel as 'builtOn' | 'ledTo']}<a href={`#${target}`}>{titles.get(target)}</a>
+                    </p>
+                  ) : null
+                )}
                 <details class="filed-more">
-                  <summary>Read the full proposal</summary>
+                  <summary>Read the full paper</summary>
                   <div class="filed-body">
                     <Body />
                     {pdf && (

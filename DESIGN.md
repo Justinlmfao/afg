@@ -128,8 +128,14 @@ read a word.
    is rendered with marginal labels like a set document (the standing format
    on /policy), never three matching cards; each real proposal follows it in
    its full text.
-3. **No invented output.** Only real proposals go in the submissions
-   collection; each shows a summary card that opens to the full paper.
+3. **No invented output.** Only real papers go in the submissions collection,
+   each a summary card that opens to the full paper. A card says what the
+   paper is: *Submission* only if it was actually sent to a consultation,
+   *Brief* for a paper not yet sent, *Looking back* for a later review of a
+   measure the government has already taken. Look-backs carry two dates (when
+   the measure was announced, when we wrote about it) and the page runs in the
+   order the government acted. Every paper makes the case for and against
+   before its recommendation, and every figure in it is dated and sourced.
 4. **Motion only where it carries meaning**: the 86% counts up once, photos
    open in a lightbox, links underline on hover, and a handful of entrances on
    the two pillar panels. Nothing ambient.

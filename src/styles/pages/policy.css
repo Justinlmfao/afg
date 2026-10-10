@@ -340,9 +340,31 @@
     color: var(--graphite);
   }
 
-  .filed-meta time {
+  /* What the paper is leads the line: a submission in the policy ink, a
+     look back in plain ink, with the card's top rule to match */
+  .filed-kind {
     font-weight: 650;
     color: var(--policy);
+  }
+
+  .filed-looking-back {
+    border-top-color: var(--graphite);
+  }
+
+  .filed-looking-back .filed-kind {
+    color: var(--ink);
+  }
+
+  .filed-link {
+    margin-top: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--graphite);
+  }
+
+  /* Chinese titles break at punctuation, not mid-phrase */
+  html[lang^='zh'] & .filed-title {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
 
   .filed-title {
@@ -428,6 +450,7 @@
     vertical-align: top;
     padding: 0.55rem 0.75rem 0.55rem 0;
     border-bottom: 1px solid var(--rule);
+    font-variant-numeric: tabular-nums;
   }
 
   .filed-body th {

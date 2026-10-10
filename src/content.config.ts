@@ -29,17 +29,29 @@ const submissions = defineCollection({
     // e.g. /policy#think-first. (Not called `slug`: Astro would treat that as
     // the entry's ID, and the language versions would collide.)
     key: z.string(),
-    // As displayed, e.g. "December 2025".
-    date: z.string(),
-    // Policy area, e.g. "Education & inequality".
+    // What the paper is. "submission": a proposal we actually sent to a
+    // government consultation (only those). "brief": an AFG paper not yet
+    // sent. "looking-back": a review, written later, of a measure the
+    // government has already taken.
+    kind: z.enum(['submission', 'brief', 'looking-back']).default('submission'),
+    // When the government announced the measure the paper is about, as
+    // "YYYY-MM-DD". The Policy page is sorted by it; a paper without one
+    // (our own proposals) sorts by `written`.
+    measureDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+    // When we wrote it, as "YYYY-MM". Shown on every card.
+    written: z.string().regex(/^\d{4}-\d{2}$/),
+    // Policy area as displayed, e.g. "Education & inequality".
     area: z.string(),
+    // Pairs an earlier measure with the later paper it led to.
+    thread: z.enum(['housing', 'tax-family', 'healthcare', 'ai-government']).optional(),
+    // Keys of related papers. A link is shown only once that paper exists.
+    builtOn: z.string().optional(),
+    ledTo: z.string().optional(),
     // Two or three sentences for the card.
     summary: z.string(),
     // Optional PDF in /public/research/, referenced as "/research/file.pdf".
     pdf: z.string().optional(),
     draft: z.boolean().default(false),
-    // Lower first; newest proposals should get the lowest numbers.
-    order: z.number().default(0),
   }),
 });
 

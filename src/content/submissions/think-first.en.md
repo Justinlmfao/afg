@@ -2,10 +2,10 @@
 title: "Think First: Closing the AI Gap for Young Children Without Outsourcing Their Thinking"
 lang: en
 key: think-first
-date: "December 2025"
+kind: submission
+written: "2025-12"
 area: "Education & inequality"
 summary: "Hong Kong is about to put AI into every primary school. Used well, it can give every child the kind of patient tutor only better-off families can pay for. Used badly, it teaches children to hand their thinking to a machine before they've learned to think for themselves. We propose a \"Think First\" approach, and a HK$54 million pilot in the primary schools serving Hong Kong's lowest-income families."
-order: 1
 ---
 
 Written with the 2025 Policy Address commitments on digital education and the

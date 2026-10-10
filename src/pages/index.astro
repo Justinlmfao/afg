@@ -3,16 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/pages/home.css';
 import { getCollection } from 'astro:content';
 import { getLangFromUrl } from '../i18n';
+import { getLatestPapers, formatMonth, paperLabels } from '../papers';
 
 // Latest work, pulled from the collections so the page stays current as
-// entries are added — no layout edits needed. Submissions only appear once a
-// real, filed one is published (drafts never render), so until then this
-// section shows the teaching modules alone rather than placeholder cards.
+// entries are added — no layout edits needed. Papers only appear once a real
+// one is published (drafts never render); the three most recently written
+// are shown, each labelled with what it is.
 const lang = getLangFromUrl(Astro.url);
-const submissions = (await getCollection('submissions'))
-  .filter((s) => !s.data.draft && s.data.lang === lang)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 2);
+const label = paperLabels[lang];
+const papers = await getLatestPapers(lang, 3);
 
 const modules = (await getCollection('programs'))
   .filter((m) => !m.data.draft)
@@ -195,12 +194,12 @@ const modules = (await getCollection('programs'))
             </a>
           </li>
           {
-            submissions.map((s) => (
+            papers.map((s) => (
               <li>
                 <a href={`/policy#${s.data.key}`}>
-                  <span class="latest-kind latest-policy">Proposal</span>
+                  <span class="latest-kind latest-policy">{label.kind[s.data.kind]}</span>
                   <span class="latest-title">{s.data.title}</span>
-                  <span class="latest-meta">{s.data.date}</span>
+                  <span class="latest-meta">{formatMonth(s.data.written, lang)}</span>
                 </a>
               </li>
             ))

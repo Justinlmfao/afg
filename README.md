@@ -31,7 +31,7 @@ npm run preview  # preview the built site
 | --- | --- |
 | `/` | Routes the reader to one of the two pillars |
 | `/about` | What AFG is, why it does both, origin, method, impact, what's next |
-| `/policy` | The think tank: record, method, filed submissions |
+| `/policy` | The think tank: record, method, and our papers (submissions and look-backs) |
 | `/teaching` | The tutoring programme: the 86% outcome, modules, partners, photos |
 | `/team` | The five leads + 35+ members |
 | `/get-involved` | Contact form + email |
@@ -90,7 +90,7 @@ Two things to know when writing Chinese in these files:
 
 | To add | Folder | Notes |
 | --- | --- | --- |
-| A policy proposal | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. Copy `think-first.en.md` / `think-first.zh.md` as a starting point. Front matter: `title`, `lang`, `key`, `date`, `area`, `summary`, `order` (lower shows first, so give the newest the lowest number), optional `pdf`. The Markdown body is the full paper, using `####` for headings. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real proposals only.** |
+| A policy paper | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. Copy `think-first.*.md` for a proposal or `basic-housing-units.*.md` for a look back. Front matter: `title`, `lang`, `key`, `kind` (`submission` only if it was actually sent; `brief` if not yet sent; `looking-back` for a later review of a government measure), `written` (`"YYYY-MM"`), `measureDate` (`"YYYY-MM-DD"`, when the government announced the measure; the page is sorted by it), `area`, `summary`, optional `thread`, `builtOn`/`ledTo` (another paper's `key`; the link appears once that paper exists) and `pdf`. The Markdown body is the full paper, using `####` for headings: the case for, the case against, our recommendation, and dated references. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real papers only.** |
 | A teaching module | `src/content/programs/` | Markdown body is the description; `why` is the "closes the gap" line; `icon` names a glyph in `Icon.astro`. |
 | A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens when you press their name on the Team page. `bio_zh` is the Traditional Chinese, one quoted line per paragraph; run `npm run zh-hans` for the Simplified. A member with no bio is listed without the toggle. |
 
@@ -125,8 +125,9 @@ From `AFG-website-brief.md`:
   never says we caused it, secured it, or won it. Keep it that way unless
   there is a citable acknowledgement from a bureau; one unverifiable claim
   would put every other figure here in doubt.
-- **No invented output.** The submissions collection ships empty; the
-  for/against/recommendation template waits for real filings.
+- **No invented output.** Only real papers go in the submissions collection,
+  and only a paper actually sent to a consultation is labelled a submission.
+  Every figure carries a date and a source.
 - **Never describe AFG as an official VSA club/ASA** — it is student-led and
   student-founded.
 - Sentence case, active voice, no promotional adjectives.

@@ -1,18 +1,20 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/pages/policy.css';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import { getLangFromUrl } from '../../i18n';
+import { getPapers, formatMonth, paperLabels } from '../../papers';
 
-// Proposals in this page's language: the .zh.md files here, and the generated
-// .hans.md files on the Simplified page (the language comes from the URL).
+// Papers in this page's language, oldest first: the .zh.md files here, and the
+// generated .hans.md files on the Simplified page (the language comes from the
+// URL).
 const lang = getLangFromUrl(Astro.url);
-const proposals = await Promise.all(
-  (await getCollection('submissions'))
-    .filter((s) => !s.data.draft && s.data.lang === lang)
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
+const label = paperLabels[lang];
+const papers = await Promise.all(
+  (await getPapers(lang)).map(async (s) => ({ ...s.data, Body: (await render(s)).Content }))
 );
+// For "Builds on" / "Led to" links, which appear only when both papers exist
+const titles = new Map(papers.map((p) => [p.key, p.title]));
 ---
 
 <BaseLayout
@@ -25,7 +27,7 @@ const proposals = await Promise.all(
       <p class="kicker">政策研究</p>
       <h1>寫給作決定的人</h1>
       <p class="lead">
-        我們的政策團隊研究在香港看到的問題，再向政府提交建議。這裡列出的都是真正提交過的工作，而且還會陸續有更多。
+        我們的政策團隊研究在香港看到的問題，再向政府提交建議。凡標明「已提交建議」的，都是真正提交給政府的文件，而且還會陸續有更多。
       </p>
     </div>
   </section>
@@ -227,24 +229,41 @@ const proposals = await Promise.all(
 
   <section class="filings rail-section">
     <div class="container rail">
-      <h2 class="rail-head">我們的兩份提案</h2>
+      <h2 class="rail-head">我們的政策文件</h2>
       <div class="rail-body">
         <p class="filings-note">
-          以下是我們提交給政府的兩個例子，較新的排在前面。每一份都先寫支持和反對的理由，再提出建議，並列明成本和衡量成效的方法。
+          按時間排列，最早的在前。<strong>已提交建議</strong>是我們向政府諮詢提交過的建議；<strong>回顧</strong>是我們事後為政府已推行的措施所寫的檢討：改變了什麼、惠及哪些人，以及我們現在會怎樣改。回顧會列出措施公布和我們撰寫的日期，並按措施公布的日期排列。每一份文件都會先寫支持和反對的理由，然後才提出建議。
         </p>
         {
-          proposals.length === 0 ? (
-            <p class="empty-note">提案提交後，會在這裡公開。</p>
+          papers.length === 0 ? (
+            <p class="empty-note">文件完成後，會在這裡公開。</p>
           ) : (
-            proposals.map(({ key, title, date, area, summary, pdf, Body }) => (
-              <article class="filed" id={key}>
+            papers.map(({ key, title, kind, measureDate, written, area, summary, builtOn, ledTo, pdf, Body }) => (
+              <article class={`filed filed-${kind}`} id={key}>
                 <p class="filed-meta">
-                  <time>{date}</time> · {area}
+                  <span class="filed-kind">{label.kind[kind]}</span>
+                  {measureDate && (
+                    <>
+                      {' · '}
+                      {label.announced}<time datetime={measureDate}>{formatMonth(measureDate, lang)}</time>
+                    </>
+                  )}
+                  {' · '}
+                  {label.written}<time datetime={written}>{formatMonth(written, lang)}</time>
+                  {' · '}
+                  {area}
                 </p>
                 <h3 class="filed-title">{title}</h3>
                 <p class="filed-summary">{summary}</p>
+                {[['builtOn', builtOn], ['ledTo', ledTo]].map(([rel, target]) =>
+                  target && titles.has(target) ? (
+                    <p class="filed-link">
+                      {label[rel as 'builtOn' | 'ledTo']}<a href={`#${target}`}>{titles.get(target)}</a>
+                    </p>
+                  ) : null
+                )}
                 <details class="filed-more">
-                  <summary>閱讀完整提案</summary>
+                  <summary>閱讀全文</summary>
                   <div class="filed-body">
                     <Body />
                     {pdf && (

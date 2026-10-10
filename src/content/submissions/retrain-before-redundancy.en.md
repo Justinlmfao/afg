@@ -2,10 +2,10 @@
 title: "Retrain Before Redundancy: Preventing AI-Driven Structural Unemployment in Hong Kong"
 lang: en
 key: retrain-before-redundancy
-date: "March 2025"
+kind: submission
+written: "2025-03"
 area: "Labour economics"
 summary: "Hong Kong is short of workers just as AI looks set to make many routine office jobs unnecessary. That's how structural unemployment starts: the jobs exist, but the people who lose theirs can't fill them. Hong Kong mostly pays people to retrain after they lose their job. We propose paying at-risk workers to retrain before it happens, steering them towards sectors that are short of staff, and rewarding employers who retrain people instead of letting them go, for up to about HK$240 million over three years."
-order: 2
 ---
 
 Written in light of the Employees Retraining Board reforms in the 2024 Policy
