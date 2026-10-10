@@ -1,132 +1,92 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import { getCollection } from 'astro:content';
+import '../styles/pages/team.css';
+import { getCollection, render } from 'astro:content';
 
-// Team members come from src/content/team/ (drafts excluded). The `group`
-// field controls which section a person appears under; the order of groups
-// below controls section order on the page.
-const members = (await getCollection('team')).filter((m) => !m.data.draft);
-
-const groupOrder = ['Leadership', 'Executive Team'];
-
-const grouped = groupOrder
-  .map((group) => ({
-    group,
-    people: members
-      .filter((m) => m.data.group === group)
-      .sort((a, b) => a.data.order - b.data.order),
-  }))
-  .filter((section) => section.people.length > 0);
-
-// Colourful gradients cycled across avatars.
-const gradients = [
-  'linear-gradient(135deg,#4f46e5,#2563eb)',
-  'linear-gradient(135deg,#f97316,#ec4899)',
-  'linear-gradient(135deg,#0d9488,#059669)',
-  'linear-gradient(135deg,#7c3aed,#4f46e5)',
-  'linear-gradient(135deg,#f59e0b,#ef4444)',
-];
-
-const initials = (name: string) =>
-  name
-    .split(' ')
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('');
-
-let avatarIndex = 0;
+// Team members from src/content/team/ (drafts excluded), sorted by `order`.
+// The Markdown body of each file is that person's bio; pressing their name
+// opens it. Anyone without a bio is still listed, just without the toggle.
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
 ---
 
 <BaseLayout
-  title="Our Team"
-  description="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
->
-  <PageHero
-    eyebrow="Our Team"
-    titlePre="Our"
-    titleAccent="Team"
-    lead="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
-  />
+  title="Team"
+  description="AI For Good is run entirely by students: more than 35 members working on policy research and tutoring."
 
-  {
-    grouped.map((section) => (
-      <section class="section-tight team-section">
-        <div class="container">
-          <p class="eyebrow" data-reveal>{section.group}</p>
-          <ul class="people-grid">
-            {section.people.map((person, i) => {
-              const grad = gradients[avatarIndex++ % gradients.length];
-              return (
-                <li
-                  class="person magnify"
-                  data-reveal
-                  style={`--reveal-delay:${i * 0.08}s`}
-                >
-                  <span class="avatar" style={`background:${grad}`} aria-hidden="true">
-                    {initials(person.data.name)}
+  pageClass="page-team">
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">Team</p>
+      <h1>Run entirely by students</h1>
+      <p class="lead">
+        More than 35 of us work on policy research and tutoring. These are the
+        people who lead the work. Press a name to read more about them.
+      </p>
+    </div>
+  </section>
+
+  <!-- The leads. Each name opens its bio: native <details>, so it works
+       without JavaScript and from the keyboard. -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="people">
+        {
+          members.map(({ name, role, Bio }) =>
+            Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2 class="person-name">{name}</h2>
+                    <span class="person-role">{role}</span>
                   </span>
-                  <p class="person-name">{person.data.name}</p>
-                  <p class="person-role">{person.data.role}</p>
-                  <p class="person-bio">{person.data.bio}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-    ))
-  }
+                  <span class="person-toggle" aria-hidden="true" />
+                </summary>
+                <div class="person-bio">
+                  <Bio />
+                </div>
+              </details>
+            ) : (
+              <div class="person person-static">
+                <span class="person-head">
+                  <h2 class="person-name">{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team photographs -->
+  <section class="section-tight">
+    <div class="container team-photos">
+      <figure>
+        <img
+          src="/programs/team-classroom.jpg"
+          alt="Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School after a session."
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure>
+        <img
+          src="/programs/team-outside-school.jpg"
+          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .people-grid {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.25rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    gap: 1.5rem;
-  }
-
-  .person {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    color: #fff;
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .person-name {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-  }
-
-  .person-role {
-    color: var(--color-accent);
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    margin-block: 0.2rem 0.6rem;
-  }
-
-  .person-bio {
-    color: var(--color-text-soft);
-    font-size: 0.97rem;
-  }
-</style>

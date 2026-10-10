@@ -1,22 +1,48 @@
-# Program photos
+# Programme photos
 
-The Programs page shows a "In the classroom" gallery of these five images.
-Right now each one is a **labelled placeholder** — replace each file with your
-real photo, keeping the **exact same filename**, and the site picks it up
-automatically (no code changes).
+These are the real photos from sessions at Ho Man Tin Ling To Catholic School,
+shown in the "In the classroom" gallery on the Teaching page (and the first one
+also heads the Teaching panel on the home page).
 
-| Filename                          | The photo it should be                                                                 |
-| --------------------------------- | -------------------------------------------------------------------------------------- |
-| `teaching-classroom.jpg`          | Wide/feature shot — volunteer leading a session, a student with her hand raised        |
-| `teaching-ai-word-problems.jpg`   | Volunteer holding a laptop, slide on using AI for a real-life maths word problem        |
-| `teaching-maths-module.jpg`       | Two volunteers running the maths module (shape/space/measurement slide)                |
-| `teaching-chalkboard.jpg`         | Volunteer working through the 1117×1117 mental-arithmetic shortcut on the chalkboard   |
-| `teaching-prompting.jpg`          | Volunteer teaching students how to ask an AI good questions (Gemini "如何提問" slide)   |
+| Filename | What it shows |
+| --- | --- |
+| `teaching-classroom.jpg` | Feature tile — a tutor leading a session, a pupil's hand raised |
+| `teaching-chalkboard-maths.jpg` | A tutor working through the 1117 × 1117 mental-arithmetic shortcut |
+| `teaching-ai-study-partner.jpg` | Explaining a maths idea aloud to an AI to check understanding |
+| `teaching-ai-tools.jpg` | Two tutors introducing what an AI assistant can do |
+| `teaching-exploring-interests.jpg` | Using AI to explore interests — dinosaurs, space, music |
+| `teaching-english-careers.jpg` | The English module: how English opens career doors |
+
+Team and cover photographs:
+
+| Filename | Where it appears |
+| --- | --- |
+| `team-classroom.jpg` | Team page — six members in the classroom |
+| `teaching-classroom.jpg` | Also the full-bleed band under the home page hero |
+| `team-outside-school.jpg` | Team page and the About origin section — outside Ling To |
+
+Sessions at Victoria Shanghai Academy (Teaching page, six per year):
+
+| Prefix | Year |
+| --- | --- |
+| `vsa-2024-25-*.jpg` | 2024–25 — AI in local communities |
+| `vsa-2025-26-*.jpg` | 2025–26 — AI ethics and using AI on community problems |
+
+Six per year fills the 3-column grid evenly; to add or remove a year, edit the
+`cohorts` array at the top of `src/pages/teaching.astro`.
 
 Notes:
-- **Landscape (roughly 3:2) JPGs** look best. They're displayed with
-  `object-fit: cover`, so they'll crop gracefully to fit each frame.
-- The first image (`teaching-classroom.jpg`) is the large feature tile.
-- If you want to change the captions/alt text or the order, edit the `photos`
-  array near the top of `src/pages/programs.astro`.
-- Keep file sizes reasonable (ideally under ~400 KB each) so the page stays fast.
+
+- All six are 1600 px wide, roughly 3:2, and 155–190 KB. They're displayed with
+  `object-fit: cover`, so they crop gracefully into each frame.
+- **Six photos fill the gallery grid exactly** (the first spans two columns and
+  two rows; the other five fill the remaining cells). If you add or remove one,
+  the last row will be uneven — either keep the count at six, or adjust the
+  grid in `src/pages/teaching.astro`.
+- To change the order, the captions, or which photo is the feature tile, edit
+  the `photos` array near the top of `src/pages/teaching.astro`. The `alt` text
+  is also used as the lightbox caption, so keep it descriptive.
+- To swap a photo, replace the file with the same filename (resize to ~1600 px
+  wide first so the page stays fast).
+- **Consent:** pupils' faces are visible. Keep whatever permission the schools
+  and families have given on file, and swap out any photo if that changes.

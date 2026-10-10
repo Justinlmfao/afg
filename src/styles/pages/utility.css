@@ -1,0 +1,43 @@
+/* Styles for the short utility pages (the contact thank-you page and the
+   404), shared by every language. Wrapped in .page-utility so class names
+   cannot collide with another page's stylesheet. */
+
+.page-utility {
+  /* The page is one block, so it ends on the footer's hairline instead of
+     its own, with enough room that the footer doesn't ride up under it */
+  .page-top {
+    padding-bottom: clamp(4rem, 10vw, 7rem);
+  }
+
+  .next-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem 2rem;
+  }
+
+  /* The row's gap does the spacing; the reading column's list rule would
+     push every link after the first down a line */
+  .next-links li + li {
+    margin-top: 0;
+  }
+
+  .next-links a {
+    display: inline-block;
+    padding-block: 0.3rem;
+  }
+
+  .other-langs {
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--graphite);
+  }
+
+  .other-langs p + p {
+    margin-top: 0.4rem;
+  }
+}

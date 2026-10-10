@@ -1,0 +1,30 @@
+---
+// Where the contact form lands once Netlify has accepted a message
+// (the form's action attribute points here).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/pages/utility.css';
+
+const email = 'ps20153216@student.vsa.edu.hk';
+---
+
+<BaseLayout
+  title="Message sent"
+  description="Your message to AI For Good has been sent."
+  pageClass="page-utility"
+  noindex
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">Contact</p>
+      <h1>Thanks, we've got your message</h1>
+      <p class="lead">
+        We'll reply to the email address you gave us. If you want to add
+        anything, write to <a href={`mailto:${email}`}>{email}</a>.
+      </p>
+      <ul class="next-links">
+        <li><a class="link-quiet" href="/">Back to the home page →</a></li>
+        <li><a class="link-quiet" href="/policy">Read our policy work →</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,104 @@
+/* Styles for the contact page, shared by the English and Chinese
+   versions. Wrapped in .page-contact so class names cannot collide with
+   another page's stylesheet. */
+
+.page-contact {
+  .page-top {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .routes {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2.75rem;
+  }
+
+  .routes h2 {
+    font-size: var(--h3);
+    margin-bottom: 0.4rem;
+  }
+
+  .routes p {
+    color: var(--graphite);
+  }
+
+  .contact-form {
+    max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+    padding-top: 2rem;
+  }
+
+  .field {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .field label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .optional {
+    color: var(--graphite);
+    font-weight: 400;
+  }
+
+  .field input,
+  .field textarea {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .field input:focus,
+  .field textarea:focus {
+    border-color: var(--policy);
+    box-shadow: 0 0 0 3px rgba(47, 93, 147, 0.15);
+    outline: none;
+  }
+
+  .field textarea {
+    resize: vertical;
+  }
+
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+  }
+
+  @media (max-width: 52rem) {
+    .routes {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  /* Wide screens: the three notes stack in the margin column and the form
+     starts level with them in the text column */
+  @media (min-width: 60rem) {
+    .routes {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      margin-bottom: 0;
+    }
+
+    .routes p {
+      font-size: 0.98rem;
+    }
+
+    .contact-form {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+}

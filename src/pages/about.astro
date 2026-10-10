@@ -1,191 +1,282 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Card from '../components/Card.astro';
-import PageHero from '../components/PageHero.astro';
+import '../styles/pages/about.css';
 ---
 
 <BaseLayout
   title="About"
-  description="AI For Good ensures AI and economic policy develop to serve the public good — through rigorous research, direct engagement with government, and education that reaches the children policy overlooks."
->
-  <PageHero
-    eyebrow="About"
-    titlePre="About"
-    titleAccent="AI For Good"
-    lead="A student-led think tank in Hong Kong, working at the intersection of technology, economics, and policy since June 2023."
-  />
+  description="AI For Good is a student-run organisation in Hong Kong, started in June 2023. We write policy recommendations for the government and run free tutoring for children from underprivileged families."
 
-  <section class="section-tight">
+  pageClass="page-about">
+  <section class="page-top">
     <div class="container prose">
-      <h2 data-reveal>Our mission</h2>
-      <p data-reveal>
-        AI For Good exists to ensure that artificial intelligence and economic
-        policy develop in a way that serves the public good — especially for
-        communities with the least power to shape them. We do this through
-        rigorous research, direct engagement with government, and education that
-        reaches the children policy usually overlooks.
+      <p class="kicker">About</p>
+      <h1>Policy and teaching, for the same reason</h1>
+      <!-- 1. What AFG is -->
+      <p class="lead">
+        AI For Good is a student-run organisation in Hong Kong, started in June
+        2023. We do two things. We write recommendations on AI and economic
+        policy and send them to the Hong Kong government, about twenty a year.
+        We also run free tutoring for primary school children from
+        underprivileged families, and have taught 350 of them so far.
       </p>
     </div>
   </section>
 
-  <section class="section-tight">
-    <div class="container prose">
-      <h2 data-reveal>Our story</h2>
-      <p data-reveal>
-        AI For Good began in June 2023 as a student club at Victoria Shanghai
-        Academy. Three years on, it has grown into a student-led think tank:
-        producing original research at the intersection of technology and
-        economics, making around twenty submissions to government a year, and
-        teaching AI and economic literacy to 350 children across Hong Kong.
-      </p>
-      <p data-reveal>
-        What stayed constant was a belief that students shouldn't wait for
-        permission to do serious work. The questions raised by AI and by
-        economic policy — about fairness, access, and who gets a say — will
-        define our generation more than any other. We decided to start answering
-        them now.
-      </p>
-    </div>
-  </section>
-
-  <!-- A big-picture look at what we do -->
-  <section class="tint-cool">
-    <div class="container prose">
-      <h2 data-reveal>A big-picture look at what we do</h2>
-      <p data-reveal>We work on three fronts that reinforce each other.</p>
-    </div>
-    <div class="container fronts">
-      <div class="front magnify" data-reveal>
-        <h3>We research and submit.</h3>
-        <p>
-          Each year we produce around twenty submissions to government
-          consultations and public bodies — on taxation, AI governance,
-          education, labour, and health. On average, four of our recommendations
-          a year are reflected in the Policy Address, and we are currently
-          preparing a submission to Hong Kong's First Five-Year Plan
-          (2026–2030). Our work is grounded in evidence and economic reasoning,
-          not opinion.
-        </p>
-      </div>
-      <div class="front magnify" data-reveal style="--reveal-delay:0.1s">
-        <h3>We teach.</h3>
-        <p>
-          We run programs that bring AI and economic literacy to children who
-          rarely get access to either — 350 to date, across ten institutions
-          including Ling To Catholic School in Ho Man Tin and St. Barnabas' Home
-          & Society. Our core idea is that, taught well, AI can be a free and
-          patient tutor — so we teach children to use it as a tool that closes
-          the gap, rather than one more advantage reserved for those who can pay.
-        </p>
-      </div>
-      <div class="front magnify" data-reveal style="--reveal-delay:0.2s">
-        <h3>We convene.</h3>
-        <p>
-          We connect students, educators, and policymakers, because good policy
-          and good education both depend on people who usually don't talk to
-          each other doing exactly that.
-        </p>
+  <!-- 2. Why both — the connective idea -->
+  <section class="why rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Why we do both</h2>
+      <div class="rail-body">
+        <blockquote class="why-claim">
+          AI policy written by people who have never met the people it affects
+          isn't good policy. The children we teach are the people it affects.
+        </blockquote>
+        <div class="why-body prose">
+          <p>
+            It isn't a coincidence that we do both. Sit in a classroom in Ho Man
+            Tin and watch a child use an AI tutor for the first time, and you
+            learn things a consultation paper won't tell you: which children
+            already have a tutor at home, which ones have a device, and which ones
+            are about to fall further behind because of a technology everyone
+            keeps calling an equaliser.
+          </p>
+          <p>
+            Most of our submissions start there. Teaching shows us where the gaps
+            are. Research tells us whether a gap is a policy problem. Then the
+            submission asks the government to fix it. It works the other way too:
+            what we learn writing about education and labour policy changes what
+            we think is worth teaching a ten-year-old. We'd rather be the people
+            who have been in the room than the people who have only read about
+            it.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- What makes us different -->
-  <section>
+  <!-- 3. Origin -->
+  <section class="origin rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How it started</h2>
+      <div class="rail-body">
+        <p>
+          AI For Good was founded in June 2023 by <strong>Justin Lo</strong>,{' '}
+          <strong>Ka Hei Ng</strong> and <strong>Oscar Zheng</strong>.{' '}
+          <strong>David Dong</strong> and <strong>Jackie Xue</strong> joined
+          later. We started outside school, as an independent think tank rather
+          than a school club. Since then we've grown to more than 35 members and
+          started working with schools across Hong Kong, which is how the
+          tutoring programme reaches the children it does.
+        </p>
+
+      <!-- Justin's own account, in the first person and left in his words.
+           The voice shift from "we" to "I" is deliberate and attributed. -->
+      <div class="founder-note">
+        <div class="fn-part">
+          <p class="fn-label">Why the policy work</p>
+          <p>
+            AI arrived in Hong Kong faster than the city could decide who it was
+            for. I watched it show up in my school, then in my friends'
+            internships, then in the government's plans, and the pattern was
+            always the same: the people who already had the most access got it
+            first. Nobody was choosing that. It was just what happened when
+            nobody was asked to choose. I had spent two years learning how
+            public money gets allocated and who ends up bearing the cost of a
+            decision, and it seemed absurd to sit on that while the decisions
+            were being made a few kilometres away. So we started writing to the
+            people making them.
+          </p>
+        </div>
+        <div class="fn-part">
+          <p class="fn-label">Why the teaching</p>
+          <p>
+            This started as a group of us at school teaching each other AI,
+            mostly by playing with it. We built things that didn't work and a
+            few that did, and it was obvious how much you could get out of these
+            tools once someone showed you the first step. Then it became obvious
+            who wasn't getting shown. The children with the most to gain from AI
+            were the least likely to ever be handed it, and that gap wasn't
+            going to close on its own. So we took what we'd been doing for fun
+            in a classroom and brought it to schools where nobody else was
+            offering it.
+          </p>
+        </div>
+        <p class="fn-attrib">— Justin Lo, founder</p>
+      </div>
+      <figure class="origin-figure">
+        <img
+          src="/programs/team-outside-school.jpg"
+          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>Outside Ho Man Tin Ling To Catholic School, where we teach.</figcaption>
+      </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. What we do — two blocks -->
+  <section class="tint rail-section">
     <div class="container">
-      <p class="eyebrow" data-reveal>What makes us different</p>
-      <div class="cards-grid">
-        <Card title="Evidence over opinion" variant="cool">
-          Every position is grounded in research and economic reasoning. We'd
-          rather be careful and right than loud and wrong.
-        </Card>
-        <Card title="We do, not just discuss" variant="violet">
-          A think tank that only talks is a debate club. We turn research into
-          submissions, programs, and measurable outreach.
-        </Card>
-        <Card title="Access is the mission" variant="warm">
-          Most conversations about AI and the economy happen among people who
-          already hold power. We deliberately work with those who don't.
-        </Card>
+      <h2 class="mb">What we do</h2>
+      <div class="two-blocks">
+        <div class="block block-policy">
+          <h3>Policy</h3>
+          <p>
+            Every year we send about twenty written recommendations to the Hong
+            Kong government. We've responded to every Policy Address and Budget
+            consultation since 2024, and we're now working on a submission to
+            the First Five-Year Plan for Economic and Social Development
+            (2026–2030). Our topics come out of the work itself: tax, AI
+            governance, education, jobs and health. Over several submissions we
+            argued for an inclusive AI programme, and the 2026–27 Budget set
+            aside HK$50 million for AI for All.
+          </p>
+          <a class="link-quiet" href="/policy">Read our policy work →</a>
+        </div>
+        <div class="block block-teaching">
+          <h3>Teaching</h3>
+          <p>
+            We run free tutoring for primary school children from
+            underprivileged families in seven schools across Hong Kong. Our 43
+            trained tutors teach four modules: maths, English, economics and
+            science. Each one uses AI as a free, patient study partner. We've
+            taught 350 children so far, and since 2024, 86% of our students have
+            moved up at least one class band.
+          </p>
+          <a class="link-quiet" href="/teaching">See our teaching →</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Values -->
-  <section class="section-tight values tint-mint">
-    <div class="container prose">
-      <h2 data-reveal>Our values</h2>
-      <ul class="values-list">
-        <li data-reveal>
-          <strong>Intellectual humility</strong> — we hold our views openly and
-          revise them with evidence.
-        </li>
-        <li data-reveal style="--reveal-delay:0.08s">
-          <strong>Service before recognition</strong> — impact matters more than
-          titles.
-        </li>
-        <li data-reveal style="--reveal-delay:0.16s">
-          <strong>Civil, evidence-based discourse</strong> — we make arguments,
-          not noise.
-        </li>
-      </ul>
+  <!-- 5. How we work -->
+  <section class="rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How we work</h2>
+      <div class="rail-body methods">
+        <div class="method">
+          <p class="method-label">Writing a proposal</p>
+          <p>
+            First we talk to our members, then we research, then we write. Every
+            proposal sets out the case for, then the case against, then our
+            recommendation, always in that order. If the case against turns out
+            to be stronger, we don't send it.
+          </p>
+        </div>
+        <div class="method">
+          <p class="method-label">Running a lesson</p>
+          <p>
+            Every tutor is trained before they teach. They follow a written
+            curriculum built around the four modules, so a child gets the same
+            quality of lesson whichever school they're at and whoever is
+            teaching.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Impact — the account first, then the two outcomes it rests on -->
+  <section class="impact rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Our impact</h2>
+      <div class="rail-body">
+        <div class="impact-body prose">
+          <p>
+            AI For Good started in 2023 as a small group of students. Today there
+            are more than 35 of us, and we all believe young people can change
+            things by speaking up about them.
+          </p>
+          <p>
+            Each year we send around 20 policy recommendations to the Hong Kong
+            government. We've taken part in the Policy Address and Budget
+            consultations since 2024, and we're now contributing to the First
+            Five-Year Plan for Economic and Social Development (2026–2030).
+            Alongside the policy work, we've taught 350 children from
+            underprivileged families at our partner schools and trained 43 student
+            tutors. Since 2024, 86% of the students we teach have moved up at
+            least one class band.
+          </p>
+          <p>
+            For us, the policy and the teaching come from the same belief: a
+            better world gets built by people who decide not to wait.
+          </p>
+        </div>
+        <div class="outcomes">
+          <div class="outcome outcome-policy">
+            <p class="outcome-figure">HK$50M</p>
+            <p class="outcome-label">
+              allocated to AI for All in the 2026–27 Budget, the kind of inclusive
+              AI programme we'd been arguing for
+            </p>
+          </div>
+          <div class="outcome outcome-teaching">
+            <p class="outcome-figure">86%</p>
+            <p class="outcome-label">
+              of our students have moved up at least one class band since 2024
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Partners -->
+  <section class="section-tight rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Who we work with</h2>
+      <div class="rail-body prose">
+        <p>
+          We teach with Ho Man Tin Ling To Catholic School, St. Barnabas' Home
+          &amp; Society, Kennedy Town School and 10% Organisation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Where we're going -->
+  <section class="section-tight ahead rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">What's next</h2>
+      <div class="rail-body prose">
+        <ul class="ahead-list">
+          <li>
+            <span class="ahead-tag ahead-policy">Policy</span>
+            We're working on our submission to the First Five-Year Plan for
+            Economic and Social Development (2026–2030), about how AI and economic
+            policy can open up opportunities rather than narrow them.
+          </li>
+          <li>
+            <span class="ahead-tag ahead-teaching">Teaching</span>
+            We're going back to Ho Man Tin Ling To Catholic School next year with
+            all four modules and a new group of tutors.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Get involved -->
+  <section class="section-tight rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Get involved</h2>
+      <div class="rail-body prose">
+        <p>
+          <strong>Schools and organisations:</strong> if you work with children
+          from underprivileged families and could use tutors, we'll bring the
+          lessons, the tutors and the equipment.{' '}
+          <a href="/get-involved">Get in touch</a>.
+        </p>
+        <p>
+          <strong>Students:</strong> we're recruiting at Victoria Shanghai
+          Academy. If you're into policy, economics or AI, we care more about what
+          you want to do than about titles.{' '}
+          <a href="/get-involved">Tell us what you'd like to work on</a>.
+        </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .fronts {
-    display: grid;
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-  }
-
-  .front {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-left: 5px solid var(--color-accent);
-    border-radius: var(--radius);
-    padding: 1.6rem 1.9rem;
-    box-shadow: var(--shadow-sm);
-    max-width: var(--measure);
-  }
-
-  .front:nth-child(2) {
-    border-left-color: var(--coral);
-  }
-  .front:nth-child(3) {
-    border-left-color: var(--teal);
-  }
-
-  .front h3 {
-    margin-bottom: 0.5rem;
-  }
-  .front p {
-    color: var(--color-text-soft);
-  }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .values-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.25rem;
-  }
-
-  .values-list li {
-    padding: 1rem 1.25rem;
-    border-radius: var(--radius-sm);
-    background: rgba(255, 255, 255, 0.6);
-    margin-bottom: 0.75rem;
-    border-left: 4px solid var(--emerald);
-  }
-
-  @media (max-width: 52rem) {
-    .cards-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

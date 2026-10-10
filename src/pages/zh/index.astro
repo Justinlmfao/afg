@@ -1,0 +1,220 @@
+---
+// Traditional Chinese home page. Shares the English page's stylesheet
+// (src/styles/pages/home.css) via pageClass, so layout changes stay in one
+// place; only the prose differs. Keep each Chinese paragraph on one source
+// line: Astro turns a line break into a space, which shows in Chinese.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/home.css';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl } from '../../i18n';
+import { getLatestPapers, formatMonth, paperLabels } from '../../papers';
+
+const lang = getLangFromUrl(Astro.url);
+const label = paperLabels[lang];
+const papers = await getLatestPapers(lang, 3);
+
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="AI For Good 香港：學生主導的人工智能政策研究與免費補習"
+  pageClass="page-home"
+  description="AI For Good 是一個由香港學生創辦和營運的組織：我們向政府提交政策建議，也為基層家庭的小學生提供免費補習。"
+>
+  <section class="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">
+        <span class="eyebrow-rule" aria-hidden="true"></span>學生主導的政策研究
+      </p>
+
+      <h1><span class="phrase">為我們終將繼承的科技，</span><span class="phrase">制訂政策。</span></h1>
+
+      <p class="hero-sub">
+        我們是一群香港學生，研究人工智能和經濟政策如何改變這座城市，每年向政府提交約二十項建議。我們也為基層家庭的小學生免費教授人工智能和經濟知識。
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-policy" href="/zh/policy">
+          閱讀我們的政策研究 <span class="arrow">→</span>
+        </a>
+        <a class="hero-secondary" href="/zh/teaching">
+          看看我們的教學 <span class="arrow">→</span>
+        </a>
+      </div>
+
+      <dl class="stat-strip">
+        <div>
+          <dt>~20</dt>
+          <dd>每年提交的建議</dd>
+        </div>
+        <div>
+          <dt>350</dt>
+          <dd>教過的孩子</dd>
+        </div>
+        <div>
+          <dt>7</dt>
+          <dd>合作學校</dd>
+        </div>
+        <div>
+          <dt>43</dt>
+          <dd>受訓學生導師</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <figure class="hero-photo-band">
+    <img
+      src="/programs/teaching-classroom.jpg"
+      alt="導師在天主教領島學校上課，一名學生舉手回答。"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption>天主教領島學校的一節補習課。</figcaption>
+  </figure>
+
+  <section class="doors-section">
+    <div class="container doors">
+      <a href="/zh/policy" class="door door-policy">
+        <p class="door-name">政策研究</p>
+        <p class="door-line">
+          我們向香港政府提交書面建議，自 2024 年起每一輪施政報告和財政預算案諮詢都有參與。
+        </p>
+        <p class="door-number">~20 <span>每年提交的建議</span></p>
+        <span class="door-cta">閱讀我們的政策研究 <span class="arrow">→</span></span>
+      </a>
+
+      <a href="/zh/teaching" class="door door-teaching">
+        <p class="door-name">教學計劃</p>
+        <p class="door-line">
+          由我們親自培訓的學生導師，在七間學校為小學生提供免費補習。
+        </p>
+        <p class="door-number">350 <span>教過的孩子</span></p>
+        <span class="door-cta">看看我們的教學 <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="proof">
+    <div class="container proof-grid">
+      <div class="proof-item">
+        <p class="proof-figure proof-policy">HK$50M</p>
+        <p class="proof-label">
+          2026–27 年度財政預算案撥給 AI for All 的款項，正是我們一直倡議的那類普及人工智能計劃
+        </p>
+      </div>
+      <div class="proof-item">
+        <p class="proof-figure proof-teaching">
+          <span data-count="86">86</span>%
+        </p>
+        <p class="proof-label">
+          自 2024 年起，至少升了一個組別的學生比例
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我們是誰</h2>
+      <div class="rail-body prose">
+        <p>
+          AI For Good 由學生在 2023 年 6 月創立，到今天仍然全由學生營運，現在已有超過 35 人。我們一開始是校外的獨立智庫，後來才陸續和全港各區的學校合作。我們同時做兩件事：為政府撰寫有證據支持的建議，也去教那些最先感受到這些決定影響的孩子。<a class="link-quiet nowrap" href="/zh/about">了解更多 →</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight current rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我們正在做的事</h2>
+      <div class="rail-body">
+        <ul class="current-list">
+          <li>
+            <span class="current-tag current-policy">政策</span><span class="current-body">
+              就《香港特別行政區經濟和社會發展第一個五年規劃（2026–2030）》撰寫意見書。我們主張人工智能的資源應該投放到有需要的地方，而不只是沿用現有的計劃。
+            </span>
+          </li>
+          <li>
+            <span class="current-tag current-teaching">教學</span><span class="current-body">
+              明年會帶著新一批導師重返天主教領島學校。
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight latest rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">最新工作</h2>
+      <div class="rail-body">
+        <ul class="latest-list">
+          <!-- The flagship always leads the list -->
+          <li>
+            <a href="/zh/policy#ai-for-all">
+              <span class="latest-kind latest-policy">主要項目</span>
+              <span class="latest-title">AI for All：2026–27 年度財政預算案撥款五千萬港元</span>
+              <span class="latest-meta">2024–2026 年</span>
+            </a>
+          </li>
+          {
+            papers.map((s) => (
+              <li>
+                <a href={`/zh/policy#${s.data.key}`}>
+                  <span class="latest-kind latest-policy">{label.kind[s.data.kind]}</span><span class="latest-title">{s.data.title}</span><span class="latest-meta">{formatMonth(s.data.written, lang)}</span>
+                </a>
+              </li>
+            ))
+          }{
+            modules.map((m) => (
+              <li>
+                <a href="/zh/teaching">
+                  <span class="latest-kind latest-teaching">單元</span><span class="latest-title">{m.data.title_zh ?? m.data.title}</span><span class="latest-meta">教學</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight partners rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">合作夥伴</h2>
+      <div class="rail-body prose">
+        <p>
+          天主教領島學校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
+          10% Organisation
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ctas">
+    <div class="container cta-grid">
+      <div class="cta">
+        <h2 class="h-sm">學校與機構</h2>
+        <p>
+          如果你服務基層家庭的孩子，又需要導師幫忙，課程、導師和器材都由我們負責。
+        </p>
+        <a class="btn btn-teaching" href="/zh/get-involved">
+          和我們合作 <span class="arrow">→</span>
+        </a>
+      </div>
+      <div class="cta">
+        <h2 class="h-sm">學生</h2>
+        <p>
+          我們正在滬江維多利亞學校招募成員。如果你對政策、經濟或人工智能有興趣，歡迎找我們。
+        </p>
+        <a class="btn btn-policy" href="/zh/get-involved">
+          加入我們 <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
