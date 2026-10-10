@@ -83,63 +83,67 @@ const photos = [
     </div>
   </section>
 
-  <section class="why-teach">
-    <div class="container prose">
-      <h2 class="section-title">我们为什么教</h2>
-      <p>
-        在香港，课后的额外辅导通常要花钱。付得起补习费的家庭会请补习，付不起的，只能看着孩子落后。人工智能改变了这一点：第一次，一位能用五种方法解释同一条题目、又有耐性的导师，可以免费得到。
-      </p>
-      <p>
-        但工具有多大用处，要看孩子懂不懂得好好使用。一个直接问人工智能要答案的孩子，什么也学不到；一个先自己尝试、再问提示、最后用自己的话解释答案的孩子，学到的会比自己一个人学更多。教会孩子分辨这两种用法，就是我们的导师在做的事。
-      </p>
+  <section class="why-teach rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我们为什么教</h2>
+      <div class="rail-body prose">
+        <p>
+          在香港，课后的额外辅导通常要花钱。付得起补习费的家庭会请补习，付不起的，只能看着孩子落后。人工智能改变了这一点：第一次，一位能用五种方法解释同一条题目、又有耐性的导师，可以免费得到。
+        </p>
+        <p>
+          但工具有多大用处，要看孩子懂不懂得好好使用。一个直接问人工智能要答案的孩子，什么也学不到；一个先自己尝试、再问提示、最后用自己的话解释答案的孩子，学到的会比自己一个人学更多。教会孩子分辨这两种用法，就是我们的导师在做的事。
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="think-first">
-    <div class="container">
-      <div class="prose">
-        <h2 class="section-title">我们怎样教：Think First 先想后问</h2>
+  <section class="think-first rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">我们怎样教：Think First 先想后问</h2>
+      <div class="rail-body">
         <p class="modules-note">每一节用到人工智能的课，都跟从同样的四个步骤。</p>
-      </div>
-      <ol class="tf-steps">
-        <li>
-          <span class="tf-num">1</span>
-          <div><h3>尝试</h3><p>孩子先自己试着解题。</p></div>
-        </li>
-        <li>
-          <span class="tf-num">2</span>
-          <div><h3>提问</h3><p>他们只问人工智能要提示或核对，永远不直接问答案。</p></div>
-        </li>
-        <li>
-          <span class="tf-num">3</span>
-          <div><h3>核对</h3><p>他们比较人工智能的回应和自己的做法，找出不同之处。</p></div>
-        </li>
-        <li>
-          <span class="tf-num">4</span>
-          <div><h3>解释</h3><p>关掉人工智能后，用自己的话解释答案。</p></div>
-        </li>
-      </ol>
-      <div class="prose tf-after">
-        <p>
-          孩子能在没有人工智能的情况下解释，就代表学会了；做不到的话，我们就退回上一步。
-        </p>
-        <p>
-          我们不把人工智能当作独立的科目来教。我们教数学、英文、经济和科学，再让孩子看到人工智能可以怎样帮助他们学好每一科。我们的导师都是中学生，完成 AFG 的培训后才开始教学，并以小组形式上课，让每个孩子都得到照顾。
-        </p>
+        <ol class="tf-steps">
+          <li>
+            <span class="tf-num">1</span>
+            <div><h3>尝试</h3><p>孩子先自己试着解题。</p></div>
+          </li>
+          <li>
+            <span class="tf-num">2</span>
+            <div><h3>提问</h3><p>他们只问人工智能要提示或核对，永远不直接问答案。</p></div>
+          </li>
+          <li>
+            <span class="tf-num">3</span>
+            <div><h3>核对</h3><p>他们比较人工智能的回应和自己的做法，找出不同之处。</p></div>
+          </li>
+          <li>
+            <span class="tf-num">4</span>
+            <div><h3>解释</h3><p>关掉人工智能后，用自己的话解释答案。</p></div>
+          </li>
+        </ol>
+        <div class="tf-after prose">
+          <p>
+            孩子能在没有人工智能的情况下解释，就代表学会了；做不到的话，我们就退回上一步。
+          </p>
+          <p>
+            我们不把人工智能当作独立的科目来教。我们教数学、英文、经济和科学，再让孩子看到人工智能可以怎样帮助他们学好每一科。我们的导师都是中学生，完成 AFG 的培训后才开始教学，并以小组形式上课，让每个孩子都得到照顾。
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="modules">
+  <section class="modules rail-section">
     <div class="container">
-      <h2 class="section-title">我们的四个单元</h2>
-      <p class="modules-note prose">
+      <div class="rail">
+        <h2 class="rail-head">我们的四个单元</h2>
+        <p class="rail-body modules-note">
         每个单元都把一个学科和人工智能配合起来，目的是缩小我们的学生和家境较好的同龄人之间的差距，而不是令它扩大。
       </p>
+      </div>
       <ol class="module-list">
         {
           modules.map((m) => (
-            <li class="module">
+            <li class="module rail-row">
               <div class="module-side">
                 <span class="module-glyph" aria-hidden="true">
                   <Icon name={m.data.icon} size={22} />
@@ -163,19 +167,23 @@ const photos = [
     </div>
   </section>
 
-  <section class="sample tint-sample">
+  <section class="sample tint-sample rail-section">
     <div class="container">
-      <div class="prose">
-        <p class="kicker kicker-teaching">示范课堂</p>
-        <h2>数字大，不代表比较强</h2>
-        <p class="sample-note">
-          这节课用上了上面的<strong>数学</strong>和<strong>英文</strong>单元。我们把它公开，让学校在邀请我们之前，先看看一节课是怎样设计的。
-        </p>
-        <ul class="sample-meta">
-          <li><span>程度</span> 小五至小六</li>
-          <li><span>时长</span> 60 分钟</li>
-          <li><span>人手</span> 每 8–10 位学生配 2 位导师</li>
-        </ul>
+      <div class="rail">
+        <div class="rail-head">
+          <p class="kicker kicker-teaching">示范课堂</p>
+          <h2>数字大，不代表比较强</h2>
+        </div>
+        <div class="rail-body">
+          <p class="sample-note">
+            这节课用上了上面的<strong>数学</strong>和<strong>英文</strong>单元。我们把它公开，让学校在邀请我们之前，先看看一节课是怎样设计的。
+          </p>
+          <ul class="sample-meta">
+            <li><span>程度</span> 小五至小六</li>
+            <li><span>时长</span> 60 分钟</li>
+            <li><span>人手</span> 每 8–10 位学生配 2 位导师</li>
+          </ul>
+        </div>
       </div>
 
       <div class="parts">
@@ -230,16 +238,20 @@ const photos = [
         </article>
       </div>
 
-      <p class="sample-link">
-        主张、证据、诚实的反方理由，然后是建议：这正是我们<a class="link-quiet" href="/zh-hans/policy">向政府提交每一份提案</a>时用的结构。我们教十一岁孩子的方法，和我们写给决策者的方法是同一套。
-      </p>
-      <p class="sample-link">
-        反过来也一样。我们在 2025 年 12 月提交的<a class="link-quiet" href="/zh-hans/policy#think-first">《Think First 先想后问》提案</a>，就是把导师每星期都在用的方法，建议推广到全港每一间小学。
-      </p>
+      <div class="rail">
+        <div class="rail-body">
+          <p class="sample-link">
+            主张、证据、诚实的反方理由，然后是建议：这正是我们<a class="link-quiet" href="/zh-hans/policy">向政府提交每一份提案</a>时用的结构。我们教十一岁孩子的方法，和我们写给决策者的方法是同一套。
+          </p>
+          <p class="sample-link">
+            反过来也一样。我们在 2025 年 12 月提交的<a class="link-quiet" href="/zh-hans/policy#think-first">《Think First 先想后问》提案</a>，就是把导师每星期都在用的方法，建议推广到全港每一间小学。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="partners rail-section">
+  <section class="section-tight partners rail-section">
     <div class="container rail">
       <h2 class="rail-head">我们在哪里教</h2>
       <div class="rail-body prose">
@@ -250,10 +262,10 @@ const photos = [
     </div>
   </section>
 
-  <section class="commitments rail-section">
+  <section class="section-tight commitments rail-section">
     <div class="container rail">
       <h2 class="rail-head">我们对学校和家长的承诺</h2>
-      <div class="rail-body prose">
+      <div class="rail-body">
         <ul class="promise-list">
           <li>导师上课时，一定有学校或中心的职员在场。</li>
           <li>我们不收集儿童的个人资料。</li>
@@ -264,10 +276,12 @@ const photos = [
     </div>
   </section>
 
-  <section class="classroom">
+  <section class="classroom rail-section">
     <div class="container">
-      <h2 class="section-title">教室里</h2>
-      <p class="modules-note prose">我们的导师在天主教领岛学校上课。</p>
+      <div class="rail">
+        <h2 class="rail-head">教室里</h2>
+        <p class="rail-body modules-note">我们的导师在天主教领岛学校上课。</p>
+      </div>
       <div class="gallery">
         {
           photos.map((photo) => (
@@ -287,11 +301,11 @@ const photos = [
     </div>
   </section>
 
-  <section class="cohorts">
+  <section class="cohorts rail-section">
     <div class="container">
-      <div class="prose">
-        <h2 class="section-title">与沪江维多利亚学校合作</h2>
-        <p class="modules-note">
+      <div class="rail">
+        <h2 class="rail-head">与沪江维多利亚学校合作</h2>
+        <p class="rail-body modules-note">
           除了在小学上课，我们也和沪江维多利亚学校合办课程，对象是社区里的年轻人。
         </p>
       </div>
@@ -299,7 +313,7 @@ const photos = [
       {
         cohorts.map((cohort) => (
           <div class="cohort">
-            <div class="cohort-head">
+            <div class="cohort-head rail-row">
               <h3>{cohort.years}</h3>
               <p>{cohort.summary}</p>
             </div>
@@ -323,10 +337,10 @@ const photos = [
     </div>
   </section>
 
-  <section class="anecdote">
-    <div class="container prose">
-      <h2 class="section-title">课堂上的一刻</h2>
-      <blockquote class="anecdote-quote">
+  <section class="anecdote rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">课堂上的一刻</h2>
+      <blockquote class="rail-body anecdote-quote">
         我们去天主教领岛学校之前，以为要花很多力气，才能说服一班孩子人工智能和时事跟他们有关。我们错了。他们不是没有兴趣，只是从来没有人给过他们机会。不到一小时，他们已经在争论一个演算法算不算公平。他们从来不缺好奇心，缺的是机会。
       </blockquote>
     </div>

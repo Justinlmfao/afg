@@ -7,10 +7,6 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  .section-title {
-    margin-bottom: 1.25rem;
-  }
-
   /* Ledger dl reset */
   .ledger dt,
   .ledger dd {
@@ -20,11 +16,6 @@
   /* ---- Flagship: AI for All -------------------------------------------- */
   .flagship {
     background: var(--policy-wash);
-    border-block: 1px solid var(--rule);
-  }
-
-  .flagship h2 {
-    margin-bottom: 0.75rem;
   }
 
   .flagship-lede {
@@ -458,6 +449,16 @@
     .proposal-part {
       grid-template-columns: 1fr;
       gap: 0.3rem;
+      padding-inline: 1.1rem;
+    }
+    .part-recommendation {
+      padding-left: calc(1.1rem - 4px);
+    }
+    .proposal-head {
+      padding-inline: 1.1rem;
+    }
+    .filed {
+      padding-inline: 1.2rem;
     }
     .steps li:not(:last-child)::after {
       content: none;

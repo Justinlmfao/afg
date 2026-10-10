@@ -127,15 +127,21 @@ read a word.
    the two pillar panels. Nothing ambient.
 5. **Sentence case everywhere.** No all-caps eyebrow chips, no promotional
    adjectives; active voice, plain verbs.
-6. **One left edge, two section patterns.** Every block starts at the
-   container's left edge (`container prose` limits its content, not its box).
-   Long narrative sections put the heading above the text. Short reference
-   sections (what we're working on, latest work, partners, what's next,
-   promises) use the **rail**: on wide screens the heading sits in a 15rem
-   margin column with the content beside it, separated from the next rail
-   section by a hairline, like rows in a ledger. Below 60rem the rail folds
-   back to heading-above. Figures that sit under cards share the cards'
-   columns and inset.
+6. **Headings in the margin, text in one column, spreads across.** On wide
+   screens every section uses the **rail**: its heading (and any kicker) sits
+   in a 15rem margin column, on the same baseline as the first line of text
+   beside it, and stays pinned in view while a long section scrolls past. All
+   running text shares the one column to its right, so a reader scans a
+   single line of headings and reads from a single left edge. Rows inside a
+   section that carry their own label (modules, cohort years) use
+   `.rail-row` to put the label in the same margin column. Grids and photos
+   (the two doors, the lesson cards, galleries, the two blocks on About,
+   calls to action) are spreads: they span the full container. Sections are
+   separated by a hairline, with generous padding around narrative sections
+   and tight padding (`section-tight`) between short reference rows. Below
+   60rem everything folds back to heading-above. The page title block
+   (kicker, h1, lead) always starts at the container's left edge. Figures
+   that sit under cards share the cards' columns and inset.
 
 ## 5. Review — what was cut, and why
 

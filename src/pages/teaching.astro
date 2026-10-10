@@ -123,78 +123,82 @@ const photos = [
   </section>
 
   <!-- Why we teach, then the method every AI lesson follows -->
-  <section class="why-teach">
-    <div class="container prose">
-      <h2 class="section-title">Why we teach</h2>
-      <p>
-        In Hong Kong, extra help after school usually costs money. Families who
-        can pay for tutoring do, and families who can't watch their children
-        fall behind. AI changes that. For the first time, a patient tutor that
-        can explain a question five different ways is available for free.
-      </p>
-      <p>
-        But a tool is only as useful as a child's ability to use it well. A
-        child who asks AI for the answer learns nothing. A child who tries
-        first, asks for a hint, and then explains the answer in their own words
-        learns more than they would have on their own. Teaching that difference
-        is what our tutors do.
-      </p>
+  <section class="why-teach rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Why we teach</h2>
+      <div class="rail-body prose">
+        <p>
+          In Hong Kong, extra help after school usually costs money. Families who
+          can pay for tutoring do, and families who can't watch their children
+          fall behind. AI changes that. For the first time, a patient tutor that
+          can explain a question five different ways is available for free.
+        </p>
+        <p>
+          But a tool is only as useful as a child's ability to use it well. A
+          child who asks AI for the answer learns nothing. A child who tries
+          first, asks for a hint, and then explains the answer in their own words
+          learns more than they would have on their own. Teaching that difference
+          is what our tutors do.
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="think-first">
-    <div class="container">
-      <div class="prose">
-        <h2 class="section-title">How we teach: Think First</h2>
+  <section class="think-first rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How we teach: Think First</h2>
+      <div class="rail-body">
         <p class="modules-note">Every lesson that uses AI follows the same four steps.</p>
-      </div>
-      <ol class="tf-steps">
-        <li>
-          <span class="tf-num">1</span>
-          <div><h3>Attempt</h3><p>Children try the problem on their own first.</p></div>
-        </li>
-        <li>
-          <span class="tf-num">2</span>
-          <div><h3>Ask</h3><p>They ask the AI for a hint or a check, never for the answer.</p></div>
-        </li>
-        <li>
-          <span class="tf-num">3</span>
-          <div><h3>Check</h3><p>They compare the AI's reply with their own work and spot the differences.</p></div>
-        </li>
-        <li>
-          <span class="tf-num">4</span>
-          <div><h3>Explain</h3><p>With the AI switched off, they explain the answer in their own words.</p></div>
-        </li>
-      </ol>
-      <div class="prose tf-after">
-        <p>
-          If a child can explain it without the AI, they've learned it. If they
-          can't, we go back a step.
-        </p>
-        <p>
-          We don't teach AI as a separate topic. We teach maths, English,
-          economics and science, and show children how AI can help them learn
-          each one. Our tutors are secondary school students who finish AFG's
-          training before they teach, and they work in small groups so every
-          child gets attention.
-        </p>
+        <ol class="tf-steps">
+          <li>
+            <span class="tf-num">1</span>
+            <div><h3>Attempt</h3><p>Children try the problem on their own first.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">2</span>
+            <div><h3>Ask</h3><p>They ask the AI for a hint or a check, never for the answer.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">3</span>
+            <div><h3>Check</h3><p>They compare the AI's reply with their own work and spot the differences.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">4</span>
+            <div><h3>Explain</h3><p>With the AI switched off, they explain the answer in their own words.</p></div>
+          </li>
+        </ol>
+        <div class="tf-after prose">
+          <p>
+            If a child can explain it without the AI, they've learned it. If they
+            can't, we go back a step.
+          </p>
+          <p>
+            We don't teach AI as a separate topic. We teach maths, English,
+            economics and science, and show children how AI can help them learn
+            each one. Our tutors are secondary school students who finish AFG's
+            training before they teach, and they work in small groups so every
+            child gets attention.
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- How we teach — four modules as a ruled list, not cards -->
-  <section class="modules">
+  <section class="modules rail-section">
     <div class="container">
-      <h2 class="section-title">Our four modules</h2>
-      <p class="modules-note prose">
-        Each module pairs a school subject with AI. The aim is to close the gap
-        between our students and children from better-off families, not to
-        widen it.
-      </p>
+      <div class="rail">
+        <h2 class="rail-head">Our four modules</h2>
+        <p class="rail-body modules-note">
+          Each module pairs a school subject with AI. The aim is to close the
+          gap between our students and children from better-off families, not
+          to widen it.
+        </p>
+      </div>
       <ol class="module-list">
         {
           rendered.map((m) => (
-            <li class="module">
+            <li class="module rail-row">
               <div class="module-side">
                 <span class="module-glyph" aria-hidden="true">
                   <Icon name={m.data.icon} size={22} />
@@ -227,21 +231,26 @@ const photos = [
        as though they were official game data.
        Justin: this is labelled a sample. Once it has been taught as written,
        say so — "first taught at [school], [month]" is stronger. -->
-  <section class="sample tint-sample">
+  <section class="sample tint-sample rail-section">
     <div class="container">
-      <div class="prose">
-        <p class="kicker kicker-teaching">Sample lesson</p>
-        <h2>Bigger isn't better</h2>
-        <p class="sample-note">
-          One lesson, using the <strong>Mathematics</strong> and{' '}
-          <strong>English</strong> modules above. We've published it so schools
-          can see how a lesson is put together before they invite us in.
-        </p>
-        <ul class="sample-meta">
-          <li><span>Level</span> P5–P6</li>
-          <li><span>Length</span> 60 minutes</li>
-          <li><span>Staffing</span> 2 tutors for every 8–10 students</li>
-        </ul>
+      <div class="rail">
+        <div class="rail-head">
+          <p class="kicker kicker-teaching">Sample lesson</p>
+          <h2>Bigger isn't better</h2>
+        </div>
+        <div class="rail-body">
+          <p class="sample-note">
+            One lesson, using the <strong>Mathematics</strong> and{' '}
+            <strong>English</strong> modules above. We've published it so
+            schools can see how a lesson is put together before they invite us
+            in.
+          </p>
+          <ul class="sample-meta">
+            <li><span>Level</span> P5–P6</li>
+            <li><span>Length</span> 60 minutes</li>
+            <li><span>Staffing</span> 2 tutors for every 8–10 students</li>
+          </ul>
+        </div>
       </div>
 
       <div class="parts">
@@ -326,23 +335,27 @@ const photos = [
       </div>
 
       <!-- The line that makes the two halves of AFG one organisation -->
-      <p class="sample-link">
-        Claim, evidence, an honest case against, then a recommendation: it's the
-        same structure we use in{' '}
-        <a class="link-quiet" href="/policy">every proposal we send to the government</a>.
-        We teach eleven-year-olds the same method we use with policymakers.
-      </p>
-      <p class="sample-link">
-        It goes the other way too. Our December 2025 proposal,{' '}
-        <a class="link-quiet" href="/policy#think-first">Think First</a>, takes
-        the method our tutors use every week and proposes it for every primary
-        school in Hong Kong.
-      </p>
+      <div class="rail">
+        <div class="rail-body">
+          <p class="sample-link">
+            Claim, evidence, an honest case against, then a recommendation: it's the
+            same structure we use in{' '}
+            <a class="link-quiet" href="/policy">every proposal we send to the government</a>.
+            We teach eleven-year-olds the same method we use with policymakers.
+          </p>
+          <p class="sample-link">
+            It goes the other way too. Our December 2025 proposal,{' '}
+            <a class="link-quiet" href="/policy#think-first">Think First</a>, takes
+            the method our tutors use every week and proposes it for every primary
+            school in Hong Kong.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Partners — a text list, not a logo wall -->
-  <section class="partners rail-section">
+  <section class="section-tight partners rail-section">
     <div class="container rail">
       <h2 class="rail-head">Where we teach</h2>
       <div class="rail-body prose">
@@ -358,10 +371,10 @@ const photos = [
   </section>
 
   <!-- What schools and families can count on -->
-  <section class="commitments rail-section">
+  <section class="section-tight commitments rail-section">
     <div class="container rail">
       <h2 class="rail-head">Our promises to schools and families</h2>
-      <div class="rail-body prose">
+      <div class="rail-body">
         <ul class="promise-list">
           <li>Tutors always teach with a member of school or centre staff in the room.</li>
           <li>We don't collect children's personal data.</li>
@@ -373,12 +386,14 @@ const photos = [
   </section>
 
   <!-- In the classroom — photos -->
-  <section class="classroom">
+  <section class="classroom rail-section">
     <div class="container">
-      <h2 class="section-title">In the classroom</h2>
-      <p class="modules-note prose">
-        Our tutors teaching at Ho Man Tin Ling To Catholic School.
-      </p>
+      <div class="rail">
+        <h2 class="rail-head">In the classroom</h2>
+        <p class="rail-body modules-note">
+          Our tutors teaching at Ho Man Tin Ling To Catholic School.
+        </p>
+      </div>
       <div class="gallery">
         {
           photos.map((photo, i) => (
@@ -399,11 +414,11 @@ const photos = [
   </section>
 
   <!-- Sessions at Victoria Shanghai Academy, by year -->
-  <section class="cohorts">
+  <section class="cohorts rail-section">
     <div class="container">
-      <div class="prose">
-        <h2 class="section-title">With Victoria Shanghai Academy</h2>
-        <p class="modules-note">
+      <div class="rail">
+        <h2 class="rail-head">With Victoria Shanghai Academy</h2>
+        <p class="rail-body modules-note">
           Alongside our work in primary schools, we run sessions with Victoria
           Shanghai Academy for young people from the local community.
         </p>
@@ -412,7 +427,7 @@ const photos = [
       {
         cohorts.map((cohort) => (
           <div class="cohort">
-            <div class="cohort-head">
+            <div class="cohort-head rail-row">
               <h3>{cohort.years}</h3>
               <p>{cohort.summary}</p>
             </div>
@@ -437,10 +452,10 @@ const photos = [
   </section>
 
   <!-- A moment from the work -->
-  <section class="anecdote">
-    <div class="container prose">
-      <h2 class="section-title">A moment from class</h2>
-      <blockquote class="anecdote-quote">
+  <section class="anecdote rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">A moment from class</h2>
+      <blockquote class="rail-body anecdote-quote">
         We went to Ling To expecting to spend the session convincing a room of
         children that AI and current affairs had anything to do with them. We
         were wrong. They weren't uninterested; nobody had ever given them the

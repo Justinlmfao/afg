@@ -29,17 +29,13 @@ const email = 'ps20153216@student.vsa.edu.hk';
 
     <div class="footer-contact">
       <a href={`mailto:${email}`}>{email}</a>
-      <p class="footer-meta">{t.footerMeta} · <span class="nowrap">&copy; {year} AI For Good</span></p>
+      <p class="footer-meta">{t.footerMeta}</p>
+      <p class="footer-meta footer-copy">&copy; {year} AI For Good</p>
     </div>
   </div>
 </footer>
 
 <style>
-  /* Keep the copyright line in one piece when the column is narrow */
-  .nowrap {
-    white-space: nowrap;
-  }
-
   .site-footer {
     margin-top: auto;
     border-top: 1px solid var(--rule);
@@ -93,6 +89,10 @@ const email = 'ps20153216@student.vsa.edu.hk';
     color: var(--graphite);
     margin-top: 0.75rem;
     font-size: 0.85rem;
+  }
+
+  .footer-copy {
+    margin-top: 0.15rem;
   }
 
   @media (max-width: 46rem) {

@@ -7,10 +7,6 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  .section-title {
-    margin-bottom: 1rem;
-  }
-
   /* ---- The 86% — this page's one bold element -------------------------- */
   /* Hero figure per the dataviz spec: the sans face, huge, exactly one. */
   .outcome {
@@ -67,10 +63,9 @@
     border-top: 1px solid var(--rule);
   }
 
+  /* Each module is a rail row: name in the margin column, text beside it */
   .module {
-    display: grid;
-    grid-template-columns: 15rem 1fr;
-    gap: 2rem;
+    row-gap: 0.9rem;
     padding-block: 1.9rem;
     border-bottom: 1px solid var(--rule);
   }
@@ -157,7 +152,6 @@
   /* ---- Sample lesson ---------------------------------------------------- */
   .tint-sample {
     background: var(--teaching-wash);
-    border-block: 1px solid var(--rule);
   }
 
   .sample-note {
@@ -283,16 +277,13 @@
     color: var(--graphite);
   }
 
-  .think-first {
-    border-top: 1px solid var(--rule);
-  }
-
+  /* Four steps as a 2 × 2 grid inside the text column */
   .tf-steps {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem 2rem;
     margin: 0.5rem 0 1.75rem;
   }
 
@@ -323,12 +314,6 @@
     color: var(--graphite);
   }
 
-  @media (max-width: 52rem) {
-    .tf-steps {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
   @media (max-width: 30rem) {
     .tf-steps {
       grid-template-columns: 1fr;
@@ -336,18 +321,10 @@
   }
 
   /* ---- Promises to schools and families ------------------------------------ */
-  .commitments {
-    border-top: 1px solid var(--rule);
-  }
-
   .promise-list {
     list-style: none;
     padding: 0;
     border-top: 1px solid var(--rule);
-  }
-
-  .prose .promise-list {
-    padding-left: 0;
   }
 
   .promise-list li {
@@ -355,10 +332,6 @@
     padding: 0.7rem 0 0.7rem 1.6rem;
     border-bottom: 1px solid var(--rule);
     position: relative;
-  }
-
-  .prose .promise-list li + li {
-    margin-top: 0;
   }
 
   .promise-list li::before {
@@ -398,18 +371,13 @@
   }
 
   /* ---- Cohort galleries -------------------------------------------------- */
-  .cohorts {
-    border-top: 1px solid var(--rule);
+  .cohort + .cohort {
+    margin-top: 3rem;
   }
 
-  .cohort {
-    margin-top: 2.25rem;
-  }
-
+  /* Rail row: the years in the margin column, the summary beside them */
   .cohort-head {
-    display: grid;
-    grid-template-columns: 7rem 1fr;
-    gap: 1.25rem;
+    row-gap: 0.25rem;
     align-items: baseline;
     padding-bottom: 0.9rem;
     margin-bottom: 1rem;
@@ -448,16 +416,8 @@
   }
 
   @media (max-width: 52rem) {
-    .module {
-      grid-template-columns: 1fr;
-      gap: 0.9rem;
-    }
     .parts {
       grid-template-columns: 1fr;
-    }
-    .cohort-head {
-      grid-template-columns: 1fr;
-      gap: 0.25rem;
     }
     .cohort-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -473,6 +433,9 @@
   }
 
   @media (max-width: 30rem) {
+    .part {
+      padding: 1.35rem 1.2rem;
+    }
     .gallery {
       grid-template-columns: 1fr;
     }

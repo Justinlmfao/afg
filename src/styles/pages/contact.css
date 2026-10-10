@@ -82,4 +82,23 @@
       gap: 1.5rem;
     }
   }
+
+  /* Wide screens: the three notes stack in the margin column and the form
+     starts level with them in the text column */
+  @media (min-width: 60rem) {
+    .routes {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+      margin-bottom: 0;
+    }
+
+    .routes p {
+      font-size: 0.98rem;
+    }
+
+    .contact-form {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
 }

@@ -198,11 +198,14 @@
     color: var(--graphite);
   }
 
+  /* The figure and the link sit at the foot of each door, so they line up
+     across the two however long each description runs */
   .door-number {
     font-weight: 700;
     font-size: 1.9rem;
     letter-spacing: -0.02em;
-    margin-top: 0.2rem;
+    margin-top: auto;
+    padding-top: 0.2rem;
   }
 
   .door-number span {
@@ -213,7 +216,6 @@
   }
 
   .door-cta {
-    margin-top: auto;
     padding-top: 0.6rem;
     font-weight: 650;
   }
@@ -320,32 +322,36 @@
     color: var(--graphite);
   }
 
-  /* 6. Latest */
+  /* 6. Latest — ruled rows like the list above it, not a stack of boxes */
   .latest-list {
     list-style: none;
     padding: 0;
-    display: grid;
-    gap: 0.6rem;
     max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+  }
+
+  .latest-list li {
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
   }
 
   .latest-list a {
     display: grid;
-    grid-template-columns: 6.5rem 1fr auto;
+    grid-template-columns: 6rem 1fr auto;
     gap: 1rem;
     align-items: baseline;
-    padding: 0.85rem 1.1rem;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
-    background: var(--surface);
     text-decoration: none;
     color: var(--ink);
-    transition: border-color 0.15s ease;
   }
 
   .latest-list a:hover {
-    border-color: var(--graphite);
     color: var(--ink);
+  }
+
+  .latest-list a:hover .latest-title {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
   }
 
   .latest-kind {

@@ -221,6 +221,9 @@ h1 + :is(p, ul, ol, dl, blockquote, form) {
   margin-top: 0.75rem;
 }
 
+/* Two section rhythms: generous around narrative sections, tight between
+   short reference rows, so the page has a cadence instead of one interval
+   repeated until everything weighs the same. */
 section {
   padding-block: clamp(2.75rem, 6vw, 4.5rem);
 }
@@ -231,18 +234,24 @@ section.section-tight {
   padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
-/* ---- Rail: heading in the margin, content beside it ---------------------
-   For short reference sections (what we're working on, partners, what's
-   next), so they use the page's width and read as one index rather than a
-   stack of thin strips. Long narrative sections keep the heading above the
-   text. Below 60rem the rail folds back to heading-above-content. */
+/* ---- Rail: headings in the margin, text in one column -------------------
+   On wide screens every section heading sits in a 15rem margin column and
+   all running text in the column beside it, so the eye has one line of
+   headings to scan and one left edge to read from. Grids and photographs
+   (the two doors, lesson cards, galleries) span the full container instead.
+   Below 60rem the rail folds back to heading-above-content. */
 .rail {
   display: grid;
   gap: 0.75rem;
 }
 
-.rail-head {
-  font-size: 1.3rem;
+h2.rail-head,
+.rail-head h2 {
+  font-size: clamp(1.4rem, 1.05rem + 0.75vw, 1.65rem);
+}
+
+.rail-head .kicker {
+  margin-bottom: 0.4rem;
 }
 
 .rail-body {
@@ -250,20 +259,44 @@ section.section-tight {
   max-width: var(--measure);
 }
 
+/* A row inside a section that lines up with the rail: its label in the
+   margin column, its text in the text column (modules, cohort years). */
+.rail-row {
+  display: grid;
+  gap: 0.6rem;
+}
+
 @media (min-width: 60rem) {
-  .rail {
+  .rail,
+  .rail-row {
     grid-template-columns: 15rem minmax(0, 1fr);
     column-gap: 3rem;
     align-items: start;
   }
 
+  /* The heading sits on the same baseline as the first line beside it */
+  .rail {
+    align-items: baseline;
+  }
+
+  /* Text with no heading beside it still sits in the text column */
+  .rail > .rail-body:only-child {
+    grid-column: 2;
+  }
+
+  /* In a long section the heading stays in view while you read it */
+  .rail-head {
+    position: sticky;
+    top: 6rem;
+  }
+
   /* A list beside the heading starts level with it: no rule on top and no
      padding above the first item. The section hairline already separates. */
-  .rail-body > :is(ul, ol):first-child {
+  .rail-body > :is(ul, ol, dl):first-child {
     border-top: none;
   }
 
-  .rail-body > :is(ul, ol):first-child > li:first-child {
+  .rail-body > :is(ul, ol, dl):first-child > :first-child {
     padding-top: 0;
   }
 }

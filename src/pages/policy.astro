@@ -34,36 +34,38 @@ const proposals = await Promise.all(
   </section>
 
   <!-- The record, as a ruled ledger — one weighted row -->
-  <section class="record">
-    <div class="container">
-      <h2 class="section-title">So far</h2>
-      <dl class="ledger">
-        <div class="ledger-row">
-          <dt class="ledger-figure">~20</dt>
-          <dd class="ledger-label">recommendations sent to the government each year</dd>
-        </div>
-        <div class="ledger-row weighted">
-          <dt class="ledger-figure">HK$50M</dt>
-          <dd class="ledger-label">
-            allocated to <strong>AI for All</strong> in the 2026–27 Budget, the
-            kind of inclusive AI programme we'd been arguing for.{' '}
-            <a class="link-quiet" href="#ai-for-all">What we sent, and what we can claim →</a>
-          </dd>
-        </div>
-        <div class="ledger-row">
-          <dt class="ledger-figure">2024–</dt>
-          <dd class="ledger-label">
-            responses to every Policy Address and Budget consultation since 2024
-          </dd>
-        </div>
-        <div class="ledger-row">
-          <dt class="ledger-figure">2026–2030</dt>
-          <dd class="ledger-label">
-            our submission to the First Five-Year Plan for Economic and Social
-            Development, in progress
-          </dd>
-        </div>
-      </dl>
+  <section class="record rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">So far</h2>
+      <div class="rail-body">
+        <dl class="ledger">
+          <div class="ledger-row">
+            <dt class="ledger-figure">~20</dt>
+            <dd class="ledger-label">recommendations sent to the government each year</dd>
+          </div>
+          <div class="ledger-row weighted">
+            <dt class="ledger-figure">HK$50M</dt>
+            <dd class="ledger-label">
+              allocated to <strong>AI for All</strong> in the 2026–27 Budget, the
+              kind of inclusive AI programme we'd been arguing for.{' '}
+              <a class="link-quiet" href="#ai-for-all">What we sent, and what we can claim →</a>
+            </dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-figure">2024–</dt>
+            <dd class="ledger-label">
+              responses to every Policy Address and Budget consultation since 2024
+            </dd>
+          </div>
+          <div class="ledger-row">
+            <dt class="ledger-figure">2026–2030</dt>
+            <dd class="ledger-label">
+              our submission to the First Five-Year Plan for Economic and Social
+              Development, in progress
+            </dd>
+          </div>
+        </dl>
+      </div>
     </div>
   </section>
 
@@ -75,11 +77,13 @@ const proposals = await Promise.all(
        TODO (Justin): link the Budget speech / Budget paper as the source for
        the figures below, and attach the August 2025 submission as a PDF once
        it is cleared for publication. -->
-  <section id="ai-for-all" class="flagship">
-    <div class="container">
-      <div class="prose">
+  <section id="ai-for-all" class="flagship rail-section">
+    <div class="container rail">
+      <div class="rail-head">
         <p class="kicker">Our main project</p>
         <h2>AI for All</h2>
+      </div>
+      <div class="rail-body">
         <p class="flagship-lede">
           In February 2026, the Hong Kong Budget set aside HK$50 million for an
           inclusive AI programme. Over two years it aims to reach about 50,000
@@ -88,7 +92,6 @@ const proposals = await Promise.all(
           Cyberport's part is aimed at students, parents, older people and
           underprivileged communities.
         </p>
-      </div>
 
       <!-- The credibility guard, stated before anything else -->
       <p class="attribution">
@@ -234,133 +237,138 @@ const proposals = await Promise.all(
           </li>
         </ul>
       </aside>
+      </div>
     </div>
   </section>
 
   <!-- The method, shown structurally -->
-  <section class="method">
-    <div class="container">
-      <h2 class="section-title">How we write a proposal</h2>
-      <!-- Justin: adjust the detail under each step to match how the team
-           actually works — this is the section a sceptical reader uses to
-           decide whether the work is systematic or ad hoc. -->
-      <ol class="steps-detail">
-        <li>
-          <span class="step-num">1</span>
-          <div>
-            <h3>Talking to the people it affects</h3>
-            <p>
-              Every proposal starts with the people a policy touches. Our topics
-              come from what our members have actually seen, not from the news,
-              and we interview teachers, parents, workers and frontline staff as
-              well as our own tutors: what happened, who it affected, and
-              whether it happens once or every week. If only one person has
-              noticed a problem, we look for more evidence before turning it
-              into a proposal.
-            </p>
-          </div>
-        </li>
-        <li>
-          <span class="step-num">2</span>
-          <div>
-            <h3>Research</h3>
-            <p>
-              Next we check whether it's really a policy problem. What does the
-              government already fund in this area? Who does that help, and who
-              does it miss? What have similar places tried, and what did it
-              cost? If an existing policy already covers it, we say so and drop
-              it. This step is meant to rule proposals out, not to justify them.
-            </p>
-          </div>
-        </li>
-        <li>
-          <span class="step-num">3</span>
-          <div>
-            <h3>Writing and submitting</h3>
-            <p>
-              A member writes the proposal in the three-part format below, and
-              we make the case against as strong as we honestly can. If it wins,
-              the proposal doesn't go out. The ones that survive go to whichever
-              consultation is open, whether that's the Policy Address, the
-              Budget or a bureau's own call for views, with a recommendation
-              clear enough to act on.
-            </p>
-          </div>
-        </li>
-      </ol>
+  <section class="method rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How we write a proposal</h2>
+      <div class="rail-body">
+        <!-- Justin: adjust the detail under each step to match how the team
+             actually works — this is the section a sceptical reader uses to
+             decide whether the work is systematic or ad hoc. -->
+        <ol class="steps-detail">
+          <li>
+            <span class="step-num">1</span>
+            <div>
+              <h3>Talking to the people it affects</h3>
+              <p>
+                Every proposal starts with the people a policy touches. Our topics
+                come from what our members have actually seen, not from the news,
+                and we interview teachers, parents, workers and frontline staff as
+                well as our own tutors: what happened, who it affected, and
+                whether it happens once or every week. If only one person has
+                noticed a problem, we look for more evidence before turning it
+                into a proposal.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">2</span>
+            <div>
+              <h3>Research</h3>
+              <p>
+                Next we check whether it's really a policy problem. What does the
+                government already fund in this area? Who does that help, and who
+                does it miss? What have similar places tried, and what did it
+                cost? If an existing policy already covers it, we say so and drop
+                it. This step is meant to rule proposals out, not to justify them.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">3</span>
+            <div>
+              <h3>Writing and submitting</h3>
+              <p>
+                A member writes the proposal in the three-part format below, and
+                we make the case against as strong as we honestly can. If it wins,
+                the proposal doesn't go out. The ones that survive go to whichever
+                consultation is open, whether that's the Policy Address, the
+                Budget or a bureau's own call for views, with a recommendation
+                clear enough to act on.
+              </p>
+            </div>
+          </li>
+        </ol>
 
-      <p class="method-note prose">
-        Every proposal follows the same three-part format:
-      </p>
+        <p class="method-note">
+          Every proposal follows the same three-part format:
+        </p>
 
-      <!-- The standing proposal template. Real submissions below render in
-           exactly this structure; here it carries the method itself. -->
-      <article class="proposal proposal-demo" aria-label="The format every proposal follows">
-        <header class="proposal-head">
-          <h3 class="proposal-title">The format every proposal follows</h3>
-          <p class="proposal-meta">How we structure every AFG submission</p>
-        </header>
-        <div class="proposal-part">
-          <p class="part-label">The case for</p>
-          <p class="part-body">
-            The strongest arguments in favour: what the policy would achieve,
-            who it would help, and the evidence for it.
-          </p>
-        </div>
-        <div class="proposal-part">
-          <p class="part-label">The case against</p>
-          <p class="part-body">
-            The honest arguments against: the costs, the risks and who would
-            bear them. If these win, we don't submit.
-          </p>
-        </div>
-        <div class="proposal-part part-recommendation">
-          <p class="part-label">Recommendation</p>
-          <p class="part-body">
-            What we're asking the government to do, in plain words, once both
-            sides have been heard, with what it would cost and how we'd know
-            whether it worked.
-          </p>
-        </div>
-      </article>
+        <!-- The standing proposal template. Real submissions below render in
+             exactly this structure; here it carries the method itself. -->
+        <article class="proposal proposal-demo" aria-label="The format every proposal follows">
+          <header class="proposal-head">
+            <h3 class="proposal-title">The format every proposal follows</h3>
+            <p class="proposal-meta">How we structure every AFG submission</p>
+          </header>
+          <div class="proposal-part">
+            <p class="part-label">The case for</p>
+            <p class="part-body">
+              The strongest arguments in favour: what the policy would achieve,
+              who it would help, and the evidence for it.
+            </p>
+          </div>
+          <div class="proposal-part">
+            <p class="part-label">The case against</p>
+            <p class="part-body">
+              The honest arguments against: the costs, the risks and who would
+              bear them. If these win, we don't submit.
+            </p>
+          </div>
+          <div class="proposal-part part-recommendation">
+            <p class="part-label">Recommendation</p>
+            <p class="part-body">
+              What we're asking the government to do, in plain words, once both
+              sides have been heard, with what it would cost and how we'd know
+              whether it worked.
+            </p>
+          </div>
+        </article>
+      </div>
     </div>
   </section>
 
   <!-- Example proposals, newest first. Each card opens to the full paper. -->
-  <section class="filings">
-    <div class="container">
-      <h2 class="section-title">Two of our proposals</h2>
-      <p class="filings-note prose">
-        Two examples of what we send to the government, newest first. Each one
-        makes the case for and against, then recommends something with a cost
-        and a way to measure whether it worked.
-      </p>
-      {
-        proposals.length === 0 ? (
-          <p class="empty-note">We publish proposals here once they've been sent in.</p>
-        ) : (
-          proposals.map(({ key, title, date, area, summary, pdf, Body }) => (
-            <article class="filed" id={key}>
-              <p class="filed-meta">
-                <time>{date}</time> · {area}
-              </p>
-              <h3 class="filed-title">{title}</h3>
-              <p class="filed-summary">{summary}</p>
-              <details class="filed-more">
-                <summary>Read the full proposal</summary>
-                <div class="filed-body">
-                  <Body />
-                  {pdf && (
-                    <p>
-                      <a class="link-quiet" href={pdf}>Download the PDF →</a>
-                    </p>
-                  )}
-                </div>
-              </details>
-            </article>
-          ))
-        )
-      }
+  <section class="filings rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Two of our proposals</h2>
+      <div class="rail-body">
+        <p class="filings-note">
+          Two examples of what we send to the government, newest first. Each one
+          makes the case for and against, then recommends something with a cost
+          and a way to measure whether it worked.
+        </p>
+        {
+          proposals.length === 0 ? (
+            <p class="empty-note">We publish proposals here once they've been sent in.</p>
+          ) : (
+            proposals.map(({ key, title, date, area, summary, pdf, Body }) => (
+              <article class="filed" id={key}>
+                <p class="filed-meta">
+                  <time>{date}</time> · {area}
+                </p>
+                <h3 class="filed-title">{title}</h3>
+                <p class="filed-summary">{summary}</p>
+                <details class="filed-more">
+                  <summary>Read the full proposal</summary>
+                  <div class="filed-body">
+                    <Body />
+                    {pdf && (
+                      <p>
+                        <a class="link-quiet" href={pdf}>Download the PDF →</a>
+                      </p>
+                    )}
+                  </div>
+                </details>
+              </article>
+            ))
+          )
+        }
+      </div>
     </div>
   </section>
 </BaseLayout>
