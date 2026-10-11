@@ -1,0 +1,490 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/pages/teaching.css';
+import Icon from '../components/Icon.astro';
+import { getCollection, render } from 'astro:content';
+
+// The four teaching modules (from src/content/programs/; drafts excluded).
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const rendered = await Promise.all(
+  modules.map(async (m) => ({
+    data: m.data,
+    Content: (await render(m)).Content,
+  }))
+);
+
+// Sessions run at Victoria Shanghai Academy for students from the local
+// community, grouped by year. Six photos per year fill a 3-column grid.
+const cohorts = [
+  {
+    years: '2024–25',
+    summary:
+      'Showing students how AI can be used in their own community: what the tools are good at, and how to use them for something that actually helps.',
+    photos: [
+      { src: '/programs/vsa-2024-25-group.jpg', alt: 'Tutors and students at the close of the 2024/25 sessions, in front of a slide thanking everyone for joining.' },
+      { src: '/programs/vsa-2024-25-presenting.jpg', alt: 'Two tutors present to students working at laptops during a 2024/25 session.' },
+      { src: '/programs/vsa-2024-25-activity.jpg', alt: 'A tutor presents a worked example on screen, showing how an AI image tool transforms one picture into another.' },
+      { src: '/programs/vsa-2024-25-helping-pair.jpg', alt: 'A tutor leans in to help two students working together at a laptop.' },
+      { src: '/programs/vsa-2024-25-helping.jpg', alt: 'A tutor helps a younger student working at a laptop.' },
+      { src: '/programs/vsa-2024-25-side-by-side.jpg', alt: 'A tutor works through a task beside a student at a laptop.' },
+    ],
+  },
+  {
+    years: '2025–26',
+    summary:
+      'Teaching local children what AI can make better, and how to spot and avoid the ways it gets misused.',
+    photos: [
+      { src: '/programs/vsa-2025-26-group.jpg', alt: 'Tutors in front of a board reading "Thanks for joining — A.I. For Good 25–26" at the end of the year.' },
+      { src: '/programs/vsa-2025-26-cohort.jpg', alt: 'The 2025/26 group of students and tutors together in the classroom.' },
+      { src: '/programs/vsa-2025-26-uses.jpg', alt: 'A tutor presents examples of what AI can be used for, including reducing traffic, predicting natural disasters, and tutoring underprivileged students.' },
+      { src: '/programs/vsa-2025-26-poster.jpg', alt: 'Students build posters setting out a problem, an AI solution, and how it would be implemented.' },
+      { src: '/programs/vsa-2025-26-discussion.jpg', alt: 'A tutor talks a student through their work at a laptop.' },
+      { src: '/programs/vsa-2025-26-helping.jpg', alt: 'A tutor helps a student at a laptop during a session.' },
+    ],
+  },
+];
+
+// Photos from sessions at Ho Man Tin Ling To Catholic School. Files live in
+// public/programs/. Six photos fill the grid exactly: the first spans two
+// columns and two rows, the rest fill the remaining cells.
+const photos = [
+  {
+    src: '/programs/teaching-classroom.jpg',
+    alt: 'A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer.',
+    span: true,
+  },
+  {
+    src: '/programs/teaching-chalkboard-maths.jpg',
+    alt: 'A tutor works through a mental-arithmetic shortcut for 1117 × 1117 on the chalkboard.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-ai-study-partner.jpg',
+    alt: 'A tutor, laptop in hand, shows pupils how to explain a maths idea aloud to an AI to check they have understood it.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-ai-tools.jpg',
+    alt: 'Two tutors introduce what an AI assistant can do: find information, break down hard questions, and help with writing.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-exploring-interests.jpg',
+    alt: 'A tutor shows pupils how to use AI to explore their own interests, from dinosaurs to space to music.',
+    span: false,
+  },
+  {
+    src: '/programs/teaching-english-careers.jpg',
+    alt: 'Two tutors run the English module, with a slide on how English opens career doors in healthcare, trade, technology, and tourism.',
+    span: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Teaching"
+  description="Free tutoring for primary school children from underprivileged families in Hong Kong. 350 children taught across 7 schools by 43 trained student tutors, and 86% have moved up at least one class band since 2024."
+
+  pageClass="page-teaching">
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker kicker-teaching">Teaching</p>
+      <h1>A free tutor for every child who can't afford one</h1>
+      <p class="lead">
+        Our student tutors teach primary school children from underprivileged
+        families across Hong Kong. Every subject is paired with AI, so the
+        children leave with a free, patient study partner they can keep using.
+      </p>
+    </div>
+  </section>
+
+  <!-- The outcome — the one figure this page leads with -->
+  <section class="outcome">
+    <div class="container">
+      <p class="outcome-figure" data-reveal>
+        <span class="outcome-number"><span data-count="86">86</span>%</span>
+        <span class="outcome-rule" aria-hidden="true"></span>
+      </p>
+      <p class="outcome-sentence" data-reveal style="--reveal-delay:0.15s">
+        of our students have moved up at least one class band since 2024.
+      </p>
+      <p class="quiet-facts" data-reveal style="--reveal-delay:0.25s">
+        350 children taught · 7 schools · 43 trained tutors
+      </p>
+      <p class="outcome-note">
+        We don't claim that 86% as ours alone. Teachers, families and the
+        students themselves did the work. But it's the number we hold
+        ourselves to.
+      </p>
+    </div>
+  </section>
+
+  <!-- Why we teach, then the method every AI lesson follows -->
+  <section class="why-teach rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Why we teach</h2>
+      <div class="rail-body prose">
+        <p>
+          In Hong Kong, extra help after school usually costs money. Families who
+          can pay for tutoring do, and families who can't watch their children
+          fall behind. AI changes that. For the first time, a patient tutor that
+          can explain a question five different ways is available for free.
+        </p>
+        <p>
+          But a tool is only as useful as a child's ability to use it well. A
+          child who asks AI for the answer learns nothing. A child who tries
+          first, asks for a hint, and then explains the answer in their own words
+          learns more than they would have on their own. Teaching that difference
+          is what our tutors do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="think-first rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">How we teach: Think First</h2>
+      <div class="rail-body">
+        <p class="modules-note">Every lesson that uses AI follows the same four steps.</p>
+        <ol class="tf-steps">
+          <li>
+            <span class="tf-num">1</span>
+            <div><h3>Attempt</h3><p>Children try the problem on their own first.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">2</span>
+            <div><h3>Ask</h3><p>They ask the AI for a hint or a check, never for the answer.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">3</span>
+            <div><h3>Check</h3><p>They compare the AI's reply with their own work and spot the differences.</p></div>
+          </li>
+          <li>
+            <span class="tf-num">4</span>
+            <div><h3>Explain</h3><p>With the AI switched off, they explain the answer in their own words.</p></div>
+          </li>
+        </ol>
+        <div class="tf-after prose">
+          <p>
+            If a child can explain it without the AI, they've learned it. If they
+            can't, we go back a step.
+          </p>
+          <p>
+            We don't teach AI as a separate topic. We teach maths, English,
+            economics and science, and show children how AI can help them learn
+            each one. Our tutors are secondary school students who finish AFG's
+            training before they teach, and they work in small groups so every
+            child gets attention.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How we teach — four modules as a ruled list, not cards -->
+  <section class="modules rail-section">
+    <div class="container">
+      <div class="rail">
+        <h2 class="rail-head">Our four modules</h2>
+        <p class="rail-body modules-note">
+          Each module pairs a school subject with AI. The aim is to close the
+          gap between our students and children from better-off families, not
+          to widen it.
+        </p>
+      </div>
+      <ol class="module-list">
+        {
+          rendered.map((m) => (
+            <li class="module rail-row">
+              <div class="module-side">
+                <span class="module-glyph" aria-hidden="true">
+                  <Icon name={m.data.icon} size={22} />
+                </span>
+                <h3>{m.data.title}</h3>
+              </div>
+              <div class="module-main">
+                <div class="module-body">
+                  <m.Content />
+                </div>
+                {m.data.why && (
+                  <p class="module-why">
+                    <span>How it helps:</span> {m.data.why}
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Sample lesson.
+       Deliberately text-only: the game is named, but no character art, logos
+       or screenshots appear anywhere — third-party game IP on a nonprofit's
+       public curriculum page is risk for no teaching benefit. The figures are
+       read off the children's own screens rather than published here, so the
+       lesson never goes stale on a balance patch and we never present numbers
+       as though they were official game data.
+       Justin: this is labelled a sample. Once it has been taught as written,
+       say so — "first taught at [school], [month]" is stronger. -->
+  <section class="sample tint-sample rail-section">
+    <div class="container">
+      <div class="rail">
+        <div class="rail-head">
+          <p class="kicker kicker-teaching">Sample lesson</p>
+          <h2>Bigger isn't better</h2>
+        </div>
+        <div class="rail-body">
+          <p class="sample-note">
+            One lesson, using the <strong>Mathematics</strong> and{' '}
+            <strong>English</strong> modules above. We've published it so
+            schools can see how a lesson is put together before they invite us
+            in.
+          </p>
+          <ul class="sample-meta">
+            <li><span>Level</span> P5–P6</li>
+            <li><span>Length</span> 60 minutes</li>
+            <li><span>Staffing</span> 2 tutors for every 8–10 students</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="parts">
+        <article class="part">
+          <p class="part-tag">Part 1 · Maths · 30 min</p>
+          <h3>Bigger isn't better</h3>
+          <p class="objective">
+            <span>Objective</span> Students work out a rate and explain why a
+            bigger single number can still lose to a smaller one.
+          </p>
+          <p>
+            Each student picks two characters they actually play in{' '}
+            <em>Brawl Stars</em> and reads the damage per shot and reload speed
+            from their own screen. They almost always pick one slow, heavy
+            hitter and one fast, weaker one, and they almost always assume the
+            bigger number wins.
+          </p>
+          <p>
+            Then they work out the damage per second, and the faster character
+            usually comes out ahead. That surprise is the lesson: one number on
+            its own doesn't tell you much, and the number that matters is
+            usually a rate.
+          </p>
+          <p>
+            Then the twist: the faster character can only hit enemies standing
+            close by. Is it still the better choice? Now the answer depends on
+            how you play, and that's what Part 2 is for.
+          </p>
+          <p class="aside">
+            <span>Extension</span> How much would the reload speed have to
+            change for the answer to flip? It's their first go at solving for an
+            unknown, and they get there because they're curious, not because a
+            textbook told them to.
+          </p>
+          <p class="aside watch">
+            <span>Watch for</span> Students who get the sums right but can't
+            explain why the answer surprised them. The explanation is the goal;
+            the multiplication is just how we get there.
+          </p>
+        </article>
+
+        <article class="part">
+          <p class="part-tag">Part 2 · English · 30 min</p>
+          <h3>Make the case</h3>
+          <p class="objective">
+            <span>Objective</span> Students write a short argument with a claim,
+            evidence, a fair version of the other side, and a recommendation.
+          </p>
+          <p>
+            They argue which of their two characters is better, using the
+            numbers they just worked out as evidence. There's one firm rule:
+            they have to write one honest sentence about why someone might
+            reasonably pick the other character. If they can't, they don't fully
+            understand their own argument yet.
+          </p>
+          <p>Sentence starters go on the board for children learning English as a second language:</p>
+          <ul class="frames">
+            <li>I think ______ is better because ______.</li>
+            <li>The evidence is ______.</li>
+            <li>Someone might choose ______ instead, because ______.</li>
+            <li>Even so, I would recommend ______ because ______.</li>
+          </ul>
+          <p>
+            Then they follow the Think First steps. Each student asks an AI tool
+            to check their calculation and give one hint to strengthen their
+            argument, and decides for themselves whether the feedback is right.
+            Finally, with the AI closed, they explain their recommendation to
+            the group in their own words.
+          </p>
+          <p>
+            Four or five sentences is a finished piece. Two or three students
+            read theirs out, and everyone else's job is to spot the
+            counterargument, not to decide who won.
+          </p>
+          <p class="aside watch">
+            <span>Watch for</span> A counterargument that's really a put-down,
+            like "someone might choose it because they're bad at the game." Send
+            it back. Learning to describe the other side fairly is the whole
+            point.
+          </p>
+        </article>
+      </div>
+
+      <!-- The line that makes the two halves of AFG one organisation -->
+      <div class="rail">
+        <div class="rail-body">
+          <p class="sample-link">
+            Claim, evidence, an honest case against, then a recommendation: it's the
+            same structure we use in{' '}
+            <a class="link-quiet" href="/policy">every proposal we send to the government</a>.
+            We teach eleven-year-olds the same method we use with policymakers.
+          </p>
+          <p class="sample-link">
+            It goes the other way too. Our December 2025 proposal,{' '}
+            <a class="link-quiet" href="/policy#think-first">Think First</a>, takes
+            the method our tutors use every week and proposes it for every primary
+            school in Hong Kong.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners — a text list, not a logo wall -->
+  <section class="section-tight partners rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Where we teach</h2>
+      <div class="rail-body prose">
+        <p>
+          We teach in seven schools, including{' '}
+          <strong>Ho Man Tin Ling To Catholic School</strong> and{' '}
+          <strong>Kennedy Town School</strong>, and with our community partners{' '}
+          <strong>St. Barnabas' Home &amp; Society</strong> and{' '}
+          <strong>10% Organisation</strong>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What schools and families can count on -->
+  <section class="section-tight commitments rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">Our promises to schools and families</h2>
+      <div class="rail-body">
+        <ul class="promise-list">
+          <li>Tutors always teach with a member of school or centre staff in the room.</li>
+          <li>We don't collect children's personal data.</li>
+          <li>We only use AI tools the partner school has approved.</li>
+          <li>Teaching is always free.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- In the classroom — photos -->
+  <section class="classroom rail-section">
+    <div class="container">
+      <div class="rail">
+        <h2 class="rail-head">In the classroom</h2>
+        <p class="rail-body modules-note">
+          Our tutors teaching at Ho Man Tin Ling To Catholic School.
+        </p>
+      </div>
+      <div class="gallery">
+        {
+          photos.map((photo, i) => (
+            <button
+              type="button"
+              class={`shot ${photo.span ? 'shot-wide' : ''}`}
+              data-lightbox
+              data-src={photo.src}
+              data-alt={photo.alt}
+              aria-label={`Expand photo: ${photo.alt}`}
+            >
+              <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" width="800" height="533" />
+            </button>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Sessions at Victoria Shanghai Academy, by year -->
+  <section class="cohorts rail-section">
+    <div class="container">
+      <div class="rail">
+        <h2 class="rail-head">With Victoria Shanghai Academy</h2>
+        <p class="rail-body modules-note">
+          Alongside our work in primary schools, we run sessions with Victoria
+          Shanghai Academy for young people from the local community.
+        </p>
+      </div>
+
+      {
+        cohorts.map((cohort) => (
+          <div class="cohort">
+            <div class="cohort-head rail-row">
+              <h3>{cohort.years}</h3>
+              <p>{cohort.summary}</p>
+            </div>
+            <div class="cohort-grid">
+              {cohort.photos.map((photo) => (
+                <button
+                  type="button"
+                  class="shot"
+                  data-lightbox
+                  data-src={photo.src}
+                  data-alt={photo.alt}
+                  aria-label={`Expand photo: ${photo.alt}`}
+                >
+                  <img src={photo.src} alt={photo.alt} loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- A moment from the work -->
+  <section class="anecdote rail-section">
+    <div class="container rail">
+      <h2 class="rail-head">A moment from class</h2>
+      <blockquote class="rail-body anecdote-quote">
+        We went to Ling To expecting to spend the session convincing a room of
+        children that AI and current affairs had anything to do with them. We
+        were wrong. They weren't uninterested; nobody had ever given them the
+        chance. Within an hour they were arguing about whether an algorithm
+        could be fair. Curiosity was never what was missing. Access was.
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Two ways in -->
+  <section class="teach-ctas">
+    <div class="container teach-cta-grid">
+      <div>
+        <h2 class="h-cta">Bring us to your school</h2>
+        <p>
+          If you run a primary school, community centre or children's programme
+          and would like free tutoring for your students, get in touch.
+        </p>
+        <a class="btn btn-teaching" href="/get-involved">Contact us <span class="arrow">→</span></a>
+      </div>
+      <div>
+        <h2 class="h-cta">Become a tutor</h2>
+        <p>
+          If you're a secondary student who wants to teach, we'll train you
+          first.
+        </p>
+        <a class="btn btn-policy" href="/get-involved">Sign up <span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
