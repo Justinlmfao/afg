@@ -1,0 +1,95 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/pages/team.css';
+import { getCollection, render } from 'astro:content';
+
+// Same team collection and order as the English page. Role and bio come from
+// role_hans and bio_hans in src/content/team/*.md (bio_hans is one string per
+// paragraph). Anything untranslated falls back to English rather than
+// disappearing; anyone without a bio is listed without the toggle.
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role_hans ?? m.data.role,
+      paras: m.data.bio_hans,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
+---
+
+<BaseLayout
+  title="团队"
+  pageClass="page-team"
+  description="AI For Good 全由学生运营，超过 35 位成员参与政策研究和补习工作。"
+>
+  <section class="page-top">
+    <div class="container prose">
+      <p class="kicker">团队</p>
+      <h1>全数由学生运营</h1>
+      <p class="lead">
+        我们有超过 35 位成员，分别参与政策研究和补习工作。以下是带领团队的成员，按一下名字就可以看看他们的介绍。
+      </p>
+    </div>
+  </section>
+
+  <!-- The leads. Each name opens its bio: native <details>, so it works
+       without JavaScript and from the keyboard. -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="people">
+        {
+          members.map(({ name, role, paras, Bio }) =>
+            paras || Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2 class="person-name">{name}</h2>
+                    <span class="person-role">{role}</span>
+                  </span>
+                  <span class="person-toggle" aria-hidden="true" />
+                </summary>
+                <div class="person-bio" lang={paras ? undefined : 'en'}>
+                  {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
+                </div>
+              </details>
+            ) : (
+              <div class="person person-static">
+                <span class="person-head">
+                  <h2 class="person-name">{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team photographs -->
+  <section class="section-tight">
+    <div class="container team-photos">
+      <figure>
+        <img
+          src="/programs/team-classroom.jpg"
+          alt="六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <figure>
+        <img
+          src="/programs/team-outside-school.jpg"
+          alt="五位 AI For Good 成员在天主教领岛学校门外。"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,82 +1,86 @@
 // Content collections.
 //
-// Each collection is just a folder of Markdown files. To add a new item to
-// the site — a government submission, a publication, a program, or a team
-// member — copy an existing .md file in the matching folder, change the
-// frontmatter at the top, and the site rebuilds itself. No component edits.
+// Each collection is a folder of Markdown files. To add an item — a policy
+// submission, a teaching module, a team member — copy the example file in the
+// matching folder, edit the fields at the top, and the site rebuilds itself.
 //
-// `order` controls sort position (lower numbers appear first). Anything
-// optional can simply be left out of the frontmatter.
-//
-// Set `draft: true` on any file to keep it in the repo as a template/example
-// without showing it on the live site (the pages filter drafts out).
+// Set `draft: true` on any file to keep it in the repo as a template without
+// showing it on the live site. `order` sorts (lower first).
 
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
-// Government & policy submissions (Research page)
+// Policy proposals (Policy page, and "Latest work" on the home page).
+//
+// One Markdown file per proposal per language, sharing a `key`:
+//   think-first.en.md    English
+//   think-first.zh.md    Traditional Chinese
+//   think-first.hans.md  Simplified, generated from the .zh.md by
+//                        `npm run zh-hans` (don't edit it by hand)
+// The front matter holds what the summary card shows; the Markdown body is the
+// full paper, which opens beneath it. Use #### for headings inside the body.
+// Only real proposals belong here.
 const submissions = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/submissions' }),
   schema: z.object({
     title: z.string(),
-    // The body / consultation the submission was made to.
-    submittedTo: z.string(),
-    // Month + Year, e.g. "March 2025". Kept as a string so you control the
-    // exact wording; not parsed as a real date.
+    lang: z.enum(['en', 'zh', 'hans']),
+    // Shared across the language versions; also the link anchor on /policy,
+    // e.g. /policy#think-first. (Not called `slug`: Astro would treat that as
+    // the entry's ID, and the language versions would collide.)
+    key: z.string(),
+    // As displayed, e.g. "December 2025".
     date: z.string(),
+    // Policy area, e.g. "Education & inequality".
+    area: z.string(),
+    // Two or three sentences for the card.
     summary: z.string(),
-    // PDF lives in /public/research/. Reference it as "/research/file.pdf".
+    // Optional PDF in /public/research/, referenced as "/research/file.pdf".
     pdf: z.string().optional(),
     draft: z.boolean().default(false),
+    // Lower first; newest proposals should get the lowest numbers.
     order: z.number().default(0),
   }),
 });
 
-// Publications & reports (Research page)
-const publications = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/publications' }),
-  schema: z.object({
-    title: z.string(),
-    date: z.string(),
-    // e.g. "12-page report"
-    detail: z.string().optional(),
-    summary: z.string(),
-    pdf: z.string().optional(),
-    draft: z.boolean().default(false),
-    order: z.number().default(0),
-  }),
-});
-
-// Teaching modules (Programs page). The Markdown body is the description; the
-// `why` line explains how the module closes the gap, and `icon`/`variant`
-// colour the card. `icon` is an Icon name (math, english, economics, science…).
+// Teaching modules (Teaching page). The Markdown body is the description; the
+// `why` line explains how the module closes the gap. `icon` names a glyph in
+// src/components/Icon.astro (math, english, economics, science).
 const programs = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/programs' }),
   schema: z.object({
     title: z.string(),
     icon: z.string().default('education'),
-    variant: z.string().default('cool'),
-    // The "Why it closes the gap" line shown at the foot of each module card.
     why: z.string().optional(),
+    // Traditional Chinese for the /zh pages. `body_zh` replaces the Markdown
+    // body, which is English-only; it is a single paragraph. The _hans twins
+    // are generated from these by `npm run zh-hans`.
+    title_zh: z.string().optional(),
+    body_zh: z.string().optional(),
+    why_zh: z.string().optional(),
+    title_hans: z.string().optional(),
+    body_hans: z.string().optional(),
+    why_hans: z.string().optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });
 
-// Team members (Team page).
+// Team members (Team page, where pressing a name opens the bio). The Markdown
+// body is the English bio. `bio_zh` is the Traditional Chinese, one string per
+// paragraph; `bio_hans` is generated from it by `npm run zh-hans`.
 const team = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/team' }),
   schema: z.object({
     name: z.string(),
     role: z.string(),
-    // One line of substance — focus area or a short sentence.
-    bio: z.string(),
-    // Which group they belong to, used to organise the page.
-    // e.g. "Leadership", "Research", "Education & Outreach".
-    group: z.string(),
+    role_zh: z.string().optional(),
+    role_hans: z.string().optional(),
+    bio_zh: z.array(z.string()).optional(),
+    bio_hans: z.array(z.string()).optional(),
     draft: z.boolean().default(false),
     order: z.number().default(0),
   }),
 });
 
-export const collections = { submissions, publications, programs, team };
+export const collections = { submissions, programs, team };

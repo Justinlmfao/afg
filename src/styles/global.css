@@ -1,54 +1,69 @@
 /* =========================================================================
-   AI For Good — global styles, design tokens & animation system
+   AI For Good — global styles
 
-   A vibrant, motion-rich editorial site: colour, gradients, scroll-reveal,
-   count-up numbers, magnifying/tilting cards, floating shapes. All motion is
-   disabled under `prefers-reduced-motion` so it stays accessible.
-
-   To re-theme, edit the custom properties in :root.
+   One paper, two inks: a single warm document-like ground shared by the whole
+   site, with the two pillars told apart by their accent —
+     policy blue #2F5D93 (the think tank)  ·  vermilion #C2461E (the teaching)
+   The pair is colour-vision validated (see DESIGN.md). Motion is used only
+   where it carries meaning; everything respects prefers-reduced-motion.
    ========================================================================= */
 
 :root {
-  /* Base surfaces & ink */
-  --color-bg: #fbf9f5;          /* warm off-white */
-  --color-surface: #ffffff;
-  --color-text: #15131a;        /* near-black */
-  --color-text-soft: #514c5e;
-  --color-border: #e8e2d8;
+  /* The six named values (DESIGN.md) */
+  --paper: #faf7f2;
+  --ink: #1c1b18;
+  --graphite: #5a554c;
+  --rule: #e5dfd3;
+  --policy: #2f5d93;
+  --teaching: #c2461e;
 
-  /* Vibrant palette */
-  --indigo: #4f46e5;
-  --blue: #2563eb;
-  --teal: #0d9488;
-  --emerald: #059669;
-  --amber: #f59e0b;
-  --coral: #f97316;
-  --pink: #ec4899;
-  --violet: #7c3aed;
+  /* Derived tints and helpers */
+  --policy-deep: #1e3a5c;      /* headings on policy washes (text only) */
+  --policy-wash: #eff3f8;
+  --teaching-deep: #96351a;    /* small text in the teaching accent */
+  --teaching-wash: #faf0e9;
+  --surface: #fffdf9;          /* raised cards/panels */
 
-  --color-accent: var(--indigo);
-  --color-accent-hover: #4338ca;
-
-  /* Gradients */
-  --grad-cool: linear-gradient(135deg, #4f46e5, #2563eb 45%, #0d9488);
-  --grad-warm: linear-gradient(135deg, #f97316, #ec4899 55%, #7c3aed);
-  --grad-rainbow: linear-gradient(120deg, #4f46e5, #0d9488, #f59e0b, #ec4899, #7c3aed);
-  --grad-hero: linear-gradient(120deg, #eef2ff, #fdf2f8, #ecfeff, #eef2ff);
-
-  /* Typography */
-  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Type */
+  /* Latin faces first; the CJK families after them are what Traditional
+     Chinese falls back to per-glyph, so no CJK webfont is downloaded. The
+     "fallback" faces (below) stand in while the web fonts load. */
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman',
+    'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
+  --sans: 'Inter', 'Inter fallback', system-ui, -apple-system, 'Segoe UI',
+    'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+  /* Heading scale. One size per role, so a section heading or a heading
+     inside a row looks the same wherever it appears. */
+  --h2: clamp(1.4rem, 1.05rem + 0.75vw, 1.65rem); /* section headings */
+  --h3: 1.3rem;  /* sub-sections, card and module titles */
+  --h4: 1.15rem; /* headings inside dense rows: steps, method lists */
 
   /* Layout */
-  --measure: 42rem;
-  --measure-wide: 66rem;
-  --space: 1.5rem;
-  --radius: 16px;
-  --radius-sm: 8px;
+  --measure: 44rem;
+  --wide: 68rem;
+  --radius: 6px;
+}
 
-  --shadow-sm: 0 2px 8px rgba(21, 19, 26, 0.06);
-  --shadow-md: 0 12px 30px rgba(21, 19, 26, 0.10);
-  --shadow-glow: 0 18px 50px -12px rgba(79, 70, 229, 0.45);
+/* ---- Font fallbacks ---------------------------------------------------- */
+/* Arial and Times resized to match Inter and Newsreader, so text keeps the
+   same line breaks when the web fonts arrive instead of jumping. Inter's
+   values are the published ones; Newsreader's were measured against Times. */
+@font-face {
+  font-family: 'Inter fallback';
+  src: local('Arial'), local('Liberation Sans');
+  size-adjust: 107.12%;
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Newsreader fallback';
+  src: local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 110.2%;
+  ascent-override: 67.15%;
+  descent-override: 24.5%;
+  line-gap-override: 0%;
 }
 
 /* ---- Reset ------------------------------------------------------------- */
@@ -64,13 +79,25 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  scroll-behavior: smooth;
+  /* The parts of the page the browser draws, in the site's palette */
+  accent-color: var(--policy);
+  scrollbar-color: #cdc5b6 var(--paper);
+}
+
+::selection {
+  background: #d6e1ee;
+  color: var(--ink);
+}
+
+input,
+textarea {
+  caret-color: var(--policy);
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -78,11 +105,9 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
 }
 
 img,
-picture,
 svg {
   max-width: 100%;
   display: block;
@@ -91,26 +116,24 @@ svg {
 /* ---- Typography -------------------------------------------------------- */
 h1,
 h2,
-h3,
-h4 {
-  font-family: var(--font-serif);
+h3 {
+  font-family: var(--serif);
   font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: -0.015em;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 500;
+  font-size: clamp(2.3rem, 5.5vw, 3.6rem);
 }
 
 h2 {
-  font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+  font-size: var(--h2);
 }
 
 h3 {
-  font-size: 1.35rem;
+  font-size: var(--h3);
 }
 
 p {
@@ -118,69 +141,100 @@ p {
 }
 
 a {
-  color: var(--color-accent);
+  color: var(--policy);
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
   transition: color 0.15s ease;
 }
 
 a:hover {
-  color: var(--color-accent-hover);
+  color: var(--policy-deep);
 }
 
 :focus-visible {
-  outline: 3px solid var(--violet);
+  outline: 2.5px solid var(--policy);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
-/* Animated multi-colour gradient text */
-.gradient-text {
-  background: var(--grad-rainbow);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 9s ease infinite;
+/* Sentence-case section label in a pillar's accent — no pills, no caps */
+.kicker {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--policy);
+  margin-bottom: 0.75rem;
 }
 
-.gradient-text-warm {
-  background: var(--grad-warm);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 9s ease infinite;
+/* Small text in the teaching accent uses the deep shade, which keeps AA
+   contrast on the teaching wash as well as on paper */
+.kicker-teaching {
+  color: var(--teaching-deep);
 }
 
-/* Brighter variants that glow against the dark cinematic heroes */
-.gradient-text-bright {
-  background: linear-gradient(120deg, #a5b4fc, #67e8f9 40%, #f9a8d4 75%, #fcd34d);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 9s ease infinite;
+.lead {
+  font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+  color: var(--graphite);
 }
 
-.gradient-text-warmbright {
-  background: linear-gradient(120deg, #fcd34d, #fb923c 45%, #f9a8d4 85%);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: gradientShift 9s ease infinite;
+/* Chinese needs a little more leading and no tight Latin tracking */
+:lang(zh-Hant) body,
+html[lang^='zh'] body {
+  line-height: 1.85;
 }
 
-/* ---- Layout helpers ---------------------------------------------------- */
+html[lang^='zh'] h1,
+html[lang^='zh'] h2,
+html[lang^='zh'] h3 {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/*
+  A `ch` is the width of "0", so a Chinese character is about two of them: a
+  measure tuned to read well in English holds roughly half as many characters
+  in Chinese. Headlines are fine that way — short lines suit them — but the two
+  standfirst-sized lines below turn into narrow columns, so widen those.
+*/
+/* Chinese has no spaces, so a headline can break in the middle of a word.
+   Wrap each phrase in .phrase: it moves to the next line as a unit, and still
+   wraps inside itself if it is wider than a narrow screen. */
+.phrase {
+  display: inline-block;
+}
+
+html[lang^='zh'] .page-teaching .outcome-sentence {
+  max-width: 40ch;
+}
+
+html[lang^='zh'] .page-home .hero h1 {
+  max-width: 12em;
+}
+
+html[lang^='zh'] .page-about .why-claim {
+  max-width: 46ch;
+}
+
+/* ---- Layout ------------------------------------------------------------ */
 .container {
   width: 100%;
-  max-width: var(--measure-wide);
+  max-width: var(--wide);
   margin-inline: auto;
   padding-inline: 1.5rem;
 }
 
 .prose {
+  max-width: var(--measure);
+}
+
+/* A narrow column inside the standard container keeps the container's left
+   edge: the width limit goes on the content, not on the box. Without this a
+   `container prose` block centres itself and sits indented from everything
+   around it. */
+.container.prose {
+  max-width: var(--wide);
+}
+
+.container.prose > * {
   max-width: var(--measure);
 }
 
@@ -198,122 +252,145 @@ a:hover {
   margin-top: 0.4rem;
 }
 
+/* A heading always gets a little air before the text it introduces. */
+h1 + :is(p, ul, ol, dl, blockquote, form) {
+  margin-top: 1rem;
+}
+
+:is(h2, h3) + :is(p, ul, ol, dl, blockquote, form, figure) {
+  margin-top: 0.75rem;
+}
+
+/* Two section rhythms: generous around narrative sections, tight between
+   short reference rows, so the page has a cadence instead of one interval
+   repeated until everything weighs the same. */
 section {
-  padding-block: clamp(3rem, 7vw, 6rem);
-  position: relative;
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
 }
 
-.section-tight {
-  padding-block: clamp(2rem, 4vw, 3.25rem);
+/* For short sections that follow on from the one above, so a page of small
+   blocks reads as one run instead of a string of islands. */
+section.section-tight {
+  padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
-/* Tinted section backgrounds */
-.tint-cool {
-  background: linear-gradient(180deg, #f3f4ff, #fbf9f5);
-}
-.tint-warm {
-  background: linear-gradient(180deg, #fff4ec, #fbf9f5);
-}
-.tint-mint {
-  background: linear-gradient(180deg, #ecfdf6, #fbf9f5);
-}
-
-/* Colourful eyebrow chip */
-.eyebrow {
-  display: inline-block;
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #fff;
-  background: var(--grad-cool);
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
-  margin-bottom: 1rem;
-  box-shadow: var(--shadow-sm);
+/* ---- Rail: headings in the margin, text in one column -------------------
+   On wide screens every section heading sits in a 15rem margin column and
+   all running text in the column beside it, so the eye has one line of
+   headings to scan and one left edge to read from. Grids and photographs
+   (the two doors, lesson cards, galleries) span the full container instead.
+   Below 60rem the rail folds back to heading-above-content. */
+.rail {
+  display: grid;
+  gap: 0.75rem;
 }
 
-.lead {
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
-  color: var(--color-text-soft);
+.rail-head .kicker {
+  margin-bottom: 0.4rem;
 }
 
-/* ---- Film grain — a whisper of texture over everything ------------------ */
-/* Kept beneath the lightbox (z 200) so expanded photos stay clean. */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 150;
-  pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
+.rail-body {
+  min-width: 0;
+  max-width: var(--measure);
 }
 
-/* ---- Editorial section headers: 01 / eyebrow / hairline ----------------- */
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  margin-bottom: 1.75rem;
+/* A row inside a section that lines up with the rail: its label in the
+   margin column, its text in the text column (modules, cohort years). */
+.rail-row {
+  display: grid;
+  gap: 0.6rem;
 }
 
-.section-idx {
-  font-family: var(--font-serif);
-  font-size: 2.4rem;
-  font-weight: 600;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-accent);
-  opacity: 0.5;
-  letter-spacing: 0.02em;
+@media (min-width: 60rem) {
+  .rail,
+  .rail-row {
+    grid-template-columns: 15rem minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+
+  /* The heading sits on the same baseline as the first line beside it */
+  .rail {
+    align-items: baseline;
+  }
+
+  /* Text with no heading beside it still sits in the text column */
+  .rail > .rail-body:only-child {
+    grid-column: 2;
+  }
+
+  /* In a long section the heading stays in view while you read it */
+  .rail-head {
+    position: sticky;
+    top: 6rem;
+  }
+
+  /* A list beside the heading starts level with it: no rule on top and no
+     padding above the first item. The section hairline already separates. */
+  .rail-body > :is(ul, ol, dl):first-child {
+    border-top: none;
+  }
+
+  .rail-body > :is(ul, ol, dl):first-child > :first-child {
+    padding-top: 0;
+  }
 }
 
-.section-head .eyebrow {
-  margin-bottom: 0;
+/* Consecutive rail sections share a hairline, like rows in a ledger */
+.rail-section + .rail-section {
+  border-top: 1px solid var(--rule);
 }
 
-.section-head::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--color-border), transparent);
+hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin-block: 2.5rem;
 }
 
-/* ---- Dark cinematic page hero (shared by the inner pages) --------------- */
-.page-hero {
-  position: relative;
-  overflow: hidden;
-  color: #fff;
-  padding-block: clamp(4rem, 9vw, 7rem);
-  background:
-    radial-gradient(55rem 35rem at 88% -12%, rgba(79, 70, 229, 0.4), transparent 62%),
-    radial-gradient(45rem 30rem at -8% 115%, rgba(236, 72, 153, 0.2), transparent 60%),
-    radial-gradient(38rem 26rem at 65% 90%, rgba(13, 148, 136, 0.22), transparent 55%),
-    linear-gradient(180deg, #0b0b22, #121235 65%, #0f1030);
+/* ---- Ruled fact ledger (used instead of stat cards) --------------------- */
+.ledger {
+  border-top: 1px solid var(--rule);
+  max-width: var(--measure);
 }
 
-.page-hero .blob {
-  mix-blend-mode: screen;
-  opacity: 0.45;
+.ledger-row {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding-block: 0.95rem;
+  border-bottom: 1px solid var(--rule);
 }
 
-.page-hero h1 {
-  color: #fff;
-  font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+.ledger-figure {
+  font-weight: 650;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-.page-hero .lead {
-  color: rgba(255, 255, 255, 0.78);
-  max-width: 56ch;
-  margin-top: 1.25rem;
+.ledger-label {
+  color: var(--graphite);
 }
 
-.page-hero .hero-content {
-  position: relative;
-  z-index: 1;
+/* The one weighted row per ledger */
+.ledger-row.weighted {
+  background: var(--policy-wash);
+  border-left: 3px solid var(--policy);
+  padding-inline: 1rem;
+  margin-inline: -1rem;
+}
+
+.ledger-row.weighted .ledger-figure {
+  color: var(--policy-deep);
+  font-size: 1.6rem;
+}
+
+@media (max-width: 34rem) {
+  .ledger-row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
 }
 
 /* ---- Buttons ----------------------------------------------------------- */
@@ -323,76 +400,63 @@ body::after {
   gap: 0.5rem;
   font-weight: 600;
   font-size: 1rem;
-  padding: 0.85rem 1.6rem;
-  border-radius: 999px;
+  padding: 0.75rem 1.4rem;
+  border-radius: var(--radius);
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.2s ease,
-    filter 0.2s ease;
-  will-change: transform;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .btn:hover {
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-1px);
 }
 
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  background: var(--grad-cool);
-  background-size: 160% 160%;
+/* Sending: the button stays visible but stops responding */
+.btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+  transform: none;
+}
+
+.btn-policy {
+  background: var(--policy);
   color: #fff;
-  box-shadow: var(--shadow-glow);
 }
 
-.btn-primary:hover {
+.btn-policy:hover {
+  background: var(--policy-deep);
   color: #fff;
-  filter: saturate(1.2);
-  animation: gradientShift 3s ease infinite;
 }
 
-/* Light sweep across the button on hover */
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.45) 50%,
-    transparent 65%
-  );
-  transform: translateX(-110%);
+.btn-teaching {
+  background: var(--teaching);
+  color: #fff;
 }
 
-.btn-primary:hover::before {
-  animation: shimmer 0.9s ease;
-}
-
-@keyframes shimmer {
-  to {
-    transform: translateX(110%);
-  }
-}
-
-.btn-secondary {
-  color: var(--color-accent);
-  border: 2px solid var(--color-accent);
-  background: rgba(255, 255, 255, 0.6);
-}
-
-.btn-secondary:hover {
-  background: var(--color-accent);
+.btn-teaching:hover {
+  background: var(--teaching-deep);
   color: #fff;
 }
 
 .btn .arrow {
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 .btn:hover .arrow {
-  transform: translateX(4px);
+  transform: translateX(3px);
+}
+
+/* Text-link with a drawn underline on hover */
+.link-quiet {
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.link-quiet:hover {
+  border-bottom-color: currentColor;
 }
 
 /* ---- Skip link --------------------------------------------------------- */
@@ -400,10 +464,10 @@ body::after {
   position: absolute;
   left: 1rem;
   top: -4rem;
-  background: var(--color-accent);
+  background: var(--policy);
   color: #fff;
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius);
   z-index: 200;
   transition: top 0.15s ease;
 }
@@ -413,88 +477,113 @@ body::after {
   color: #fff;
 }
 
-/* ---- Scroll progress bar ----------------------------------------------- */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 4px;
-  width: 0%;
-  background: var(--grad-rainbow);
-  background-size: 200% 100%;
-  z-index: 100;
-  animation: gradientShift 6s linear infinite;
-}
-
-/* ---- Scroll-reveal ----------------------------------------------------- */
+/* ---- Selective entrances ------------------------------------------------ */
+/* Applied to a handful of elements only — not every section. */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(32px) scale(0.98);
-  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   transition-delay: var(--reveal-delay, 0s);
 }
-[data-reveal='left'] {
-  transform: translateX(-40px);
-}
-[data-reveal='right'] {
-  transform: translateX(40px);
-}
-[data-reveal='zoom'] {
-  transform: scale(0.85);
-}
+
 [data-reveal].is-visible {
   opacity: 1;
   transform: none;
 }
 
-/* ---- Magnify / tilt cards ---------------------------------------------- */
-.magnify {
-  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.25s ease;
-  will-change: transform;
-}
-.magnify:hover {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: var(--shadow-md);
+/* ---- Lightbox (teaching photos) ----------------------------------------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5vw;
+  background: rgba(20, 18, 14, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
 }
 
-.tilt {
-  transform-style: preserve-3d;
-  transition: transform 0.18s ease, box-shadow 0.25s ease;
-  will-change: transform;
+/* Visible at once when opening (only the fade animates), so focus can move
+   into the viewer straight away; closing keeps the fade before hiding. */
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
 }
 
-/* ---- Floating decorative blobs ----------------------------------------- */
-.blob {
+.lightbox img {
+  max-width: 92vw;
+  max-height: 84vh;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-btn {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
   border-radius: 50%;
-  filter: blur(40px);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-/* ---- Animated underline links ------------------------------------------ */
-.link-underline {
-  position: relative;
-  text-decoration: none;
+.lightbox-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
-.link-underline::after {
-  content: '';
+
+/* The blue ring disappears on the dark backdrop, so it turns white here */
+.lightbox :focus-visible {
+  outline-color: #fff;
+}
+
+.lightbox-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.lightbox-prev {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-cap {
   position: absolute;
+  bottom: 1.5rem;
   left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: var(--grad-cool);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-.link-underline:hover::after {
-  transform: scaleX(1);
+  right: 0;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  padding-inline: 2rem;
 }
 
-/* ---- Utility ----------------------------------------------------------- */
+/* ---- Utility ------------------------------------------------------------ */
+/* Keeps a short link and its arrow together at the end of a paragraph */
+.nowrap {
+  white-space: nowrap;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -507,241 +596,8 @@ body::after {
   border: 0;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid var(--color-border);
-  margin-block: 2.5rem;
-}
-
-/* ---- Keyframes --------------------------------------------------------- */
-@keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes floatY {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-26px);
-  }
-}
-
-@keyframes floatX {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(24px);
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 14px rgba(79, 70, 229, 0);
-  }
-}
-
-@keyframes spinSlow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes bobIn {
-  0% {
-    transform: translateY(8px) scale(0.96);
-    opacity: 0;
-  }
-  100% {
-    transform: none;
-    opacity: 1;
-  }
-}
-
-/* ---- Cinematic word reveal (used on the hero headline) ----------------- */
-.reveal-words .word {
-  display: inline-block;
-  white-space: pre; /* keep the trailing space that lives inside each token */
-}
-.reveal-words .word-inner {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(0.45em);
-  filter: blur(12px);
-  animation: wordIn 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-  animation-delay: var(--wd, 0s);
-}
-
-@keyframes wordIn {
-  to {
-    opacity: 1;
-    transform: none;
-    filter: blur(0);
-  }
-}
-
-/* ---- Particle network canvas ------------------------------------------- */
-.particles {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* ---- Cursor-follow spotlight (cards) ----------------------------------- */
-.spotlight::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle at var(--mx, 50%) var(--my, 50%),
-    rgba(79, 70, 229, 0.16),
-    transparent 42%
-  );
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: 1;
-}
-.spotlight:hover::after {
-  opacity: 1;
-}
-
-/* ---- Topic marquee ----------------------------------------------------- */
-.marquee {
-  overflow: hidden;
-  border-block: 1px solid var(--color-border);
-  background: var(--color-surface);
-  padding-block: 1.15rem;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 40s linear infinite;
-}
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-.marquee-item {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  color: var(--color-text-soft);
-  padding-inline: 1.4rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 1.4rem;
-  white-space: nowrap;
-}
-.marquee-item::after {
-  content: '✦';
-  color: var(--color-accent);
-  font-size: 0.62em;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* ---- Lightbox ---------------------------------------------------------- */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5vw;
-  background: rgba(12, 11, 24, 0.92);
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s;
-}
-.lightbox.open {
-  opacity: 1;
-  visibility: visible;
-}
-.lightbox img {
-  max-width: 92vw;
-  max-height: 84vh;
-  border-radius: var(--radius);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-  transform: scale(0.95);
-  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.lightbox.open img {
-  transform: none;
-}
-.lightbox-btn {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-size: 1.4rem;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.lightbox-btn:hover {
-  background: rgba(255, 255, 255, 0.26);
-}
-.lightbox-close {
-  top: 1.25rem;
-  right: 1.25rem;
-}
-.lightbox-prev {
-  left: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.lightbox-next {
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.lightbox-cap {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  right: 0;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.95rem;
-  padding-inline: 2rem;
-}
-
-/* ---- Reduced motion: turn everything calm ------------------------------ */
+/* ---- Reduced motion ------------------------------------------------------ */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
@@ -749,21 +605,9 @@ hr {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+
   [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
-  }
-  .blob,
-  .particles {
-    display: none;
-  }
-  .reveal-words .word-inner {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-    animation: none !important;
-  }
-  .marquee-track {
-    animation: none !important;
   }
 }
