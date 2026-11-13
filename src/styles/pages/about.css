@@ -3,10 +3,6 @@
    another page's stylesheet. */
 
 .page-about {
-  .page-top {
-    border-bottom: 1px solid var(--rule);
-  }
-
   .mb {
     margin-bottom: 1.5rem;
   }
@@ -18,23 +14,34 @@
     line-height: 1.35;
     max-width: 34ch;
     margin-block: 0 1.75rem;
-    padding-left: 1.5rem;
-    /* The one place the two inks meet, because the claim joins them */
-    border-left: 4px solid var(--policy);
-    border-image: linear-gradient(180deg, var(--policy), var(--teaching)) 1;
+    color: var(--ink);
+  }
+
+  /* The two inks meet in a short bar above the claim and the founder's
+     note, because both join the two halves of the organisation */
+  .why-claim::before,
+  .founder-note::before {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--policy), var(--teaching));
+    margin-bottom: 1rem;
   }
 
   .why-body {
-    color: var(--graphite);
+    color: var(--text);
   }
 
-  /* 3. Origin — the founder's note, set apart from the institutional voice */
+  /* 3. Origin — the founder's note, set apart from the institutional voice
+     in a tinted block */
   .founder-note {
-    max-width: var(--measure);
-    margin-top: 1.5rem;
-    padding-left: 1.5rem;
-    border-left: 3px solid var(--policy);
-    border-image: linear-gradient(180deg, var(--policy), var(--teaching)) 1;
+    max-width: var(--measure-wide);
+    margin-top: 1.75rem;
+    padding: clamp(1.4rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
+    background: var(--tint);
+    border-radius: var(--radius-card);
   }
 
   .fn-part + .fn-part {
@@ -43,7 +50,7 @@
 
   .fn-label {
     font-weight: 650;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     letter-spacing: 0.02em;
     color: var(--graphite);
     margin-bottom: 0.3rem;
@@ -69,8 +76,7 @@
     height: auto;
     aspect-ratio: 3 / 2;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--rule);
+    border-radius: var(--radius-img);
   }
 
   .origin-figure figcaption {
@@ -80,9 +86,6 @@
   }
 
   /* 4 & 5. Two-column blocks */
-  .tint {
-    background: linear-gradient(180deg, #f6f3ec, var(--paper));
-  }
 
   .two-blocks {
     display: grid;
@@ -96,8 +99,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-top: 3px solid var(--rule);
-    padding-top: 1.1rem;
+    padding: 1.9rem 1.75rem 1.6rem;
+    border-radius: var(--radius-card);
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 1.75rem 0;
+    background-size: 2.5rem 4px;
+    background-repeat: no-repeat;
   }
 
   .block .link-quiet {
@@ -109,12 +116,14 @@
   }
 
   .block p {
-    color: var(--graphite);
+    color: var(--text);
     margin-bottom: 0.9rem;
   }
 
+  /* Soft filled cards, the same as the two on the home page */
   .block-policy {
-    border-top-color: var(--policy);
+    background-color: var(--policy-wash);
+    background-image: linear-gradient(var(--policy), var(--policy));
   }
 
   .block-policy .link-quiet {
@@ -122,7 +131,8 @@
   }
 
   .block-teaching {
-    border-top-color: var(--teaching);
+    background-color: var(--teaching-wash);
+    background-image: linear-gradient(var(--teaching), var(--teaching));
   }
 
   .block-teaching .link-quiet {
@@ -139,7 +149,7 @@
   }
 
   .method p:last-child {
-    color: var(--graphite);
+    color: var(--text);
   }
 
   /* 6. Impact */
@@ -173,7 +183,7 @@
   }
 
   .outcome-label {
-    color: var(--graphite);
+    color: var(--text-soft);
     max-width: 20rem;
   }
 
@@ -187,12 +197,12 @@
   .ahead-list li {
     padding-block: 0.9rem;
     border-bottom: 1px solid var(--rule);
-    color: var(--graphite);
+    color: var(--text);
   }
 
   .ahead-tag {
     display: inline-block;
-    font-size: 0.82rem;
+    font-size: 0.875rem;
     font-weight: 650;
     margin-right: 0.6rem;
   }
@@ -208,7 +218,15 @@
   @media (max-width: 52rem) {
     .two-blocks {
       grid-template-columns: 1fr;
-      gap: 1.75rem;
+      gap: 1.25rem;
+    }
+  }
+
+  /* Phones: tinted blocks keep a slim inset so their text runs wide */
+  @media (max-width: 34rem) {
+    .block {
+      padding: 1.6rem 1.1rem 1.35rem;
+      background-position: 1.1rem 0;
     }
   }
 

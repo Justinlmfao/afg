@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import OnThisPage from '../components/OnThisPage.astro';
 import '../styles/pages/policy.css';
 import { getCollection, render } from 'astro:content';
 import { getLangFromUrl } from '../i18n';
@@ -30,11 +31,21 @@ const proposals = await Promise.all(
         recommendations to the government. Everything here has actually been
         submitted, and there's more on the way.
       </p>
+      <OnThisPage
+        label="On this page"
+        tone="policy"
+        items={[
+          { href: '#so-far', label: 'So far' },
+          { href: '#ai-for-all', label: 'AI for All' },
+          { href: '#how-we-write', label: 'How we write a proposal' },
+          { href: '#proposals', label: 'Our proposals' },
+        ]}
+      />
     </div>
   </section>
 
   <!-- The record, as a ruled ledger — one weighted row -->
-  <section class="record rail-section">
+  <section id="so-far" class="record rail-section">
     <div class="container rail">
       <h2 class="rail-head">So far</h2>
       <div class="rail-body">
@@ -242,7 +253,7 @@ const proposals = await Promise.all(
   </section>
 
   <!-- The method, shown structurally -->
-  <section class="method rail-section">
+  <section id="how-we-write" class="method rail-section">
     <div class="container rail">
       <h2 class="rail-head">How we write a proposal</h2>
       <div class="rail-body">
@@ -333,7 +344,7 @@ const proposals = await Promise.all(
   </section>
 
   <!-- Example proposals, newest first. Each card opens to the full paper. -->
-  <section class="filings rail-section">
+  <section id="proposals" class="filings rail-section">
     <div class="container rail">
       <h2 class="rail-head">Two of our proposals</h2>
       <div class="rail-body">

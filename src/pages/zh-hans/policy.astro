@@ -2,6 +2,7 @@
 // GENERATED FILE — do not edit by hand.
 // Run `npm run zh-hans` to rebuild this from src/pages/zh/.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
 import '../../styles/pages/policy.css';
 import { getCollection, render } from 'astro:content';
 import { getLangFromUrl } from '../../i18n';
@@ -29,10 +30,20 @@ const proposals = await Promise.all(
       <p class="lead">
         我们的政策团队研究在香港看到的问题，再向政府提交建议。这里列出的都是真正提交过的工作，而且还会陆续有更多。
       </p>
+      <OnThisPage
+        label="本页内容"
+        tone="policy"
+        items={[
+          { href: '#so-far', label: '到目前为止' },
+          { href: '#ai-for-all', label: 'AI for All' },
+          { href: '#how-we-write', label: '怎样写提案' },
+          { href: '#proposals', label: '我们的提案' },
+        ]}
+      />
     </div>
   </section>
 
-  <section class="record rail-section">
+  <section id="so-far" class="record rail-section">
     <div class="container rail">
       <h2 class="rail-head">到目前为止</h2>
       <div class="rail-body">
@@ -161,7 +172,7 @@ const proposals = await Promise.all(
     </div>
   </section>
 
-  <section class="method rail-section">
+  <section id="how-we-write" class="method rail-section">
     <div class="container rail">
       <h2 class="rail-head">我们怎样写一份提案</h2>
       <div class="rail-body">
@@ -227,7 +238,7 @@ const proposals = await Promise.all(
     </div>
   </section>
 
-  <section class="filings rail-section">
+  <section id="proposals" class="filings rail-section">
     <div class="container rail">
       <h2 class="rail-head">我们的两份提案</h2>
       <div class="rail-body">

@@ -1,28 +1,35 @@
 /* =========================================================================
    AI For Good — global styles
 
-   One paper, two inks: a single warm document-like ground shared by the whole
-   site, with the two pillars told apart by their accent —
-     policy blue #2F5D93 (the think tank)  ·  vermilion #C2461E (the teaching)
-   The pair is colour-vision validated (see DESIGN.md). Motion is used only
-   where it carries meaning; everything respects prefers-reduced-motion.
+   One paper, two inks: a single warm white ground shared by the whole site,
+   with the two pillars told apart by their accent —
+     policy blue #2A5AB0 (the think tank)  ·  vermilion #CC4A22 (the teaching)
+   Colour comes in a few confident blocks rather than many lines and pale
+   boxes. The pair is checked for contrast and colour-blind separation (see
+   DESIGN.md). Motion is used only where it carries meaning; everything
+   respects prefers-reduced-motion.
    ========================================================================= */
 
 :root {
-  /* The six named values (DESIGN.md) */
-  --paper: #faf7f2;
-  --ink: #1c1b18;
-  --graphite: #5a554c;
-  --rule: #e5dfd3;
-  --policy: #2f5d93;
-  --teaching: #c2461e;
+  /* The named values (DESIGN.md) */
+  --paper: #fbf9f5;
+  --ink: #1c1b18;              /* headings */
+  --text: #2c2a26;             /* running text */
+  --text-soft: #46423b;        /* standfirsts */
+  --graphite: #5a554c;         /* dates, captions, labels only */
+  --rule: #e9e4db;             /* the few separators that remain */
+  --policy: #2a5ab0;
+  --teaching: #cc4a22;
 
   /* Derived tints and helpers */
-  --policy-deep: #1e3a5c;      /* headings on policy washes (text only) */
-  --policy-wash: #eff3f8;
-  --teaching-deep: #96351a;    /* small text in the teaching accent */
-  --teaching-wash: #faf0e9;
-  --surface: #fffdf9;          /* raised cards/panels */
+  --policy-deep: #1f4489;      /* hover, and text on policy washes */
+  --policy-wash: #edf2fa;
+  --teaching-deep: #a93d1c;    /* small text in the teaching accent */
+  --teaching-wash: #fbeee8;
+  --tint: #f4f1eb;             /* neutral block behind notes and quotes */
+  --surface: #ffffff;          /* cards */
+  --charcoal: #1f1d1a;         /* the closing band */
+  --field-border: #8f897f;     /* form fields: 3:1 against white */
 
   /* Type */
   /* Latin faces first; the CJK families after them are what Traditional
@@ -34,14 +41,19 @@
     'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
   /* Heading scale. One size per role, so a section heading or a heading
      inside a row looks the same wherever it appears. */
-  --h2: clamp(1.4rem, 1.05rem + 0.75vw, 1.65rem); /* section headings */
-  --h3: 1.3rem;  /* sub-sections, card and module titles */
-  --h4: 1.15rem; /* headings inside dense rows: steps, method lists */
+  --h2: clamp(1.6rem, 1.2rem + 0.9vw, 1.9rem); /* section headings */
+  --h3: 1.35rem; /* sub-sections, card and module titles */
+  --h4: 1.2rem;  /* headings inside dense rows: steps, method lists */
 
   /* Layout */
-  --measure: 44rem;
+  --measure: 35rem;            /* about 68 characters of body text */
+  --measure-wide: calc(var(--measure) + 3.5rem); /* cards: text width plus their inset */
   --wide: 68rem;
-  --radius: 6px;
+  --radius: 6px;               /* small things: fields, focus rings */
+  --radius-card: 16px;         /* cards and tinted blocks */
+  --radius-img: 12px;          /* photographs */
+  --shadow-card: 0 1px 2px rgba(28, 27, 24, 0.05), 0 8px 24px rgba(28, 27, 24, 0.06);
+  --header-h: 4rem;
 }
 
 /* ---- Font fallbacks ---------------------------------------------------- */
@@ -84,8 +96,20 @@ html {
   scrollbar-color: #cdc5b6 var(--paper);
 }
 
+/* The sticky header is a little slimmer on phones */
+@media (max-width: 52rem) {
+  :root {
+    --header-h: 3.5rem;
+  }
+}
+
+/* Anchored sections stop below the sticky header */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 1rem);
+}
+
 ::selection {
-  background: #d6e1ee;
+  background: #d7e2f6;
   color: var(--ink);
 }
 
@@ -96,7 +120,7 @@ textarea {
 
 body {
   background: var(--paper);
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--sans);
   font-size: 1.0625rem;
   line-height: 1.7;
@@ -119,6 +143,7 @@ h2,
 h3 {
   font-family: var(--serif);
   font-weight: 500;
+  color: var(--ink);
   line-height: 1.15;
   letter-spacing: -0.01em;
   text-wrap: balance;
@@ -173,7 +198,7 @@ a:hover {
 
 .lead {
   font-size: clamp(1.1rem, 1.9vw, 1.3rem);
-  color: var(--graphite);
+  color: var(--text-soft);
 }
 
 /* Chinese needs a little more leading and no tight Latin tracking */
@@ -187,6 +212,11 @@ html[lang^='zh'] h2,
 html[lang^='zh'] h3 {
   letter-spacing: 0;
   line-height: 1.35;
+}
+
+/* About 31 characters a line, the comfortable range for Chinese */
+html[lang^='zh'] {
+  --measure: 33rem;
 }
 
 /*
@@ -291,6 +321,12 @@ section.section-tight {
 
 .rail-body {
   min-width: 0;
+  max-width: var(--measure-wide);
+}
+
+/* Cards in the text column may run a little wider than the text, but no
+   paragraph or list line does */
+.rail-body :is(p, li, blockquote) {
   max-width: var(--measure);
 }
 
@@ -326,7 +362,7 @@ section.section-tight {
   }
 
   /* A list beside the heading starts level with it: no rule on top and no
-     padding above the first item. The section hairline already separates. */
+     padding above the first item. */
   .rail-body > :is(ul, ol, dl):first-child {
     border-top: none;
   }
@@ -336,20 +372,14 @@ section.section-tight {
   }
 }
 
-/* Consecutive rail sections share a hairline, like rows in a ledger */
-.rail-section + .rail-section {
-  border-top: 1px solid var(--rule);
-}
-
 hr {
   border: none;
   border-top: 1px solid var(--rule);
   margin-block: 2.5rem;
 }
 
-/* ---- Ruled fact ledger (used instead of stat cards) --------------------- */
+/* ---- Fact ledger (used instead of stat cards) --------------------------- */
 .ledger {
-  border-top: 1px solid var(--rule);
   max-width: var(--measure);
 }
 
@@ -370,15 +400,17 @@ hr {
 }
 
 .ledger-label {
-  color: var(--graphite);
+  color: var(--text);
 }
 
-/* The one weighted row per ledger */
+/* The one weighted row per ledger: a tinted block, no rule of its own */
 .ledger-row.weighted {
   background: var(--policy-wash);
-  border-left: 3px solid var(--policy);
+  border-bottom-color: transparent;
+  border-radius: 12px;
   padding-inline: 1rem;
   margin-inline: -1rem;
+  margin-block: 0.4rem;
 }
 
 .ledger-row.weighted .ledger-figure {
@@ -400,8 +432,8 @@ hr {
   gap: 0.5rem;
   font-weight: 600;
   font-size: 1rem;
-  padding: 0.75rem 1.4rem;
-  border-radius: var(--radius);
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
   text-decoration: none;
   border: none;
   cursor: pointer;

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
 import '../../styles/pages/teaching.css';
 import Icon from '../../components/Icon.astro';
 import { getCollection } from 'astro:content';
@@ -61,6 +62,18 @@ const photos = [
       <p class="lead">
         我們的學生導師在全港各區為基層家庭的小學生上課。每個科目都配上人工智能，讓孩子多了一個免費、有耐性、課後也能繼續用的學習夥伴。
       </p>
+      <OnThisPage
+        label="本頁內容"
+        tone="teaching"
+        items={[
+          { href: '#why-we-teach', label: '為什麼教' },
+          { href: '#think-first', label: 'Think First 先想後問' },
+          { href: '#modules', label: '四個單元' },
+          { href: '#sample-lesson', label: '示範課堂' },
+          { href: '#where-we-teach', label: '在哪裡教' },
+          { href: '#in-the-classroom', label: '課室裡' },
+        ]}
+      />
     </div>
   </section>
 
@@ -81,7 +94,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="why-teach rail-section">
+  <section id="why-we-teach" class="why-teach rail-section">
     <div class="container rail">
       <h2 class="rail-head">我們為什麼教</h2>
       <div class="rail-body prose">
@@ -95,7 +108,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="think-first rail-section">
+  <section id="think-first" class="think-first rail-section">
     <div class="container rail">
       <h2 class="rail-head">我們怎樣教：Think First 先想後問</h2>
       <div class="rail-body">
@@ -130,7 +143,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="modules rail-section">
+  <section id="modules" class="modules rail-section">
     <div class="container">
       <div class="rail">
         <h2 class="rail-head">我們的四個單元</h2>
@@ -165,7 +178,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="sample tint-sample rail-section">
+  <section id="sample-lesson" class="sample tint-sample rail-section">
     <div class="container">
       <div class="rail">
         <div class="rail-head">
@@ -249,7 +262,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="section-tight partners rail-section">
+  <section id="where-we-teach" class="section-tight partners rail-section">
     <div class="container rail">
       <h2 class="rail-head">我們在哪裡教</h2>
       <div class="rail-body prose">
@@ -274,7 +287,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="classroom rail-section">
+  <section id="in-the-classroom" class="classroom rail-section">
     <div class="container">
       <div class="rail">
         <h2 class="rail-head">課室裡</h2>

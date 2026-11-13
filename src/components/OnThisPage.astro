@@ -1,0 +1,88 @@
+---
+// "On this page": a row of jump links under the title of a long page. On a
+// phone the row scrolls sideways instead of wrapping onto several lines.
+interface Props {
+  /** Read out to screen readers, e.g. "On this page". */
+  label: string;
+  items: { href: string; label: string }[];
+  /** Which pillar's colour the links take. */
+  tone?: 'policy' | 'teaching';
+}
+
+const { label, items, tone = 'policy' } = Astro.props;
+---
+
+<nav class={`on-page on-page-${tone}`} aria-label={label}>
+  <ul>
+    {items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+  </ul>
+</nav>
+
+<style>
+  .on-page {
+    margin-top: 1.75rem;
+  }
+
+  /* The title block's reading-column list rules (indent, item spacing)
+     don't apply to this row */
+  .on-page ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .on-page li {
+    margin: 0;
+  }
+
+  a {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.3;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+  }
+
+  .on-page-policy a {
+    background: var(--policy-wash);
+    color: var(--policy-deep);
+  }
+
+  .on-page-policy a:hover {
+    background: #dde7f8;
+  }
+
+  .on-page-teaching a {
+    background: var(--teaching-wash);
+    color: var(--teaching-deep);
+  }
+
+  .on-page-teaching a:hover {
+    background: #f7dfd3;
+  }
+
+  @media (max-width: 34rem) {
+    .on-page ul {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin-inline: -1.5rem;
+      padding: 0 1.5rem 0.25rem;
+      scrollbar-width: none;
+    }
+
+    ul::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      flex: none;
+    }
+  }
+</style>

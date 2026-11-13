@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import OnThisPage from '../components/OnThisPage.astro';
 import '../styles/pages/teaching.css';
 import Icon from '../components/Icon.astro';
 import { getCollection, render } from 'astro:content';
@@ -98,6 +99,18 @@ const photos = [
         families across Hong Kong. Every subject is paired with AI, so the
         children leave with a free, patient study partner they can keep using.
       </p>
+      <OnThisPage
+        label="On this page"
+        tone="teaching"
+        items={[
+          { href: '#why-we-teach', label: 'Why we teach' },
+          { href: '#think-first', label: 'Think First' },
+          { href: '#modules', label: 'Our four modules' },
+          { href: '#sample-lesson', label: 'Sample lesson' },
+          { href: '#where-we-teach', label: 'Where we teach' },
+          { href: '#in-the-classroom', label: 'In the classroom' },
+        ]}
+      />
     </div>
   </section>
 
@@ -123,7 +136,7 @@ const photos = [
   </section>
 
   <!-- Why we teach, then the method every AI lesson follows -->
-  <section class="why-teach rail-section">
+  <section id="why-we-teach" class="why-teach rail-section">
     <div class="container rail">
       <h2 class="rail-head">Why we teach</h2>
       <div class="rail-body prose">
@@ -144,7 +157,7 @@ const photos = [
     </div>
   </section>
 
-  <section class="think-first rail-section">
+  <section id="think-first" class="think-first rail-section">
     <div class="container rail">
       <h2 class="rail-head">How we teach: Think First</h2>
       <div class="rail-body">
@@ -185,7 +198,7 @@ const photos = [
   </section>
 
   <!-- How we teach — four modules as a ruled list, not cards -->
-  <section class="modules rail-section">
+  <section id="modules" class="modules rail-section">
     <div class="container">
       <div class="rail">
         <h2 class="rail-head">Our four modules</h2>
@@ -231,7 +244,7 @@ const photos = [
        as though they were official game data.
        Justin: this is labelled a sample. Once it has been taught as written,
        say so — "first taught at [school], [month]" is stronger. -->
-  <section class="sample tint-sample rail-section">
+  <section id="sample-lesson" class="sample tint-sample rail-section">
     <div class="container">
       <div class="rail">
         <div class="rail-head">
@@ -355,7 +368,7 @@ const photos = [
   </section>
 
   <!-- Partners — a text list, not a logo wall -->
-  <section class="section-tight partners rail-section">
+  <section id="where-we-teach" class="section-tight partners rail-section">
     <div class="container rail">
       <h2 class="rail-head">Where we teach</h2>
       <div class="rail-body prose">
@@ -386,7 +399,7 @@ const photos = [
   </section>
 
   <!-- In the classroom — photos -->
-  <section class="classroom rail-section">
+  <section id="in-the-classroom" class="classroom rail-section">
     <div class="container">
       <div class="rail">
         <h2 class="rail-head">In the classroom</h2>

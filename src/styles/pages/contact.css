@@ -3,10 +3,6 @@
    another page's stylesheet. */
 
 .page-contact {
-  .page-top {
-    border-bottom: 1px solid var(--rule);
-  }
-
   .routes {
     list-style: none;
     padding: 0;
@@ -22,13 +18,12 @@
   }
 
   .routes p {
-    color: var(--graphite);
+    color: var(--text);
   }
 
   .contact-form {
     max-width: var(--measure);
-    border-top: 1px solid var(--rule);
-    padding-top: 2rem;
+    padding-top: 1rem;
   }
 
   .field {
@@ -53,8 +48,8 @@
     font-family: inherit;
     font-size: 1rem;
     padding: 0.7rem 0.85rem;
-    border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    border: 1px solid var(--field-border);
+    border-radius: 10px;
     background: var(--surface);
     color: var(--ink);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -63,7 +58,7 @@
   .field input:focus,
   .field textarea:focus {
     border-color: var(--policy);
-    box-shadow: 0 0 0 3px rgba(47, 93, 147, 0.15);
+    box-shadow: 0 0 0 3px rgba(42, 90, 176, 0.18);
     outline: none;
   }
 

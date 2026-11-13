@@ -3,10 +3,6 @@
    another page's stylesheet. */
 
 .page-team {
-  .page-top {
-    border-bottom: 1px solid var(--rule);
-  }
-
   .team-photos {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -22,8 +18,7 @@
     height: auto;
     aspect-ratio: 3 / 2;
     object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--rule);
+    border-radius: var(--radius-img);
   }
 
   @media (max-width: 46rem) {
@@ -36,7 +31,6 @@
      without a bio gets the same row, minus the toggle. */
   .people {
     max-width: var(--measure);
-    border-top: 1px solid var(--ink);
   }
 
   .person {
@@ -97,7 +91,7 @@
     flex: none;
     width: 1.9rem;
     height: 1.9rem;
-    border: 1px solid var(--rule);
+    border: 1px solid #cfc8bc;
     border-radius: 50%;
     transition: border-color 0.2s ease;
   }
@@ -130,7 +124,7 @@
 
   .person-bio {
     padding-bottom: 1.6rem;
-    color: var(--graphite);
+    color: var(--text);
   }
 
   .person-bio p + p {

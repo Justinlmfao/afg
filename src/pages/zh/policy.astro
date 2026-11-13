@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import OnThisPage from '../../components/OnThisPage.astro';
 import '../../styles/pages/policy.css';
 import { getCollection, render } from 'astro:content';
 import { getLangFromUrl } from '../../i18n';
@@ -27,10 +28,20 @@ const proposals = await Promise.all(
       <p class="lead">
         我們的政策團隊研究在香港看到的問題，再向政府提交建議。這裡列出的都是真正提交過的工作，而且還會陸續有更多。
       </p>
+      <OnThisPage
+        label="本頁內容"
+        tone="policy"
+        items={[
+          { href: '#so-far', label: '到目前為止' },
+          { href: '#ai-for-all', label: 'AI for All' },
+          { href: '#how-we-write', label: '怎樣寫提案' },
+          { href: '#proposals', label: '我們的提案' },
+        ]}
+      />
     </div>
   </section>
 
-  <section class="record rail-section">
+  <section id="so-far" class="record rail-section">
     <div class="container rail">
       <h2 class="rail-head">到目前為止</h2>
       <div class="rail-body">
@@ -159,7 +170,7 @@ const proposals = await Promise.all(
     </div>
   </section>
 
-  <section class="method rail-section">
+  <section id="how-we-write" class="method rail-section">
     <div class="container rail">
       <h2 class="rail-head">我們怎樣寫一份提案</h2>
       <div class="rail-body">
@@ -225,7 +236,7 @@ const proposals = await Promise.all(
     </div>
   </section>
 
-  <section class="filings rail-section">
+  <section id="proposals" class="filings rail-section">
     <div class="container rail">
       <h2 class="rail-head">我們的兩份提案</h2>
       <div class="rail-body">

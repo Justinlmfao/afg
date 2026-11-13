@@ -138,7 +138,7 @@
     max-width: var(--wide);
     margin-inline: auto;
     padding: 0.85rem 1.5rem 0;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     color: var(--graphite);
   }
 
@@ -166,14 +166,17 @@
     gap: 1.5rem;
   }
 
+  /* Soft filled cards, no outline; a short bar in the pillar's colour
+     hangs from the top edge, the same mark used on cards across the site */
   .door {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
-    padding: 1.9rem 2rem 1.7rem;
-    border: 1px solid var(--rule);
-    border-top-width: 4px;
-    border-radius: var(--radius);
+    padding: 2.1rem 2rem 1.8rem;
+    border-radius: var(--radius-card);
+    background-position: 2rem 0;
+    background-size: 2.5rem 4px;
+    background-repeat: no-repeat;
     text-decoration: none;
     color: var(--ink);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -191,7 +194,7 @@
   }
 
   .door-line {
-    color: var(--graphite);
+    color: var(--text);
   }
 
   /* The figure and the link sit at the foot of each door, so they line up
@@ -226,8 +229,8 @@
   }
 
   .door-policy {
-    background: var(--policy-wash);
-    border-top-color: var(--policy);
+    background-color: var(--policy-wash);
+    background-image: linear-gradient(var(--policy), var(--policy));
   }
   .door-policy .door-number,
   .door-policy .door-cta {
@@ -235,30 +238,50 @@
   }
 
   .door-teaching {
-    background: var(--teaching-wash);
-    border-top-color: var(--teaching);
+    background-color: var(--teaching-wash);
+    background-image: linear-gradient(var(--teaching), var(--teaching));
   }
   .door-teaching .door-number,
   .door-teaching .door-cta {
     color: var(--teaching-deep);
   }
 
-  /* 3. Proof */
-  .proof {
-    border-block: 1px solid var(--rule);
+  /* 3. Proof — the page's one loud moment: two solid panels, edge to edge,
+     in the pillars' colours. On wide screens each figure lines up with the
+     text of the card above it. */
+  section.proof {
+    padding-block: 0;
   }
 
-  /* Same columns and gap as the two doors above, and the same inset as the
-     text inside them, so each figure sits directly under its pillar. */
   .proof-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    max-width: none;
+    padding: 0;
+  }
+
+  .proof-item {
+    padding: clamp(2.5rem, 6vw, 4.25rem) 1.5rem;
+    color: #fff;
+  }
+
+  .proof-item:first-child {
+    background: var(--policy);
+  }
+
+  .proof-item:last-child {
+    background: var(--teaching);
   }
 
   @media (min-width: 52rem) {
-    .proof-item {
-      padding-inline: 2rem;
+    .proof-item:first-child {
+      padding-left: calc(max(0px, (100vw - var(--wide)) / 2) + 3.5rem);
+      padding-right: 2.75rem;
+    }
+
+    .proof-item:last-child {
+      padding-left: 2.75rem;
+      padding-right: calc(max(0px, (100vw - var(--wide)) / 2) + 1.5rem);
     }
   }
 
@@ -271,17 +294,9 @@
     margin-bottom: 0.5rem;
   }
 
-  .proof-policy {
-    color: var(--policy);
-  }
-
-  .proof-teaching {
-    color: var(--teaching-deep);
-  }
-
   /* Measured in rem rather than ch so English and Chinese wrap alike */
   .proof-label {
-    color: var(--graphite);
+    color: #fff;
     max-width: 22rem;
   }
 
@@ -290,7 +305,6 @@
     list-style: none;
     padding: 0;
     max-width: var(--measure);
-    border-top: 1px solid var(--rule);
   }
 
   .current-list li {
@@ -302,7 +316,7 @@
   }
 
   .current-tag {
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 650;
   }
 
@@ -315,15 +329,14 @@
   }
 
   .current-body {
-    color: var(--graphite);
+    color: var(--text);
   }
 
-  /* 6. Latest — ruled rows like the list above it, not a stack of boxes */
+  /* 6. Latest — rows like the list above it, not a stack of boxes */
   .latest-list {
     list-style: none;
     padding: 0;
     max-width: var(--measure);
-    border-top: 1px solid var(--rule);
   }
 
   .latest-list li {
@@ -351,7 +364,7 @@
   }
 
   .latest-kind {
-    font-size: 0.78rem;
+    font-size: 0.875rem;
     font-weight: 650;
   }
 
@@ -376,11 +389,21 @@
 
   /* 7 & 8 */
   .partners p {
-    color: var(--graphite);
+    color: var(--text);
   }
 
+  /* The page closes on one dark band */
   .ctas {
-    border-top: 1px solid var(--rule);
+    background: var(--charcoal);
+    color: #fff;
+  }
+
+  .ctas h2 {
+    color: #fff;
+  }
+
+  .ctas :focus-visible {
+    outline-color: #fff;
   }
 
   .cta-grid {
@@ -390,8 +413,8 @@
   }
 
   .cta p {
-    color: var(--graphite);
-    margin-bottom: 1.1rem;
+    color: #e8e4dc;
+    margin-bottom: 1.25rem;
     max-width: 34ch;
   }
 
@@ -407,14 +430,40 @@
       gap: 1.75rem;
     }
 
+    .proof-grid {
+      gap: 0;
+    }
+
     .latest-list a {
-      grid-template-columns: 1fr;
-      gap: 0.2rem;
+      grid-template-columns: auto 1fr;
+      grid-template-areas: 'kind meta' 'title title';
+      gap: 0.15rem 0.75rem;
+    }
+
+    .latest-kind {
+      grid-area: kind;
+    }
+
+    .latest-meta {
+      grid-area: meta;
+      justify-self: end;
+    }
+
+    .latest-title {
+      grid-area: title;
     }
 
     .current-list li {
       grid-template-columns: 1fr;
       gap: 0.15rem;
+    }
+  }
+
+  /* Phones: the cards keep a slim inset so their text runs wide */
+  @media (max-width: 34rem) {
+    .door {
+      padding: 1.9rem 1.25rem 1.5rem;
+      background-position: 1.25rem 0;
     }
   }
 }

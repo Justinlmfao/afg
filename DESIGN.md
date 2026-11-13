@@ -3,24 +3,34 @@
 Written before building, per the brief ("write a short design plan… review it
 against this brief and cut anything generic… then build").
 
-## 1. Palette — 6 named values
+## 1. Palette
+
+Revised in November 2026 to be livelier but still calm ("simplistic yet
+vibrant"): a cleaner warm white, a clearer blue and orange, and near-black text.
 
 | Name | Hex | Job |
 | --- | --- | --- |
-| Paper | `#FAF7F2` | Page ground. Warm, printable — the site reads as a document, not an app. |
-| Ink | `#1C1B18` | Primary text. |
-| Graphite | `#5A554C` | Secondary text, metadata. |
-| Rule | `#E5DFD3` | Hairlines, table rules, borders. |
-| Policy blue | `#2F5D93` | The think-tank's identity: links, rules, and marks on everything policy. |
-| Vermilion | `#C2461E` | The teaching programme's identity: marks and accents on everything teaching. |
+| Paper | `#FBF9F5` | Page ground. A warm white, cleaner than the old beige. |
+| Ink | `#1C1B18` | Headings. |
+| Text | `#2C2A26` | Running text, so paragraphs read crisp rather than grey. |
+| Text soft | `#46423B` | Standfirsts and secondary paragraphs. |
+| Graphite | `#5A554C` | Dates, captions and small labels only. |
+| Rule | `#E9E4DB` | The few separators that remain (list rows, table rules). |
+| Policy blue | `#2A5AB0` | The think tank: links, marks and fills on everything policy. |
+| Vermilion | `#CC4A22` | The teaching programme: marks and fills on everything teaching. |
 
-The two accents were **validated as a pair, not eyeballed** (dataviz skill's
-`validate_palette.js`): CVD separation ΔE 17.9 protan / 30.4 tritan, normal-vision
-ΔE 27.0, both ≥3:1 against the surface, both inside the mark lightness band. A
-colour-blind reader can always tell which pillar they're on.
+Derived values: policy deep `#1F4489` (hover, text on blue tints), teaching
+deep `#A93D1C` (any small orange text: vermilion itself is 4.4:1 on paper, so
+it is kept for fills and large marks), policy wash `#EDF2FA`, teaching wash
+`#FBEEE8`, neutral tint `#F4F1EB` (notes, quotes, footer), charcoal `#1F1D1A`
+(the home page's closing band), and form-field borders `#8F897F` (3:1 against
+white).
 
-Each accent also has a 6–8% wash tint (derived, not named) for panel backgrounds:
-policy wash ≈ `#EFF3F8`, teaching wash ≈ `#FAF0E9`.
+**Checked, not eyeballed.** White text on the blue fill is 6.6:1 and on the
+vermilion fill 4.6:1, so both carry small white text. Blue text on paper is
+6.3:1. Colour-blind separation between the two accents (CIEDE2000 after
+full-strength Machado simulation): 45.9 normal, 49.8 protan, 57.4 deutan,
+62.2 tritan. A colour-blind reader can always tell which pillar they're on.
 
 ## 2. Type — two faces, strict roles
 
@@ -145,11 +155,28 @@ read a word.
    `.rail-row` to put the label in the same margin column. Grids and photos
    (the two doors, the lesson cards, galleries, the two blocks on About,
    calls to action) are spreads: they span the full container. Sections are
-   separated by a hairline, with generous padding around narrative sections
-   and tight padding (`section-tight`) between short reference rows. Below
-   60rem everything folds back to heading-above. The page title block
-   (kicker, h1, lead) always starts at the container's left edge. Figures
-   that sit under cards share the cards' columns and inset.
+   separated by space, with generous padding around narrative sections and
+   tight padding (`section-tight`) between short reference rows. Below 60rem
+   everything folds back to heading-above. The page title block (kicker, h1,
+   lead) always starts at the container's left edge. Figures that sit under
+   cards line up with the cards' text.
+7. **Colour in a few confident blocks, not many lines.** Each page gets at
+   most two or three solid colour moments: the home page's HK$50M and 86%
+   panels (blue and vermilion, edge to edge, white type), the Teaching
+   page's 86% band, and the home page's charcoal closing band. Everything
+   else stays on paper or a soft tint. Sections are separated by space, not
+   hairlines; lists keep faint row separators; cards have no outline (a soft
+   fill, or white with a soft shadow) and 16px corners; buttons are rounded.
+   No coloured side stripes: notes and quotes are tinted blocks. The one
+   recurring mark is a short 2.5rem × 4px bar in the pillar's colour hanging
+   from the top edge of each card (blue-to-vermilion on About, where the two
+   halves meet).
+8. **Comfortable reading on any screen.** Body lines are capped at about 68
+   characters (`--measure`, 35rem), Chinese at about 31; cards may run 3.5rem
+   wider because their text sits inset. No text is smaller than 14px. On
+   phones, cards keep only a slim inset, numbered steps put the number beside
+   the heading, photo galleries become sideways swipe rows, and the long
+   Policy and Teaching pages open with a row of "On this page" links.
 
 ## 5. Review — what was cut, and why
 
