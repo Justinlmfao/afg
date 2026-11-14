@@ -1,41 +1,27 @@
 ---
-// The AFG mark: three rules descending in length — the shape of every
-// proposal we file. The case for, the case against, and the recommendation,
-// which is the shortest line and the one in the accent colour.
+// The AI For Good logo, inlined from the SVG files in src/assets/brand/ so it
+// takes the colour of the text around it.
 //
-// `boxed` wraps it in a rounded square for the favicon and any context that
-// needs a solid shape at very small sizes; the header and footer use the bare
-// rules, which sit better beside the wordmark.
+//   wordmark  "AI For Good" on its own: the header on every page.
+//   lockup    wordmark, rule and HONG KONG: the footer, on the dark ground.
+//
+// Don't re-type the wordmark in live text or recolour it; change the files.
+import wordmark from '../assets/brand/logo-wordmark-light.svg?raw';
+import lockup from '../assets/brand/logo-lockup-dark.svg?raw';
+
 interface Props {
-  size?: number;
-  boxed?: boolean;
+  variant?: 'wordmark' | 'lockup';
+  /** Read out as the image's name. Leave unset when the link around it is already named. */
+  label?: string;
 }
-const { size = 22, boxed = false } = Astro.props;
+const { variant = 'wordmark', label } = Astro.props;
+
+const naming = label ? ` role="img" aria-label="${label}"` : ' aria-hidden="true"';
+const svg = (variant === 'lockup' ? lockup : wordmark)
+  .replace(/\s*<title[^>]*>[\s\S]*?<\/title>/, '')
+  .replace(/ role="img" aria-labelledby="t"/, `${naming} class="logo logo-${variant}"`)
+  // The lettering follows the text colour; the lockup's rule keeps its own grey.
+  .replace(/fill="#(16171B|F5F2EB)"/g, 'fill="currentColor"');
 ---
 
-<svg
-  width={size}
-  height={size}
-  viewBox="0 0 24 24"
-  fill="none"
-  aria-hidden="true"
-  class="afg-mark"
->
-  {boxed && <rect width="24" height="24" rx="5" fill="var(--paper, #faf7f2)" />}
-  <rect x={boxed ? 4 : 3} y="6" width={boxed ? 16 : 18} height="2.6" rx="1.3" fill="var(--ink, #1c1b18)" />
-  <rect x={boxed ? 4 : 3} y="10.7" width={boxed ? 11.5 : 13} height="2.6" rx="1.3" fill="var(--policy, #2f5d93)" />
-  <rect x={boxed ? 4 : 3} y="15.4" width={boxed ? 7 : 8} height="2.6" rx="1.3" fill="var(--teaching, #c2461e)" />
-</svg>
-
-<style>
-  .afg-mark {
-    display: block;
-    flex-shrink: 0;
-  }
-
-  /* The accent rule nudges out on hover — the recommendation being made */
-  :global(a:hover) > .afg-mark rect:last-child {
-    transition: transform 0.2s ease;
-    transform: translateX(2px);
-  }
-</style>
+<Fragment set:html={svg} />

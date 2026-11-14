@@ -13,8 +13,7 @@ const email = 'ps20153216@student.vsa.edu.hk';
   <div class="container footer-inner">
     <div>
       <p class="footer-brand">
-        <Logo size={20} />
-        AI For Good
+        <Logo label="AI For Good" />
       </p>
       <p class="footer-tagline">{t.footerTagline}</p>
     </div>
@@ -57,7 +56,13 @@ const email = 'ps20153216@student.vsa.edu.hk';
     gap: 0.6rem;
     font-family: var(--serif);
     font-size: 1.15rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-brand :global(.logo) {
+    display: block;
+    height: 20px;
+    width: auto;
   }
 
   .footer-tagline {

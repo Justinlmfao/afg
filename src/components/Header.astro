@@ -1,6 +1,5 @@
 ---
-// Site header. The brand mark (see Logo.astro) is three rules descending in
-// length — the shape of every proposal we file. Mobile menu is progressively
+// Site header, with the wordmark (see Logo.astro). Mobile menu is progressively
 // enhanced. Nav links and the language switcher follow the current locale.
 import Logo from './Logo.astro';
 import {
@@ -26,8 +25,7 @@ const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href={localizePath('/', lang)} class="brand" aria-label={t.home}>
-      <Logo size={22} />
-      AI For Good
+      <Logo />
     </a>
 
     <button
@@ -118,6 +116,13 @@ const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.
     color: var(--ink);
     text-decoration: none;
     letter-spacing: -0.01em;
+    min-height: 44px;
+  }
+
+  .brand :global(.logo) {
+    display: block;
+    height: 22px;
+    width: auto;
   }
 
   .primary-nav ul {
@@ -213,8 +218,8 @@ const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.
       display: flex;
     }
 
-    .brand {
-      font-size: 1.15rem;
+    .brand :global(.logo) {
+      height: 19px;
     }
 
     /* The open menu is a panel over the page, with the page dimmed behind
