@@ -97,6 +97,8 @@ export const ui = {
     footerTagline:
       'Students in Hong Kong writing policy recommendations for the government and running free tutoring for primary school children from underprivileged families.',
     footerMeta: 'Hong Kong · Founded June 2023',
+    shareImageAlt:
+      'A tutoring session at Ho Man Tin Ling To Catholic School, beside the AI For Good Hong Kong logo.',
   },
   zh: {
     skip: '跳至主要內容',
@@ -121,6 +123,7 @@ export const ui = {
     footerTagline:
       '一群香港學生，為政府撰寫政策建議，也為基層家庭的小學生提供免費補習。',
     footerMeta: '香港 · 於 2023 年 6 月創立',
+    shareImageAlt: '天主教領島學校的一節補習課，旁邊是 AI For Good Hong Kong 的標誌。',
   },
   hans: {
     skip: '跳至主要内容',
@@ -145,6 +148,7 @@ export const ui = {
     footerTagline:
       '一群香港学生，为政府撰写政策建议，也为基层家庭的小学生提供免费补习。',
     footerMeta: '香港 · 于 2023 年 6 月创立',
+    shareImageAlt: '天主教领岛学校的一节补习课，旁边是 AI For Good Hong Kong 的标志。',
   },
 } as const;
 

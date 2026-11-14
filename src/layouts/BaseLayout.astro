@@ -26,12 +26,17 @@ interface Props {
   pageClass?: string;
   /** Keep a page out of search results (the 404 and thank-you pages). */
   noindex?: boolean;
+  /** Share image for link previews, 1200×630. Defaults to /og-default.jpg. */
+  image?: string;
+  imageAlt?: string;
 }
 
 const {
   title,
   pageClass,
   noindex = false,
+  image = '/og-default.jpg',
+  imageAlt,
   description = 'AI For Good is a student-run organisation in Hong Kong. We write policy recommendations for the government and run free tutoring for primary school children from underprivileged families.',
 } = Astro.props;
 
@@ -46,6 +51,18 @@ const fullTitle = title.startsWith('AI For Good') ? title : `${title} — ${t.si
 const site = Astro.site ?? Astro.url;
 const absolute = (path: string) => new URL(path.endsWith('/') ? path : `${path}/`, site).href;
 const canonical = absolute(Astro.url.pathname);
+const shareImage = new URL(image, site).href;
+
+// Tells search engines what kind of organisation this is.
+const organisation = {
+  '@context': 'https://schema.org',
+  '@type': 'NGO',
+  name: 'AI For Good Hong Kong',
+  url: new URL('/', site).href,
+  logo: new URL('/icon-512.png', site).href,
+  foundingDate: '2023-06',
+  areaServed: 'Hong Kong',
+};
 ---
 
 <!doctype html>
@@ -53,7 +70,10 @@ const canonical = absolute(Astro.url.pathname);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#16171B" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
 
@@ -67,6 +87,12 @@ const canonical = absolute(Astro.url.pathname);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={ogLocale} />
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt ?? t.shareImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(organisation)} />
 
     <!-- Each page exists in all three languages; tell search engines which is which -->
     {
