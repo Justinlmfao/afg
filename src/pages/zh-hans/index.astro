@@ -6,217 +6,132 @@
 // place; only the prose differs. Keep each Chinese paragraph on one source
 // line: Astro turns a line break into a space, which shows in Chinese.
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Photo from '../../components/Photo.astro';
+import Now from '../../components/Now.astro';
+import Case from '../../components/Case.astro';
+import Ledger from '../../components/Ledger.astro';
+import Steps from '../../components/Steps.astro';
+import Gallery from '../../components/Gallery.astro';
+import MarginNote from '../../components/MarginNote.astro';
 import '../../styles/pages/home.css';
-import { getCollection } from 'astro:content';
+import { facts, showSamples } from '../../data/facts';
+import { aiForAllCase } from '../../data/cases';
+import { getSubmissions } from '../../lib/submissions';
 import { getLangFromUrl } from '../../i18n';
 
 const lang = getLangFromUrl(Astro.url);
-const submissions = (await getCollection('submissions'))
-  .filter((s) => !s.data.draft && s.data.lang === lang)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 2);
-
-const modules = (await getCollection('programs'))
-  .filter((m) => !m.data.draft)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+const f = facts;
+const story = aiForAllCase(lang, { document: '/zh-hans/policy#ai-for-all' });
+// The proposals with a page of their own: the ones not already told above.
+const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
 ---
 
 <BaseLayout
   title="AI For Good 香港：学生主导的人工智能政策研究与免费补习"
   pageClass="page-home"
-  description="AI For Good 是一个由香港学生创办和运营的组织：我们向政府提交政策建议，也为基层家庭的小学生提供免费补习。"
+  description="AI For Good 由香港学生运营。我们每年向政府提交约二十项政策建议，也为基层家庭的小学生免费上课。"
 >
-  <section class="hero">
-    <div class="container hero-inner">
-      <p class="eyebrow">
-        <span class="eyebrow-rule" aria-hidden="true"></span>学生主导的政策研究
-      </p>
-
-      <h1><span class="phrase">为我们终将继承的科技，</span><span class="phrase">制订政策。</span></h1>
-
-      <p class="hero-sub">
-        我们是一群香港学生，研究人工智能和经济政策如何改变这座城市，每年向政府提交约二十项建议。我们也为基层家庭的小学生免费教授人工智能和经济知识。
-      </p>
-
-      <div class="hero-actions">
-        <a class="btn btn-policy" href="/zh-hans/policy">
-          阅读我们的政策研究 <span class="arrow">→</span>
-        </a>
-        <a class="hero-secondary" href="/zh-hans/teaching">
-          看看我们的教学 <span class="arrow">→</span>
-        </a>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <h1>香港学生撰写人工智能政策建议，也为受影响的孩子上课。</h1>
+      <div>
+        <p class="lead">
+          我们每年向政府提交约{f.recsPerYear.word.zh}项建议，并为基层家庭的小学生免费上课。
+        </p>
+        <div class="actions">
+          <a class="btn" href="/zh-hans/policy">我们的政策研究</a>
+          <a class="textlink" href="/zh-hans/teaching">我们的教学</a>
+        </div>
       </div>
-
-      <dl class="stat-strip">
-        <div>
-          <dt>~20</dt>
-          <dd>每年提交的建议</dd>
-        </div>
-        <div>
-          <dt>350</dt>
-          <dd>教过的孩子</dd>
-        </div>
-        <div>
-          <dt>7</dt>
-          <dd>合作学校</dd>
-        </div>
-        <div>
-          <dt>43</dt>
-          <dd>受训学生导师</dd>
-        </div>
-      </dl>
+      <Now />
     </div>
-  </section>
+  </div>
 
-  <figure class="hero-photo-band">
-    <img
-      src="/programs/teaching-classroom.jpg"
+  <figure class="photo">
+    <Photo
+      name="teaching-classroom.jpg"
       alt="导师在天主教领岛学校上课，一名学生举手回答。"
-      loading="lazy"
-      decoding="async"
+      sizes="100vw"
+      position="50% 38%"
+      positionPhone="68% 40%"
+      eager
     />
-    <figcaption>天主教领岛学校的一节补习课。</figcaption>
+    <figcaption class="wrap">天主教领岛学校的一节补习课。</figcaption>
   </figure>
 
-  <section class="doors-section">
-    <div class="container doors">
-      <a href="/zh-hans/policy" class="door door-policy">
-        <p class="door-name">政策研究</p>
-        <p class="door-line">
-          我们向香港政府提交书面建议，自 2024 年起每一轮施政报告和财政预算案咨询都有参与。
-        </p>
-        <p class="door-number">~20 <span>每年提交的建议</span></p>
-        <span class="door-cta">阅读我们的政策研究 <span class="arrow">→</span></span>
-      </a>
-
-      <a href="/zh-hans/teaching" class="door door-teaching">
-        <p class="door-name">教学计划</p>
-        <p class="door-line">
-          由我们亲自培训的学生导师，在七所学校为小学生提供免费补习。
-        </p>
-        <p class="door-number">350 <span>教过的孩子</span></p>
-        <span class="door-cta">看看我们的教学 <span class="arrow">→</span></span>
-      </a>
+  <section class="sec" aria-labelledby="ai-for-all">
+    <div class="wrap">
+      <Case id="ai-for-all" {...story}>
+        <a slot="claim-more" href="/zh-hans/policy#ai-for-all">{story.more}</a>
+      </Case>
     </div>
   </section>
 
-  <section class="proof">
-    <div class="container proof-grid">
-      <div class="proof-item">
-        <p class="proof-figure proof-policy">HK$50M</p>
-        <p class="proof-label">
-          2026–27 年度财政预算案拨给 AI for All 的款项，正是我们一直倡议的那类普及人工智能计划
-        </p>
+  <section class="sec" aria-labelledby="policy-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="policy-h">自 2024 年起，我们回应了每一份施政报告及财政预算案咨询。</h2>
+        <p>每份建议书都先写支持的理由、反对的理由，然后才是我们的建议。</p>
       </div>
-      <div class="proof-item">
-        <p class="proof-figure proof-teaching">
-          86%
-        </p>
-        <p class="proof-label">
-          自 2024 年起，至少升了一个组别的学生比例
-        </p>
+      <div>
+        <Ledger rows={proposals} variant="brief" heading="其他近期建议" caption="其他近期建议" />
+        <a class="more" href="/zh-hans/policy#submissions">所有意见书</a>
       </div>
     </div>
   </section>
 
-  <section class="section-tight rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">我们是谁</h2>
-      <div class="rail-body prose">
-        <p>
-          AI For Good 由学生在 2023 年 6 月创立，到今天仍然全由学生运营，现在已有超过 35 人。我们一开始是校外的独立智库，后来才陆续和全港各区的学校合作。我们同时做两件事：为政府撰写有证据支持的建议，也去教那些最先感受到这些决定影响的孩子。<a class="link-quiet nowrap" href="/zh-hans/about">了解更多 →</a>
-        </p>
+  <section class="sec" aria-labelledby="teaching-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="teaching-h">孩子先自己尝试，再请人工智能给提示，从不直接要答案。</h2>
+        <p>每一节课都跟从同样的四个步骤，数学、英文、经济和科学都一样。</p>
       </div>
-    </div>
-  </section>
-
-  <section class="section-tight current rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">我们正在做的事</h2>
-      <div class="rail-body">
-        <ul class="current-list">
-          <li>
-            <span class="current-tag current-policy">政策</span><span class="current-body">
-              就《香港特别行政区经济和社会发展第一个五年规划（2026–2030）》撰写意见书。我们主张人工智能的资源应该投放到有需要的地方，而不只是沿用现有的计划。
-            </span>
-          </li>
-          <li>
-            <span class="current-tag current-teaching">教学</span><span class="current-body">
-              明年会带着新一批导师重返天主教领岛学校。
-            </span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-tight latest rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">最新工作</h2>
-      <div class="rail-body">
-        <ul class="latest-list">
-          <!-- The flagship always leads the list -->
-          <li>
-            <a href="/zh-hans/policy#ai-for-all">
-              <span class="latest-kind latest-policy">主要项目</span>
-              <span class="latest-title">AI for All：2026–27 年度财政预算案拨款五千万港元</span>
-              <span class="latest-meta">2024–2026 年</span>
-            </a>
-          </li>
+      <Steps
+        items={[
+          { name: '尝试', text: '先自己试着解题。' },
+          { name: '提问', text: '请人工智能给提示或核对。' },
+          { name: '核对', text: '比较它的回应和自己的做法。' },
+          { name: '解释', text: '关掉人工智能，用自己的话解释。' },
+        ]}
+      />
+      <Gallery
+        photos={[
           {
-            submissions.map((s) => (
-              <li>
-                <a href={`/zh-hans/policy#${s.data.key}`}>
-                  <span class="latest-kind latest-policy">提案</span><span class="latest-title">{s.data.title}</span><span class="latest-meta">{s.data.date}</span>
-                </a>
-              </li>
-            ))
-          }{
-            modules.map((m) => (
-              <li>
-                <a href="/zh-hans/teaching">
-                  <span class="latest-kind latest-teaching">单元</span><span class="latest-title">{m.data.title_hans ?? m.data.title}</span><span class="latest-meta">教学</span>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
+            name: 'teaching-ai-study-partner.jpg',
+            alt: '导师在小学课堂上，用投影在屏幕上的人工智能学习伙伴教学。',
+            caption: '在天主教领岛学校，把人工智能当作学习伙伴。',
+          },
+          {
+            name: 'vsa-2025-26-helping.jpg',
+            alt: '导师协助一名学生使用笔记本电脑。',
+            caption: '与沪江维多利亚学校合办的社区课堂，2025–26 年度。',
+          },
+          {
+            name: 'vsa-2024-25-presenting.jpg',
+            alt: '两位导师向一班年轻人讲解。',
+            caption: '社区课堂，2024–25 年度。',
+          },
+        ]}
+      />
+      <div class="noted facts">
+        <p class="facts-main">
+          我们的 {f.tutors.value} 位受训导师，在{f.schools.word.zh}所学校教过 {f.children.value} 个孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的学生至少升了一个组别。
+        </p>
+        <MarginNote label="关于这个数字。">
+          这不是我们一个人的功劳。老师、家长和学生自己都付出了努力。但这是我们用来要求自己的数字。{(!f.bandUp.method.sample || showSamples) && <a href="/zh-hans/teaching#results">我们怎样计算</a>}
+        </MarginNote>
       </div>
+      <a class="more" href="/zh-hans/teaching">我们的教学、单元和示范课堂</a>
     </div>
   </section>
 
-  <section class="section-tight partners rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">合作伙伴</h2>
-      <div class="rail-body prose">
+  <section class="sec" aria-labelledby="partners-h">
+    <div class="wrap">
+      <div class="partners">
+        <h2 id="partners-h">合作伙伴</h2>
         <p>
-          天主教领岛学校 · St. Barnabas' Home &amp; Society · Kennedy Town School ·
-          10% Organisation
+          天主教领岛学校、Kennedy Town School、St. Barnabas' Home &amp; Society 及 10% Organisation。
         </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="ctas">
-    <div class="container cta-grid">
-      <div class="cta">
-        <h2 class="h-sm">学校与机构</h2>
-        <p>
-          如果你服务基层家庭的孩子，又需要导师帮忙，课程、导师和器材都由我们负责。
-        </p>
-        <a class="btn btn-teaching" href="/zh-hans/get-involved">
-          和我们合作 <span class="arrow">→</span>
-        </a>
-      </div>
-      <div class="cta">
-        <h2 class="h-sm">学生</h2>
-        <p>
-          我们正在沪江维多利亚学校招募成员。如果你对政策、经济或人工智能有兴趣，欢迎找我们。
-        </p>
-        <a class="btn btn-policy" href="/zh-hans/get-involved">
-          加入我们 <span class="arrow">→</span>
-        </a>
       </div>
     </div>
   </section>

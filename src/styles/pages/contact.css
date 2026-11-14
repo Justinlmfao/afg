@@ -1,99 +1,77 @@
-/* Styles for the contact page, shared by the English and Chinese
-   versions. Wrapped in .page-contact so class names cannot collide with
-   another page's stylesheet. */
-
+/* Contact page, shared by the English and Chinese versions. */
 .page-contact {
   .routes {
-    list-style: none;
+    margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-    margin-bottom: 2.75rem;
+    list-style: none;
+  }
+
+  .routes li {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .routes li:first-child {
+    border-top: 1px solid var(--ink);
   }
 
   .routes h2 {
-    font-size: var(--h3);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.3rem;
+    font-size: var(--step-1);
   }
 
   .routes p {
-    color: var(--text);
+    font-size: var(--step--1);
   }
 
   .contact-form {
-    max-width: var(--measure);
-    padding-top: 1rem;
+    display: grid;
+    gap: 1.25rem;
+    max-width: 36rem;
   }
 
   .field {
-    margin-bottom: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    display: grid;
+    gap: 0.35rem;
   }
 
   .field label {
     font-weight: 600;
-    font-size: 0.95rem;
+    color: var(--ink);
   }
 
   .optional {
-    color: var(--graphite);
     font-weight: 400;
+    color: var(--muted);
   }
 
   .field input,
   .field textarea {
-    font-family: inherit;
-    font-size: 1rem;
-    padding: 0.7rem 0.85rem;
-    border: 1px solid var(--field-border);
-    border-radius: 10px;
-    background: var(--surface);
+    width: 100%;
+    min-height: 48px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--field);
+    border-radius: 4px;
+    background: var(--paper);
+    font: inherit;
     color: var(--ink);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .field input:focus,
-  .field textarea:focus {
-    border-color: var(--policy);
-    box-shadow: 0 0 0 3px rgba(42, 90, 176, 0.18);
-    outline: none;
   }
 
   .field textarea {
     resize: vertical;
   }
 
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--green);
+  }
+
+  .contact-form .btn {
+    justify-self: start;
+  }
+
   .hidden-field {
     position: absolute;
     left: -9999px;
-  }
-
-  @media (max-width: 52rem) {
-    .routes {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-  }
-
-  /* Wide screens: the three notes stack in the margin column and the form
-     starts level with them in the text column */
-  @media (min-width: 60rem) {
-    .routes {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-      margin-bottom: 0;
-    }
-
-    .routes p {
-      font-size: 0.98rem;
-    }
-
-    .contact-form {
-      border-top: none;
-      padding-top: 0;
-    }
   }
 }

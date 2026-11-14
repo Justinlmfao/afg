@@ -1,491 +1,173 @@
-/* Styles for the policy page, shared by the English and Chinese
-   versions. Wrapped in .page-policy so class names cannot collide with
-   another page's stylesheet. */
-
+/* Policy page and the proposal pages under it, in every language. */
 .page-policy {
-  /* Ledger dl reset */
-  .ledger dt,
-  .ledger dd {
-    margin: 0;
+  /* Under the AI for All case: the fuller account, and its sources */
+  .after-case {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
   }
 
-  /* ---- Flagship: AI for All -------------------------------------------- */
-  .flagship {
-    background: var(--policy-wash);
+  .after-case details > .prose {
+    margin-top: 0.5rem;
   }
 
-  .flagship-lede {
-    font-size: 1.12rem;
+  @media (min-width: 64rem) {
+    .after-case {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
   }
 
-  /* The limit on what we claim, stated up front rather than buried: a
-     plain white note on the blue section, no outline or stripe */
-  .attribution {
-    max-width: var(--measure);
-    margin-top: 1.5rem;
-    padding: 1rem 1.25rem;
-    background: var(--surface);
-    border-radius: 12px;
-    color: var(--text);
-    font-size: 0.97rem;
-  }
-
-  .attribution strong {
-    color: var(--ink);
-  }
-
-  /* Sources — the visible evidence for the figures above */
   .sources {
-    max-width: var(--measure);
-    margin-top: 1.75rem;
+    font-size: var(--step--1);
   }
 
   .sources-label {
-    font-size: 0.9rem;
-    font-weight: 650;
-    color: var(--graphite);
-    margin-bottom: 0.6rem;
+    font-weight: 700;
+    color: var(--ink);
   }
 
   .sources ul {
-    list-style: none;
+    margin-top: 0.3rem;
     padding: 0;
+    list-style: none;
   }
 
   .sources li {
-    padding-block: 0.45rem;
-    font-size: 0.95rem;
+    padding-block: 0.25rem 0.7rem;
+    border-top: 1px solid var(--rule);
   }
 
-  /* Padding on the inline link widens its tap target without moving text */
-  .sources a,
-  .filed-body li a {
-    padding-block: 0.3rem;
+  .sources a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .sources li span {
     display: block;
-    color: var(--graphite);
-    font-size: 0.875rem;
+    color: var(--muted);
   }
 
-  .timeline {
-    list-style: none;
-    padding: 0;
-    margin: 1.75rem 0;
-    max-width: var(--measure);
+  /* ---- A proposal page (ProposalPage.astro) ---- */
+  .page-top h1 {
+    max-width: 26ch;
   }
 
-  .timeline li {
-    display: grid;
-    grid-template-columns: 8.5rem 1fr;
-    gap: 1.25rem;
-    padding-block: 0.8rem;
-    border-bottom: 1px solid var(--rule);
+  .back {
+    margin: 0 0 0.6rem;
   }
 
-  .t-phase {
-    font-weight: 650;
-    font-size: 0.98rem;
-    color: var(--policy);
+  /* The paper reads like a paper: the serif, at text size */
+  .paper {
+    max-width: 38rem;
+    font-family: var(--serif);
+    font-size: var(--step-0);
   }
 
-  .t-date {
-    display: block;
+  .paper > * + * {
+    margin-top: 1em;
+  }
+
+  .paper h3 {
+    margin-top: 2.2em;
+    padding-top: 1.1em;
+    border-top: 1px solid var(--rule);
+    font-size: var(--step-2);
+  }
+
+  .paper > h3:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .paper strong {
     font-weight: 500;
-    font-size: 0.875rem;
-    color: var(--graphite);
-    margin-top: 0.1rem;
-  }
-
-  .t-body {
-    color: var(--text);
-  }
-
-  @media (max-width: 34rem) {
-    .timeline li {
-      grid-template-columns: 1fr;
-      gap: 0.15rem;
-    }
-  }
-
-  /* Process steps — a single ruled line, not three cards */
-  .steps {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem 2.25rem;
-    margin-bottom: 2rem;
-    font-weight: 600;
-  }
-
-  .steps li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
-
-  .steps li:not(:last-child)::after {
-    content: '→';
-    color: var(--graphite);
-    font-weight: 400;
-    margin-left: 2.25rem;
-  }
-
-  .step-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.75rem;
-    height: 1.75rem;
-    border-radius: 50%;
-    background: var(--policy);
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 650;
-  }
-
-  /* Expanded process — one row per step */
-  .steps-detail {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 2.25rem;
-    max-width: var(--measure);
-  }
-
-  .steps-detail li {
-    display: grid;
-    grid-template-columns: 2.6rem 1fr;
-    gap: 1.1rem;
-    padding-block: 1.25rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .steps-detail h3 {
-    font-size: var(--h4);
-    margin-bottom: 0.35rem;
-  }
-
-  .steps-detail p {
-    color: var(--text);
-  }
-
-  /* Phones: the number sits beside the heading and the text below runs the
-     full width, instead of the number keeping a column of its own */
-  @media (max-width: 34rem) {
-    .steps-detail li {
-      grid-template-columns: auto 1fr;
-      column-gap: 0.75rem;
-      row-gap: 0.4rem;
-      align-items: center;
-    }
-
-    .steps-detail li > div {
-      display: contents;
-    }
-
-    .steps-detail h3 {
-      margin-bottom: 0;
-    }
-
-    .steps-detail p {
-      grid-column: 1 / -1;
-    }
-  }
-
-  .method-note {
-    color: var(--text);
-    margin-bottom: 1.5rem;
-  }
-
-  /* ---- The proposal template — the page's one bold element ------------- */
-  /* A white card with a soft shadow instead of an outline */
-  .proposal {
-    max-width: var(--measure-wide);
-    background: var(--surface);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
-  }
-
-  .proposal + .proposal {
-    margin-top: 1.5rem;
-  }
-
-  .proposal-head {
-    padding: 1.5rem 1.75rem 1.1rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .proposal-title {
-    font-size: var(--h3);
-  }
-
-  .proposal-meta {
-    color: var(--graphite);
-    font-size: 0.92rem;
-    margin-top: 0.3rem;
-  }
-
-  /* Marginal-label rows: label column | text, like a set document */
-  .proposal-part {
-    display: grid;
-    grid-template-columns: 9.5rem 1fr;
-    gap: 1.25rem;
-    padding: 1.1rem 1.75rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .proposal-part:last-of-type {
-    border-bottom: none;
-  }
-
-  .part-label {
-    font-weight: 650;
-    font-size: 0.92rem;
-    color: var(--graphite);
-    padding-top: 0.15rem;
-  }
-
-  .part-body {
-    color: var(--text);
-  }
-
-  /* The recommendation carries the pillar's colour: a tinted row, its label
-     in blue, no side stripe */
-  .part-recommendation {
-    background: var(--policy-wash);
-  }
-
-  .part-recommendation .part-label {
-    color: var(--policy);
-  }
-
-  .proposal-pdf {
-    padding: 0 1.75rem 1.4rem;
-  }
-
-  /* ---- AI for All: even gaps between its groups -------------------------
-     intro → claim → timeline → our proposal → why / watching → sources.
-     Each group is separated by the same 2.5rem so none of them crowd or
-     float apart. */
-  .flagship .attribution {
-    margin-top: 2rem;
-  }
-
-  .flagship .timeline {
-    margin: 2.5rem 0 0;
-  }
-
-  .flagship .proposal {
-    margin-top: 2.5rem;
-  }
-
-  .flagship-more {
-    max-width: var(--measure);
-    margin-top: 2.5rem;
-  }
-
-  .flagship .sources {
-    margin-top: 2.5rem;
-  }
-
-  .flagship-more h3 {
-    font-size: var(--h3);
-  }
-
-  .flagship-more h3 + p {
-    margin-top: 0.5rem;
-  }
-
-  .flagship-more p + h3 {
-    margin-top: 2rem;
-  }
-
-  .flagship-more p {
-    color: var(--text);
-  }
-
-  .watch-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 0.75rem;
-  }
-
-  .watch-list li {
-    padding-block: 0.75rem;
-    border-bottom: 1px solid #dfe5f0;
-    color: var(--text);
-  }
-
-  .watch-list li:last-child {
-    border-bottom: none;
-  }
-
-  .watch-list strong {
     color: var(--ink);
   }
 
-  /* ---- Example proposals: a summary card that opens to the full paper -- */
-  .filings-note {
-    color: var(--text);
-    margin-bottom: 1.5rem;
+  .paper li + li {
+    margin-top: 0.5em;
   }
 
-  /* White card, soft shadow, and the short colour bar used on cards
-     across the site */
-  .filed {
-    max-width: var(--measure-wide);
-    background-color: var(--surface);
-    background-image: linear-gradient(var(--policy), var(--policy));
-    background-position: 1.75rem 0;
-    background-size: 2.5rem 4px;
-    background-repeat: no-repeat;
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    padding: 1.6rem 1.75rem 1.2rem;
+  .paper li > ul,
+  .paper li > ol {
+    margin-top: 0.5em;
   }
 
-  .filed + .filed {
-    margin-top: 1.5rem;
+  /* Tables scroll sideways inside the paper instead of pushing the page */
+  .paper table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
   }
 
-  .filed-meta {
-    font-size: 0.875rem;
-    color: var(--graphite);
+  .paper th,
+  .paper td {
+    min-width: 7rem;
+    padding: 0.6rem 1rem 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
   }
 
-  .filed-meta time {
-    font-weight: 650;
-    color: var(--policy);
+  .paper th {
+    border-bottom-color: var(--ink);
+    font-weight: 600;
+    color: var(--muted);
   }
 
-  .filed-title {
-    font-size: var(--h3);
-    line-height: 1.25;
-    margin-top: 0.35rem;
+  .paper a {
+    overflow-wrap: anywhere;
   }
 
-  .filed-summary {
-    margin-top: 0.75rem;
-    color: var(--text);
-  }
-
-  .filed-more {
-    margin-top: 1rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .filed-more summary {
-    cursor: pointer;
-    padding-top: 0.85rem;
-    font-weight: 650;
-    color: var(--policy);
+  /* The references, the last list in a paper: each one is a link on its
+     own line, so it gets room to be tapped */
+  .paper > ul:last-child {
+    padding: 0;
     list-style: none;
   }
 
-  .filed-more summary::-webkit-details-marker {
-    display: none;
+  .paper > ul:last-child li {
+    margin: 0;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: var(--step--1);
   }
 
-  .filed-more summary::after {
-    content: ' ↓';
+  .paper > ul:last-child a {
+    display: block;
+    padding-block: 0.75rem;
   }
 
-  .filed-more[open] summary::after {
-    content: ' ↑';
+  .paper-meta p + p {
+    margin-top: 0.6rem;
   }
 
-  /* The full paper: plain, readable document styles */
-  .filed-body {
-    padding-top: 0.5rem;
+  .cite {
+    max-width: 38rem;
+    margin-top: var(--space-5);
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+    font-size: var(--step--1);
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+
+  .cite b {
+    font-weight: 700;
     color: var(--text);
   }
+}
 
-  .filed-body h4 {
-    font-family: var(--serif);
-    font-weight: 500;
-    font-size: var(--h4);
-    margin: 1.75rem 0 0.6rem;
-  }
-
-  .filed-body p + p,
-  .filed-body p + ul,
-  .filed-body p + ol,
-  .filed-body ul + p,
-  .filed-body ol + p,
-  .filed-body table + p,
-  .filed-body p + table {
-    margin-top: 0.9rem;
-  }
-
-  .filed-body ul,
-  .filed-body ol {
-    padding-left: 1.25rem;
-  }
-
-  .filed-body li + li {
-    margin-top: 0.45rem;
-  }
-
-  /* Tables scroll sideways on a phone rather than squashing their text */
-  .filed-body table {
-    display: block;
-    overflow-x: auto;
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.92rem;
-  }
-
-  .filed-body th,
-  .filed-body td {
-    text-align: left;
-    vertical-align: top;
-    padding: 0.55rem 0.75rem 0.55rem 0;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .filed-body th {
-    font-weight: 650;
-    color: var(--graphite);
-    border-bottom-color: var(--graphite);
-  }
-
-  /* The references list always closes the paper */
-  .filed-body > ul:last-child li {
-    font-size: 0.9rem;
-    color: var(--graphite);
-  }
-
-  .empty-note {
-    color: var(--graphite);
-    background: var(--tint);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    max-width: var(--measure);
-  }
-
-  @media (max-width: 34rem) {
-    /* Phones: cards keep only a slim inset, so their text uses nearly
-       the full screen width */
-    .proposal-part {
-      grid-template-columns: 1fr;
-      gap: 0.3rem;
-      padding-inline: 1rem;
-    }
-    .proposal-head {
-      padding-inline: 1rem;
-    }
-    .filed {
-      padding-inline: 1.1rem;
-      background-position: 1.1rem 0;
-    }
-    .attribution {
-      padding-inline: 1rem;
-    }
-    .steps li:not(:last-child)::after {
-      content: none;
-    }
+html[lang^='zh'] .page-policy {
+  .page-top h1 {
+    max-width: 18em;
   }
 }

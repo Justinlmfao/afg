@@ -9,6 +9,10 @@ const redirects = {
   '/programs': '/teaching/',
   // Traditional Chinese lives at /zh; catch the explicit script code too.
   '/zh-hant': '/zh/',
+  // The Team page became the People section of About.
+  '/team': '/about/#people',
+  '/zh/team': '/zh/about/#people',
+  '/zh-hans/team': '/zh-hans/about/#people',
 };
 
 // Static output — no server needed, deploys free to Netlify or Cloudflare

@@ -1,0 +1,21 @@
+---
+// A page for each proposal that has a paper: /policy/think-first and so on.
+// The page itself is laid out in src/components/ProposalPage.astro.
+import ProposalPage from '../../components/ProposalPage.astro';
+import { getSubmissions, type Submission } from '../../lib/submissions';
+
+export async function getStaticPaths() {
+  // Astro runs this on its own, so the language is named inside it.
+  const LANG = 'en';
+  return (await getSubmissions(LANG))
+    .filter((s) => s.hasPaper)
+    .map((s) => ({ params: { key: s.key }, props: { submission: s } }));
+}
+
+interface Props {
+  submission: Submission;
+}
+const { submission } = Astro.props;
+---
+
+<ProposalPage submission={submission} />

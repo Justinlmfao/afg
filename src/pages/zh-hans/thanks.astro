@@ -4,9 +4,9 @@
 // Where the contact form lands once Netlify has accepted a message
 // (the form's action attribute points here).
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageTop from '../../components/PageTop.astro';
 import '../../styles/pages/utility.css';
-
-const email = 'ps20153216@student.vsa.edu.hk';
+import { contactEmail } from '../../data/facts';
 ---
 
 <BaseLayout
@@ -15,17 +15,14 @@ const email = 'ps20153216@student.vsa.edu.hk';
   pageClass="page-utility"
   noindex
 >
-  <section class="page-top">
-    <div class="container prose">
-      <p class="kicker">联系我们</p>
-      <h1>谢谢，我们已收到你的留言</h1>
-      <p class="lead">
-        我们会回复到你提供的电子邮箱。如需补充，可以直接发电子邮件至{' '}<a href={`mailto:${email}`}>{email}</a>。
-      </p>
-      <ul class="next-links">
-        <li><a class="link-quiet" href="/zh-hans/">返回首页 →</a></li>
-        <li><a class="link-quiet" href="/zh-hans/policy">阅读我们的政策研究 →</a></li>
-      </ul>
-    </div>
-  </section>
+  <PageTop vertical="联系">
+    <h1>谢谢，我们已收到你的留言。</h1>
+    <p class="lead">
+      我们会回复到你提供的电子邮箱，通常在一星期内。如需补充，可以直接发电子邮件至{' '}<a href={`mailto:${contactEmail}`}>{contactEmail}</a>。
+    </p>
+    <ul class="next-links">
+      <li><a class="textlink" href="/zh-hans/">返回首页</a></li>
+      <li><a class="textlink" href="/zh-hans/policy">我们的政策研究</a></li>
+    </ul>
+  </PageTop>
 </BaseLayout>

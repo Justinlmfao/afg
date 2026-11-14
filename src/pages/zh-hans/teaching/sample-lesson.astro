@@ -1,0 +1,121 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// The sample lesson in Simplified Chinese, on a page of its own so a school
+// can print it. Shares src/styles/pages/teaching.css with the English page.
+// Keep each Chinese paragraph on one source line. The sentence starters stay
+// in English: they are for an English lesson.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageTop from '../../../components/PageTop.astro';
+import Worksheet from '../../../components/Worksheet.astro';
+import '../../../styles/pages/teaching.css';
+---
+
+<BaseLayout
+  title="示范课堂：数字大，不代表比较强"
+  pageClass="page-teaching"
+  description="AI For Good 一节 60 分钟的课，对象是小五至小六学生，用上数学和英文：学生先计算一个比率，再用证据论证，并公平地写出另一方的看法。"
+>
+  <PageTop vertical="教学">
+    <p class="back no-print"><a class="textlink" href="/zh-hans/teaching#sample-lesson">我们的教学</a></p>
+    <h1>示范课堂：数字大，不代表比较强</h1>
+    <p class="lead">
+      这节课用上了我们的<strong>数学</strong>和<strong>英文</strong>单元。我们把它公开，让学校在邀请我们之前，先看看一节课是怎样设计的。
+    </p>
+    <ul class="lesson-facts">
+      <li><span>程度</span>小五至小六</li>
+      <li><span>时长</span>60 分钟</li>
+      <li><span>人手</span>每 8–10 位学生配 2 位导师</li>
+    </ul>
+  </PageTop>
+
+  <section class="sec" aria-labelledby="part-1">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <p class="part-tag">第一部分 · 数学 · 30 分钟</p>
+        <h2 id="part-1">数字大，不代表比较强</h2>
+      </div>
+      <div class="prose">
+        <p class="objective">
+          <b>学习目标：</b>学生计算一个比率，并解释为什么一个较大的数字，也可能输给较小的那个。
+        </p>
+        <p>
+          每位学生选两个自己真的会玩的《Brawl Stars》角色，从自己的手机画面读出每发伤害和装弹速度。他们几乎总会选一个又慢又重、一个又快又轻的角色，也几乎总以为数字大的那个会赢。
+        </p>
+        <p>
+          然后他们计算每秒伤害，结果通常是快的那个胜出。这份意外就是这一课的重点：单看一个数字说明不了太多，真正重要的数字往往是一个比率。
+        </p>
+        <p>
+          然后是转折：快的那个角色只能攻击近距离的敌人。它还是较好的选择吗？现在答案要视乎你怎样玩，而这正是第二部分要处理的。
+        </p>
+        <p class="aside">
+          <b>延伸：</b>装弹速度要改变多少，答案才会倒过来？这是他们第一次解未知数，推动他们的是好奇心，而不是课本。
+        </p>
+        <p class="aside">
+          <b>留意：</b>算式做对、却说不出为什么答案出乎意料的学生。能解释才是目标，乘法只是过程。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="part-2">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <p class="part-tag">第二部分 · 英文 · 30 分钟</p>
+        <h2 id="part-2">把理由写出来</h2>
+      </div>
+      <div class="prose">
+        <p class="objective">
+          <b>学习目标：</b>学生写一段短论证，包括主张、证据、公平地写出对方的看法，以及建议。
+        </p>
+        <p>
+          他们用刚才算出的数字做证据，论证两个角色之中哪一个较好。只有一条硬性规定：必须诚实地写一句，说明为什么有人会合理地选另一个角色。写不出来的话，就代表还未真正明白自己的论点。
+        </p>
+        <p>我们会在黑板上写好句子开头，帮助以英文为第二语言的学生：</p>
+        <ul class="frames" lang="en">
+          <li>I think ______ is better because ______.</li>
+          <li>The evidence is ______.</li>
+          <li>Someone might choose ______ instead, because ______.</li>
+          <li>Even so, I would recommend ______ because ______.</li>
+        </ul>
+        <p>
+          接着他们跟从 Think First 的步骤：每位学生请人工智能工具核对自己的计算，并给一个提示让论点更有力，再自己判断这些意见对不对。最后关掉人工智能，用自己的话向组员解释自己的建议。
+        </p>
+        <p>
+          写四、五句就是一份完整的作品。我们会请两三位学生读出自己写的，其他人的任务是找出当中的反方论点，而不是判断谁赢。
+        </p>
+        <p class="aside">
+          <b>留意：</b>把反方论点写成贬低别人的话，例如“有人会选它，因为他玩得差”。这要退回重写。学会公平地说出对方的立场，正是这个练习的意义。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="same-method">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="same-method">和我们写给决策者时用的，是同一套方法。</h2>
+      </div>
+      <div class="prose">
+        <p>
+          主张、证据、诚实的反方理由，然后是建议：这正是我们<a href="/zh-hans/policy#how-we-write">向政府提交每一份建议书</a>时用的结构。我们教十一岁孩子的方法，和我们写给决策者的方法是同一套。
+        </p>
+        <p>
+          反过来也一样。我们在 2025 年 12 月提交的<a href="/zh-hans/policy/think-first">《Think First 先想后问》建议书</a>，就是把导师每星期都在用的方法，建议推广到全港每一间小学。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec lesson-sheet-sec" aria-labelledby="worksheet">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="worksheet">工作纸。</h2>
+        <p>每位学生一张。这一页可以直接用浏览器列印。</p>
+      </div>
+      <div class="lesson-sheet">
+        <Worksheet />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

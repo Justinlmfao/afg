@@ -1,0 +1,82 @@
+---
+// The worksheet from our published sample lesson, "Bigger isn't better", set
+// as a page rather than a picture, so it stays sharp, prints, and can be
+// read aloud. The sentence starters stay in English in every language: they
+// are for an English lesson.
+//
+//   pins   show the numbered markers that Annotated.astro's notes refer to
+import { getLangFromUrl } from '../i18n';
+
+interface Props {
+  pins?: boolean;
+}
+const { pins = false } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+
+const words = {
+  en: {
+    name: 'Worksheet',
+    table: 'My two characters',
+    columns: ['Character', 'Damage per shot', 'Shots per second', 'Damage per second'],
+    starters: 'Make the case',
+  },
+  zh: {
+    name: '工作紙',
+    table: '我的兩個角色',
+    columns: ['角色', '每發傷害', '每秒發射次數', '每秒傷害'],
+    starters: '把理由寫出來',
+  },
+  hans: {
+    name: '工作纸',
+    table: '我的两个角色',
+    columns: ['角色', '每发伤害', '每秒发射次数', '每秒伤害'],
+    starters: '把理由写出来',
+  },
+}[lang];
+---
+
+<div class="sheet">
+  <p class="sheet-name">{words.name}</p>
+  <p class="sheet-title">{words.table}</p>
+  <div class="sheet-scroll">
+    <table class="sheet-table">
+      <thead>
+        <tr>
+          {
+            words.columns.map((column, i) => (
+              <th scope="col">
+                {column}
+                {pins && i === 3 && <span class="pin" aria-hidden="true">2</span>}
+              </th>
+            ))
+          }
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{pins && <span class="pin" aria-hidden="true">1</span>}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sheet-title sheet-part">{words.starters}</p>
+  <ul class="sheet-lines" lang="en">
+    <li>I think <span class="blank"></span> is better because <span class="blank"></span>.</li>
+    <li>The evidence is <span class="blank"></span>.</li>
+    <li>
+      Someone might choose <span class="blank"></span> instead, because <span class="blank"></span>.
+      {pins && <span class="pin" aria-hidden="true">3</span>}
+    </li>
+    <li>Even so, I would recommend <span class="blank"></span> because <span class="blank"></span>.</li>
+  </ul>
+</div>

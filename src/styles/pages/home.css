@@ -1,451 +1,73 @@
-/* Styles for the home page, shared by the English and Chinese
-   versions. Wrapped in .page-home so class names cannot collide with
-   another page's stylesheet. */
-
+/* Home page, shared by the English and Chinese versions. */
 .page-home {
-  .h-sm {
-    font-size: var(--h3);
-    margin-bottom: 1rem;
-  }
-
-  /* 1. Hero — single column, left-aligned, generous air */
+  /* Hero: the heading across the full width, then the standfirst and
+     actions in eight columns with the "Now" note in three. */
   .hero {
-    padding-block: 4.5rem 3rem;
+    padding-block: var(--space-7) var(--space-5);
   }
 
-  @media (min-width: 52rem) {
-    .hero {
-      padding-block: 7.5rem 5rem;
-    }
-  }
-
-  /* The hero keeps the standard container width, so its left edge lines up
-     with every section below it. */
-
-  /* Sentence-case eyebrow with a short hairline lead-in */
-  .eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--graphite);
-    margin-bottom: 1.5rem;
-  }
-
-  .eyebrow-rule {
-    display: block;
-    width: 18px;
-    height: 1px;
-    background: var(--ink);
-    flex-shrink: 0;
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
   }
 
   .hero h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    max-width: 19ch;
+    max-width: 17ch;
+    font-size: var(--step-5);
+    letter-spacing: -0.012em;
   }
 
-  .hero-sub {
-    margin-top: 1.75rem;
-    max-width: 56ch;
-    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
-    color: var(--graphite);
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem 1.75rem;
-    margin-top: 2.5rem;
-  }
-
-  .hero-secondary {
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    color: var(--ink);
-    border-bottom: 1.5px solid var(--rule);
-    padding-bottom: 2px;
-    transition: border-color 0.15s ease;
-  }
-
-  .hero-secondary:hover {
-    border-bottom-color: var(--ink);
-    color: var(--ink);
-  }
-
-  .hero-secondary .arrow,
-  .hero-actions .arrow {
-    display: inline-block;
-    transition: transform 0.15s ease;
-  }
-
-  .hero-secondary:hover .arrow {
-    transform: translateX(3px);
-  }
-
-  /* Four verified figures under a hairline */
-  .stat-strip {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem 2rem;
-    margin-top: 4rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-  }
-
-  .stat-strip dt {
-    font-size: clamp(2rem, 4vw, 2.6rem);
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
-
-  .stat-strip dd {
-    margin: 0.5rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.45;
-    color: var(--graphite);
-    max-width: 20ch;
-  }
-
-  /* Full-bleed photograph */
-  .hero-photo-band {
-    margin: 0;
-  }
-
-  .hero-photo-band img {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 7;
-    object-fit: cover;
-    display: block;
-  }
-
-  .hero-photo-band figcaption {
-    max-width: var(--wide);
-    margin-inline: auto;
-    padding: 0.85rem 1.5rem 0;
-    font-size: 0.875rem;
-    color: var(--graphite);
-  }
-
-
-
-  /* 2. The two doors — full padding now that the photo band sits above */
-  .doors-section {
-    padding-top: clamp(2.75rem, 6vw, 4.5rem);
-  }
-
-  .doors {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-  }
-
-  /* Soft filled cards, no outline; a short bar in the pillar's colour
-     hangs from the top edge, the same mark used on cards across the site */
-  .door {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    padding: 2.1rem 2rem 1.8rem;
-    border-radius: var(--radius-card);
-    background-position: 2rem 0;
-    background-size: 2.5rem 4px;
-    background-repeat: no-repeat;
-    text-decoration: none;
-    color: var(--ink);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .door:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 34px rgba(28, 27, 24, 0.1);
-    color: var(--ink);
-  }
-
-  .door-name {
-    font-family: var(--serif);
-    font-size: 1.75rem;
-  }
-
-  .door-line {
-    color: var(--text);
-  }
-
-  /* The figure and the link sit at the foot of each door, so they line up
-     across the two however long each description runs */
-  .door-number {
-    font-weight: 700;
-    font-size: 1.9rem;
-    letter-spacing: -0.02em;
-    margin-top: auto;
-    padding-top: 0.2rem;
-  }
-
-  .door-number span {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--graphite);
-    letter-spacing: 0;
-  }
-
-  .door-cta {
-    padding-top: 0.6rem;
-    font-weight: 650;
-  }
-
-  .door-cta .arrow {
-    transition: transform 0.15s ease;
-    display: inline-block;
-  }
-
-  .door:hover .door-cta .arrow {
-    transform: translateX(4px);
-  }
-
-  .door-policy {
-    background-color: var(--policy-wash);
-    background-image: linear-gradient(var(--policy), var(--policy));
-  }
-  .door-policy .door-number,
-  .door-policy .door-cta {
-    color: var(--policy);
-  }
-
-  .door-teaching {
-    background-color: var(--teaching-wash);
-    background-image: linear-gradient(var(--teaching), var(--teaching));
-  }
-  .door-teaching .door-number,
-  .door-teaching .door-cta {
-    color: var(--teaching-deep);
-  }
-
-  /* 3. Proof — the page's one loud moment: two solid panels, edge to edge,
-     in the pillars' colours. On wide screens each figure lines up with the
-     text of the card above it. */
-  section.proof {
-    padding-block: 0;
-  }
-
-  .proof-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    max-width: none;
-    padding: 0;
-  }
-
-  .proof-item {
-    padding: clamp(2.5rem, 6vw, 4.25rem) 1.5rem;
-    color: #fff;
-  }
-
-  .proof-item:first-child {
-    background: var(--policy);
-  }
-
-  .proof-item:last-child {
-    background: var(--teaching);
-  }
-
-  @media (min-width: 52rem) {
-    .proof-item:first-child {
-      padding-left: calc(max(0px, (100vw - var(--wide)) / 2) + 3.5rem);
-      padding-right: 2.75rem;
-    }
-
-    .proof-item:last-child {
-      padding-left: 2.75rem;
-      padding-right: calc(max(0px, (100vw - var(--wide)) / 2) + 1.5rem);
-    }
-  }
-
-  .proof-figure {
-    font-family: var(--sans);
-    font-weight: 700;
-    font-size: clamp(2.8rem, 6.5vw, 4.2rem);
-    line-height: 1;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Measured in rem rather than ch so English and Chinese wrap alike */
-  .proof-label {
-    color: #fff;
-    max-width: 22rem;
-  }
-
-  /* 5. Current work */
-  .current-list {
-    list-style: none;
-    padding: 0;
-    max-width: var(--measure);
-  }
-
-  .current-list li {
-    display: grid;
-    grid-template-columns: 6rem 1fr;
-    gap: 1rem;
-    padding-block: 0.9rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .current-tag {
-    font-size: 0.875rem;
-    font-weight: 650;
-  }
-
-  .current-policy {
-    color: var(--policy);
-  }
-
-  .current-teaching {
-    color: var(--teaching-deep);
-  }
-
-  .current-body {
-    color: var(--text);
-  }
-
-  /* 6. Latest — rows like the list above it, not a stack of boxes */
-  .latest-list {
-    list-style: none;
-    padding: 0;
-    max-width: var(--measure);
-  }
-
-  .latest-list li {
-    padding-block: 0.85rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .latest-list a {
-    display: grid;
-    grid-template-columns: 6rem 1fr auto;
-    gap: 1rem;
-    align-items: baseline;
-    text-decoration: none;
-    color: var(--ink);
-  }
-
-  .latest-list a:hover {
-    color: var(--ink);
-  }
-
-  .latest-list a:hover .latest-title {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 3px;
-  }
-
-  .latest-kind {
-    font-size: 0.875rem;
-    font-weight: 650;
-  }
-
-  .latest-policy {
-    color: var(--policy);
-  }
-
-  .latest-teaching {
-    color: var(--teaching-deep);
-  }
-
-  .latest-title {
-    font-family: var(--serif);
-    font-size: 1.1rem;
-  }
-
-  .latest-meta {
-    color: var(--graphite);
-    font-size: 0.88rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* 7 & 8 */
-  .partners p {
-    color: var(--text);
-  }
-
-  /* The page closes on one dark band */
-  .ctas {
-    background: var(--charcoal);
-    color: #fff;
-  }
-
-  .ctas h2 {
-    color: #fff;
-  }
-
-  .ctas :focus-visible {
-    outline-color: #fff;
-  }
-
-  .cta-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-  }
-
-  .cta p {
-    color: #e8e4dc;
-    margin-bottom: 1.25rem;
+  .hero .lead {
     max-width: 34ch;
   }
 
-  @media (max-width: 52rem) {
-    .stat-strip {
-      grid-template-columns: repeat(2, 1fr);
+  @media (min-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
+      column-gap: clamp(2rem, 6vw, 6rem);
     }
 
-    .doors,
-    .proof-grid,
-    .cta-grid {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
+    .hero h1 {
+      grid-column: 1 / -1;
     }
 
-    .proof-grid {
-      gap: 0;
-    }
-
-    .latest-list a {
-      grid-template-columns: auto 1fr;
-      grid-template-areas: 'kind meta' 'title title';
-      gap: 0.15rem 0.75rem;
-    }
-
-    .latest-kind {
-      grid-area: kind;
-    }
-
-    .latest-meta {
-      grid-area: meta;
-      justify-self: end;
-    }
-
-    .latest-title {
-      grid-area: title;
-    }
-
-    .current-list li {
-      grid-template-columns: 1fr;
-      gap: 0.15rem;
+    .now {
+      align-self: start;
+      margin-top: 0.35rem;
     }
   }
 
-  /* Phones: the cards keep a slim inset so their text runs wide */
-  @media (max-width: 34rem) {
-    .door {
-      padding: 1.9rem 1.25rem 1.5rem;
-      background-position: 1.25rem 0;
-    }
+  .facts {
+    margin-top: var(--space-5);
+  }
+
+  .facts-main {
+    max-width: 34ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .partners {
+    max-width: 46rem;
+  }
+
+  .partners h2 {
+    margin-bottom: 0.5rem;
+    font-size: var(--step-2);
+  }
+}
+
+html[lang^='zh'] .page-home {
+  .hero h1 {
+    max-width: 14em;
+    letter-spacing: 0;
+  }
+
+  .hero .lead,
+  .facts-main {
+    max-width: 22em;
+    line-height: 1.7;
   }
 }

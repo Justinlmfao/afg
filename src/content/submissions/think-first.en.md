@@ -1,18 +1,29 @@
 ---
 title: "Think First: Closing the AI Gap for Young Children Without Outsourcing Their Thinking"
+short: "Think First: closing the AI gap for young children"
 lang: en
 key: think-first
-date: "December 2025"
+date: "2025-12"
 area: "Education & inequality"
+status: submitted
+ask: "A HK$54 million pilot in the primary schools serving the lowest-income families."
+case_title: "Teaching children to think with AI before they lean on it."
+noticed: "Hong Kong is about to put AI into every primary school. Used badly, it teaches children to hand their thinking to a machine before they've learned to think for themselves. Our tutors were already seeing it in class."
+did: "We proposed a \"Think First\" approach, the method our tutors use every week, and a HK$54 million pilot in the primary schools serving Hong Kong's lowest-income families."
+changed: "Nothing we can point to yet. We're making the case again in our next submissions."
+changed_status: pending
+case_for: "AI built to give hints instead of answers avoids the learning loss that unrestricted AI causes, and the pilot reaches the children with the least guidance at home, for under 3% of the money already set aside."
+case_against: "It keeps the youngest children away from AI, it takes class time, and the best evidence so far comes from teenagers, not primary pupils."
+recommendation: "All five measures, with the Labs starting as an independently evaluated three-year pilot in 100 schools."
 summary: "Hong Kong is about to put AI into every primary school. Used well, it can give every child the kind of patient tutor only better-off families can pay for. Used badly, it teaches children to hand their thinking to a machine before they've learned to think for themselves. We propose a \"Think First\" approach, and a HK$54 million pilot in the primary schools serving Hong Kong's lowest-income families."
-order: 1
+order: 3
 ---
 
 Written with the 2025 Policy Address commitments on digital education and the
 Education Bureau's AI for Empowering Learning and Teaching Funding Programme in
 mind, ahead of the 2026–27 Budget.
 
-#### The issue
+### The issue
 
 **The money is moving faster than the method.** The 2025 Policy Address
 committed to an AI literacy learning framework, AI in the core curriculum and
@@ -53,7 +64,7 @@ children we teach have never been short of interest. What they lack is access,
 and someone to show them how to use these tools in a way that builds their
 thinking instead of replacing it.
 
-#### What we propose
+### What we propose
 
 **1. An age-staged "Think First" ladder in the AI literacy framework**
 
@@ -96,7 +107,7 @@ the Education Bureau's existing professional development programme, with at
 least two teachers trained in every public primary school by the end of the
 2026/27 school year.
 
-#### Cost
+### Cost
 
 | Per school, per year | HK$ |
 |---|---|
@@ -109,7 +120,7 @@ least two teachers trained in every public primary school by the end of the
 billion already set aside in the Quality Education Fund for digital education.
 The training module and the hint-mode condition fit within existing budgets.
 
-#### The case for
+### The case for
 
 - **It protects learning.** The best evidence we have shows that AI built to
   give hints instead of answers avoids the learning loss that unrestricted AI
@@ -123,7 +134,7 @@ The training module and the hint-mode condition fit within existing budgets.
 - **It's cheap and testable.** At under 3% of the existing allocation, it can
   be evaluated properly before anyone scales it up.
 
-#### The case against
+### The case against
 
 - **It holds younger children back from AI.** Keeping individual accounts out
   of P1–P3 means younger children miss some benefits, and some parents and
@@ -137,7 +148,7 @@ The training module and the hint-mode condition fit within existing budgets.
 - **The money might do more elsewhere.** HK$54 million could pay for smaller
   classes or more teaching assistants, which have a longer track record.
 
-#### Our recommendation
+### Our recommendation
 
 On balance, we recommend all five measures. The case against is strongest on
 the evidence, which is exactly why the Labs should start as an independently
@@ -145,7 +156,7 @@ evaluated three-year pilot rather than a territory-wide rollout. The cost of
 getting this wrong, a generation who can use AI but can't think without it, is
 far higher than the cost of moving carefully.
 
-#### How we'd measure it
+### How we'd measure it
 
 - **The key test.** After each AI-assisted unit, pupils sit a short test
   without AI. Lab pupils should match or beat similar pupils who learned the
@@ -157,7 +168,7 @@ far higher than the cost of moving carefully.
 - **Results.** Internal assessment results and class banding, compared with
   similar schools outside the pilot.
 
-#### What's happened since
+### What's happened since
 
 In June 2026, the Education Bureau published its Blueprint for Digital
 Education Development in Primary and Secondary Schools. It includes an AI
@@ -166,7 +177,7 @@ teachers to complete at least 30 hours of digital education training in every
 three-year professional development cycle, starting from the 2026/27 school
 year.
 
-#### References
+### References
 
 - [Bastani, H. et al. (2025). "Generative AI without guardrails can harm learning: Evidence from high school mathematics." *PNAS* 122(26)](https://www.pnas.org/doi/10.1073/pnas.2422633122)
 - [UNESCO (2023). *Guidance for generative AI in education and research*](https://www.unesco.org/en/articles/guidance-generative-ai-education-and-research)

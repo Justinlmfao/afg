@@ -1,280 +1,194 @@
 ---
+// About page: the organisation at a glance, why it does both policy and
+// teaching, the founder's own account, the people who lead it, and how it
+// started. The People section replaces the old Team page.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTop from '../components/PageTop.astro';
+import SummaryList from '../components/SummaryList.astro';
+import Gallery from '../components/Gallery.astro';
 import '../styles/pages/about.css';
+import { getCollection, render } from 'astro:content';
+import { facts } from '../data/facts';
+
+const f = facts;
+
+// The people who lead AFG (src/content/team/). Anyone without a bio is
+// listed without the button to open one.
+const people = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      first: m.data.name.split(' ')[0],
+      role: m.data.role,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
 ---
 
 <BaseLayout
   title="About"
+  pageClass="page-about"
   description="AI For Good is a student-run organisation in Hong Kong, started in June 2023. We write policy recommendations for the government and run free tutoring for children from underprivileged families."
+>
+  <PageTop vertical="關於我們">
+    <h1>Policy and teaching, for the same reason.</h1>
+    <p class="lead">
+      AI For Good is a student-run organisation in Hong Kong, started in {f.founded.en}. We write AI and
+      economic policy recommendations for the government, and run free tutoring for primary school
+      children from underprivileged families.
+    </p>
+  </PageTop>
 
-  pageClass="page-about">
-  <section class="page-top">
-    <div class="container prose">
-      <p class="kicker">About</p>
-      <h1>Policy and teaching, for the same reason</h1>
-      <!-- 1. What AFG is -->
-      <p class="lead">
-        AI For Good is a student-run organisation in Hong Kong, started in June
-        2023. We do two things. We write recommendations on AI and economic
-        policy and send them to the Hong Kong government, about twenty a year.
-        We also run free tutoring for primary school children from
-        underprivileged families, and have taught 350 of them so far.
-      </p>
-    </div>
-  </section>
-
-  <!-- 2. Why both — the connective idea -->
-  <section class="why rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">Why we do both</h2>
-      <div class="rail-body">
-        <blockquote class="why-claim">
-          AI policy written by people who have never met the people it affects
-          isn't good policy. The children we teach are the people it affects.
-        </blockquote>
-        <div class="why-body prose">
-          <p>
-            It isn't a coincidence that we do both. Sit in a classroom in Ho Man
-            Tin and watch a child use an AI tutor for the first time, and you
-            learn things a consultation paper won't tell you: which children
-            already have a tutor at home, which ones have a device, and which ones
-            are about to fall further behind because of a technology everyone
-            keeps calling an equaliser.
-          </p>
-          <p>
-            Most of our submissions start there. Teaching shows us where the gaps
-            are. Research tells us whether a gap is a policy problem. Then the
-            submission asks the government to fix it. It works the other way too:
-            what we learn writing about education and labour policy changes what
-            we think is worth teaching a ten-year-old. We'd rather be the people
-            who have been in the room than the people who have only read about
-            it.
-          </p>
-        </div>
+  <section class="sec" aria-labelledby="at-a-glance">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="at-a-glance">At a glance.</h2>
       </div>
+      <SummaryList
+        rows={[
+          { key: 'Founded', value: `${f.founded.en}, by ${f.founders[0]}, ${f.founders[1]} and ${f.founders[2]}` },
+          { key: 'Members', value: `${f.members.value} students` },
+          {
+            key: 'Policy',
+            value: `About ${f.recsPerYear.value.replace('~', '')} recommendations a year; every Policy Address and Budget consultation since ${f.recsPerYear.since}`,
+          },
+          {
+            key: 'Teaching',
+            value: `${f.children.value} children, ${f.schools.value} schools, ${f.tutors.value} trained tutors, ${f.modules.length} modules`,
+          },
+          {
+            key: 'Outcome',
+            value: `<a href="/policy#ai-for-all">${f.aiForAll.amount.en} for AI for All</a> in the ${f.aiForAll.budget} Budget`,
+          },
+          {
+            key: 'Partners',
+            value: "Ho Man Tin Ling To Catholic School, Kennedy Town School, St. Barnabas' Home &amp; Society and 10% Organisation",
+          },
+        ]}
+      />
     </div>
   </section>
 
-  <!-- 3. Origin -->
-  <section class="origin rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">How it started</h2>
-      <div class="rail-body">
-        <p>
-          AI For Good was founded in June 2023 by <strong>Justin Lo</strong>,{' '}
-          <strong>Ka Hei Ng</strong> and <strong>Oscar Zheng</strong>.{' '}
-          <strong>David Dong</strong> and <strong>Jackie Xue</strong> joined
-          later. We started outside school, as an independent think tank rather
-          than a school club. Since then we've grown to more than 35 members and
-          started working with schools across Hong Kong, which is how the
-          tutoring programme reaches the children it does.
+  <section class="sec" aria-labelledby="why-both">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="why-both">People who write policy should meet the people it affects.</h2>
+      </div>
+      <div class="prose">
+        <p class="lead">
+          AI policy written by people who have never met the people it affects isn't good policy. The
+          children we teach are the people it affects.
         </p>
-
-      <!-- Justin's own account, in the first person and left in his words.
-           The voice shift from "we" to "I" is deliberate and attributed. -->
-      <div class="founder-note">
-        <div class="fn-part">
-          <p class="fn-label">Why the policy work</p>
-          <p>
-            AI arrived in Hong Kong faster than the city could decide who it was
-            for. I watched it show up in my school, then in my friends'
-            internships, then in the government's plans, and the pattern was
-            always the same: the people who already had the most access got it
-            first. Nobody was choosing that. It was just what happened when
-            nobody was asked to choose. I had spent two years learning how
-            public money gets allocated and who ends up bearing the cost of a
-            decision, and it seemed absurd to sit on that while the decisions
-            were being made a few kilometres away. So we started writing to the
-            people making them.
-          </p>
-        </div>
-        <div class="fn-part">
-          <p class="fn-label">Why the teaching</p>
-          <p>
-            This started as a group of us at school teaching each other AI,
-            mostly by playing with it. We built things that didn't work and a
-            few that did, and it was obvious how much you could get out of these
-            tools once someone showed you the first step. Then it became obvious
-            who wasn't getting shown. The children with the most to gain from AI
-            were the least likely to ever be handed it, and that gap wasn't
-            going to close on its own. So we took what we'd been doing for fun
-            in a classroom and brought it to schools where nobody else was
-            offering it.
-          </p>
-        </div>
-        <p class="fn-attrib">— Justin Lo, Founder &amp; Director</p>
-      </div>
-      <figure class="origin-figure">
-        <img
-          src="/programs/team-outside-school.jpg"
-          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption>Outside Ho Man Tin Ling To Catholic School, where we teach.</figcaption>
-      </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. What we do — two blocks -->
-  <section class="rail-section">
-    <div class="container">
-      <h2 class="mb">What we do</h2>
-      <div class="two-blocks">
-        <div class="block block-policy">
-          <h3>Policy</h3>
-          <p>
-            Every year we send about twenty written recommendations to the Hong
-            Kong government. We've responded to every Policy Address and Budget
-            consultation since 2024, and we're now working on a submission to
-            the First Five-Year Plan for Economic and Social Development
-            (2026–2030). Our topics come out of the work itself: tax, AI
-            governance, education, jobs and health. Over several submissions we
-            argued for an inclusive AI programme, and the 2026–27 Budget set
-            aside HK$50 million for AI for All.
-          </p>
-          <a class="link-quiet" href="/policy">Read our policy work →</a>
-        </div>
-        <div class="block block-teaching">
-          <h3>Teaching</h3>
-          <p>
-            We run free tutoring for primary school children from
-            underprivileged families in seven schools across Hong Kong. Our 43
-            trained tutors teach four modules: maths, English, economics and
-            science. Each one uses AI as a free, patient study partner. We've
-            taught 350 children so far, and since 2024, 86% of our students have
-            moved up at least one class band.
-          </p>
-          <a class="link-quiet" href="/teaching">See our teaching →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. How we work -->
-  <section class="rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">How we work</h2>
-      <div class="rail-body methods">
-        <div class="method">
-          <p class="method-label">Writing a proposal</p>
-          <p>
-            First we talk to our members, then we research, then we write. Every
-            proposal sets out the case for, then the case against, then our
-            recommendation, always in that order. If the case against turns out
-            to be stronger, we don't send it.
-          </p>
-        </div>
-        <div class="method">
-          <p class="method-label">Running a lesson</p>
-          <p>
-            Every tutor is trained before they teach. They follow a written
-            curriculum built around the four modules, so a child gets the same
-            quality of lesson whichever school they're at and whoever is
-            teaching.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. Impact — the account first, then the two outcomes it rests on -->
-  <section class="impact rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">Our impact</h2>
-      <div class="rail-body">
-        <div class="impact-body prose">
-          <p>
-            AI For Good started in 2023 as a small group of students. Today there
-            are more than 35 of us, and we all believe young people can change
-            things by speaking up about them.
-          </p>
-          <p>
-            Each year we send around 20 policy recommendations to the Hong Kong
-            government. We've taken part in the Policy Address and Budget
-            consultations since 2024, and we're now contributing to the First
-            Five-Year Plan for Economic and Social Development (2026–2030).
-            Alongside the policy work, we've taught 350 children from
-            underprivileged families at our partner schools and trained 43 student
-            tutors. Since 2024, 86% of the students we teach have moved up at
-            least one class band.
-          </p>
-          <p>
-            For us, the policy and the teaching come from the same belief: a
-            better world gets built by people who decide not to wait.
-          </p>
-        </div>
-        <div class="outcomes">
-          <div class="outcome outcome-policy">
-            <p class="outcome-figure">HK$50M</p>
-            <p class="outcome-label">
-              allocated to AI for All in the 2026–27 Budget, the kind of inclusive
-              AI programme we'd been arguing for
-            </p>
-          </div>
-          <div class="outcome outcome-teaching">
-            <p class="outcome-figure">86%</p>
-            <p class="outcome-label">
-              of our students have moved up at least one class band since 2024
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Partners -->
-  <section class="section-tight rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">Who we work with</h2>
-      <div class="rail-body prose">
         <p>
-          We teach with Ho Man Tin Ling To Catholic School, St. Barnabas' Home
-          &amp; Society, Kennedy Town School and 10% Organisation.
+          It isn't a coincidence that we do both. Sit in a classroom in Ho Man Tin and watch a child use an
+          AI tutor for the first time, and you learn things a consultation paper won't tell you: which
+          children already have a tutor at home, which ones have a device, and which ones are about to fall
+          further behind because of a technology everyone keeps calling an equaliser.
+        </p>
+        <p>
+          Most of our submissions start there. Teaching shows us where the gaps are. Research tells us
+          whether a gap is a policy problem. Then the submission asks the government to fix it. It works
+          the other way too: what we learn writing about education and labour policy changes what we think
+          is worth teaching a ten-year-old. We'd rather be the people who have been in the room than the
+          people who have only read about it.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- 8. Where we're going -->
-  <section class="section-tight ahead rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">What's next</h2>
-      <div class="rail-body prose">
-        <ul class="ahead-list">
-          <li>
-            <span class="ahead-tag ahead-policy">Policy</span>
-            We're working on our submission to the First Five-Year Plan for
-            Economic and Social Development (2026–2030), about how AI and economic
-            policy can open up opportunities rather than narrow them.
-          </li>
-          <li>
-            <span class="ahead-tag ahead-teaching">Teaching</span>
-            We're going back to Ho Man Tin Ling To Catholic School next year with
-            all four modules and a new group of tutors.
-          </li>
+  <!-- Justin's own account, in the first person and left in his words.
+       The voice shift from "we" to "I" is deliberate and signed. -->
+  <section class="sec" aria-labelledby="why-i-started">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="why-i-started">Why I started it.</h2>
+      </div>
+      <div class="prose">
+        <h3>Why the policy work</h3>
+        <p>
+          AI arrived in Hong Kong faster than the city could decide who it was for. I watched it show up in
+          my school, then in my friends' internships, then in the government's plans, and the pattern was
+          always the same: the people who already had the most access got it first. Nobody was choosing
+          that. It was just what happened when nobody was asked to choose. I had spent two years learning
+          how public money gets allocated and who ends up bearing the cost of a decision, and it seemed
+          absurd to sit on that while the decisions were being made a few kilometres away. So we started
+          writing to the people making them.
+        </p>
+        <h3>Why the teaching</h3>
+        <p>
+          This started as a group of us at school teaching each other AI, mostly by playing with it. We
+          built things that didn't work and a few that did, and it was obvious how much you could get out
+          of these tools once someone showed you the first step. Then it became obvious who wasn't getting
+          shown. The children with the most to gain from AI were the least likely to ever be handed it,
+          and that gap wasn't going to close on its own. So we took what we'd been doing for fun in a
+          classroom and brought it to schools where nobody else was offering it.
+        </p>
+        <p class="signed">Justin Lo, Founder &amp; Director</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="people">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="people">Run entirely by students.</h2>
+        <p>Our members work on policy research and tutoring. These are the people who lead it.</p>
+      </div>
+      <div>
+        <!-- Each bio opens under its name: a native <details>, so it works
+             from the keyboard and without JavaScript. -->
+        <ul class="people">
+          {
+            people.map(({ name, first, role, Bio }) => (
+              <li class="person">
+                <h3>{name}</h3>
+                <p class="person-role">{role}</p>
+                {Bio && (
+                  <details>
+                    <summary>About {first}</summary>
+                    <div class="prose">
+                      <Bio />
+                    </div>
+                  </details>
+                )}
+              </li>
+            ))
+          }
         </ul>
+        <div class="people-photos">
+          <Gallery
+            photos={[
+              {
+                name: 'team-classroom.jpg',
+                alt: 'Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School, after a session.',
+                caption: 'In a classroom at Ho Man Tin Ling To Catholic School, after a session.',
+              },
+              {
+                name: 'team-outside-school.jpg',
+                alt: 'Five AI For Good members outside Ho Man Tin Ling To Catholic School.',
+                caption: 'Outside the school.',
+              },
+            ]}
+          />
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 9. Get involved -->
-  <section class="section-tight rail-section">
-    <div class="container rail">
-      <h2 class="rail-head">Get involved</h2>
-      <div class="rail-body prose">
+  <section class="sec" aria-labelledby="how-it-started">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="how-it-started">How it started.</h2>
+      </div>
+      <div class="prose">
         <p>
-          <strong>Schools and organisations:</strong> if you work with children
-          from underprivileged families and could use tutors, we'll bring the
-          lessons, the tutors and the equipment.{' '}
-          <a href="/get-involved">Get in touch</a>.
-        </p>
-        <p>
-          <strong>Students:</strong> we're recruiting at Victoria Shanghai
-          Academy. If you're into policy, economics or AI, we care more about what
-          you want to do than about titles.{' '}
-          <a href="/get-involved">Tell us what you'd like to work on</a>.
+          AI For Good was founded by <strong>Justin Lo</strong>, <strong>Ka Hei Ng</strong> and{' '}
+          <strong>Oscar Zheng</strong>. <strong>David Dong</strong> and <strong>Jackie Xue</strong> joined
+          later. We started outside school, as an independent think tank rather than a school club. Since
+          then we've grown and started working with schools across Hong Kong, which is how the tutoring
+          programme reaches the children it does.
         </p>
       </div>
     </div>

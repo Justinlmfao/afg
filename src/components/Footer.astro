@@ -1,112 +1,71 @@
 ---
-// Site footer — quiet, ruled, document-like.
+// Site footer, on the dark ground with the full logo. It is also every
+// page's closing call to action: one line for schools and organisations, one
+// for students. No page carries a separate closing section.
 import Logo from './Logo.astro';
-import { getLangFromUrl, localizePath, ui, navItems } from '../i18n';
+import { contactEmail } from '../data/facts';
+import { monthOf } from '../lib/dates';
+import { getLangFromUrl, localizePath, ui, navItems, langOrder, langShort, htmlLangs } from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const t = ui[lang];
-const year = new Date().getFullYear();
-const email = 'ps20153216@student.vsa.edu.hk';
+const f = t.footer;
+const contact = localizePath('/get-involved', lang);
+const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.url.pathname;
+// The month the site was last built, which is when its content last changed.
+const updated = monthOf(new Date(), lang);
 ---
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
-      <p class="footer-brand">
-        <Logo label="AI For Good" />
-      </p>
-      <p class="footer-tagline">{t.footerTagline}</p>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <Logo variant="lockup" label="AI For Good Hong Kong" />
+        <p class="foot-blurb">{f.blurb}</p>
+      </div>
+      <div>
+        <h2>{f.schoolsTitle}</h2>
+        <p>{f.schoolsText}</p>
+        <a class="btn-light" href={`${contact}#schools`}>{f.schoolsAction}</a>
+      </div>
+      <div>
+        <h2>{f.studentsTitle}</h2>
+        <p>{f.studentsText}</p>
+        <a class="btn-light" href={`${contact}#students`}>{f.studentsAction}</a>
+      </div>
     </div>
 
-    <nav class="footer-nav" aria-label={t.navFooter}>
-      {
-        navItems.map((item) => (
-          <a href={localizePath(item.path, lang)}>{t.nav[item.key]}</a>
-        ))
-      }
-    </nav>
-
-    <div class="footer-contact">
-      <a href={`mailto:${email}`}>{email}</a>
-      <p class="footer-meta">{t.footerMeta}</p>
-      <p class="footer-meta footer-copy">&copy; {year} AI For Good</p>
+    <div class="foot-base">
+      <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      <nav aria-label={t.navFooter}>
+        <ul>
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={localizePath(item.path, lang)}>{t.nav[item.key]}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <ul aria-label={t.langLabel}>
+        {
+          langOrder.map((code) => (
+            <li>
+              <a
+                href={localizePath(switchPath, code)}
+                lang={htmlLangs[code]}
+                aria-current={code === lang ? 'true' : undefined}
+              >
+                {langShort[code]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <span class="foot-meta">
+        {f.place} · {f.updated}{lang === 'en' ? ' ' : ''}{updated}
+      </span>
     </div>
   </div>
 </footer>
-
-<style>
-  /* A soft tinted base instead of a rule */
-  .site-footer {
-    margin-top: auto;
-    background: var(--tint);
-    padding-block: 3rem;
-    font-size: 0.95rem;
-  }
-
-  .footer-inner {
-    display: grid;
-    grid-template-columns: 1.5fr 0.7fr 1.1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .footer-brand :global(.logo) {
-    display: block;
-    height: 20px;
-    width: auto;
-  }
-
-  .footer-tagline {
-    color: var(--graphite);
-    max-width: 30rem;
-  }
-
-  .footer-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .footer-nav a {
-    color: var(--graphite);
-    text-decoration: none;
-    width: fit-content;
-  }
-
-  .footer-nav a:hover {
-    color: var(--ink);
-  }
-
-  /* Padding on the inline link widens its tap target without moving text */
-  .footer-contact a {
-    font-weight: 600;
-    overflow-wrap: anywhere;
-    padding-block: 0.3rem;
-  }
-
-  .footer-meta {
-    color: var(--graphite);
-    margin-top: 0.75rem;
-    font-size: 0.875rem;
-  }
-
-  .footer-copy {
-    margin-top: 0.15rem;
-  }
-
-  @media (max-width: 46rem) {
-    .footer-inner {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-    }
-  }
-</style>

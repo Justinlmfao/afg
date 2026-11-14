@@ -1,0 +1,16 @@
+---
+// The small "Now" note in the home page hero: what we're working on this
+// month. The words and the date come from `facts.now` in src/data/facts.ts.
+import { facts } from '../data/facts';
+import { formatDate } from '../lib/dates';
+import { getLangFromUrl, ui } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang].now;
+---
+
+<aside class="now" aria-label={t.label}>
+  <b>{t.title}</b>
+  {facts.now[lang]}
+  <time datetime={facts.now.updated}>{t.updated} {formatDate(facts.now.updated, lang)}</time>
+</aside>

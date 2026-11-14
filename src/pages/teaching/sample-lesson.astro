@@ -1,0 +1,148 @@
+---
+// The sample lesson, on a page of its own so a school can print it.
+//
+// Deliberately text-only: the game is named, but no character art, logos or
+// screenshots appear. The figures are read off the children's own screens
+// rather than published here, so the lesson never goes stale on a balance
+// patch and we never present numbers as though they were official game data.
+// Once it has been taught as written, say so: "first taught at [school],
+// [month]" is stronger than "sample".
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageTop from '../../components/PageTop.astro';
+import Worksheet from '../../components/Worksheet.astro';
+import '../../styles/pages/teaching.css';
+---
+
+<BaseLayout
+  title="Sample lesson: Bigger isn't better"
+  pageClass="page-teaching"
+  description="A 60-minute AI For Good lesson for P5–P6, using maths and English: students work out a rate, then argue a case with evidence and a fair account of the other side."
+>
+  <PageTop vertical="教學">
+    <p class="back no-print"><a class="textlink" href="/teaching#sample-lesson">Our teaching</a></p>
+    <h1>Sample lesson: Bigger isn't better</h1>
+    <p class="lead">
+      One lesson, using our <strong>Mathematics</strong> and <strong>English</strong> modules. We've
+      published it so schools can see how a lesson is put together before they invite us in.
+    </p>
+    <ul class="lesson-facts">
+      <li><span>Level</span>P5–P6</li>
+      <li><span>Length</span>60 minutes</li>
+      <li><span>Staffing</span>2 tutors for every 8–10 students</li>
+    </ul>
+  </PageTop>
+
+  <section class="sec" aria-labelledby="part-1">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <p class="part-tag">Part 1 · Maths · 30 min</p>
+        <h2 id="part-1">Bigger isn't better</h2>
+      </div>
+      <div class="prose">
+        <p class="objective">
+          <b>Objective:</b> students work out a rate and explain why a bigger single number can still lose
+          to a smaller one.
+        </p>
+        <p>
+          Each student picks two characters they actually play in <cite>Brawl Stars</cite> and reads the
+          damage per shot and reload speed from their own screen. They almost always pick one slow, heavy
+          hitter and one fast, weaker one, and they almost always assume the bigger number wins.
+        </p>
+        <p>
+          Then they work out the damage per second, and the faster character usually comes out ahead. That
+          surprise is the lesson: one number on its own doesn't tell you much, and the number that matters
+          is usually a rate.
+        </p>
+        <p>
+          Then the twist: the faster character can only hit enemies standing close by. Is it still the
+          better choice? Now the answer depends on how you play, and that's what Part 2 is for.
+        </p>
+        <p class="aside">
+          <b>Extension:</b> how much would the reload speed have to change for the answer to flip? It's
+          their first go at solving for an unknown, and they get there because they're curious, not
+          because a textbook told them to.
+        </p>
+        <p class="aside">
+          <b>Watch for:</b> students who get the sums right but can't explain why the answer surprised
+          them. The explanation is the goal; the multiplication is just how we get there.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="part-2">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <p class="part-tag">Part 2 · English · 30 min</p>
+        <h2 id="part-2">Make the case</h2>
+      </div>
+      <div class="prose">
+        <p class="objective">
+          <b>Objective:</b> students write a short argument with a claim, evidence, a fair version of the
+          other side, and a recommendation.
+        </p>
+        <p>
+          They argue which of their two characters is better, using the numbers they just worked out as
+          evidence. There's one firm rule: they have to write one honest sentence about why someone might
+          reasonably pick the other character. If they can't, they don't fully understand their own
+          argument yet.
+        </p>
+        <p>Sentence starters go on the board for children learning English as a second language:</p>
+        <ul class="frames">
+          <li>I think ______ is better because ______.</li>
+          <li>The evidence is ______.</li>
+          <li>Someone might choose ______ instead, because ______.</li>
+          <li>Even so, I would recommend ______ because ______.</li>
+        </ul>
+        <p>
+          Then they follow the Think First steps. Each student asks an AI tool to check their calculation
+          and give one hint to strengthen their argument, and decides for themselves whether the feedback
+          is right. Finally, with the AI closed, they explain their recommendation to the group in their
+          own words.
+        </p>
+        <p>
+          Four or five sentences is a finished piece. Two or three students read theirs out, and everyone
+          else's job is to spot the counterargument, not to decide who won.
+        </p>
+        <p class="aside">
+          <b>Watch for:</b> a counterargument that's really a put-down, like "someone might choose it
+          because they're bad at the game." Send it back. Learning to describe the other side fairly is
+          the whole point.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The line that makes the two halves of AFG one organisation -->
+  <section class="sec" aria-labelledby="same-method">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="same-method">The same method we use with policymakers.</h2>
+      </div>
+      <div class="prose">
+        <p>
+          Claim, evidence, an honest case against, then a recommendation: it's the same structure we use
+          in <a href="/policy#how-we-write">every proposal we send to the government</a>. We teach
+          eleven-year-olds the same method we use with policymakers.
+        </p>
+        <p>
+          It goes the other way too. Our December 2025 proposal,{' '}
+          <a href="/policy/think-first">Think First</a>, takes the method our tutors use every week and
+          proposes it for every primary school in Hong Kong.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec lesson-sheet-sec" aria-labelledby="worksheet">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="worksheet">The worksheet.</h2>
+        <p>One for each student. This page prints cleanly from your browser.</p>
+      </div>
+      <div class="lesson-sheet">
+        <Worksheet />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

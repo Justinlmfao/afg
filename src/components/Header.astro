@@ -1,6 +1,8 @@
 ---
-// Site header, with the wordmark (see Logo.astro). Mobile menu is progressively
-// enhanced. Nav links and the language switcher follow the current locale.
+// Site header: the wordmark, the four sections and the three languages.
+// On phones the sections fold into a sheet behind a Menu button, and one
+// language link stays in view: Chinese from the English pages, English from
+// either Chinese version.
 import Logo from './Logo.astro';
 import {
   getLangFromUrl,
@@ -18,317 +20,136 @@ const t = ui[lang];
 
 // Current path with any language prefix removed, so it matches navItems paths.
 const path = localizePath(Astro.url.pathname, 'en');
-// The 404 page exists only once, so its language links go to each home page
+// The 404 page exists only once, so its language links go to each home page.
 const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.url.pathname;
-// On phones, one tap to the other language without opening the menu:
-// Chinese from the English pages, English from either Chinese version.
 const quick = lang === 'en' ? ({ code: 'zh', label: '中文' } as const) : ({ code: 'en', label: 'EN' } as const);
+
+const links = navItems.map((item) => ({
+  href: localizePath(item.path, lang),
+  label: t.nav[item.key],
+  // "Here" covers pages inside a section too, e.g. /policy/think-first.
+  here: path === item.path || path.startsWith(item.path + '/'),
+  current: path === item.path,
+}));
+const languages = langOrder.map((code) => ({
+  code,
+  href: localizePath(switchPath, code),
+  label: langShort[code],
+  current: code === lang,
+}));
 ---
 
-<header class="site-header" id="site-header">
-  <div class="container header-inner">
-    <a href={localizePath('/', lang)} class="brand" aria-label={t.home}>
+<header class="site-head">
+  <div class="wrap site-head-in">
+    <a class="wordmark" href={localizePath('/', lang)} aria-label={t.home}>
       <Logo />
     </a>
 
-    <a
-      class="lang-quick"
-      href={localizePath(switchPath, quick.code)}
-      lang={htmlLangs[quick.code]}
-      aria-label={switchLabels[lang][quick.code]}
-    >
-      {quick.label}
-    </a>
-
-    <button
-      class="nav-toggle"
-      aria-expanded="false"
-      aria-controls="primary-nav"
-      aria-label={t.menu}
-    >
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
-
-    <nav id="primary-nav" class="primary-nav" aria-label={t.navPrimary}>
-      <ul>
+    <nav class="nav" aria-label={t.navPrimary}>
+      {
+        links.map((link) => (
+          <a href={link.href} class:list={[link.here && 'is-here']} aria-current={link.current ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+      <span class="lang" role="group" aria-label={t.langLabel}>
         {
-          navItems.map((item) => (
-            <li>
+          languages.map((l, i) => (
+            <>
+              {i > 0 && <span class="lang-dot" aria-hidden="true">·</span>}
               <a
-                href={localizePath(item.path, lang)}
-                aria-current={path === item.path ? 'page' : undefined}
+                href={l.href}
+                lang={htmlLangs[l.code]}
+                aria-current={l.current ? 'true' : undefined}
+                aria-label={switchLabels[lang][l.code]}
               >
-                {t.nav[item.key]}
+                {l.label}
               </a>
-            </li>
+            </>
           ))
         }
-        <li class="lang-item">
-          {/*
-            Three languages don't fit as full names, so the switcher is a short
-            group with the current language marked rather than linked. Each
-            link keeps you on the page you were reading.
-          */}
-          <span class="lang-group" role="group" aria-label={t.langLabel}>
-            {
-              langOrder.map((code, i) => (
-                <>
-                  {i > 0 && <span class="lang-sep" aria-hidden="true">·</span>}
-                  {code === lang ? (
-                    <span class="lang-current" aria-current="true" lang={htmlLangs[code]}>
-                      {langShort[code]}
-                    </span>
-                  ) : (
-                    <a
-                      class="lang-switch"
-                      href={localizePath(switchPath, code)}
-                      lang={htmlLangs[code]}
-                      aria-label={switchLabels[lang][code]}
-                    >
-                      {langShort[code]}
-                    </a>
-                  )}
-                </>
-              ))
-            }
-          </span>
-        </li>
-      </ul>
+      </span>
     </nav>
+
+    <div class="head-phone">
+      <a class="lang-quick" href={localizePath(switchPath, quick.code)} lang={htmlLangs[quick.code]}>
+        {quick.label}
+      </a>
+      <button
+        class="menu-btn"
+        type="button"
+        aria-expanded="false"
+        aria-controls="menu"
+        data-open={t.menu}
+        data-close={t.close}
+      >
+        {t.menu}
+      </button>
+    </div>
+  </div>
+
+  <div class="menu" id="menu" hidden>
+    <div class="wrap">
+      <nav aria-label={t.navPrimary}>
+        <ul>
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  class:list={['menu-link', link.here && 'is-here']}
+                  href={link.href}
+                  aria-current={link.current ? 'page' : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p class="menu-lang">
+        {
+          languages.map((l) => (
+            <a href={l.href} lang={htmlLangs[l.code]} aria-current={l.current ? 'true' : undefined}>
+              {l.label}
+            </a>
+          ))
+        }
+      </p>
+    </div>
   </div>
 </header>
 
-<style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    background: var(--paper);
-    border-bottom: 1px solid var(--rule);
-    z-index: 90;
-  }
-
-  .header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    min-height: var(--header-h);
-    gap: 1rem;
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-family: var(--serif);
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: var(--ink);
-    text-decoration: none;
-    letter-spacing: -0.01em;
-    min-height: 44px;
-  }
-
-  .brand :global(.logo) {
-    display: block;
-    height: 22px;
-    width: auto;
-  }
-
-  .lang-quick {
-    display: none;
-  }
-
-  .primary-nav ul {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    gap: 1.7rem;
-    padding: 0;
-    margin: 0;
-  }
-
-  .primary-nav a {
-    color: var(--graphite);
-    text-decoration: none;
-    font-size: 0.97rem;
-    font-weight: 600;
-    padding-block: 0.25rem;
-    border-bottom: 2px solid transparent;
-  }
-
-  .primary-nav a:hover {
-    color: var(--ink);
-  }
-
-  .primary-nav a[aria-current='page'] {
-    color: var(--ink);
-    border-bottom-color: var(--policy);
-  }
-
-  /* The Teaching link underlines in its own ink when current */
-  .primary-nav a[href$='/teaching'][aria-current='page'] {
-    border-bottom-color: var(--teaching);
-  }
-
-  /* Language switch sits apart from the nav proper */
-  .lang-item {
-    padding-left: 1.7rem;
-    border-left: 1px solid var(--rule);
-  }
-
-  .lang-group {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.45rem;
-  }
-
-  .lang-switch {
-    font-size: 0.9rem !important;
-    font-weight: 500 !important;
-    color: var(--policy) !important;
-  }
-
-  .lang-switch:hover {
-    color: var(--policy-deep) !important;
-  }
-
-  /* The language you are already reading: shown, not offered */
-  .lang-current {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  .lang-sep {
-    font-size: 0.9rem;
-    color: var(--graphite);
-    opacity: 0.45;
-  }
-
-  .nav-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    width: 2.5rem;
-    height: 2.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-  }
-
-  .nav-toggle-bar {
-    display: block;
-    height: 2px;
-    width: 100%;
-    background: var(--ink);
-    border-radius: 2px;
-  }
-
-  @media (max-width: 52rem) {
-    .nav-toggle {
-      display: flex;
-    }
-
-    .brand :global(.logo) {
-      height: 19px;
-    }
-
-    .lang-quick {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      margin-left: auto;
-      padding-inline: 0.5rem;
-      font-size: 0.97rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-    }
-
-    /* The open menu is a panel over the page, with the page dimmed behind
-       it; tapping the dimmed area closes it (see the script below) */
-    .primary-nav {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--paper);
-      box-shadow: 0 18px 36px rgba(28, 27, 24, 0.12);
-    }
-
-    .primary-nav.is-open {
-      display: block;
-    }
-
-    .primary-nav.is-open::after {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      height: 100vh;
-      background: rgba(28, 27, 24, 0.32);
-    }
-
-    .primary-nav ul {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0;
-      padding: 0.5rem 1.5rem 1rem;
-    }
-
-    .primary-nav li {
-      border-top: 1px solid var(--rule);
-    }
-
-    .primary-nav a {
-      display: block;
-      padding: 0.85rem 0;
-      border-bottom: none;
-    }
-
-    .primary-nav a[aria-current='page'] {
-      color: var(--policy);
-    }
-
-    .lang-item {
-      padding-left: 0;
-      border-left: none;
-      padding-block: 0.85rem;
-    }
-
-    /* Keep the three languages on one row inside the stacked mobile menu */
-    .lang-item .lang-switch {
-      display: inline;
-      padding: 0;
-    }
-  }
-</style>
-
 <script>
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.getElementById('primary-nav');
+  // The only script on the site: opening and closing the phone menu.
+  const button = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = document.getElementById('menu');
+
   const setOpen = (open: boolean) => {
-    nav?.classList.toggle('is-open', open);
-    toggle?.setAttribute('aria-expanded', String(open));
+    if (!button || !menu) return;
+    menu.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+    button.textContent = (open ? button.dataset.close : button.dataset.open) ?? '';
   };
-  toggle?.addEventListener('click', () => {
-    setOpen(!nav?.classList.contains('is-open'));
-  });
-  // Tapping the dimmed page below the panel (the nav's ::after) closes it
-  nav?.addEventListener('click', (e) => {
-    if (e.target === nav) setOpen(false);
-  });
-  // Escape closes the open menu and puts focus back on its button
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav?.classList.contains('is-open')) {
+
+  button?.addEventListener('click', () => setOpen(menu?.hidden ?? false));
+
+  // Escape closes the menu and puts focus back on its button
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu && !menu.hidden) {
       setOpen(false);
-      (toggle as HTMLElement | null)?.focus();
+      button?.focus();
     }
+  });
+
+  // So does tapping anywhere outside the header
+  document.addEventListener('click', (event) => {
+    if (menu && !menu.hidden && !(event.target as Element).closest('.site-head')) setOpen(false);
+  });
+
+  // And widening the window past the point where the full nav appears
+  window.matchMedia('(min-width: 52.01rem)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
   });
 </script>

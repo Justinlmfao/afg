@@ -1,0 +1,50 @@
+---
+// A photograph from src/assets/photos/, by file name. The build makes AVIF
+// and WebP versions at several widths, and the browser picks one to fit.
+//
+//   sizes      how wide the photo is shown, e.g. "100vw" for full-bleed
+//   eager      the first photo on a page: load it straight away
+//   position   which part stays in frame when the photo is cropped
+//   positionPhone   the same, on a narrow screen (faces move off-centre)
+//   frame      a class for the <picture> around it (used by Gallery)
+import { Picture } from 'astro:assets';
+import { photo } from '../lib/photos';
+
+interface Props {
+  name: string;
+  alt: string;
+  sizes: string;
+  eager?: boolean;
+  position?: string;
+  positionPhone?: string;
+  frame?: string;
+  widths?: number[];
+}
+const {
+  name,
+  alt,
+  sizes,
+  eager = false,
+  position,
+  positionPhone,
+  frame,
+  widths = [480, 800, 1200, 1600],
+} = Astro.props;
+
+const style = [position && `--pos:${position}`, positionPhone && `--pos-phone:${positionPhone}`]
+  .filter(Boolean)
+  .join(';');
+---
+
+<Picture
+  src={photo(name)}
+  alt={alt}
+  formats={['avif', 'webp']}
+  widths={widths}
+  sizes={sizes}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : undefined}
+  decoding={eager ? 'sync' : 'async'}
+  style={style || undefined}
+  pictureAttributes={frame ? { class: frame } : {}}
+/>

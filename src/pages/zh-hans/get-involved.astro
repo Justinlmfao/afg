@@ -1,12 +1,14 @@
 ---
 // GENERATED FILE — do not edit by hand.
 // Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// Simplified Chinese Contact page. Shares src/styles/pages/contact.css with
+// the English page. Keep each Chinese paragraph on one source line.
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getLangFromUrl, ui } from '../../i18n';
+import PageTop from '../../components/PageTop.astro';
 import '../../styles/pages/contact.css';
+import { contactEmail } from '../../data/facts';
+import { getLangFromUrl, ui } from '../../i18n';
 
-// Contact address chosen by Justin (school-affiliated).
-const email = 'ps20153216@student.vsa.edu.hk';
 const t = ui[getLangFromUrl(Astro.url)];
 ---
 
@@ -15,31 +17,24 @@ const t = ui[getLangFromUrl(Astro.url)];
   pageClass="page-contact"
   description="联系 AI For Good：欢迎想参与研究或教学的学生、学校和合作伙伴，以及任何查询。"
 >
-  <section class="page-top">
-    <div class="container prose">
-      <p class="kicker">联系我们</p>
-      <h1>与我们联系</h1>
-      <p class="lead">
-        欢迎发电子邮件至{' '}<a href={`mailto:${email}`}>{email}</a>，或填写下面的表格。我们在香港。
-      </p>
-    </div>
-  </section>
+  <PageTop vertical="联系">
+    <h1>与我们联系。</h1>
+    <p class="lead">
+      欢迎发电子邮件至{' '}<a href={`mailto:${contactEmail}`}>{contactEmail}</a>，或填写下面的表格。我们在香港，通常会在一星期内回复。
+    </p>
+  </PageTop>
 
   <!-- Who writes to us sits in the margin column beside the form -->
-  <section>
-    <div class="container rail">
-      <ul class="routes rail-head">
-        <li>
+  <section class="sec">
+    <div class="wrap rail">
+      <ul class="routes">
+        <li id="students">
           <h2>学生</h2>
-          <p>
-            想做真正的研究或教学？比起头衔，我们更在乎你想做什么。告诉我们你想参与哪方面的工作。
-          </p>
+          <p>想做真正的研究或教学？比起头衔，我们更在乎你想做什么。告诉我们你想参与哪方面的工作。</p>
         </li>
-        <li>
+        <li id="schools">
           <h2>学校与伙伴</h2>
-          <p>
-            如果你的学校或机构服务基层家庭的孩子，我们很希望和你合作。课程、导师和器材都由我们负责。
-          </p>
+          <p>如果你的学校或机构服务基层家庭的孩子，我们很希望和你合作。课程、导师和器材都由我们负责。</p>
         </li>
         <li>
           <h2>其他查询</h2>
@@ -60,7 +55,7 @@ const t = ui[getLangFromUrl(Astro.url)];
         action="/zh-hans/thanks/"
         data-netlify="true"
         netlify-honeypot="bot-field"
-        class="contact-form rail-body"
+        class="contact-form"
       >
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden-field" aria-hidden="true">
@@ -86,35 +81,33 @@ const t = ui[getLangFromUrl(Astro.url)];
 
         <div class="field">
           <label for="message">留言</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
+          <textarea id="message" name="message" rows="6" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-policy" data-sending={t.sending}>
-          <span class="btn-label">发送留言</span> <span class="arrow" aria-hidden="true">→</span>
-        </button>
+        <button type="submit" class="btn" data-sending={t.sending}>发送留言</button>
       </form>
     </div>
   </section>
 </BaseLayout>
 
 <script>
-  // While the form sends, the button says so and can't be pressed twice.
-  // The browser's own checks run first, so this only fires on a valid form.
+  // Feedback while the form sends: the button says so and can't be pressed
+  // twice. The browser's own checks run first, so this only fires on a valid
+  // form. Without this script the form still sends.
   const form = document.querySelector<HTMLFormElement>('.contact-form');
   const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const buttonLabel = button?.querySelector('.btn-label');
-  const idleText = buttonLabel?.textContent;
+  const idleText = button?.textContent;
   form?.addEventListener('submit', () => {
-    if (!button || !buttonLabel) return;
+    if (!button) return;
     button.disabled = true;
     button.setAttribute('aria-busy', 'true');
-    buttonLabel.textContent = button.dataset.sending || '';
+    button.textContent = button.dataset.sending || '';
   });
   // Coming back with the browser's Back button restores a usable form
   window.addEventListener('pageshow', () => {
-    if (!button || !buttonLabel) return;
+    if (!button) return;
     button.disabled = false;
     button.removeAttribute('aria-busy');
-    buttonLabel.textContent = idleText || '';
+    button.textContent = idleText || '';
   });
 </script>

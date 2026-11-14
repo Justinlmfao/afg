@@ -27,9 +27,9 @@
   /* Type. Latin faces first; Chinese falls through to the system faces, so
      no Chinese web font is downloaded. */
   --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Songti TC', 'PMingLiU',
-    'Noto Serif TC', serif;
+    'Noto Serif TC', 'Noto Serif CJK TC', serif;
   --sans: 'Source Sans 3', 'Source Sans 3 fallback', -apple-system, 'Segoe UI',
-    'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+    'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', 'Noto Sans CJK TC', sans-serif;
 
   /* Fluid scale, 360 to 1240px wide. Seven sizes, nothing else. */
   --step--1: clamp(0.885rem, 0.859rem + 0.117vw, 0.95rem);  /* 14→15px dates, captions, tags, notes */
@@ -49,30 +49,8 @@
   --wide: 74rem;    /* page container */
   --text-w: 36rem;  /* reading column, about 65 characters */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --margin-title: 'AFG margin title';
   --header-h: 60px;
-
-  /* Names the previous design used, pointed at the new values until each
-     page is rebuilt. Removed at the end of the redesign. */
-  --text-soft: var(--text);
-  --graphite: var(--muted);
-  --policy: var(--green);
-  --policy-deep: var(--green-hover);
-  --policy-wash: var(--surface);
-  --teaching: var(--green);
-  --teaching-deep: var(--green-hover);
-  --teaching-wash: var(--surface);
-  --tint: var(--surface);
-  --charcoal: var(--night);
-  --field-border: var(--field);
-  --h2: var(--step-3);
-  --h3: var(--step-2);
-  --h4: var(--step-1);
-  --measure: var(--text-w);
-  --measure-wide: calc(var(--text-w) + 3.5rem);
-  --radius: 4px;
-  --radius-card: 0;
-  --radius-img: 0;
-  --shadow-card: none;
 }
 
 /* ---- Fonts ------------------------------------------------------------- */
@@ -108,6 +86,25 @@
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* The page names set down the margin on wide screens (VerticalTitle.astro)
+   use these two tiny files, which hold only the dozen characters needed:
+   政策 教學 關於我們 聯絡, and their Simplified forms. Add a character to a
+   margin title and it falls back to the system serif until the file is
+   remade. */
+@font-face {
+  font-family: 'AFG margin title';
+  src: url('/fonts/noto-serif-tc-titles.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AFG margin title SC';
+  src: url('/fonts/noto-serif-sc-titles.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
 /* Arial and Times resized to the web fonts' proportions, so lines break in
    the same places before and after the fonts arrive. The size adjustments
    were measured by setting this site's own copy in both faces (Source Sans 3
@@ -131,6 +128,21 @@
   line-gap-override: 0%;
 }
 
+/* Simplified Chinese reads from the Simplified system faces. */
+html[lang='zh-Hans'] {
+  --margin-title: 'AFG margin title SC';
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Songti SC', 'SimSun',
+    'Noto Serif SC', 'Noto Serif CJK SC', serif;
+  --sans: 'Source Sans 3', 'Source Sans 3 fallback', -apple-system, 'Segoe UI',
+    'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Noto Sans CJK SC', sans-serif;
+}
+
+@media (max-width: 52rem) {
+  :root {
+    --header-h: 56px;
+  }
+}
+
 /* ---- Reset ------------------------------------------------------------- */
 *,
 *::before,
@@ -144,21 +156,39 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  /* The parts of the page the browser draws, in the site's palette */
-  accent-color: var(--policy);
-  scrollbar-color: #b9bdb8 var(--paper);
+  accent-color: var(--green);
+  /* Anchored sections stop below the sticky header */
+  scroll-padding-top: calc(var(--header-h) + 1.25rem);
 }
 
-/* The sticky header is a little slimmer on phones */
-@media (max-width: 52rem) {
-  :root {
-    --header-h: 3.5rem;
-  }
+body {
+  background: var(--paper);
+  color: var(--text);
+  font: 400 var(--step-0) / 1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Anchored sections stop below the sticky header */
-[id] {
-  scroll-margin-top: calc(var(--header-h) + 1rem);
+main {
+  flex: 1 0 auto;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+ul,
+ol {
+  padding-left: 1.2em;
 }
 
 ::selection {
@@ -166,514 +196,406 @@ html {
   color: var(--ink);
 }
 
-input,
-textarea {
-  caret-color: var(--policy);
-}
-
-body {
-  background: var(--paper);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: var(--step-0);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-img,
-svg {
-  max-width: 100%;
-  display: block;
-}
-
-/* ---- Typography -------------------------------------------------------- */
+/* ---- Type -------------------------------------------------------------- */
 h1,
 h2,
-h3 {
+h3,
+h4 {
   font-family: var(--serif);
   font-weight: 500;
+  font-optical-sizing: auto;
   color: var(--ink);
   line-height: 1.15;
-  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+  font-size: var(--step-4);
 }
 
 h2 {
-  font-size: var(--h2);
+  font-size: var(--step-3);
+  letter-spacing: -0.008em;
 }
 
 h3 {
-  font-size: var(--h3);
+  font-size: var(--step-2);
+}
+
+h4 {
+  font-size: var(--step-1);
 }
 
 p {
   text-wrap: pretty;
 }
 
-a {
-  color: var(--policy);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: color 0.15s ease;
-}
-
-a:hover {
-  color: var(--policy-deep);
-}
-
-:focus-visible {
-  outline: 2.5px solid var(--policy);
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* Sentence-case section label in a pillar's accent — no pills, no caps */
-.kicker {
+/* Emphasis inside running text. 700 is kept for run-in labels (.runin). */
+strong,
+b {
   font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--policy);
-  margin-bottom: 0.75rem;
-}
-
-/* Small text in the teaching accent uses the deep shade, which keeps AA
-   contrast on the teaching wash as well as on paper */
-.kicker-teaching {
-  color: var(--teaching-deep);
-}
-
-.lead {
-  font-size: clamp(1.1rem, 1.9vw, 1.3rem);
-  color: var(--text-soft);
-}
-
-/* Chinese needs a little more leading and no tight Latin tracking */
-:lang(zh-Hant) body,
-html[lang^='zh'] body {
-  line-height: 1.85;
-}
-
-html[lang^='zh'] h1,
-html[lang^='zh'] h2,
-html[lang^='zh'] h3 {
-  letter-spacing: 0;
-  line-height: 1.35;
-}
-
-/* About 31 characters a line, the comfortable range for Chinese */
-html[lang^='zh'] {
-  --measure: 33rem;
-}
-
-/*
-  A `ch` is the width of "0", so a Chinese character is about two of them: a
-  measure tuned to read well in English holds roughly half as many characters
-  in Chinese. Headlines are fine that way — short lines suit them — but the two
-  standfirst-sized lines below turn into narrow columns, so widen those.
-*/
-/* Chinese has no spaces, so a headline can break in the middle of a word.
-   Wrap each phrase in .phrase: it moves to the next line as a unit, and still
-   wraps inside itself if it is wider than a narrow screen. */
-.phrase {
-  display: inline-block;
-}
-
-html[lang^='zh'] .page-teaching .outcome-sentence {
-  max-width: 40ch;
-}
-
-html[lang^='zh'] .page-home .hero h1 {
-  max-width: 12em;
-}
-
-html[lang^='zh'] .page-about .why-claim {
-  max-width: 46ch;
-}
-
-/* ---- Layout ------------------------------------------------------------ */
-.container {
-  width: 100%;
-  max-width: var(--wide);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
-}
-
-.prose {
-  max-width: var(--measure);
-}
-
-/* A narrow column inside the standard container keeps the container's left
-   edge: the width limit goes on the content, not on the box. Without this a
-   `container prose` block centres itself and sits indented from everything
-   around it. */
-.container.prose {
-  max-width: var(--wide);
-}
-
-.container.prose > * {
-  max-width: var(--measure);
-}
-
-.prose p + p,
-.prose p + ul,
-.prose ul + p {
-  margin-top: 1.1rem;
-}
-
-.prose ul {
-  padding-left: 1.2rem;
-}
-
-.prose li + li {
-  margin-top: 0.4rem;
-}
-
-/* A heading always gets a little air before the text it introduces. */
-h1 + :is(p, ul, ol, dl, blockquote, form) {
-  margin-top: 1rem;
-}
-
-:is(h2, h3) + :is(p, ul, ol, dl, blockquote, form, figure) {
-  margin-top: 0.75rem;
-}
-
-/* Two section rhythms: generous around narrative sections, tight between
-   short reference rows, so the page has a cadence instead of one interval
-   repeated until everything weighs the same. */
-section {
-  padding-block: clamp(2.75rem, 6vw, 4.5rem);
-}
-
-/* For short sections that follow on from the one above, so a page of small
-   blocks reads as one run instead of a string of islands. */
-section.section-tight {
-  padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
-}
-
-/* ---- Rail: headings in the margin, text in one column -------------------
-   On wide screens every section heading sits in a 15rem margin column and
-   all running text in the column beside it, so the eye has one line of
-   headings to scan and one left edge to read from. Grids and photographs
-   (the two doors, lesson cards, galleries) span the full container instead.
-   Below 60rem the rail folds back to heading-above-content. */
-.rail {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.rail-head .kicker {
-  margin-bottom: 0.4rem;
-}
-
-.rail-body {
-  min-width: 0;
-  max-width: var(--measure-wide);
-}
-
-/* Cards in the text column may run a little wider than the text, but no
-   paragraph or list line does */
-.rail-body :is(p, li, blockquote) {
-  max-width: var(--measure);
-}
-
-/* A row inside a section that lines up with the rail: its label in the
-   margin column, its text in the text column (modules, cohort years). */
-.rail-row {
-  display: grid;
-  gap: 0.6rem;
-}
-
-@media (min-width: 60rem) {
-  .rail,
-  .rail-row {
-    grid-template-columns: 15rem minmax(0, 1fr);
-    column-gap: 3rem;
-    align-items: start;
-  }
-
-  /* The heading sits on the same baseline as the first line beside it */
-  .rail {
-    align-items: baseline;
-  }
-
-  /* Text with no heading beside it still sits in the text column */
-  .rail > .rail-body:only-child {
-    grid-column: 2;
-  }
-
-  /* In a long section the heading stays in view while you read it */
-  .rail-head {
-    position: sticky;
-    top: 6rem;
-  }
-
-  /* A list beside the heading starts level with it: no rule on top and no
-     padding above the first item. */
-  .rail-body > :is(ul, ol, dl):first-child {
-    border-top: none;
-  }
-
-  .rail-body > :is(ul, ol, dl):first-child > :first-child {
-    padding-top: 0;
-  }
-}
-
-hr {
-  border: none;
-  border-top: 1px solid var(--rule);
-  margin-block: 2.5rem;
-}
-
-/* ---- Fact ledger (used instead of stat cards) --------------------------- */
-.ledger {
-  max-width: var(--measure);
-}
-
-.ledger-row {
-  display: grid;
-  grid-template-columns: 9.5rem 1fr;
-  gap: 1.25rem;
-  align-items: baseline;
-  padding-block: 0.95rem;
-  border-bottom: 1px solid var(--rule);
-}
-
-.ledger-figure {
-  font-weight: 650;
-  font-size: 1.35rem;
-  letter-spacing: -0.01em;
   color: var(--ink);
 }
 
-.ledger-label {
-  color: var(--text);
+.runin {
+  font-weight: 700;
+  color: var(--ink);
 }
 
-/* The one weighted row per ledger: a tinted block, no rule of its own */
-.ledger-row.weighted {
-  background: var(--policy-wash);
-  border-bottom-color: transparent;
-  border-radius: 12px;
-  padding-inline: 1rem;
-  margin-inline: -1rem;
-  margin-block: 0.4rem;
+a {
+  color: var(--green);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 120ms, text-decoration-color 120ms;
 }
 
-.ledger-row.weighted .ledger-figure {
-  color: var(--policy-deep);
-  font-size: 1.6rem;
+a:hover {
+  color: var(--green-hover);
+  text-decoration-thickness: 2px;
 }
 
-@media (max-width: 34rem) {
-  .ledger-row {
-    grid-template-columns: 1fr;
-    gap: 0.15rem;
+:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 2px;
+}
+
+/* An email address may break anywhere rather than push the page sideways */
+a[href^='mailto:'] {
+  overflow-wrap: anywhere;
+}
+
+/* The highlighter: once per page at most, on the phrase that matters most */
+mark {
+  background: var(--mark);
+  color: var(--ink);
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.lead {
+  font-size: var(--step-1);
+  line-height: 1.5;
+  max-width: var(--text-w);
+}
+
+.small {
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+/* Chinese: taller lines, no tracking, and the browser's own spacing between
+   Chinese and Latin where it is supported. */
+html[lang^='zh'] body {
+  line-height: 1.85;
+  line-break: strict;
+  text-autospace: normal;
+  text-spacing-trim: trim-start;
+}
+
+html[lang^='zh'] :is(h1, h2, h3, h4) {
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+html[lang^='zh'] .lead {
+  line-height: 1.7;
+}
+
+/* ---- Layout ------------------------------------------------------------ */
+.wrap {
+  width: 100%;
+  max-width: var(--wide);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* A section: ruled off from the one before, with the same space above and
+   below. Nothing sits in a box. */
+.sec {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--rule);
+}
+
+.sec-first {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.sec-head {
+  max-width: 46rem;
+  margin-bottom: var(--space-5);
+}
+
+.sec-head p {
+  margin-top: 0.8rem;
+  max-width: var(--text-w);
+}
+
+.sec-head .kicker-date {
+  margin: 0 0 0.5rem;
+}
+
+.kicker-date {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+/* The rail: from 56rem the section heading sits in a left column and the
+   content in the right. Below that they stack. */
+.rail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.rail-head h2 {
+  font-size: var(--step-2);
+}
+
+.rail-head p {
+  margin-top: 0.8rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+@media (min-width: 56rem) {
+  .rail {
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
   }
 }
 
-/* ---- Buttons ----------------------------------------------------------- */
-.btn {
+/* Running text: one reading column */
+.prose {
+  max-width: var(--text-w);
+}
+
+.prose > * + * {
+  margin-top: 1em;
+}
+
+.prose > h3 {
+  margin-top: 1.6em;
+}
+
+.prose li + li {
+  margin-top: 0.4em;
+}
+
+/* A sentence with a note beside it: from 64rem the note sits in a right-hand
+   column next to the text it supports; below that it follows the text. */
+.noted {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  .noted {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    column-gap: 4rem;
+    align-items: start;
+  }
+}
+
+.sidenote {
+  font-size: var(--step--1);
+  color: var(--muted);
+  max-width: 24rem;
+}
+
+.sidenote b {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sidenote + .sidenote {
+  margin-top: 0.8rem;
+}
+
+/* ---- Buttons and standalone links -------------------------------------- */
+.btn,
+.btn-light {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0.8rem 1.5rem;
-  border-radius: 999px;
+  min-height: 48px;
+  padding: 0 1.3rem;
+  border: 0;
+  border-radius: 4px;
+  font: 600 var(--step-0) / 1.2 var(--sans);
   text-decoration: none;
-  border: none;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  transition: background-color 120ms;
+}
+
+.btn {
+  background: var(--green);
+  color: #fff;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-}
-
-/* Sending: the button stays visible but stops responding */
-.btn:disabled {
-  opacity: 0.7;
-  cursor: progress;
-  transform: none;
-}
-
-.btn-policy {
-  background: var(--policy);
+  background: var(--green-hover);
   color: #fff;
 }
 
-.btn-policy:hover {
-  background: var(--policy-deep);
-  color: #fff;
+.btn[disabled] {
+  background: var(--muted);
+  cursor: default;
 }
 
-.btn-teaching {
-  background: var(--teaching);
-  color: #fff;
+.btn-light {
+  background: var(--cream);
+  color: var(--night);
 }
 
-.btn-teaching:hover {
-  background: var(--teaching-deep);
-  color: #fff;
+.btn-light:hover {
+  background: #fff;
+  color: var(--night);
 }
 
-.btn .arrow {
-  transition: transform 0.15s ease;
-}
-
-.btn:hover .arrow {
-  transform: translateX(3px);
-}
-
-/* Text-link with a drawn underline on hover */
-.link-quiet {
+/* A link standing on its own line: big enough to tap */
+.more,
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  min-height: 44px;
   font-weight: 600;
-  text-decoration: none;
-  border-bottom: 1.5px solid transparent;
-  transition: border-color 0.15s ease;
 }
 
-.link-quiet:hover {
-  border-bottom-color: currentColor;
+.more {
+  margin-top: 1.2rem;
 }
 
-/* ---- Skip link --------------------------------------------------------- */
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -4rem;
-  background: var(--policy);
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius);
-  z-index: 200;
-  transition: top 0.15s ease;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+  margin-top: var(--space-4);
 }
 
-.skip-link:focus {
-  top: 1rem;
-  color: #fff;
-}
-
-/* ---- Lightbox (teaching photos) ----------------------------------------- */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
+/* ---- Details ----------------------------------------------------------- */
+/* Longer material folds away under a plain text summary. */
+details > summary {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 5vw;
-  background: rgba(20, 18, 14, 0.92);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s;
-}
-
-/* Visible at once when opening (only the fade animates), so focus can move
-   into the viewer straight away; closing keeps the fade before hiding. */
-.lightbox.open {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 0.25s ease;
-}
-
-.lightbox img {
-  max-width: 92vw;
-  max-height: 84vh;
-  border-radius: var(--radius);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
-}
-
-.lightbox-btn {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  gap: 0.5rem;
+  min-height: 44px;
+  width: fit-content;
+  color: var(--green);
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease;
+  list-style: none;
 }
 
-.lightbox-btn svg {
-  width: 1.25rem;
-  height: 1.25rem;
+details > summary::-webkit-details-marker {
+  display: none;
 }
 
-/* The blue ring disappears on the dark backdrop, so it turns white here */
-.lightbox :focus-visible {
-  outline-color: #fff;
-}
-
-.lightbox-btn:hover {
-  background: rgba(255, 255, 255, 0.28);
-}
-
-.lightbox-close {
-  top: 1.25rem;
-  right: 1.25rem;
-}
-
-.lightbox-prev {
-  left: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.lightbox-next {
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.lightbox-cap {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 0;
-  right: 0;
+details > summary::before {
+  content: '+';
+  flex: none;
+  width: 1ch;
+  font-weight: 400;
   text-align: center;
-  color: rgba(255, 255, 255, 0.85);
-  font-size: 0.95rem;
-  padding-inline: 2rem;
 }
 
-/* ---- Utility ------------------------------------------------------------ */
-/* Keeps a short link and its arrow together at the end of a paragraph */
-.nowrap {
-  white-space: nowrap;
+details[open] > summary::before {
+  content: '\2212';
 }
 
+details > summary:hover {
+  color: var(--green-hover);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* ---- Helpers ----------------------------------------------------------- */
 .visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
+  padding: 0;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
 
-/* ---- Reduced motion ------------------------------------------------------ */
+.skip {
+  position: absolute;
+  left: -999px;
+}
+
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: var(--paper);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* Placeholder content, shown in `npm run dev` only (see src/data/facts.ts) */
+.sample-tag {
+  display: inline-block;
+  margin-right: 0.4em;
+  padding: 0 0.4em;
+  border: 1px dashed var(--muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+  color: var(--muted);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
+  * {
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---- Print ------------------------------------------------------------- */
+/* Any page prints as a plain document: no header, footer or margin title. */
+@media print {
+  .site-head,
+  .foot,
+  .skip,
+  .vtitle,
+  .on-this-page,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    display: block;
+    font-size: 11pt;
+    color: #000;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .sec {
+    padding-block: 1.5rem;
+    break-inside: auto;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  .sheet,
+  figure,
+  li {
+    break-inside: avoid;
   }
 }

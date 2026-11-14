@@ -1,0 +1,89 @@
+---
+// One proposal's page, /policy/<key>: its case first (what we noticed, what
+// we did, what's changed), the argument in three lines, then the paper as we
+// sent it. Shared by the English and Chinese pages, which pass in the entry
+// for their own language.
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTop from './PageTop.astro';
+import Case from './Case.astro';
+import ThreePart from './ThreePart.astro';
+import '../styles/pages/policy.css';
+import { formatDate } from '../lib/dates';
+import { statusText, type Submission } from '../lib/submissions';
+import { getLangFromUrl, localizePath, ui } from '../i18n';
+
+interface Props {
+  submission: Submission;
+}
+const { submission: s } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang].proposal;
+const { Content } = await render(s.entry);
+
+const sent = formatDate(s.date, lang, 'long');
+const year = s.date.slice(0, 4);
+const address = new URL(localizePath(`/policy/${s.key}`, lang) + '/', Astro.site).href;
+---
+
+<BaseLayout title={s.short ?? s.title} description={s.summary} pageClass="page-policy">
+  <PageTop vertical="政策">
+    <p class="back"><a class="textlink" href={localizePath('/policy#submissions', lang)}>{t.back}</a></p>
+    <p class="meta-line">
+      <time datetime={s.date}>{sent}</time>
+      {s.area && ` · ${s.area}`} · {statusText(s, lang)}
+    </p>
+    <h1>{s.title}</h1>
+  </PageTop>
+
+  {
+    s.case_title && s.noticed && s.did && s.changed && (
+      <section class="sec" aria-labelledby="case">
+        <div class="wrap">
+          <Case
+            id="case"
+            title={s.case_title}
+            noticed={{ date: s.noticed_date, text: s.noticed }}
+            did={{
+              date: s.date,
+              text: s.did,
+              evidence: { kind: 'document', label: t.paperChip, href: '#paper' },
+            }}
+            changed={{ date: s.changed_date, text: s.changed, status: s.changed_status }}
+          />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    s.case_for && s.case_against && s.recommendation && (
+      <section class="sec" aria-labelledby="three-lines">
+        <div class="wrap rail">
+          <div class="rail-head">
+            <h2 id="three-lines">{t.threeLines}</h2>
+          </div>
+          <ThreePart caseFor={s.case_for} caseAgainst={s.case_against} recommendation={s.recommendation} boxed />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="sec" aria-labelledby="paper">
+    <div class="wrap rail">
+      <div class="rail-head paper-meta">
+        <h2 id="paper">{t.paper}</h2>
+        <p>{t.paperNote}</p>
+        {s.pdf && <p><a class="textlink" href={s.pdf}>{t.pdf}</a></p>}
+      </div>
+      <div>
+        <article class="paper">
+          <Content />
+        </article>
+        <p class="cite">
+          <b>{t.cite}</b>{lang === 'en' ? ': ' : '：'}AI For Good Hong Kong ({year}). <cite>{s.title}</cite>. {t.citeSubmitted}{lang === 'en' ? ' ' : ' '}{sent}. {address}
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

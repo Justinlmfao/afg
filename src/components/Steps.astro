@@ -1,0 +1,22 @@
+---
+// A numbered sequence. Use it only where the order is real: the four Think
+// First steps, the three steps of writing a proposal.
+//
+//   long   three steps with a short paragraph each, instead of one line
+interface Props {
+  items: { name: string; text: string }[];
+  long?: boolean;
+}
+const { items, long = false } = Astro.props;
+---
+
+<ol class:list={['steps', long && 'steps-long']}>
+  {
+    items.map((item) => (
+      <li>
+        <h3>{item.name}</h3>
+        <p>{item.text}</p>
+      </li>
+    ))
+  }
+</ol>

@@ -1,18 +1,29 @@
 ---
 title: "Retrain Before Redundancy: Preventing AI-Driven Structural Unemployment in Hong Kong"
+short: "Retrain Before Redundancy"
 lang: en
 key: retrain-before-redundancy
-date: "March 2025"
+date: "2025-03"
 area: "Labour economics"
+status: submitted
+ask: "Pay at-risk workers to retrain before they lose their jobs: up to about HK$240 million over three years."
+case_title: "Paying workers to retrain before AI takes their jobs, not after."
+noticed: "Hong Kong is short of workers just as AI looks set to make many routine office jobs unnecessary. Hong Kong mostly pays people to retrain after they lose their job."
+did: "We proposed paying at-risk workers to retrain before redundancy, steering them towards sectors short of staff, and rewarding employers who retrain people instead of letting them go: up to about HK$240 million over three years."
+changed: "Nothing we can point to yet."
+changed_status: pending
+case_for: "Paying a worker to retrain while they still have a job costs far less than unemployment afterwards, and it moves people into the sectors that are short of staff."
+case_against: "Nobody knows exactly which jobs AI will replace, some of the money pays for training that would have happened anyway, and not every job switch is realistic."
+recommendation: "All five measures, starting with an AI Exposure Index that is reviewed every year."
 summary: "Hong Kong is short of workers just as AI looks set to make many routine office jobs unnecessary. That's how structural unemployment starts: the jobs exist, but the people who lose theirs can't fill them. Hong Kong mostly pays people to retrain after they lose their job. We propose paying at-risk workers to retrain before it happens, steering them towards sectors that are short of staff, and rewarding employers who retrain people instead of letting them go, for up to about HK$240 million over three years."
-order: 2
+order: 5
 ---
 
 Written in light of the Employees Retraining Board reforms in the 2024 Policy
 Address, the government's Report on Manpower Projection to 2028, and the
 2025–26 Budget.
 
-#### The issue
+### The issue
 
 **A shortage and a surplus at the same time.** The government's Report on
 Manpower Projection to 2028, published in November 2024, projects a shortfall of
@@ -57,7 +68,7 @@ retrain while they're still employed and employers are still hiring. Waiting
 until displacement shows up in the unemployment figures means paying for longer
 spells out of work, lost tax revenue and higher welfare costs.
 
-#### What we propose
+### What we propose
 
 **1. Publish an AI Exposure Index for Hong Kong occupations.** The Labour and
 Welfare Bureau and the Census and Statistics Department should map Hong Kong's
@@ -90,7 +101,7 @@ with AI could claim a top-up of up to **HK$20,000 per worker** they retrain into
 a new role instead of dismissing. That turns AI adoption from a reason to cut
 staff into a reason to redeploy them.
 
-#### Cost
+### Cost
 
 | Item | Basis | Up to (HK$, 3 years) |
 |---|---|---|
@@ -109,7 +120,7 @@ Employees Retraining Levy that employers pay when importing workers. As labour
 importation grows to fill shortages, it's fair for that levy to fund retraining
 for local workers whose jobs are changing.
 
-#### The case for
+### The case for
 
 - **Prevention is cheaper than cure.** Paying a worker HK$9,990 to retrain
   while employed costs far less than months of unemployment, lost tax revenue
@@ -123,7 +134,7 @@ for local workers whose jobs are changing.
 - **It shares the cost fairly.** Employers who gain from AI and imported labour
   help pay for local workers to adjust.
 
-#### The case against
+### The case against
 
 - **The forecasts may be wrong.** Nobody knows exactly which jobs AI will
   replace. An exposure index might flag the wrong occupations and train the
@@ -139,7 +150,7 @@ for local workers whose jobs are changing.
 - **It may slow AI adoption.** Any condition on technology subsidies, however
   light, adds friction for firms.
 
-#### Our recommendation
+### Our recommendation
 
 On balance, we recommend all five measures, starting with the AI Exposure Index,
 since the others depend on it. The strongest objection is that forecasts are
@@ -148,7 +159,7 @@ updated as the evidence changes. The Train-to-Keep incentive is deliberately a
 reward rather than a requirement, so it encourages firms to redeploy staff
 without penalising them for adopting AI.
 
-#### How we'd measure it
+### How we'd measure it
 
 - **Targeting.** The share of allowance recipients who come from high-exposure
   occupations.
@@ -160,7 +171,7 @@ without penalising them for adopting AI.
 - **Time out of work.** The share of unemployed former clerical workers who have
   been out of work for more than six months.
 
-#### What's happened since
+### What's happened since
 
 - The **2026–27 Budget** (February 2026) announced that the ERB will be upgraded
   as **Upskill Hong Kong**, offering skills-based courses including AI
@@ -172,7 +183,7 @@ without penalising them for adopting AI.
   admin, **clerical support workers** will see a surplus of about **25,000 to
   30,000 by 2028**, while the overall shortage narrows to around 130,000.
 
-#### References
+### References
 
 - [Census and Statistics Department, unemployment and underemployment statistics for December 2024 – February 2025, 18 March 2025](https://www.info.gov.hk/gia/general/202503/18/P2025031800366.htm)
 - [China Daily HK, "Report: HK may face huge manpower shortage by 2028", 14 November 2024](https://www.chinadailyhk.com/hk/article/597764)

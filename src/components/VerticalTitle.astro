@@ -1,0 +1,15 @@
+---
+// The page's Chinese name, set vertically in the left margin on wide
+// screens, like the subject names written down the chalkboard in our
+// classroom photographs. Decoration: the page's real title is its <h1>.
+import { getLangFromUrl } from '../i18n';
+
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+// On the English pages the characters are Traditional Chinese.
+const lang = getLangFromUrl(Astro.url) === 'en' ? 'zh-Hant' : undefined;
+---
+
+<span class="vtitle" aria-hidden="true" lang={lang}>{text}</span>

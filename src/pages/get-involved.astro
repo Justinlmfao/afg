@@ -1,46 +1,43 @@
 ---
+// Contact page: the email address, who usually writes to us, and the form.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getLangFromUrl, ui } from '../i18n';
+import PageTop from '../components/PageTop.astro';
 import '../styles/pages/contact.css';
+import { contactEmail } from '../data/facts';
+import { getLangFromUrl, ui } from '../i18n';
 
-// Contact address chosen by Justin (school-affiliated).
-const email = 'ps20153216@student.vsa.edu.hk';
 const t = ui[getLangFromUrl(Astro.url)];
 ---
 
 <BaseLayout
   title="Contact"
+  pageClass="page-contact"
   description="Get in touch with AI For Good: students who want to research or teach, schools and partners, and anyone else."
-
-  pageClass="page-contact">
-  <section class="page-top">
-    <div class="container prose">
-      <p class="kicker">Contact</p>
-      <h1>Get in touch</h1>
-      <p class="lead">
-        Email us at <a href={`mailto:${email}`}>{email}</a> or fill in the form
-        below. We're based in Hong Kong.
-      </p>
-    </div>
-  </section>
+>
+  <PageTop vertical="聯絡">
+    <h1>Get in touch.</h1>
+    <p class="lead">
+      Email us at <a href={`mailto:${contactEmail}`}>{contactEmail}</a> or fill in the form below. We're
+      based in Hong Kong, and we usually reply within a week.
+    </p>
+  </PageTop>
 
   <!-- Who writes to us sits in the margin column beside the form -->
-  <section>
-    <div class="container rail">
-      <ul class="routes rail-head">
-        <li>
+  <section class="sec">
+    <div class="wrap rail">
+      <ul class="routes">
+        <li id="students">
           <h2>Students</h2>
           <p>
-            Want to do real research or teach? We care more about the work than
-            about titles. Tell us what you'd like to work on.
+            Want to do real research or teach? We care more about the work than about titles. Tell us what
+            you'd like to work on.
           </p>
         </li>
-        <li>
-          <h2>Schools &amp; partners</h2>
+        <li id="schools">
+          <h2>Schools and partners</h2>
           <p>
-            If you run a school or programme for children from underprivileged
-            families, we'd love to work with you. We'll bring the lessons, the
-            tutors and the equipment.
+            If you run a school or programme for children from underprivileged families, we'd love to work
+            with you. We'll bring the lessons, the tutors and the equipment.
           </p>
         </li>
         <li>
@@ -60,7 +57,7 @@ const t = ui[getLangFromUrl(Astro.url)];
         action="/thanks/"
         data-netlify="true"
         netlify-honeypot="bot-field"
-        class="contact-form rail-body"
+        class="contact-form"
       >
         <input type="hidden" name="form-name" value="contact" />
         <p class="hidden-field" aria-hidden="true">
@@ -86,36 +83,33 @@ const t = ui[getLangFromUrl(Astro.url)];
 
         <div class="field">
           <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
+          <textarea id="message" name="message" rows="6" required></textarea>
         </div>
 
-        <button type="submit" class="btn btn-policy" data-sending={t.sending}>
-          <span class="btn-label">Send message</span> <span class="arrow" aria-hidden="true">→</span>
-        </button>
+        <button type="submit" class="btn" data-sending={t.sending}>Send message</button>
       </form>
     </div>
   </section>
 </BaseLayout>
 
 <script>
-  // While the form sends, the button says so and can't be pressed twice.
-  // The browser's own checks run first, so this only fires on a valid form.
+  // Feedback while the form sends: the button says so and can't be pressed
+  // twice. The browser's own checks run first, so this only fires on a valid
+  // form. Without this script the form still sends.
   const form = document.querySelector<HTMLFormElement>('.contact-form');
   const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
-  const buttonLabel = button?.querySelector('.btn-label');
-  const idleText = buttonLabel?.textContent;
+  const idleText = button?.textContent;
   form?.addEventListener('submit', () => {
-    if (!button || !buttonLabel) return;
+    if (!button) return;
     button.disabled = true;
     button.setAttribute('aria-busy', 'true');
-    buttonLabel.textContent = button.dataset.sending || '';
+    button.textContent = button.dataset.sending || '';
   });
   // Coming back with the browser's Back button restores a usable form
   window.addEventListener('pageshow', () => {
-    if (!button || !buttonLabel) return;
+    if (!button) return;
     button.disabled = false;
     button.removeAttribute('aria-busy');
-    buttonLabel.textContent = idleText || '';
+    button.textContent = idleText || '';
   });
 </script>
-

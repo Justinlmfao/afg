@@ -1,0 +1,92 @@
+---
+// Every submission as a dated list, newest first. A table on a wide screen;
+// on a narrow one each row stacks.
+//
+//   variant "full"   Date | Submission | Ask | Where it stands  (Policy page)
+//   variant "brief"  Date | title and ask together | Where it stands  (home)
+//   heading          the middle column's header in the brief table
+//
+// A row marked `sample: true` has a placeholder ask. It shows with a
+// "Sample" tag in `npm run dev`; on the built site the row keeps its date,
+// title and status and the ask is left out.
+import { formatDate, ledgerYear, machineDate } from '../lib/dates';
+import { submissionHref, statusText, type Submission } from '../lib/submissions';
+import { showSamples } from '../data/facts';
+import { getLangFromUrl, ui } from '../i18n';
+
+interface Props {
+  rows: Submission[];
+  variant?: 'full' | 'brief';
+  heading?: string;
+  /** Names the table for screen readers. */
+  caption: string;
+}
+const { rows, variant = 'full', heading, caption } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
+const full = variant === 'full';
+
+// Group by year, keeping the order the rows came in.
+const groups: Submission[][] = [];
+for (const row of rows) {
+  const last = groups.at(-1);
+  if (last && ledgerYear(last[0].date) === ledgerYear(row.date)) last.push(row);
+  else groups.push([row]);
+}
+---
+
+<div class="ledger-wrap">
+  <table class:list={['ledger', full ? 'ledger-full' : 'ledger-brief']}>
+    <caption class="visually-hidden">{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{t.ledger.date}</th>
+        <th scope="col">{heading ?? t.ledger.submission}</th>
+        {full && <th scope="col">{t.ledger.ask}</th>}
+        <th scope="col">{t.ledger.status}</th>
+      </tr>
+    </thead>
+    {
+      groups.map((group) => (
+        <tbody>
+          {group.map((s) => {
+            const href = submissionHref(s, lang);
+            const name = s.short ?? s.title;
+            const showAsk = s.ask && (!s.sample || showSamples);
+            const ask = showAsk && (
+              <>
+                {s.sample && <span class="sample-tag" data-sample>{t.sample}</span>}
+                {s.ask}
+              </>
+            );
+            return (
+              <tr>
+                <td class="date">
+                  {machineDate(s.date) ? (
+                    <time datetime={s.date}>{formatDate(s.date, lang)}</time>
+                  ) : (
+                    formatDate(s.date, lang)
+                  )}
+                </td>
+                {full ? (
+                  <>
+                    <td class="title">
+                      <span class="t">{href ? <a href={href}>{name}</a> : name}</span>
+                    </td>
+                    <td class="ask">{ask}</td>
+                  </>
+                ) : (
+                  <td class="prop">
+                    <span class="t">{href ? <a href={href}>{name}</a> : name}</span>
+                    {ask && <span class="ask">{ask}</span>}
+                  </td>
+                )}
+                <td class:list={['status', s.status === 'reflected' && 'won']}>{statusText(s, lang)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      ))
+    }
+  </table>
+</div>

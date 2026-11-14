@@ -1,0 +1,13 @@
+---
+// A caveat or source that supports a sentence. Put it after the text it
+// belongs to, inside a `.noted` wrapper: on wide screens it sits in the
+// right-hand margin beside that text, on narrow ones it follows it.
+interface Props {
+  /** The run-in label, e.g. "About that number." */
+  label?: string;
+  id?: string;
+}
+const { label, id } = Astro.props;
+---
+
+<p class="sidenote" id={id}>{label && <b>{label}</b>}{label && ' '}<slot /></p>

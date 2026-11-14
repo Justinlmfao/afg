@@ -4,7 +4,8 @@
 //
 // Traditional Chinese (src/pages/zh/) is the source of the Chinese on this
 // site. This script converts it to Simplified and writes src/pages/zh-hans/,
-// plus the *_hans fields in the content collections. The output is committed,
+// the .hans.md proposals, the *_hans fields in the content collections and
+// the `hans:` lines in src/data/. The output is committed,
 // so you can read it in review and hand-edit a sentence if you need to — but a
 // hand edit is overwritten the next time this runs, so prefer fixing the
 // Traditional and regenerating.
@@ -102,9 +103,22 @@ const BANNER = `---
 // Run \`npm run zh-hans\` to rebuild this from src/pages/zh/.
 `;
 
-fs.mkdirSync(OUT, { recursive: true });
+// Every .astro file under src/pages/zh/, including those in sub-folders
+// (policy/[key].astro, teaching/sample-lesson.astro).
+function pagesIn(dir, prefix = '') {
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>
+    entry.isDirectory()
+      ? pagesIn(path.join(dir, entry.name), path.join(prefix, entry.name))
+      : entry.name.endsWith('.astro')
+        ? [path.join(prefix, entry.name)]
+        : []
+  );
+}
 
-for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
+// Start from an empty folder, so a page deleted from /zh disappears here too.
+fs.rmSync(OUT, { recursive: true, force: true });
+
+for (const name of pagesIn(SRC)) {
   const source = fs.readFileSync(path.join(SRC, name), 'utf8');
 
   let out = toHans(source)
@@ -115,6 +129,9 @@ for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
     .replaceAll('href="/zh"', 'href="/zh-hans"')
     // Collection fields come from the *_hans columns, not the Traditional ones.
     .replace(/\b(\w+)_zh\b/g, '$1_hans')
+    // A page that names its own language (to pick its entries from a
+    // collection) names Simplified here.
+    .replaceAll("const LANG = 'zh'", "const LANG = 'hans'")
     // Carried-over code comments describe the Traditional page they came from.
     .replaceAll('Traditional Chinese', 'Simplified Chinese')
     .replaceAll('src/pages/zh/', 'src/pages/zh-hans/');
@@ -122,8 +139,10 @@ for (const name of fs.readdirSync(SRC).filter((f) => f.endsWith('.astro'))) {
   // Replace the leading frontmatter fence with the generated-file banner.
   out = out.startsWith('---\n') ? BANNER + out.slice(4) : BANNER + '---\n' + out;
 
-  fs.writeFileSync(path.join(OUT, name), out);
-  console.log(`${OUT}/${name}`);
+  const target = path.join(OUT, name);
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.writeFileSync(target, out);
+  console.log(target);
 }
 
 // --- Proposals -----------------------------------------------------------
@@ -186,5 +205,33 @@ for (const dir of COLLECTIONS) {
       fs.writeFileSync(file, next);
       console.log(file);
     }
+  }
+}
+
+// --- Shared data ---------------------------------------------------------
+
+// src/data/*.ts keeps the three languages side by side:
+//   en: '…',
+//   zh: '…',
+//   hans: '…',
+// Each `hans:` line is rewritten from the `zh:` line above it. A `zh:` value
+// must sit on one line for this to work.
+const DATA = 'src/data';
+for (const name of fs.readdirSync(DATA).filter((f) => f.endsWith('.ts'))) {
+  const file = path.join(DATA, name);
+  const text = fs.readFileSync(file, 'utf8');
+  const lines = text.split('\n');
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    out.push(lines[i]);
+    const m = lines[i].match(/^(\s*)zh:(.*)$/);
+    if (!m) continue;
+    out.push(`${m[1]}hans:${toHans(m[2])}`);
+    if (/^\s*hans:/.test(lines[i + 1] ?? '')) i++; // replace the old twin
+  }
+  const next = out.join('\n');
+  if (next !== text) {
+    fs.writeFileSync(file, next);
+    console.log(file);
   }
 }

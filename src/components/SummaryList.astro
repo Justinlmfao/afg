@@ -1,0 +1,19 @@
+---
+// A key and value list, for facts at a glance. Used once, on About.
+// Values may contain links.
+interface Props {
+  rows: { key: string; value: string }[];
+}
+const { rows } = Astro.props;
+---
+
+<dl class="summary">
+  {
+    rows.map((row) => (
+      <div>
+        <dt>{row.key}</dt>
+        <dd set:html={row.value} />
+      </div>
+    ))
+  }
+</dl>

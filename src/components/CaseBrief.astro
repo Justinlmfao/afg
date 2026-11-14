@@ -1,0 +1,51 @@
+---
+// A submission's case in brief: its title, when it was sent, and one short
+// passage for each stage. Links to the submission's own page when it has one.
+import { formatDate } from '../lib/dates';
+import { submissionHref, statusText, type Submission } from '../lib/submissions';
+import { getLangFromUrl, ui } from '../i18n';
+
+interface Props {
+  submission: Submission;
+}
+const { submission: s } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
+const href = submissionHref(s, lang);
+const pending = s.changed_status === 'pending';
+---
+
+<article class="brief" id={s.key}>
+  <p class="brief-meta">
+    <time datetime={s.date.includes('/') ? undefined : s.date}>{formatDate(s.date, lang, 'long')}</time>
+    {s.area && ` · ${s.area}`} · {statusText(s, lang)}
+  </p>
+  <h3>{href ? <a href={href}>{s.title}</a> : s.title}</h3>
+  <dl class:list={['brief-stages', pending ? 'pending' : 'changed']}>
+    {
+      s.noticed && (
+        <div>
+          <dt>{t.stage.noticed}</dt>
+          <dd>{s.noticed}</dd>
+        </div>
+      )
+    }
+    {
+      s.did && (
+        <div>
+          <dt>{t.stage.did}</dt>
+          <dd>{s.did}</dd>
+        </div>
+      )
+    }
+    {
+      s.changed && (
+        <div>
+          <dt>{pending ? t.stage.soFar : t.stage.changed}</dt>
+          <dd>{s.changed}</dd>
+        </div>
+      )
+    }
+  </dl>
+  {s.hasPaper && href && <a class="more" href={href}>{t.proposal.read}</a>}
+</article>
