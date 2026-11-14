@@ -20,12 +20,24 @@ const t = ui[lang];
 const path = localizePath(Astro.url.pathname, 'en');
 // The 404 page exists only once, so its language links go to each home page
 const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.url.pathname;
+// On phones, one tap to the other language without opening the menu:
+// Chinese from the English pages, English from either Chinese version.
+const quick = lang === 'en' ? ({ code: 'zh', label: '中文' } as const) : ({ code: 'en', label: 'EN' } as const);
 ---
 
 <header class="site-header" id="site-header">
   <div class="container header-inner">
     <a href={localizePath('/', lang)} class="brand" aria-label={t.home}>
       <Logo />
+    </a>
+
+    <a
+      class="lang-quick"
+      href={localizePath(switchPath, quick.code)}
+      lang={htmlLangs[quick.code]}
+      aria-label={switchLabels[lang][quick.code]}
+    >
+      {quick.label}
     </a>
 
     <button
@@ -125,6 +137,10 @@ const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.
     width: auto;
   }
 
+  .lang-quick {
+    display: none;
+  }
+
   .primary-nav ul {
     list-style: none;
     display: flex;
@@ -220,6 +236,18 @@ const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.
 
     .brand :global(.logo) {
       height: 19px;
+    }
+
+    .lang-quick {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-left: auto;
+      padding-inline: 0.5rem;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
     }
 
     /* The open menu is a panel over the page, with the page dimmed behind
