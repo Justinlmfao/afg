@@ -1,5 +1,63 @@
 /* Policy page and the proposal pages under it, in every language. */
 .page-policy {
+  /* So far: a figure and what it counts, on ruled rows */
+  .record {
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .record > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem 1.5rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .record > div:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .record dt {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+    color: var(--accent);
+  }
+
+  .record dd {
+    margin: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .record > div {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .case .sec-head p:not(.kicker-date) {
+    max-width: var(--text-w);
+  }
+
+  .flagship-parts {
+    max-width: 52rem;
+    margin-top: var(--space-5);
+  }
+
+  .format-intro {
+    margin-bottom: var(--space-4);
+  }
+
+  .format-title {
+    font-size: var(--step-1);
+  }
+
+  .format-sub {
+    margin: 0.2rem 0 0.9rem;
+  }
+
   /* Under the AI for All case: the fuller account, and its sources */
   .after-case {
     display: grid;

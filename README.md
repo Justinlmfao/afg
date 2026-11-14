@@ -34,12 +34,12 @@ below.
 
 | Route | What it is |
 | --- | --- |
-| `/` | The AI for All case, recent proposals, how we teach |
-| `/policy` | AI for All in full, a ledger of every submission, how a proposal is written |
+| `/` | Hero and figures, the Policy and Teaching doors, the AI for All case, who we are, recent proposals, how we teach, latest work |
+| `/policy` | The record so far, AI for All in full, a ledger of every submission, how a proposal is written, two proposals |
 | `/policy/<key>` | One page per proposal: its case, the argument in three lines, the paper |
-| `/teaching` | The programme as a case, the Think First steps and worksheet, promises, modules, where we teach |
+| `/teaching` | The programme as a case, why we teach, the Think First steps and worksheet, modules, the sample lesson in full, promises, all the classroom photographs |
 | `/teaching/sample-lesson` | The sample lesson, set up to print |
-| `/about` | At a glance, why we do both, the founder's account, the people who lead it |
+| `/about` | At a glance, why we do both, how it started, what we do and how, our impact, the people who lead it, what's next |
 | `/get-involved` | Contact form and email |
 
 Old URLs redirect: `/research` and `/programs` to the pages that replaced
@@ -79,10 +79,12 @@ Chinese changes.
 | The AI for All story (home and Policy) | `src/data/cases.ts` |
 | Nav labels, footer text, labels such as "What we noticed" | `src/i18n.ts` (all three languages) |
 | English page copy | `src/pages/*.astro` |
+| The sample lesson's text (shown on Teaching and on its own page) | `src/pages/_lesson.astro` and `src/pages/zh/_lesson.astro` |
 | Chinese page copy | `src/pages/zh/*.astro`, then `npm run zh-hans` |
 | A submission, module or team member | `src/content/**` (see below), then `npm run zh-hans` |
 | A Hong Kong word that should read differently on the mainland | the `TERMS` list in `scripts/generate-simplified.mjs` |
 | Colours, type sizes, spacing | the `:root` block in `src/styles/global.css` |
+| Which colour a page or section takes | `tone-policy` (navy) or `tone-teaching` (green) in its class; add `washed` for the pale ground or `band` for the solid colour |
 | How a component looks | `src/styles/components.css` (one block per component) |
 | How one page looks | `src/styles/pages/<page>.css` |
 | The logo, favicon or share image | `src/assets/brand/`, `public/favicon*`, `public/og-default.jpg` |
@@ -139,7 +141,9 @@ fails if sample content ever reaches a page.
 
 Photographs live in `src/assets/photos/`; the build makes AVIF and WebP
 versions at several widths. To use one, drop the `.jpg` in that folder and
-name it in a page with `<Photo name="file.jpg" … />` or in a `<Gallery>`. See
+name it in a page with `<Photo name="file.jpg" … />`, in a `<Gallery>` (three
+photos, one caption) or in a `<PhotoGrid>` (a whole set; each opens at full
+size). See
 `src/assets/photos/README.md` for which file shows what.
 
 ### PDFs
@@ -151,7 +155,7 @@ submission's `pdf:` field, e.g. `pdf: "/research/my-submission.pdf"`.
 
 ## The rules this site follows
 
-- **Every number lives in `src/data/facts.ts`** and is said once per page:
+- **Every number lives in `src/data/facts.ts`**:
   founded June 2023 · 35+ members · ~20 recommendations a year · HK$50 million
   allocated to AI for All in the 2026–27 Budget · 350 children · 7 schools ·
   43 tutors · 86% moved up a class band since 2024. If a figure isn't in that

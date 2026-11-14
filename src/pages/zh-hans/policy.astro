@@ -20,7 +20,24 @@ import { getLangFromUrl } from '../../i18n';
 
 const lang = getLangFromUrl(Astro.url);
 const f = facts;
-const story = aiForAllCase(lang, { document: '#submissions' });
+// The same case as the home page, told at full length here.
+const short = aiForAllCase(lang, { document: '#submissions' });
+const story = {
+  ...short,
+  period: `我们的主要项目 · ${short.period}`,
+  noticed: {
+    ...short.noticed,
+    text: '我们在一些没有人工智能课堂、也没有资源开办的学校教书，每间教室都看到同一件事：孩子学得很快，缺的是接触的机会。最容易被人工智能抛离的家庭，偏偏也是经学校和雇主推行的计划最难接触到的一群。',
+  },
+  did: {
+    ...short.did,
+    text: '我们把看到的写成一份论证：先访问负责教学的成员，再研究现有的公共支援帮到谁、漏了谁，然后写成一份包括支持理由、反对理由和建议的意见书。我们在 2025 年 8 月把它提交到施政报告咨询，之后在财政预算案的意见中再次提出同一论点。',
+  },
+  changed: {
+    ...short.changed,
+    text: '2026–27 年度财政预算案拨出五千万港元推行 AI for All，计划在 2026 年 6 月正式启动。我们一直提出的论点，在计划的设计中得到呼应：数码港的部分以<mark>学生、家长、长者和基层社群</mark>为对象，正是我们指出一般人工智能技能推广最迟才会照顾到的人。资料来源列在下面，你可以自己查证。',
+  },
+};
 // Submissions in this page's language: the .zh.md files here, and the
 // generated .hans.md files on the Simplified page.
 const submissions = await getSubmissions(lang);
@@ -29,55 +46,94 @@ const proposals = submissions.filter((s) => s.hasPaper);
 
 <BaseLayout
   title="政策研究"
-  pageClass="page-policy"
+  pageClass="page-policy tone-policy"
   description="AI For Good 的政策研究：每年向香港政府提交约二十项书面建议，涵盖施政报告、财政预算案和第一个五年规划。"
 >
-  <PageTop vertical="政策">
+  <PageTop vertical="政策" band>
     <h1>写给作决定的人。</h1>
     <p class="lead">
       我们的政策团队研究在香港看到的问题，再向政府提交建议。这里列出的都是真正提交过的工作，而且还会陆续有更多。
     </p>
     <OnThisPage
       items={[
+        { href: '#so-far', label: '到目前为止' },
         { href: '#ai-for-all', label: 'AI for All' },
         { href: '#submissions', label: '所有意见书' },
-        { href: '#how-we-write', label: '怎样写建议书' },
-        { href: '#proposals', label: '建议书全文' },
+        { href: '#how-we-write', label: '怎样写提案' },
+        { href: '#proposals', label: '我们的提案' },
       ]}
     />
   </PageTop>
 
+  <section class="sec" aria-labelledby="so-far">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="so-far">到目前为止</h2>
+      </div>
+      <dl class="record">
+        <div>
+          <dt>{f.recsPerYear.value}</dt>
+          <dd>每年向政府提交的建议</dd>
+        </div>
+        <div>
+          <dt>HK$50M</dt>
+          <dd>
+            {f.aiForAll.budget} 年度财政预算案拨给 <strong>AI for All</strong> 的款项，正是我们一直倡议的那类普及人工智能计划。<a href="#ai-for-all">我们提交了什么，又可以怎样说</a>
+          </dd>
+        </div>
+        <div>
+          <dt>2024–</dt>
+          <dd>自 2024 年起，每一轮施政报告和财政预算案咨询都有提交意见</dd>
+        </div>
+        <div>
+          <dt>2026–2030</dt>
+          <dd>正在为《经济和社会发展第一个五年规划》撰写意见书</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
   <section class="sec" aria-labelledby="ai-for-all">
     <div class="wrap">
-      <Case id="ai-for-all" {...story} />
+      <Case id="ai-for-all" {...story}>
+        <p slot="intro">
+          2026 年 2 月，香港财政预算案拨出五千万港元，推行一个普及人工智能计划。计划预计在两年内，通过超过 200 个课程、讲座和比赛，接触约 {f.aiForAll.reach.toLocaleString('en')} 名市民，由数码港、香港科技园公司和香港生产力促进局负责推行，其中数码港的部分以学生、家长、长者和基层社群为对象。
+        </p>
+      </Case>
+
+      <dl class="threepart flagship-parts">
+        <div>
+          <dt>我们为什么提出</dt>
+          <dd>我们在没有人工智能课堂、也没有相关预算的学校教小学生。孩子很有兴趣，也学得很快，他们缺的是机会。所以我们每年的意见书都提出同一点：如果人工智能培训只经学校和雇主推行，最后只会惠及本来已有机会的家庭，漏掉真正需要的人。公帑应该先照顾排在队尾的人。</dd>
+        </div>
+        <div>
+          <dt>我们提交了什么</dt>
+          <dd>2025 年 8 月，我们在施政报告咨询中提出这个论点，之后在财政预算案的意见中再次提出。我们建议政府直接资助最难接触到人工智能的人，例如资源不足学校的孩子、他们的家长和长者，而不是经那些最迟才会照顾到他们的机构转介。我们要求的是专门拨给这群人的款项，而不是一个笼统的人工智能技能承诺。</dd>
+        </div>
+        <div>
+          <dt>这代表什么，又不代表什么</dt>
+          <dd>这是一个开始，不是终点。政府形容五千万港元只是初步拨款，50,000 名参加者的目标也只是按现有资源订下的基准；官员表示如果有需求，可能会再增加拨款。五万人只占香港人口的一小部分。我们在下一轮的立场是：需求确实存在，拨款应该跟上，我们也打算在五年规划的意见书中这样说。</dd>
+        </div>
+      </dl>
 
       <div class="after-case">
         <div class="prose">
-          <p>这是一个开始，不是终点。</p>
-          <details>
-            <summary>这代表什么，又不代表什么</summary>
-            <div class="prose">
-              <p>
-                AI for All 预计在两年内，通过超过 200 个课程、讲座和比赛，接触约 {f.aiForAll.reach.toLocaleString('en')} 名市民，由数码港、香港科技园公司和香港生产力促进局负责推行。政府形容这笔款项只是初步拨款，参加人数的目标也只是按现有资源订下的基准；官员表示如果有需求，可能会再增加拨款。我们在下一轮的立场是：需求确实存在，拨款应该跟上，我们也打算在五年规划的意见书中这样说。
-              </p>
-              <h3>为什么这很重要</h3>
-              <p>
-                能够接触人工智能，只解决了一半问题。2019 年，全港有 94% 的家庭可以上网，但月入少于一万港元的家庭只有 71%。而即使有电脑，如果没有人教孩子好好使用人工智能，他们也可能只是依赖它，而不是从中学习。这第二道差距，正是我们<a href="/zh-hans/policy/think-first">《Think First 先想后问》建议</a>要处理的问题。
-              </p>
-              <h3>我们接下来会留意的事</h3>
-              <ul>
-                <li>
-                  <strong>接触到谁。</strong>名额是否真的去到低收入家庭的学生、家长和长者，以及政府会否公布参加者的背景。
-                </li>
-                <li>
-                  <strong>怎样教。</strong>给孩子的课程，是否教他们用人工智能来思考，而不只是教他们怎样用。
-                </li>
-                <li>
-                  <strong>会否扩大。</strong>这只是第一笔拨款。我们会继续主张拨款应该跟随需求增加。
-                </li>
-              </ul>
-            </div>
-          </details>
+          <h3>为什么这很重要</h3>
+          <p>
+            能够接触人工智能，只解决了一半问题。2019 年，全港有 94% 的家庭可以上网，但月入少于一万港元的家庭只有 71%。而即使有电脑，如果没有人教孩子好好使用人工智能，他们也可能只是依赖它，而不是从中学习。这第二道差距，正是我们<a href="/zh-hans/policy/think-first">《Think First 先想后问》建议</a>要处理的问题。
+          </p>
+          <h3>我们接下来会留意的事</h3>
+          <ul>
+            <li>
+              <strong>接触到谁。</strong>名额是否真的去到低收入家庭的学生、家长和长者，以及政府会否公布参加者的背景。
+            </li>
+            <li>
+              <strong>怎样教。</strong>给孩子的课程，是否教他们用人工智能来思考，而不只是教他们怎样用。
+            </li>
+            <li>
+              <strong>会否扩大。</strong>五千万港元和五万人是一个开始。我们会继续主张拨款应该跟随需求增加。
+            </li>
+          </ul>
         </div>
 
         <aside class="sources" aria-labelledby="sources-h">
@@ -101,7 +157,7 @@ const proposals = submissions.filter((s) => s.hasPaper);
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="submissions">
+  <section class="sec washed" aria-labelledby="submissions">
     <div class="wrap">
       <div class="sec-head">
         <h2 id="submissions">我们向政府提交过的<wbr />所有意见书。</h2>
@@ -114,6 +170,7 @@ const proposals = submissions.filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="how-we-write">
     <div class="wrap">
       <div class="sec-head">
+        <p class="kicker-date">我们怎样写一份提案</p>
         <h2 id="how-we-write">每份建议书<wbr />都先反驳自己。</h2>
       </div>
       <Steps
@@ -121,25 +178,31 @@ const proposals = submissions.filter((s) => s.hasPaper);
         items={[
           {
             name: '和受影响的人交谈',
-            text: '我们的议题来自成员亲眼见到的事，而不是新闻。我们会访问老师、家长、上班族和一线人员，也会问我们自己的导师：发生了什么、影响了谁、是只发生过一次还是每星期都有。如果只有一个人留意到某个问题，我们会先找更多证据。',
+            text: '每一份提案都从受政策影响的人开始。我们的议题来自成员亲眼见到的事，而不是新闻；我们会访问老师、家长、上班族和一线人员，也会问我们自己的导师：发生了什么、影响了谁、是只发生过一次还是每星期都有。如果只有一个人留意到某个问题，我们会先找更多证据，才把它写成提案。',
           },
           {
-            name: '确认这真的是政策问题',
-            text: '政府在这方面已经资助了什么？这些资助帮到谁、漏了谁？其他地方试过什么方法、成本多少？如果现有政策已经处理了这个问题，我们会直说，然后放弃。这一步的目的是筛掉建议，而不是替建议找理由。',
+            name: '做研究',
+            text: '接着我们会检查这是否真的是政策问题。政府在这方面已经资助了什么？这些资助帮到谁、漏了谁？其他地方试过什么方法、成本多少？如果现有政策已经处理了这个问题，我们会直说，然后放弃这份提案。这一步的目的是筛掉提案，而不是替提案找理由。',
           },
           {
-            name: '先写支持的理由，再写反对的理由，最后才是建议',
-            text: '由一位成员分三部分撰写建议书，反对的理由会写得尽量有力。通过的建议书会交到当时开放的咨询，而建议会写得清楚具体，让对方可以据此行动。',
+            name: '撰写和提交',
+            text: '由一位成员按下面的三段格式撰写提案，反对的理由会写得尽量有力。如果反对的理由胜出，提案就不会提交。通过的提案会交到当时开放的咨询，例如施政报告、财政预算案或个别政策局的意见征集，而建议会写得清楚具体，让对方可以据此行动。',
           },
         ]}
       />
+
+      <p class="format-intro">每一份提案都用同一个三段格式：</p>
       <div class="noted">
-        <ThreePart
-          caseFor="最有力的支持论点：这项政策能做到什么、帮到谁，以及背后的证据。"
-          caseAgainst="诚实地写出反对的论点：成本、风险，以及由谁承担。"
-          recommendation="用简单直接的话写出我们希望政府做什么，包括需要多少钱，以及怎样知道它是否有效。"
-        />
-        <MarginNote label="我们的规矩。">如果反对的理由更有说服力，这份建议书就不会提交。</MarginNote>
+        <div>
+          <h3 class="format-title">每份提案都用的格式</h3>
+          <p class="small format-sub">AI For Good 意见书的结构</p>
+          <ThreePart
+            caseFor="最有力的支持论点：这项政策能做到什么、帮到谁，以及背后的证据。"
+            caseAgainst="诚实地写出反对的论点：成本、风险，以及由谁承担。如果这一方胜出，我们就不提交。"
+            recommendation="在两方面都说清楚之后，用简单直接的话写出我们希望政府做什么，包括需要多少钱，以及怎样知道它是否有效。"
+          />
+        </div>
+        <MarginNote label="我们的规矩。">如果反对的理由更有说服力，这份提案就不会提交。</MarginNote>
       </div>
     </div>
   </section>
@@ -147,8 +210,8 @@ const proposals = submissions.filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="proposals">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="proposals">两份可以<wbr />阅读全文的<wbr />建议书。</h2>
-        <p>每一份都先交代来龙去脉，然后是我们提交的全文。</p>
+        <h2 id="proposals">我们的两份提案</h2>
+        <p>以下是我们提交给政府的两个例子，较新的排在前面。每一份都先写支持和反对的理由，再提出建议，并列明成本和衡量成效的方法。</p>
       </div>
       <div>
         {proposals.map((s) => <CaseBrief submission={s} />)}

@@ -26,14 +26,15 @@ const year = s.date.slice(0, 4);
 const address = new URL(localizePath(`/policy/${s.key}`, lang) + '/', Astro.site).href;
 ---
 
-<BaseLayout title={s.short ?? s.title} description={s.summary} pageClass="page-policy">
-  <PageTop vertical="政策">
+<BaseLayout title={s.short ?? s.title} description={s.summary} pageClass="page-policy tone-policy">
+  <PageTop vertical="政策" band>
     <p class="back"><a class="textlink" href={localizePath('/policy#submissions', lang)}>{t.back}</a></p>
     <p class="meta-line">
       <time datetime={s.date}>{sent}</time>
       {s.area && ` · ${s.area}`} · {statusText(s, lang)}
     </p>
     <h1>{s.title}</h1>
+    {s.summary && <p class="lead">{s.summary}</p>}
   </PageTop>
 
   {
@@ -50,6 +51,7 @@ const address = new URL(localizePath(`/policy/${s.key}`, lang) + '/', Astro.site
               evidence: { kind: 'document', label: t.paperChip, href: '#paper' },
             }}
             changed={{ date: s.changed_date, text: s.changed, status: s.changed_status }}
+            claim={s.claim}
           />
         </div>
       </section>

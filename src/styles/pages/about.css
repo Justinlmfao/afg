@@ -1,7 +1,7 @@
 /* About page, shared by the English and Chinese versions. */
 .page-about {
-  .prose .lead {
-    color: var(--ink);
+  blockquote.tagline {
+    margin: 0;
   }
 
   .signed {
@@ -11,16 +11,80 @@
     color: var(--muted);
   }
 
-  /* People: a name, a role, and a bio that opens underneath */
-  .people {
+  .origin-figure {
+    max-width: 46rem;
+    margin: var(--space-5) 0 0;
+  }
+
+  .origin-figure img {
+    width: 100%;
+  }
+
+  .origin-figure figcaption {
+    padding-top: 0.6rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  /* What we do: a heading, then the two halves in their own colours */
+  .what-head {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-top: 1px solid var(--rule);
+  }
+
+  .block h3 {
+    color: var(--accent);
+  }
+
+  .block p {
+    max-width: 32rem;
+    margin-top: 0.7rem;
+  }
+
+  .block .textlink {
+    margin-top: 0.6rem;
+  }
+
+  .how-we-work,
+  .sec-after-band {
+    border-top: 0;
+  }
+
+  /* How we work: two ruled rows */
+  .methods {
     max-width: 46rem;
     margin: 0;
-    padding: 0;
-    list-style: none;
+  }
+
+  .methods > div {
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .methods > div:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .methods dt {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .methods dd {
+    margin: 0.2rem 0 0;
+  }
+
+  .impact {
+    padding-bottom: var(--space-5);
+  }
+
+  /* People: press a name to open the bio underneath */
+  .people {
+    max-width: 46rem;
   }
 
   .person {
-    padding-block: 1.1rem 0.6rem;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -28,28 +92,74 @@
     border-top: 1px solid var(--ink);
   }
 
+  .person > summary,
+  div.person {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    min-height: 44px;
+    padding-block: 0.9rem;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* The + sits at the right of the row, not before the name */
+  .person > summary::before {
+    order: 2;
+    font-size: var(--step-2);
+    color: var(--accent);
+  }
+
+  .person > summary:hover {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .person > summary:hover h3 {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  .person-head {
+    display: block;
+  }
+
   .person-role {
+    display: block;
     margin-top: 0.15rem;
     color: var(--muted);
   }
 
-  .person details {
-    margin-top: 0.2rem;
+  .person .prose {
+    padding-bottom: 1.2rem;
   }
 
-  .person details .prose {
-    margin-block: 0.4rem 0.8rem;
+  /* What's next: a ruled list with a coloured word for each half */
+  .next-list {
+    max-width: 46rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .person:not(:has(details)) {
-    padding-bottom: 1.1rem;
+  .next-list li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
   }
 
-  .people-photos {
-    margin-top: var(--space-5);
+  .next-list li:first-child {
+    border-top: 1px solid var(--ink);
   }
 }
 
-.page-about .people-photos {
-  max-width: 46rem;
+html[lang^='zh'] .page-about .next-list li {
+  grid-template-columns: 4.5rem minmax(0, 1fr);
 }

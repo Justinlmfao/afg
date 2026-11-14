@@ -64,6 +64,9 @@ const submissions = defineCollection({
     changed_date: z.string().optional(),
     // "pending" is an honest "not yet".
     changed_status: z.enum(['changed', 'pending']).default('pending'),
+    // The "What we can claim" note under the case: what we can say about
+    // the change, and what we can't.
+    claim: z.string().optional(),
 
     // The argument in three lines, shown above the paper.
     case_for: z.string().optional(),

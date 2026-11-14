@@ -1,0 +1,112 @@
+---
+// The sample lesson itself: both parts, and the line that ties it to our
+// policy work. Shown in full on the Teaching page and on its own printable
+// page (teaching/sample-lesson.astro), so the words live here once. The
+// underscore keeps this file from becoming a page of its own.
+//
+// Deliberately text-only: the game is named, but no character art, logos or
+// screenshots appear. The figures are read off the children's own screens
+// rather than published here, so the lesson never goes stale on a balance
+// patch and we never present numbers as though they were official game data.
+interface Props {
+  /** The heading level of each part: 3 inside the Teaching page, 2 on the lesson's own page. */
+  level?: 2 | 3;
+}
+const Heading = Astro.props.level === 2 ? 'h2' : 'h3';
+---
+
+<div class="lesson">
+  <article class="rail lesson-part">
+    <div class="rail-head">
+      <p class="part-tag">Part 1 · Maths · 30 min</p>
+      <Heading>Bigger isn't better</Heading>
+    </div>
+    <div class="prose">
+      <p class="objective">
+        <b>Objective</b> Students work out a rate and explain why a bigger single number can still lose
+        to a smaller one.
+      </p>
+      <p>
+        Each student picks two characters they actually play in <cite>Brawl Stars</cite> and reads the
+        damage per shot and reload speed from their own screen. They almost always pick one slow, heavy
+        hitter and one fast, weaker one, and they almost always assume the bigger number wins.
+      </p>
+      <p>
+        Then they work out the damage per second, and the faster character usually comes out ahead. That
+        surprise is the lesson: one number on its own doesn't tell you much, and the number that matters
+        is usually a rate.
+      </p>
+      <p>
+        Then the twist: the faster character can only hit enemies standing close by. Is it still the
+        better choice? Now the answer depends on how you play, and that's what Part 2 is for.
+      </p>
+      <p class="aside">
+        <b>Extension</b> How much would the reload speed have to change for the answer to flip? It's
+        their first go at solving for an unknown, and they get there because they're curious, not because
+        a textbook told them to.
+      </p>
+      <p class="aside">
+        <b>Watch for</b> Students who get the sums right but can't explain why the answer surprised them.
+        The explanation is the goal; the multiplication is just how we get there.
+      </p>
+    </div>
+  </article>
+
+  <article class="rail lesson-part">
+    <div class="rail-head">
+      <p class="part-tag">Part 2 · English · 30 min</p>
+      <Heading>Make the case</Heading>
+    </div>
+    <div class="prose">
+      <p class="objective">
+        <b>Objective</b> Students write a short argument with a claim, evidence, a fair version of the
+        other side, and a recommendation.
+      </p>
+      <p>
+        They argue which of their two characters is better, using the numbers they just worked out as
+        evidence. There's one firm rule: they have to write one honest sentence about why someone might
+        reasonably pick the other character. If they can't, they don't fully understand their own
+        argument yet.
+      </p>
+      <p>Sentence starters go on the board for children learning English as a second language:</p>
+      <ul class="frames">
+        <li>I think ______ is better because ______.</li>
+        <li>The evidence is ______.</li>
+        <li>Someone might choose ______ instead, because ______.</li>
+        <li>Even so, I would recommend ______ because ______.</li>
+      </ul>
+      <p>
+        Then they follow the Think First steps. Each student asks an AI tool to check their calculation
+        and give one hint to strengthen their argument, and decides for themselves whether the feedback
+        is right. Finally, with the AI closed, they explain their recommendation to the group in their
+        own words.
+      </p>
+      <p>
+        Four or five sentences is a finished piece. Two or three students read theirs out, and everyone
+        else's job is to spot the counterargument, not to decide who won.
+      </p>
+      <p class="aside">
+        <b>Watch for</b> A counterargument that's really a put-down, like "someone might choose it
+        because they're bad at the game." Send it back. Learning to describe the other side fairly is the
+        whole point.
+      </p>
+    </div>
+  </article>
+
+  <!-- The line that makes the two halves of AFG one organisation -->
+  <div class="rail lesson-part">
+    <div class="rail-head"></div>
+    <div class="prose">
+      <p>
+        Claim, evidence, an honest case against, then a recommendation: it's the same structure we use
+        in <a href="/policy#how-we-write">every proposal we send to the government</a>. We teach
+        eleven-year-olds the same method we use with policymakers.
+      </p>
+      <p>
+        It goes the other way too. Our December 2025 proposal,{' '}
+        <a href="/policy/think-first">Think First</a>, takes the method our tutors use every week and
+        proposes it for every primary school in Hong Kong.
+      </p>
+    </div>
+  </div>
+</div>

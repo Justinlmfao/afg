@@ -21,6 +21,7 @@ const pending = s.changed_status === 'pending';
     {s.area && ` · ${s.area}`} · {statusText(s, lang)}
   </p>
   <h3>{href ? <a href={href}>{s.title}</a> : s.title}</h3>
+  {s.summary && <p class="brief-summary">{s.summary}</p>}
   <dl class:list={['brief-stages', pending ? 'pending' : 'changed']}>
     {
       s.noticed && (

@@ -2,7 +2,9 @@
 
 The current design ("Statesman", v4, November 2026). It replaces the blue and
 orange "one paper, two inks" design. It was built from the v4 redesign spec
-of 15 November 2026; this file records what was built.
+of 15 November 2026, then revised the same week: every section and photograph
+from the previous site was brought back into the new system, and Policy and
+Teaching were given a colour each. This file records what was built.
 
 ## 1. The style
 
@@ -12,13 +14,17 @@ policy paper and a school notice board, not a startup landing page.
 - **Serif for the voice, sans for the facts.** Headings and the few big
   figures are Newsreader, matching the logo. Everything read in paragraphs,
   plus dates, labels and buttons, is Source Sans 3.
-- **White paper, black ink, one green.** The logo's green is the only accent.
-  Navy appears only in the AFG marks (favicon, avatar, share image). The
-  logo's near-black is the footer.
+- **White paper, black ink, and the logo's two colours.** Policy is the
+  logo's navy and Teaching its green: a page or section in either half takes
+  that colour for its links, buttons, case line, a solid band and a pale
+  ground. Pages that belong to neither (Home's hero, About, Contact) use
+  green. The logo's near-black is the footer; the highlighter yellow is also
+  the chalk colour of the margin titles on a band.
 - **Ruled, not boxed.** Content is separated by white space and thin rules,
-  like a printed document. A box is kept for the one thing that must stand
-  apart on a page: the "What we can claim" note, or the three-line argument
-  on a proposal page.
+  like a printed document. Colour comes in whole bands and grounds that run
+  the width of the window, not in cards. A grey box is kept for the one thing
+  that must stand apart on a page: the "What we can claim" note, or the
+  three-line argument on a proposal page.
 - **Documents and photographs are the decoration.** Real classroom photos
   with captions, real submission titles, real sources. No illustrations,
   icons, gradients, textures or emoji.
@@ -57,9 +63,13 @@ policy paper and a school notice board, not a startup landing page.
 | `--text` | `#2B2D30` | Body | 13.8:1 |
 | `--muted` | `#5B5F5E` | Dates, captions, labels | 6.5:1 (5.9:1 on surface) |
 | `--rule` | `#DCDFDB` | Hairlines (decorative) | |
-| `--green` | `#1A563E` | The accent: links, buttons, the case line, focus | 8.6:1 |
+| `--green` | `#1A563E` | Teaching, and the default accent | 8.6:1 |
 | `--green-hover` | `#13442F` | | |
-| `--navy` | `#1D395E` | AFG marks only | |
+| `--navy` | `#1D395E` | Policy, and the AFG marks | 11.9:1 |
+| `--navy-hover` | `#152B49` | | |
+| `--policy-wash` | `#EAF0F7` | Pale ground behind a Policy section | |
+| `--teaching-wash` | `#EAF3EC` | Pale ground behind a Teaching section | |
+| `--band-muted` | `#CFD6D2` | Secondary text on a solid band | 5.7:1 on green, 8.2:1 on navy |
 | `--night` | `#16171B` | Footer background | |
 | `--cream` | `#F5F2EB` | Text on night | 16.0:1 |
 | `--night-muted` | `#B9B6AE` | Secondary text on night | 8.8:1 |
@@ -67,9 +77,14 @@ policy paper and a school notice board, not a startup landing page.
 | `--mark` | `#FFE27A` | Highlighter behind ink text | 14.0:1 |
 | `--field` | `#868A87` | Form field borders | 3.5:1 |
 
-No tinted washes, no gradients, no shadows. Policy and Teaching are not
-colour-coded. `<mark>` appears once per page at most, on the phrase that
-matters most.
+**Tone.** `.tone-policy` or `.tone-teaching` on a page's `<main>` or on a
+section sets `--accent`, `--accent-hover` and `--wash`. Components only ever
+use `--accent`, so anything placed inside takes the right colour. `.washed`
+puts a section on its tone's pale ground; `.band` makes it a solid band with
+cream type. The top of every Policy and Teaching page is a band.
+
+No gradients, no shadows. `<mark>` appears once per page at most, on the
+phrase that matters most.
 
 ### Type
 
@@ -161,15 +176,19 @@ would become a template.
   its content on the right. Below that they stack.
 - **Inner pages:** from 64rem the page's Chinese name is set vertically in
   the left margin (政策, 教學, 關於我們, 聯絡), like the subject names on the
-  chalkboard in our classroom photographs. It is decoration, hidden from
-  screen readers; the `<h1>` is the title.
+  chalkboard in our classroom photographs: chalk yellow on the navy and green
+  bands. It is decoration, hidden from screen readers; the `<h1>` is the
+  title.
+- **The two halves:** where Policy and Teaching sit side by side (the doors
+  and outcomes on Home, "What we do" and the outcomes on About), each half
+  runs to its edge of the window in its own colour. On phones they stack.
 - **Margin notes:** a caveat or source sits in a right-hand column beside the
   sentence it supports from 64rem, and follows it below that. No toggles, no
   numbered footnotes.
 - **Phones:** nothing scrolls sideways at 320px. Every link or button that
   stands on its own is at least 44×44px. Photographs are cropped per image so
-  faces stay in frame. A gallery shows one photograph. Long material sits in
-  a native `<details>` or on its own page.
+  faces stay in frame. A three-photo gallery shows one photograph; a photo
+  grid shows them all, two across.
 
 ## 6. Components
 
@@ -183,6 +202,8 @@ would become a template.
 | `SummaryList` | Key and value list, used once on About |
 | `Annotated`, `Worksheet` | The Think First worksheet as HTML, with numbered notes |
 | `Gallery` | One large photograph and two small (or a pair), with one caption for all |
+| `PhotoGrid` | A whole set of photographs in a grid; each opens at full size |
+| `FigureRow` | The four figures under the home hero |
 | `Now` | The "Now" note in the home hero, from `facts.now` |
 | `PageTop`, `VerticalTitle` | The top of an inner page and its margin title |
 | `Photo` | A photograph from `src/assets/photos/`, as AVIF and WebP at four widths |
@@ -194,27 +215,35 @@ state. Everything else works without it.
 
 ## 7. Rules that keep it honest
 
-1. **Every figure comes from `src/data/facts.ts`** and is said once per page.
+1. **Every figure comes from `src/data/facts.ts`.** A figure may appear more
+   than once on a page (the previous site's sections were all kept), but it
+   is always the same number from the same place.
 2. **Placeholders never go live.** Anything marked `sample: true` shows with
    a "Sample" tag in `npm run dev` and is left out of the built site.
    `scripts/check-design.mjs` runs after every build and fails it if sample
    content, an arrow character, an eyebrow label, a count-up or a scroll
-   reveal is found; it warns if a headline figure appears twice on a page.
+   reveal is found.
 3. **Attribution on AI for All stays limited.** We recommended it and the
    Budget went that way. It is a government programme; we didn't fund it and
    we don't run it.
 4. **"Not yet" is shown.** A proposal that hasn't changed anything says so.
 5. **Sentence case, active voice, no promotional adjectives.**
 
-## 8. What was removed, and why
+## 8. What was kept, and what was removed
 
-- The label above every heading, the four-number stat strip, the two "door"
-  cards and the coloured proof blocks: template sections that repeated the
-  same figures up to four times a page.
+Kept from the previous site, restyled: every section and every sentence, the
+four figures under the hero, the two doors and the two outcome panels, "Who
+we are", "What we're working on", "Latest work", the full sample lesson on
+the Teaching page, all eighteen classroom photographs, and the closing calls
+to action. The v4 pieces (the case, the ledger, the proposal pages, the
+worksheet, the summary list) were added on top.
+
+Removed:
+
 - The warm off-white ground, blue and orange blocks, rounded cards and soft
   shadows: now the look AI tools produce when told to look less like AI.
 - The count-up on 86% (screenshots caught it mid-count), scroll reveals and
   the hero entrance.
 - Every arrow after a link, the pill-shaped "On this page" chips, the
-  three-bar logo, the photo lightbox, the icon set, and the "Latest work"
-  list that mixed modules and proposals.
+  three-bar logo, the icon set, and the photo lightbox (each photograph in a
+  grid is now a plain link to its full-size version).

@@ -1,22 +1,23 @@
 ---
 // The sample lesson in Traditional Chinese, on a page of its own so a school
-// can print it. Shares src/styles/pages/teaching.css with the English page.
-// Keep each Chinese paragraph on one source line. The sentence starters stay
-// in English: they are for an English lesson.
+// can print it. The lesson's words live in src/pages/zh/_lesson.astro, shared
+// with the Teaching page.
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PageTop from '../../../components/PageTop.astro';
 import Worksheet from '../../../components/Worksheet.astro';
+import Lesson from '../_lesson.astro';
 import '../../../styles/pages/teaching.css';
 ---
 
 <BaseLayout
   title="示範課堂：數字大，不代表比較強"
-  pageClass="page-teaching"
+  pageClass="page-teaching tone-teaching"
   description="AI For Good 一節 60 分鐘的課，對象是小五至小六學生，用上數學和英文：學生先計算一個比率，再用證據論證，並公平地寫出另一方的看法。"
 >
-  <PageTop vertical="教學">
+  <PageTop vertical="教學" band>
     <p class="back no-print"><a class="textlink" href="/zh/teaching#sample-lesson">我們的教學</a></p>
-    <h1>示範課堂：<wbr />數字大，<wbr />不代表比較強</h1>
+    <p class="kicker-date">示範課堂</p>
+    <h1>數字大，<wbr />不代表比較強</h1>
     <p class="lead">
       這節課用上了我們的<strong>數學</strong>和<strong>英文</strong>單元。我們把它公開，讓學校在邀請我們之前，先看看一節課是怎樣設計的。
     </p>
@@ -27,85 +28,13 @@ import '../../../styles/pages/teaching.css';
     </ul>
   </PageTop>
 
-  <section class="sec" aria-labelledby="part-1">
-    <div class="wrap rail">
-      <div class="rail-head">
-        <p class="part-tag">第一部分 · 數學 · 30 分鐘</p>
-        <h2 id="part-1">數字大，不代表比較強</h2>
-      </div>
-      <div class="prose">
-        <p class="objective">
-          <b>學習目標：</b>學生計算一個比率，並解釋為什麼一個較大的數字，也可能輸給較小的那個。
-        </p>
-        <p>
-          每位學生選兩個自己真的會玩的《Brawl Stars》角色，從自己的手機畫面讀出每發傷害和裝彈速度。他們幾乎總會選一個又慢又重、一個又快又輕的角色，也幾乎總以為數字大的那個會贏。
-        </p>
-        <p>
-          然後他們計算每秒傷害，結果通常是快的那個勝出。這份意外就是這一課的重點：單看一個數字說明不了太多，真正重要的數字往往是一個比率。
-        </p>
-        <p>
-          然後是轉折：快的那個角色只能攻擊近距離的敵人。它還是較好的選擇嗎？現在答案要視乎你怎樣玩，而這正是第二部分要處理的。
-        </p>
-        <p class="aside">
-          <b>延伸：</b>裝彈速度要改變多少，答案才會倒過來？這是他們第一次解未知數，推動他們的是好奇心，而不是課本。
-        </p>
-        <p class="aside">
-          <b>留意：</b>算式做對、卻說不出為什麼答案出乎意料的學生。能解釋才是目標，乘法只是過程。
-        </p>
-      </div>
+  <section class="sec" aria-label="課堂內容">
+    <div class="wrap">
+      <Lesson level={2} />
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="part-2">
-    <div class="wrap rail">
-      <div class="rail-head">
-        <p class="part-tag">第二部分 · 英文 · 30 分鐘</p>
-        <h2 id="part-2">把理由寫出來</h2>
-      </div>
-      <div class="prose">
-        <p class="objective">
-          <b>學習目標：</b>學生寫一段短論證，包括主張、證據、公平地寫出對方的看法，以及建議。
-        </p>
-        <p>
-          他們用剛才算出的數字做證據，論證兩個角色之中哪一個較好。只有一條硬性規定：必須誠實地寫一句，說明為什麼有人會合理地選另一個角色。寫不出來的話，就代表還未真正明白自己的論點。
-        </p>
-        <p>我們會在黑板上寫好句子開頭，幫助以英文為第二語言的學生：</p>
-        <ul class="frames" lang="en">
-          <li>I think ______ is better because ______.</li>
-          <li>The evidence is ______.</li>
-          <li>Someone might choose ______ instead, because ______.</li>
-          <li>Even so, I would recommend ______ because ______.</li>
-        </ul>
-        <p>
-          接著他們跟從 Think First 的步驟：每位學生請人工智能工具核對自己的計算，並給一個提示讓論點更有力，再自己判斷這些意見對不對。最後關掉人工智能，用自己的話向組員解釋自己的建議。
-        </p>
-        <p>
-          寫四、五句就是一份完整的作品。我們會請兩三位學生讀出自己寫的，其他人的任務是找出當中的反方論點，而不是判斷誰贏。
-        </p>
-        <p class="aside">
-          <b>留意：</b>把反方論點寫成貶低別人的話，例如「有人會選它，因為他玩得差」。這要退回重寫。學會公平地說出對方的立場，正是這個練習的意義。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" aria-labelledby="same-method">
-    <div class="wrap rail">
-      <div class="rail-head">
-        <h2 id="same-method">和我們寫給<wbr />決策者時用的，<wbr />是同一套方法。</h2>
-      </div>
-      <div class="prose">
-        <p>
-          主張、證據、誠實的反方理由，然後是建議：這正是我們<a href="/zh/policy#how-we-write">向政府提交每一份建議書</a>時用的結構。我們教十一歲孩子的方法，和我們寫給決策者的方法是同一套。
-        </p>
-        <p>
-          反過來也一樣。我們在 2025 年 12 月提交的<a href="/zh/policy/think-first">《Think First 先想後問》建議書</a>，就是把導師每星期都在用的方法，建議推廣到全港每一間小學。
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec lesson-sheet-sec" aria-labelledby="worksheet">
+  <section class="sec" aria-labelledby="worksheet">
     <div class="wrap rail">
       <div class="rail-head">
         <h2 id="worksheet">工作紙。</h2>

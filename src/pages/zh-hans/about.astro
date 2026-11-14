@@ -9,7 +9,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageTop from '../../components/PageTop.astro';
 import SummaryList from '../../components/SummaryList.astro';
-import Gallery from '../../components/Gallery.astro';
+import Photo from '../../components/Photo.astro';
 import '../../styles/pages/about.css';
 import { getCollection, render } from 'astro:content';
 import { facts } from '../../data/facts';
@@ -26,7 +26,6 @@ const people = await Promise.all(
     .sort((a, b) => a.data.order - b.data.order)
     .map(async (m) => ({
       name: m.data.name,
-      first: m.data.name.split(' ')[0],
       role: m.data.role_hans ?? m.data.role,
       paras: m.data.bio_hans,
       Bio: m.body?.trim() ? (await render(m)).Content : null,
@@ -42,14 +41,14 @@ const people = await Promise.all(
   <PageTop vertical="关于我们">
     <h1>政策和教学，<wbr />出于同一个原因。</h1>
     <p class="lead">
-      AI For Good 是一个由香港学生运营的组织，于 {f.founded[lang]}成立。我们为政府撰写人工智能和经济政策的建议，也为基层家庭的小学生提供免费补习。
+      AI For Good 是一个由香港学生运营的组织，于 {f.founded[lang]}成立。我们做两件事：一是撰写人工智能和经济政策的建议，提交给香港政府，每年大约{f.recsPerYear.word[lang]}项；二是为基层家庭的小学生提供免费补习，到目前为止已教过 {f.children.value} 个孩子。
     </p>
   </PageTop>
 
   <section class="sec" aria-labelledby="at-a-glance">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="at-a-glance">概览。</h2>
+        <h2 id="at-a-glance">概览</h2>
       </div>
       <SummaryList
         rows={[
@@ -79,12 +78,13 @@ const people = await Promise.all(
   <section class="sec" aria-labelledby="why-both">
     <div class="wrap rail">
       <div class="rail-head">
+        <p class="kicker-date">为什么两样都做</p>
         <h2 id="why-both">写政策的人，<wbr />应该见过<wbr />受政策影响的人。</h2>
       </div>
       <div class="prose">
-        <p class="lead">
+        <blockquote class="tagline">
           如果写人工智能政策的人从未见过受影响的人，这样的政策不会是好政策。我们教的孩子，正是受影响的人。
-        </p>
+        </blockquote>
         <p>
           我们两样都做，并不是巧合。坐在何文田的教室里，看着一个孩子第一次用人工智能导师，你会明白很多咨询文件不会告诉你的事：哪些孩子家里早就有补习老师，哪些有电脑，而哪些孩子正因为一项人人都说能“拉平差距”的科技，被抛得更远。
         </p>
@@ -95,11 +95,32 @@ const people = await Promise.all(
     </div>
   </section>
 
+  <section class="sec" aria-labelledby="how-it-started">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="how-it-started">我们怎样开始</h2>
+      </div>
+      <div>
+        <p class="prose">
+          AI For Good 于 {f.founded[lang]}由 <strong>Justin Lo</strong>、<strong>Ka Hei Ng</strong> 和 <strong>Oscar Zheng</strong> 创立，<strong>David Dong</strong> 和 <strong>Jackie Xue</strong> 其后加入。我们一开始是校外的独立智库，不是学校的学会。后来成员增加到超过 35 人，也开始和全港各区的学校合作，补习计划就是这样接触到今天这些孩子。
+        </p>
+        <figure class="origin-figure">
+          <Photo
+            name="team-outside-school.jpg"
+            alt="五位 AI For Good 成员在天主教领岛学校门外。"
+            sizes="(min-width: 56rem) 46rem, 100vw"
+          />
+          <figcaption>天主教领岛学校门外，我们上课的地方。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- Justin's own account, in the first person and left in his words. -->
   <section class="sec" aria-labelledby="why-i-started">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="why-i-started">我为什么创办它。</h2>
+        <h2 id="why-i-started">我为什么创办它</h2>
       </div>
       <div class="prose">
         <h3>为什么做政策研究</h3>
@@ -115,59 +136,169 @@ const people = await Promise.all(
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="people">
-    <div class="wrap rail">
-      <div class="rail-head">
-        <h2 id="people">全由学生运营。</h2>
-        <p>我们的成员分别参与政策研究和补习工作。以下是带领团队的成员。</p>
+  <section aria-labelledby="what-we-do">
+    <div class="wrap what-head">
+      <h2 id="what-we-do">我们做什么</h2>
+    </div>
+    <div class="halves">
+      <div class="half-col tone-policy">
+        <div class="half washed block">
+          <h3>政策研究</h3>
+          <p>
+            我们每年向香港政府提交约{f.recsPerYear.word[lang]}份书面建议。自 2024 年起，我们参与了每一轮施政报告和财政预算案咨询，现在正为《经济和社会发展第一个五年规划（2026–2030）》撰写意见书。我们的题目来自实际工作：税务、人工智能管治、教育、就业和医疗。我们在多份意见书中提倡推行一个普及的人工智能计划，而 {f.aiForAll.budget} 年度财政预算案拨出了{f.aiForAll.amount[lang]}推行 AI for All。
+          </p>
+          <a class="textlink" href="/zh-hans/policy">阅读我们的政策研究</a>
+        </div>
       </div>
-      <div>
-        <ul class="people">
-          {
-            people.map(({ name, first, role, paras, Bio }) => (
-              <li class="person">
-                <h3>{name}</h3>
-                <p class="person-role">{role}</p>
-                {(paras || Bio) && (
-                  <details>
-                    <summary>关于 {first}</summary>
-                    <div class="prose" lang={paras ? undefined : 'en'}>
-                      {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
-                    </div>
-                  </details>
-                )}
-              </li>
-            ))
-          }
-        </ul>
-        <div class="people-photos">
-          <Gallery
-            photos={[
-              {
-                name: 'team-classroom.jpg',
-                alt: '六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。',
-                caption: '在天主教领岛学校的教室内，摄于一节课之后。',
-              },
-              {
-                name: 'team-outside-school.jpg',
-                alt: '五位 AI For Good 成员在天主教领岛学校门外。',
-                caption: '学校门外。',
-              },
-            ]}
-          />
+      <div class="half-col tone-teaching">
+        <div class="half washed block">
+          <h3>教学计划</h3>
+          <p>
+            我们在全港七所学校为基层家庭的小学生提供免费补习。{f.tutors.value} 位受训导师教四个单元：数学、英文、经济和科学，每个单元都把人工智能当作一个免费、有耐性的学习伙伴。到目前为止我们已教过 {f.children.value} 个孩子；自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的学生至少升了一个组别。
+          </p>
+          <a class="textlink" href="/zh-hans/teaching">看看我们的教学</a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="how-it-started">
+  <section class="sec how-we-work" aria-labelledby="how-we-work">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="how-it-started">我们怎样开始。</h2>
+        <h2 id="how-we-work">我们怎样做</h2>
+      </div>
+      <dl class="methods">
+        <div>
+          <dt>写一份提案</dt>
+          <dd>我们先和成员交谈，再做研究，最后才动笔。每一份提案都先写支持的理由，再写反对的理由，最后才提出建议，次序不变。如果反对的理由更有说服力，我们就不会提交。</dd>
+        </div>
+        <div>
+          <dt>上一节课</dt>
+          <dd>每位导师都要先受训才可以上课。他们跟着围绕四个单元编写的教材来教，所以无论孩子在哪所学校、由哪位导师教，上到的课都是同样水平。</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec impact" aria-labelledby="our-impact">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="our-impact">我们的成果</h2>
       </div>
       <div class="prose">
         <p>
-          AI For Good 由 <strong>Justin Lo</strong>、<strong>Ka Hei Ng</strong> 和 <strong>Oscar Zheng</strong> 创立，<strong>David Dong</strong> 和 <strong>Jackie Xue</strong> 其后加入。我们一开始是校外的独立智库，不是学校的学会。后来成员渐渐增加，也开始和全港各区的学校合作，补习计划就是这样接触到今天这些孩子。
+          AI For Good 在 2023 年由一小群学生开始，今天已有超过 35 人，我们都相信年轻人可以通过为议题发声来改变现状。
+        </p>
+        <p>
+          我们每年向香港政府提交约 20 项政策建议。自 2024 年起，我们参与施政报告和财政预算案咨询，现在也正为《经济和社会发展第一个五年规划（2026–2030）》提交意见。在政策工作以外，我们在合作学校教过 {f.children.value} 个基层家庭的孩子，并培训了 {f.tutors.value} 位学生导师。自 {f.bandUp.since} 年起，我们教的学生之中有 {f.bandUp.value}{f.bandUp.unit} 至少升了一个组别。
+        </p>
+        <p>
+          对我们来说，政策和教学出于同一个信念：更好的世界，是由决定不再等待的人建立的。
+        </p>
+      </div>
+    </div>
+  </section>
+  <div class="halves">
+    <div class="half-col tone-policy">
+      <div class="half band">
+        <p class="proof-figure">HK$50M</p>
+        <p class="proof-label">{f.aiForAll.budget} 年度财政预算案拨给 AI for All 的款项，正是我们一直倡议的那类普及人工智能计划</p>
+      </div>
+    </div>
+    <div class="half-col tone-teaching">
+      <div class="half band">
+        <p class="proof-figure">{f.bandUp.value}{f.bandUp.unit}</p>
+        <p class="proof-label">自 {f.bandUp.since} 年起，至少升了一个组别的学生比例</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- The people who lead it. This was the Team page. -->
+  <section class="sec sec-after-band" aria-labelledby="people">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="people">全由学生运营。</h2>
+        <p>我们有超过 35 位成员，分别参与政策研究和补习工作。以下是带领团队的成员，按一下名字就可以看看他们的介绍。</p>
+      </div>
+      <div>
+        <div class="people">
+          {
+            people.map(({ name, role, paras, Bio }) =>
+              paras || Bio ? (
+                <details class="person">
+                  <summary>
+                    <span class="person-head">
+                      <h3>{name}</h3>
+                      <span class="person-role">{role}</span>
+                    </span>
+                  </summary>
+                  <div class="prose" lang={paras ? undefined : 'en'}>
+                    {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
+                  </div>
+                </details>
+              ) : (
+                <div class="person">
+                  <span class="person-head">
+                    <h3>{name}</h3>
+                    <span class="person-role">{role}</span>
+                  </span>
+                </div>
+              )
+            )
+          }
+        </div>
+        <figure class="origin-figure">
+          <Photo
+            name="team-classroom.jpg"
+            alt="六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。"
+            sizes="(min-width: 56rem) 46rem, 100vw"
+          />
+          <figcaption>在天主教领岛学校的教室内，摄于一节课之后。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="partners">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="partners">合作伙伴</h2>
+      </div>
+      <p class="prose">
+        我们和天主教领岛学校、St. Barnabas' Home &amp; Society、Kennedy Town School 及 10% Organisation 合作教学。
+      </p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="whats-next">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="whats-next">下一步</h2>
+      </div>
+      <ul class="next-list">
+        <li class="tone-policy">
+          <span class="tone-tag">政策</span>
+          <span>我们正在为《经济和社会发展第一个五年规划（2026–2030）》撰写意见书，讨论人工智能和经济政策怎样才能为更多人打开机会，而不是缩小机会。</span>
+        </li>
+        <li class="tone-teaching">
+          <span class="tone-tag">教学</span>
+          <span>明年我们会带着四个单元和新一批导师，重返天主教领岛学校。</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="get-involved">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="get-involved">参与我们</h2>
+      </div>
+      <div class="prose">
+        <p>
+          <strong>学校与机构：</strong>如果你服务基层家庭的孩子，又需要导师帮忙，课程、导师和器材都由我们负责。<a href="/zh-hans/get-involved#schools">欢迎联系我们</a>。
+        </p>
+        <p>
+          <strong>学生：</strong>我们正在沪江维多利亚学校招募成员。如果你对政策、经济或人工智能有兴趣，比起头衔，我们更在乎你想做什么。<a href="/zh-hans/get-involved#students">告诉我们你想参与什么</a>。
         </p>
       </div>
     </div>

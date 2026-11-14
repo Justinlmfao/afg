@@ -1,14 +1,17 @@
 ---
-// Teaching page: the programme told as a case, the Think First method with
-// an annotated worksheet, our promises, the four modules, and where we teach.
+// Teaching page: the programme told as a case, why we teach, the Think
+// First method with an annotated worksheet, the four modules, the sample
+// lesson in full, where we teach, our promises, and every photograph from
+// the classroom.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageTop from '../components/PageTop.astro';
 import OnThisPage from '../components/OnThisPage.astro';
 import Case from '../components/Case.astro';
 import Steps from '../components/Steps.astro';
 import Annotated from '../components/Annotated.astro';
-import Gallery from '../components/Gallery.astro';
+import PhotoGrid from '../components/PhotoGrid.astro';
 import MarginNote from '../components/MarginNote.astro';
+import Lesson from './_lesson.astro';
 import '../styles/pages/teaching.css';
 import { getCollection, render } from 'astro:content';
 import { facts, showSamples } from '../data/facts';
@@ -24,14 +27,75 @@ const modules = await Promise.all(
     .sort((a, b) => a.data.order - b.data.order)
     .map(async (m) => ({ ...m.data, Body: (await render(m)).Content }))
 );
+
+// Photos from sessions at Ho Man Tin Ling To Catholic School. The files are
+// in src/assets/photos/. The first is shown large.
+const photos = [
+  {
+    name: 'teaching-classroom.jpg',
+    alt: 'A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer.',
+    position: '60% 40%',
+  },
+  {
+    name: 'teaching-chalkboard-maths.jpg',
+    alt: 'A tutor works through a mental-arithmetic shortcut for 1117 × 1117 on the chalkboard.',
+  },
+  {
+    name: 'teaching-ai-study-partner.jpg',
+    alt: 'A tutor, laptop in hand, shows pupils how to explain a maths idea aloud to an AI to check they have understood it.',
+  },
+  {
+    name: 'teaching-ai-tools.jpg',
+    alt: 'Two tutors introduce what an AI assistant can do: find information, break down hard questions, and help with writing.',
+  },
+  {
+    name: 'teaching-exploring-interests.jpg',
+    alt: 'A tutor shows pupils how to use AI to explore their own interests, from dinosaurs to space to music.',
+  },
+  {
+    name: 'teaching-english-careers.jpg',
+    alt: 'Two tutors run the English module, with a slide on how English opens career doors in healthcare, trade, technology, and tourism.',
+  },
+];
+
+// Sessions run at Victoria Shanghai Academy for students from the local
+// community, grouped by year: six photographs each.
+const cohorts = [
+  {
+    years: '2024–25',
+    summary:
+      'Showing students how AI can be used in their own community: what the tools are good at, and how to use them for something that actually helps.',
+    photos: [
+      { name: 'vsa-2024-25-group.jpg', alt: 'Tutors and students at the close of the 2024/25 sessions, in front of a slide thanking everyone for joining.' },
+      { name: 'vsa-2024-25-presenting.jpg', alt: 'Two tutors present to students working at laptops during a 2024/25 session.' },
+      { name: 'vsa-2024-25-activity.jpg', alt: 'A tutor presents a worked example on screen, showing how an AI image tool transforms one picture into another.' },
+      { name: 'vsa-2024-25-helping-pair.jpg', alt: 'A tutor leans in to help two students working together at a laptop.' },
+      { name: 'vsa-2024-25-helping.jpg', alt: 'A tutor helps a younger student working at a laptop.', position: '50% 35%' },
+      { name: 'vsa-2024-25-side-by-side.jpg', alt: 'A tutor works through a task beside a student at a laptop.', position: '50% 35%' },
+    ],
+  },
+  {
+    years: '2025–26',
+    summary:
+      'Teaching local children what AI can make better, and how to spot and avoid the ways it gets misused.',
+    photos: [
+      { name: 'vsa-2025-26-group.jpg', alt: 'Tutors in front of a board reading "Thanks for joining — A.I. For Good 25–26" at the end of the year.' },
+      { name: 'vsa-2025-26-cohort.jpg', alt: 'The 2025/26 group of students and tutors together in the classroom.' },
+      { name: 'vsa-2025-26-uses.jpg', alt: 'A tutor presents examples of what AI can be used for, including reducing traffic, predicting natural disasters, and tutoring underprivileged students.', position: '50% 35%' },
+      { name: 'vsa-2025-26-poster.jpg', alt: 'Students build posters setting out a problem, an AI solution, and how it would be implemented.' },
+      { name: 'vsa-2025-26-discussion.jpg', alt: 'A tutor talks a student through their work at a laptop.' },
+      { name: 'vsa-2025-26-helping.jpg', alt: 'A tutor helps a student at a laptop during a session.' },
+    ],
+  },
+];
 ---
 
 <BaseLayout
   title="Teaching"
-  pageClass="page-teaching"
+  pageClass="page-teaching tone-teaching"
   description="Free tutoring for primary school children from underprivileged families in Hong Kong. 350 children taught across 7 schools by 43 trained student tutors, and 86% have moved up at least one class band since 2024."
 >
-  <PageTop vertical="教學">
+  <PageTop vertical="教學" band>
     <h1>Free tutoring where children try first and ask the AI second.</h1>
     <p class="lead">
       Our student tutors teach primary school children from underprivileged families across Hong Kong.
@@ -40,21 +104,22 @@ const modules = await Promise.all(
     </p>
     <OnThisPage
       items={[
-        { href: '#how-it-started', label: 'How it started' },
+        { href: '#why-we-teach', label: 'Why we teach' },
         { href: '#think-first', label: 'Think First' },
-        { href: '#promises', label: 'Promises' },
-        { href: '#modules', label: 'Modules' },
+        { href: '#modules', label: 'Our four modules' },
         { href: '#sample-lesson', label: 'Sample lesson' },
         { href: '#where-we-teach', label: 'Where we teach' },
+        { href: '#in-the-classroom', label: 'In the classroom' },
       ]}
     />
   </PageTop>
 
-  <!-- The programme, told the way we tell every piece of work -->
-  <section class="sec" aria-labelledby="how-it-started">
+  <!-- The programme, told the way we tell every piece of work. The outcome
+       is the one figure this page leads with. -->
+  <section class="sec" aria-labelledby="the-programme">
     <div class="wrap">
       <Case
-        id="how-it-started"
+        id="the-programme"
         title="Why we teach, and what's changed."
         noticed={{
           date: '2023',
@@ -62,19 +127,22 @@ const modules = await Promise.all(
         }}
         did={{
           date: '2024/2026',
-          text: `We trained ${f.tutors.value} secondary-school tutors and taught ${f.children.value} children four modules (maths, English, economics and science) in ${f.schools.word.en} schools, every lesson built on Think First.`,
+          text: `We trained ${f.tutors.value} secondary-school tutors and taught four modules (maths, English, economics and science) in ${f.schools.word.en} schools, every lesson built on Think First.`,
         }}
         changed={{
           dateLabel: `Since ${f.bandUp.since}`,
           status: 'changed',
           figure: `${f.bandUp.value}${f.bandUp.unit}`,
-          text: 'of our students have moved up at least one class band.',
+          text: `of our students have moved up at least one class band since ${f.bandUp.since}.`,
         }}
       >
         <Fragment slot="changed-note">
-          <MarginNote label="About that number." id="results">
-            We don't claim it as ours alone. Teachers, families and the students themselves did the work.
-            But it's the number we hold ourselves to.
+          <p class="quiet-facts">
+            {f.children.value} children taught · {f.schools.value} schools · {f.tutors.value} trained tutors
+          </p>
+          <MarginNote id="results">
+            We don't claim that {f.bandUp.value}{f.bandUp.unit} as ours alone. Teachers, families and the
+            students themselves did the work. But it's the number we hold ourselves to.
           </MarginNote>
           {
             showSamples && f.bandUp.method.sample && (
@@ -87,7 +155,37 @@ const modules = await Promise.all(
           {!f.bandUp.method.sample && <MarginNote label="How we count it.">{f.bandUp.method.en}</MarginNote>}
         </Fragment>
       </Case>
+    </div>
+  </section>
 
+  <section class="sec" aria-labelledby="why-we-teach">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="why-we-teach">Why we teach</h2>
+      </div>
+      <div class="prose">
+        <p class="tagline">A free tutor for every child who can't afford one.</p>
+        <p>
+          In Hong Kong, extra help after school usually costs money. Families who can pay for tutoring
+          do, and families who can't watch their children fall behind. AI changes that. For the first
+          time, a patient tutor that can explain a question five different ways is available for free.
+        </p>
+        <p>
+          But a tool is only as useful as a child's ability to use it well. A child who asks AI for the
+          answer learns nothing. A child who tries first, asks for a hint, and then explains the answer
+          in their own words learns more than they would have on their own. Teaching that difference is
+          what our tutors do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- A moment from the work -->
+  <section class="sec" aria-labelledby="a-moment">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="a-moment">A moment from class</h2>
+      </div>
       <figure class="quote">
         <blockquote>
           <p>
@@ -102,16 +200,12 @@ const modules = await Promise.all(
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="think-first">
+  <section class="sec washed" aria-labelledby="think-first">
     <div class="wrap">
       <div class="sec-head">
+        <p class="kicker-date">How we teach: Think First</p>
         <h2 id="think-first">Every lesson follows the same four steps.</h2>
-        <p>
-          A tool is only as useful as a child's ability to use it well. A child who asks AI for the answer
-          learns nothing. A child who tries first, asks for a hint, and then explains the answer in their
-          own words learns more than they would have on their own. Teaching that difference is what our
-          tutors do. We call it Think First.
-        </p>
+        <p>Every lesson that uses AI follows the same four steps.</p>
       </div>
       <Steps
         items={[
@@ -134,8 +228,88 @@ const modules = await Promise.all(
         ]}
       />
 
-      <p class="closing-line">
-        If a child can explain it without the AI, they've learned it. If they can't, we go back a step.
+      <div class="prose">
+        <p class="closing-line">
+          If a child can explain it without the AI, they've learned it. If they can't, we go back a step.
+        </p>
+        <p>
+          We don't teach AI as a separate topic. We teach maths, English, economics and science, and show
+          children how AI can help them learn each one. Our tutors are secondary school students who
+          finish AFG's training before they teach, and they work in small groups so every child gets
+          attention.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four modules as a ruled list -->
+  <section class="sec" aria-labelledby="modules">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <p class="kicker-date">Our four modules</p>
+        <h2 id="modules">Four school subjects, each with AI as a study partner.</h2>
+        <p>
+          Each module pairs a school subject with AI. The aim is to close the gap between our students
+          and children from better-off families, not to widen it.
+        </p>
+      </div>
+      <ul class="module-list">
+        {
+          modules.map((m) => (
+            <li class="module">
+              <h3>{m.title}</h3>
+              <div class="prose">
+                <m.Body />
+              </div>
+              {m.why && (
+                <p class="module-why">
+                  <b>How it helps:</b> {m.why}
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Sample lesson, in full. Labelled a sample: once it has been taught as
+       written, say so. -->
+  <section class="sec washed" aria-labelledby="sample-lesson">
+    <div class="wrap">
+      <div class="rail lesson-top">
+        <div class="rail-head">
+          <p class="kicker-date">Sample lesson</p>
+          <h2 id="sample-lesson">Bigger isn't better</h2>
+        </div>
+        <div>
+          <p class="prose">
+            One lesson, using the <strong>Mathematics</strong> and <strong>English</strong> modules
+            above. We've published it so schools can see how a lesson is put together before they invite
+            us in.
+          </p>
+          <ul class="lesson-facts">
+            <li><span>Level</span>P5–P6</li>
+            <li><span>Length</span>60 minutes</li>
+            <li><span>Staffing</span>2 tutors for every 8–10 students</li>
+          </ul>
+          <p><a class="more" href="/teaching/sample-lesson">The lesson on its own page, with a worksheet to print</a></p>
+        </div>
+      </div>
+      <Lesson />
+    </div>
+  </section>
+
+  <!-- Partners, as text -->
+  <section class="sec" aria-labelledby="where-we-teach">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="where-we-teach">Where we teach</h2>
+      </div>
+      <p class="prose">
+        We teach in seven schools, including <strong>Ho Man Tin Ling To Catholic School</strong> and{' '}
+        <strong>Kennedy Town School</strong>, and with our community partners{' '}
+        <strong>St. Barnabas' Home &amp; Society</strong> and <strong>10% Organisation</strong>.
       </p>
     </div>
   </section>
@@ -144,6 +318,7 @@ const modules = await Promise.all(
   <section class="sec" aria-labelledby="promises">
     <div class="wrap rail">
       <div class="rail-head">
+        <p class="kicker-date">Our promises to schools and families</p>
         <h2 id="promises">What schools and families can count on.</h2>
       </div>
       <ul class="promise-list">
@@ -155,129 +330,57 @@ const modules = await Promise.all(
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="modules">
+  <!-- In the classroom: every photograph. Each opens at full size. -->
+  <section class="sec" aria-labelledby="in-the-classroom">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="modules">Four school subjects, each with AI as a study partner.</h2>
-        <p>
-          We don't teach AI as a separate topic. Our tutors are secondary school students who finish AFG's
-          training before they teach, and they work in small groups so every child gets attention.
-        </p>
+        <h2 id="in-the-classroom">In the classroom</h2>
+        <p>Our tutors teaching at Ho Man Tin Ling To Catholic School.</p>
       </div>
-      <ul class="module-list">
-        {
-          modules.map((m) => (
-            <li class="module">
-              <h3>{m.title}</h3>
-              <p>{m.summary}</p>
-              {m.why && (
-                <p class="module-why">
-                  <b>How it helps:</b> {m.why}
-                </p>
-              )}
-              <details>
-                <summary>More about this module</summary>
-                <div class="prose">
-                  <m.Body />
-                </div>
-              </details>
-            </li>
-          ))
-        }
-      </ul>
+      <PhotoGrid photos={photos} feature />
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="sample-lesson">
+  <!-- Sessions at Victoria Shanghai Academy, by year -->
+  <section class="sec" aria-labelledby="with-vsa">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="sample-lesson">A lesson, start to finish.</h2>
-      </div>
-      <div class="prose">
+        <h2 id="with-vsa">With Victoria Shanghai Academy</h2>
         <p>
-          <strong>Bigger isn't better:</strong> a 60-minute lesson for P5–P6 using maths and English, with
-          2 tutors for every 8–10 students. We've published it so schools can see how a lesson is put
-          together before they invite us in.
-        </p>
-        <p><a class="textlink" href="/teaching/sample-lesson">The full lesson plan</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="sec" aria-labelledby="where-we-teach">
-    <div class="wrap rail">
-      <div class="rail-head">
-        <h2 id="where-we-teach">Where we teach.</h2>
-      </div>
-      <div>
-        <p class="prose">
-          We teach in primary schools including <strong>Ho Man Tin Ling To Catholic School</strong> and{' '}
-          <strong>Kennedy Town School</strong>, and with our community partners{' '}
-          <strong>St. Barnabas' Home &amp; Society</strong> and <strong>10% Organisation</strong>.
-        </p>
-        <div class="place-gallery">
-          <Gallery
-            photos={[
-              {
-                name: 'teaching-ai-tools.jpg',
-                alt: 'Two tutors introduce what an AI assistant can do: find information, break down hard questions, and help with writing.',
-                caption: 'Introducing what an AI assistant can do, at Ho Man Tin Ling To Catholic School.',
-              },
-              {
-                name: 'teaching-english-careers.jpg',
-                alt: 'Two tutors run the English module, with a slide on how English opens career doors in healthcare, trade, technology, and tourism.',
-                caption: 'The English module.',
-              },
-              {
-                name: 'teaching-exploring-interests.jpg',
-                alt: 'A tutor shows pupils how to use AI to explore their own interests, from dinosaurs to space to music.',
-                caption: 'Using AI to explore your own interests.',
-              },
-            ]}
-          />
-        </div>
-
-        <h3 class="place-h">With Victoria Shanghai Academy</h3>
-        <p class="prose">
           Alongside our work in primary schools, we run sessions with Victoria Shanghai Academy for young
           people from the local community.
         </p>
-        <dl class="years">
-          <div>
-            <dt>2024–25</dt>
-            <dd>
-              Showing students how AI can be used in their own community: what the tools are good at, and
-              how to use them for something that actually helps.
-            </dd>
-          </div>
-          <div>
-            <dt>2025–26</dt>
-            <dd>
-              Teaching local children what AI can make better, and how to spot and avoid the ways it gets
-              misused.
-            </dd>
-          </div>
-        </dl>
-        <div class="place-gallery">
-          <Gallery
-            photos={[
-              {
-                name: 'vsa-2025-26-poster.jpg',
-                alt: 'Students build posters setting out a problem, an AI solution, and how it would be implemented.',
-                caption: 'Students plan how AI could help with a problem in their community, 2025–26.',
-              },
-              {
-                name: 'vsa-2024-25-group.jpg',
-                alt: 'Tutors and students at the close of the 2024–25 sessions, in front of a slide thanking everyone for joining.',
-                caption: 'The end of the 2024–25 sessions.',
-              },
-              {
-                name: 'vsa-2025-26-cohort.jpg',
-                alt: 'The 2025–26 group of students and tutors together in the classroom.',
-                caption: 'Students and tutors, 2025–26.',
-              },
-            ]}
-          />
+      </div>
+      <div>
+        {
+          cohorts.map((cohort) => (
+            <div class="cohort">
+              <h3>{cohort.years}</h3>
+              <p class="prose">{cohort.summary}</p>
+              <PhotoGrid photos={cohort.photos} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Two ways in -->
+  <section class="sec washed" aria-label="Get involved">
+    <div class="wrap">
+      <div class="halves-plain cta-pair">
+        <div>
+          <h2>Bring us to your school</h2>
+          <p>
+            If you run a primary school, community centre or children's programme and would like free
+            tutoring for your students, get in touch.
+          </p>
+          <a class="btn" href="/get-involved#schools">Contact us</a>
+        </div>
+        <div>
+          <h2>Become a tutor</h2>
+          <p>If you're a secondary student who wants to teach, we'll train you first.</p>
+          <a class="btn" href="/get-involved#students">Sign up</a>
         </div>
       </div>
     </div>

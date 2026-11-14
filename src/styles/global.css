@@ -14,15 +14,31 @@
   --text: #2b2d30;         /* body                        13.8:1 */
   --muted: #5b5f5e;        /* dates, captions, labels      6.5:1 */
   --rule: #dcdfdb;         /* hairlines (decorative) */
-  --green: #1a563e;        /* the accent: links, buttons, case line, focus  8.6:1 */
+  --green: #1a563e;        /* the logo's green                 8.6:1 */
   --green-hover: #13442f;
-  --navy: #1d395e;         /* AFG marks only (favicon, avatar, share image) */
+  --navy: #1d395e;         /* the logo's navy                 11.9:1 */
+  --navy-hover: #152b49;
   --night: #16171b;        /* footer background */
   --cream: #f5f2eb;        /* text on night               16.0:1 */
   --night-muted: #b9b6ae;  /* secondary text on night      8.8:1 */
   --night-rule: #3a3b3f;
   --mark: #ffe27a;         /* highlighter behind ink text, once per page */
   --field: #868a87;        /* form field borders           3.5:1 */
+
+  /* The two halves of the work each have a colour: Policy is the navy,
+     Teaching the green. A page or section says which it is with
+     .tone-policy or .tone-teaching, and everything inside that uses the
+     accent (links, buttons, the case line) follows. Untoned pages use green. */
+  --policy: var(--navy);
+  --policy-hover: var(--navy-hover);
+  --policy-wash: #eaf0f7;  /* pale ground behind a Policy section */
+  --teaching: var(--green);
+  --teaching-hover: var(--green-hover);
+  --teaching-wash: #eaf3ec; /* pale ground behind a Teaching section */
+  --accent: var(--green);
+  --accent-hover: var(--green-hover);
+  --wash: var(--surface);
+  --band-muted: #cfd6d2;   /* secondary text on a solid band  5.7:1 on green, 8.2:1 on navy */
 
   /* Type. Latin faces first; Chinese falls through to the system faces, so
      no Chinese web font is downloaded. */
@@ -156,7 +172,7 @@ html[lang='zh-Hans'] {
 
 html {
   -webkit-text-size-adjust: 100%;
-  accent-color: var(--green);
+  accent-color: var(--accent);
   /* Anchored sections stop below the sticky header */
   scroll-padding-top: calc(var(--header-h) + 1.25rem);
 }
@@ -243,19 +259,19 @@ b {
 }
 
 a {
-  color: var(--green);
+  color: var(--accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   transition: color 120ms, text-decoration-color 120ms;
 }
 
 a:hover {
-  color: var(--green-hover);
+  color: var(--accent-hover);
   text-decoration-thickness: 2px;
 }
 
 :focus-visible {
-  outline: 3px solid var(--green);
+  outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -304,6 +320,50 @@ html[lang^='zh'] :is(h1, h2, h3, h4) {
 
 html[lang^='zh'] .lead {
   line-height: 1.7;
+}
+
+/* ---- Tone: Policy navy, Teaching green ---------------------------------- */
+.tone-policy {
+  --accent: var(--policy);
+  --accent-hover: var(--policy-hover);
+  --wash: var(--policy-wash);
+}
+
+.tone-teaching {
+  --accent: var(--teaching);
+  --accent-hover: var(--teaching-hover);
+  --wash: var(--teaching-wash);
+}
+
+/* A section on its tone's pale ground */
+.washed {
+  background: var(--wash);
+}
+
+/* A solid band in the tone's colour, with cream type */
+.band {
+  background: var(--accent);
+  color: var(--cream);
+}
+
+.band :is(h1, h2, h3, h4, p, li, dt, dd, b, strong, figcaption) {
+  color: inherit;
+}
+
+.band a {
+  color: var(--cream);
+}
+
+.band a:hover {
+  color: #fff;
+}
+
+.band :focus-visible {
+  outline-color: var(--cream);
+}
+
+.band :is(.kicker-date, .meta-line, .small, .band-quiet) {
+  color: var(--band-muted);
 }
 
 /* ---- Layout ------------------------------------------------------------ */
@@ -364,6 +424,10 @@ html[lang^='zh'] .lead {
   color: var(--muted);
 }
 
+.rail-head .kicker-date {
+  margin: 0 0 0.4rem;
+}
+
 @media (min-width: 56rem) {
   .rail {
     grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
@@ -386,6 +450,27 @@ html[lang^='zh'] .lead {
 
 .prose li + li {
   margin-top: 0.4em;
+}
+
+/* A line that sums a section up, set in the heading face */
+.tagline {
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+/* Two blocks side by side from 44rem, stacked below */
+.halves-plain {
+  display: grid;
+  gap: var(--space-5);
+}
+
+@media (min-width: 44rem) {
+  .halves-plain {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2rem, 5vw, 5rem);
+  }
 }
 
 /* A sentence with a note beside it: from 64rem the note sits in a right-hand
@@ -434,12 +519,12 @@ html[lang^='zh'] .lead {
 }
 
 .btn {
-  background: var(--green);
+  background: var(--accent);
   color: #fff;
 }
 
 .btn:hover {
-  background: var(--green-hover);
+  background: var(--accent-hover);
   color: #fff;
 }
 
@@ -488,7 +573,7 @@ details > summary {
   gap: 0.5rem;
   min-height: 44px;
   width: fit-content;
-  color: var(--green);
+  color: var(--accent);
   font-weight: 600;
   cursor: pointer;
   list-style: none;
@@ -511,7 +596,7 @@ details[open] > summary::before {
 }
 
 details > summary:hover {
-  color: var(--green-hover);
+  color: var(--accent-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;

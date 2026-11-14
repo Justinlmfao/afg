@@ -10,8 +10,6 @@
 //   - data-sample: placeholder content that must never go live
 //     (see `sample: true` in src/data/facts.ts and src/content/submissions/)
 //
-// It WARNS, without failing, when one of our headline figures appears more
-// than once in a page's main content. Each figure should be said once.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,26 +37,7 @@ const BANNED = [
   { name: 'sample (placeholder) content', test: /\sdata-sample[\s=>]/ },
 ];
 
-// The figures from src/data/facts.ts, in every form the three languages use.
-const FIGURES = [
-  { name: '350 children', test: /(?<![\d,.])350(?![\d,])/g },
-  { name: '43 tutors', test: /(?<![\d,.])43(?![\d,%])/g },
-  { name: '86%', test: /(?<!\d)86\s?%/g },
-  { name: 'HK$50 million', test: /HK\$50 million|五千[萬万]港元/g },
-  { name: '35+ members', test: /(?<!\d)35\+|more than 35|超過 ?35/g },
-];
-
-/** The words a reader sees in the page's main content. */
-function mainText(html) {
-  const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? '';
-  return main
-    .replace(/<(script|style)[\s\S]*?<\/\1>/g, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&amp;/g, '&');
-}
-
 const failures = [];
-const warnings = [];
 
 for (const file of htmlFiles(DIST)) {
   const html = fs.readFileSync(file, 'utf8');
@@ -70,15 +49,7 @@ for (const file of htmlFiles(DIST)) {
   for (const rule of BANNED) {
     if (rule.test.test(html)) failures.push(`${page}: contains ${rule.name}`);
   }
-
-  const text = mainText(html);
-  for (const figure of FIGURES) {
-    const count = (text.match(figure.test) ?? []).length;
-    if (count > 1) warnings.push(`${page}: ${figure.name} appears ${count} times`);
-  }
 }
-
-for (const warning of warnings) console.warn(`check-design: warning: ${warning}`);
 
 if (failures.length) {
   for (const failure of failures) console.error(`check-design: ${failure}`);
@@ -86,6 +57,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(
-  `check-design: passed${warnings.length ? ` with ${warnings.length} warning(s)` : ''}. No arrows, eyebrows, count-ups or sample content.`
-);
+console.log('check-design: passed. No arrows, eyebrows, count-ups or sample content.');

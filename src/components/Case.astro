@@ -68,6 +68,7 @@ const gaps = stages.map((stage, i) =>
   <div class="sec-head">
     {period && <p class="kicker-date">{period}</p>}
     <h2 id={id} set:html={title} />
+    <slot name="intro" />
   </div>
 
   <ol class:list={['track', pending && 'pending']}>

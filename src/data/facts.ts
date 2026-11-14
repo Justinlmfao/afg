@@ -70,8 +70,8 @@ export const facts = {
   },
 };
 
-// The address on the Contact page and in the footer. Change it here once
-// hello@aiforgoodhk.org forwards to an inbox someone reads.
+// The address on the Contact page and in the footer: the school address
+// Justin chose. Change it here and it changes everywhere.
 export const contactEmail = 'ps20153216@student.vsa.edu.hk';
 
 /** True where placeholder content may be shown: `npm run dev` only. */

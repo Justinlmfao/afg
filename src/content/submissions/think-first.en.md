@@ -5,13 +5,16 @@ lang: en
 key: think-first
 date: "2025-12"
 area: "Education & inequality"
-status: submitted
+status: reflected
+status_label: "Partly reflected in the June 2026 education blueprint"
 ask: "A HK$54 million pilot in the primary schools serving the lowest-income families."
 case_title: "Teaching children to think with AI before they lean on it."
 noticed: "Hong Kong is about to put AI into every primary school. Used badly, it teaches children to hand their thinking to a machine before they've learned to think for themselves. Our tutors were already seeing it in class."
 did: "We proposed a \"Think First\" approach, the method our tutors use every week, and a HK$54 million pilot in the primary schools serving Hong Kong's lowest-income families."
-changed: "Nothing we can point to yet. We're making the case again in our next submissions."
-changed_status: pending
+changed: "In June 2026 the Education Bureau published its Blueprint for Digital Education Development. It includes an AI Literacy Learning Framework and a guide to using AI in teaching, and requires teachers to complete at least 30 hours of digital education training in every three-year cycle. That is the direction two of our five measures pointed in: a framework for AI literacy, and training for teachers. The pilot in the lowest-income schools hasn't been funded, and we're making that case again in our next submissions."
+changed_date: "2026-06"
+changed_status: changed
+claim: "The blueprint moves the way we argued on two of our five measures. It is the Education Bureau's work, and we can't say our proposal caused it. The pilot we asked for has not been funded."
 case_for: "AI built to give hints instead of answers avoids the learning loss that unrestricted AI causes, and the pilot reaches the children with the least guidance at home, for under 3% of the money already set aside."
 case_against: "It keeps the youngest children away from AI, it takes class time, and the best evidence so far comes from teenagers, not primary pupils."
 recommendation: "All five measures, with the Labs starting as an independently evaluated three-year pilot in 100 schools."

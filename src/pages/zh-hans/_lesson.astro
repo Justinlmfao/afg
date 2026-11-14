@@ -1,0 +1,87 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// The sample lesson itself, in Simplified Chinese: both parts, and the line
+// that ties it to our policy work. Shown in full on the Teaching page and on
+// its own printable page, so the words live here once. The underscore keeps
+// this file from becoming a page of its own. Keep each Chinese paragraph on
+// one source line. The sentence starters stay in English: they are for an
+// English lesson.
+interface Props {
+  /** The heading level of each part: 3 inside the Teaching page, 2 on the lesson's own page. */
+  level?: 2 | 3;
+}
+const Heading = Astro.props.level === 2 ? 'h2' : 'h3';
+---
+
+<div class="lesson">
+  <article class="rail lesson-part">
+    <div class="rail-head">
+      <p class="part-tag">第一部分 · 数学 · 30 分钟</p>
+      <Heading>数字大，不代表比较强</Heading>
+    </div>
+    <div class="prose">
+      <p class="objective">
+        <b>学习目标</b>学生计算一个比率，并解释为什么一个较大的数字，也可能输给较小的那个。
+      </p>
+      <p>
+        每位学生选两个自己真的会玩的《Brawl Stars》角色，从自己的手机画面读出每发伤害和装弹速度。他们几乎总会选一个又慢又重、一个又快又轻的角色，也几乎总以为数字大的那个会赢。
+      </p>
+      <p>
+        然后他们计算每秒伤害，结果通常是快的那个胜出。这份意外就是这一课的重点：单看一个数字说明不了太多，真正重要的数字往往是一个比率。
+      </p>
+      <p>
+        然后是转折：快的那个角色只能攻击近距离的敌人。它还是较好的选择吗？现在答案要视乎你怎样玩，而这正是第二部分要处理的。
+      </p>
+      <p class="aside">
+        <b>延伸</b>装弹速度要改变多少，答案才会倒过来？这是他们第一次解未知数，推动他们的是好奇心，而不是课本。
+      </p>
+      <p class="aside">
+        <b>留意</b>算式做对、却说不出为什么答案出乎意料的学生。能解释才是目标，乘法只是过程。
+      </p>
+    </div>
+  </article>
+
+  <article class="rail lesson-part">
+    <div class="rail-head">
+      <p class="part-tag">第二部分 · 英文 · 30 分钟</p>
+      <Heading>把理由写出来</Heading>
+    </div>
+    <div class="prose">
+      <p class="objective">
+        <b>学习目标</b>学生写一段短论证，包括主张、证据、公平地写出对方的看法，以及建议。
+      </p>
+      <p>
+        他们用刚才算出的数字做证据，论证两个角色之中哪一个较好。只有一条硬性规定：必须诚实地写一句，说明为什么有人会合理地选另一个角色。写不出来的话，就代表还未真正明白自己的论点。
+      </p>
+      <p>我们会在黑板上写好句子开头，帮助以英文为第二语言的学生：</p>
+      <ul class="frames" lang="en">
+        <li>I think ______ is better because ______.</li>
+        <li>The evidence is ______.</li>
+        <li>Someone might choose ______ instead, because ______.</li>
+        <li>Even so, I would recommend ______ because ______.</li>
+      </ul>
+      <p>
+        接着他们跟从 Think First 的步骤：每位学生请人工智能工具核对自己的计算，并给一个提示让论点更有力，再自己判断这些意见对不对。最后关掉人工智能，用自己的话向组员解释自己的建议。
+      </p>
+      <p>
+        写四、五句就是一份完整的作品。我们会请两三位学生读出自己写的，其他人的任务是找出当中的反方论点，而不是判断谁赢。
+      </p>
+      <p class="aside">
+        <b>留意</b>把反方论点写成贬低别人的话，例如“有人会选它，因为他玩得差”。这要退回重写。学会公平地说出对方的立场，正是这个练习的意义。
+      </p>
+    </div>
+  </article>
+
+  <div class="rail lesson-part">
+    <div class="rail-head"></div>
+    <div class="prose">
+      <p>
+        主张、证据、诚实的反方理由，然后是建议：这正是我们<a href="/zh-hans/policy#how-we-write">向政府提交每一份提案</a>时用的结构。我们教十一岁孩子的方法，和我们写给决策者的方法是同一套。
+      </p>
+      <p>
+        反过来也一样。我们在 2025 年 12 月提交的<a href="/zh-hans/policy/think-first">《Think First 先想后问》提案</a>，就是把导师每星期都在用的方法，建议推广到全港每一间小学。
+      </p>
+    </div>
+  </div>
+</div>
