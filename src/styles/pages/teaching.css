@@ -58,6 +58,16 @@
     border-top: 1px solid var(--ink);
   }
 
+  /* On the green band the list is cream, ruled in a paler line */
+  .band .promise-list li {
+    border-color: rgb(245 242 235 / 0.3);
+    color: var(--cream);
+  }
+
+  .band .promise-list li:first-child {
+    border-top-color: var(--cream);
+  }
+
   /* Modules: four ruled rows */
   .module-list {
     margin: 0;
@@ -66,9 +76,40 @@
   }
 
   .module {
-    max-width: 46rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
     padding-block: var(--space-4);
     border-bottom: 1px solid var(--rule);
+  }
+
+  /* The photograph sits above the words on a phone, beside them when wide */
+  .module-photo {
+    order: -1;
+  }
+
+  .module-photo img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: var(--pos, 50% 50%);
+  }
+
+  @media (min-width: 48rem) {
+    .module {
+      grid-template-columns: minmax(0, 1fr) 16rem;
+      column-gap: 2.5rem;
+      align-items: start;
+    }
+
+    .module-photo {
+      order: 0;
+      padding-top: 0.4rem;
+    }
+
+    .module-photo img {
+      aspect-ratio: 4 / 3;
+    }
   }
 
   .module:first-child {

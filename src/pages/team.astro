@@ -4,7 +4,7 @@
 // bio is listed without the toggle.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageTop from '../components/PageTop.astro';
-import Gallery from '../components/Gallery.astro';
+import Photo from '../components/Photo.astro';
 import '../styles/pages/team.css';
 import { getCollection, render } from 'astro:content';
 
@@ -33,10 +33,31 @@ const members = await Promise.all(
     </p>
   </PageTop>
 
+  <!-- The team, large, before the names -->
+  <figure class="photo photo-tall">
+    <Photo
+      name="team-classroom.jpg"
+      alt="Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School, after a session."
+      sizes="100vw"
+      position="50% 42%"
+      eager
+    />
+    <figcaption class="wrap">In a classroom at Ho Man Tin Ling To Catholic School, after a session.</figcaption>
+  </figure>
+
   <!-- The leads. Each name opens its bio: a native <details>, so it works
        without JavaScript and from the keyboard. -->
   <section class="sec">
     <div class="wrap team-body">
+      <figure class="team-side">
+        <Photo
+          name="team-outside-school.jpg"
+          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          sizes="(min-width: 64rem) 17rem, 100vw"
+          position="62% 100%"
+        />
+        <figcaption>Outside Ho Man Tin Ling To Catholic School, where we teach.</figcaption>
+      </figure>
       <div class="people">
         {
           members.map(({ name, role, Bio }) =>
@@ -63,26 +84,6 @@ const members = await Promise.all(
           )
         }
       </div>
-    </div>
-  </section>
-
-  <!-- Team photographs -->
-  <section class="sec">
-    <div class="wrap team-body">
-      <Gallery
-        photos={[
-          {
-            name: 'team-classroom.jpg',
-            alt: 'Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School, after a session.',
-            caption: 'In a classroom at Ho Man Tin Ling To Catholic School, after a session.',
-          },
-          {
-            name: 'team-outside-school.jpg',
-            alt: 'Five AI For Good members outside Ho Man Tin Ling To Catholic School.',
-            caption: 'Outside the school.',
-          },
-        ]}
-      />
     </div>
   </section>
 </BaseLayout>

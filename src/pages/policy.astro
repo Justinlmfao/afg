@@ -11,6 +11,9 @@ import Ledger from '../components/Ledger.astro';
 import Steps from '../components/Steps.astro';
 import ThreePart from '../components/ThreePart.astro';
 import MarginNote from '../components/MarginNote.astro';
+import MeterList from '../components/MeterList.astro';
+import FigureRow from '../components/FigureRow.astro';
+import Photo from '../components/Photo.astro';
 import '../styles/pages/policy.css';
 import { facts } from '../data/facts';
 import { aiForAllCase } from '../data/cases';
@@ -110,6 +113,16 @@ const proposals = submissions.filter((s) => s.hasPaper);
           Kong Productivity Council, and Cyberport's part is aimed at students, parents, older people and
           underprivileged communities.
         </p>
+        <FigureRow
+          slot="figures"
+          inline
+          items={[
+            { figure: f.aiForAll.amount.en, label: 'allocated in the 2026–27 Budget' },
+            { figure: f.aiForAll.reach.toLocaleString('en'), label: 'people it aims to reach' },
+            { figure: '200+', label: 'courses, seminars and competitions' },
+            { figure: '2 years', label: 'to deliver them' },
+          ]}
+        />
       </Case>
 
       <!-- The same three-part shape as every proposal, so the method is
@@ -157,6 +170,14 @@ const proposals = submissions.filter((s) => s.hasPaper);
             learning from it. That second gap is what our{' '}
             <a href="/policy/think-first">Think First proposal</a> is about.
           </p>
+          <MeterList
+            title="Households with internet access at home, 2019"
+            rows={[
+              { label: 'All Hong Kong households', value: 94 },
+              { label: 'Households earning under HK$10,000 a month', value: 71 },
+            ]}
+            source="Source: Legislative Council Research Office."
+          />
           <h3>What we're watching next</h3>
           <ul>
             <li>
@@ -203,6 +224,19 @@ const proposals = submissions.filter((s) => s.hasPaper);
       </div>
     </div>
   </section>
+
+  <figure class="photo">
+    <Photo
+      name="teaching-chalkboard-maths.jpg"
+      alt="A tutor works through a mental-arithmetic shortcut for 1117 × 1117 on the chalkboard."
+      sizes="100vw"
+      position="50% 35%"
+    />
+    <figcaption class="wrap">
+      A maths session at Ho Man Tin Ling To Catholic School. Most of our proposals start in a classroom
+      like this one.
+    </figcaption>
+  </figure>
 
   <section class="sec washed" aria-labelledby="submissions">
     <div class="wrap">

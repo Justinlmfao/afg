@@ -292,9 +292,9 @@ export const langShort: Record<Lang, string> = {
 
 /** Nav items in display order, with their English (root) paths. */
 export const navItems = [
+  { key: 'about', path: '/about' },
   { key: 'policy', path: '/policy' },
   { key: 'teaching', path: '/teaching' },
-  { key: 'about', path: '/about' },
   { key: 'team', path: '/team' },
   { key: 'contact', path: '/get-involved' },
 ] as const;

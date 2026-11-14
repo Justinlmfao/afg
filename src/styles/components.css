@@ -1487,3 +1487,120 @@ div.person {
 .person :is(h2, h3) {
   font-size: var(--step-2);
 }
+
+/* ---- Percentages on aligned bars (MeterList.astro) --------------------- */
+.meters {
+  max-width: var(--text-w);
+  margin: var(--space-4) 0 0;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--ink);
+}
+
+.meters figcaption {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.meters dl {
+  margin: 0.9rem 0 0;
+}
+
+.meters dl > div + div {
+  margin-top: 1rem;
+}
+
+.meters dt {
+  font-size: var(--step--1);
+  color: var(--text);
+}
+
+.meters dd {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.3rem 0 0;
+}
+
+/* The track is the pale step of the same colour; the bar grows from the left */
+.meter {
+  flex: 1;
+  height: 16px;
+  background: var(--wash);
+  border-radius: 0 4px 4px 0;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 0 4px 4px 0;
+}
+
+.meter-value {
+  min-width: 3.2em;
+  font-family: var(--serif);
+  font-size: var(--step-1);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-align: right;
+  color: var(--ink);
+}
+
+.meters-source {
+  margin-top: 0.9rem;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+/* A row of figures inside a section, with no rule above the section's own */
+.figures-inline {
+  margin: 0 0 var(--space-6);
+}
+
+/* ---- A quotation on a solid band ---------------------------------------- */
+.band-quote blockquote {
+  max-width: 44rem;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: var(--step-2);
+  line-height: 1.35;
+}
+
+.band-quote figure {
+  margin: 0;
+}
+
+.band-quote figcaption {
+  margin-top: 1rem;
+  font-size: var(--step--1);
+  color: var(--band-muted);
+}
+
+html[lang^='zh'] .band-quote blockquote {
+  font-size: var(--step-1);
+  line-height: 1.75;
+}
+
+/* The small line above a heading, on a solid band */
+.band .rail-head .kicker-date,
+.band .sec-head .kicker-date {
+  color: var(--band-muted);
+}
+
+/* A full-width photograph between two sections */
+.photo + .sec,
+.band + .sec,
+.sec.band + .sec,
+.sec.band {
+  border-top: 0;
+}
+
+.photo-tall img {
+  aspect-ratio: 2 / 1;
+}
+
+@media (max-width: 40rem) {
+  .photo-tall img {
+    aspect-ratio: 4 / 3;
+  }
+}

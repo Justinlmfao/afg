@@ -12,6 +12,9 @@ import Ledger from '../../components/Ledger.astro';
 import Steps from '../../components/Steps.astro';
 import ThreePart from '../../components/ThreePart.astro';
 import MarginNote from '../../components/MarginNote.astro';
+import MeterList from '../../components/MeterList.astro';
+import FigureRow from '../../components/FigureRow.astro';
+import Photo from '../../components/Photo.astro';
 import '../../styles/pages/policy.css';
 import { facts } from '../../data/facts';
 import { aiForAllCase } from '../../data/cases';
@@ -99,6 +102,16 @@ const proposals = submissions.filter((s) => s.hasPaper);
         <p slot="intro">
           2026 年 2 月，香港财政预算案拨出五千万港元，推行一个普及人工智能计划。计划预计在两年内，通过超过 200 个课程、讲座和比赛，接触约 {f.aiForAll.reach.toLocaleString('en')} 名市民，由数码港、香港科技园公司和香港生产力促进局负责推行，其中数码港的部分以学生、家长、长者和基层社群为对象。
         </p>
+        <FigureRow
+          slot="figures"
+          inline
+          items={[
+            { figure: f.aiForAll.amount[lang], label: '2026–27 年度财政预算案的拨款' },
+            { figure: f.aiForAll.reach.toLocaleString('en'), label: '预计接触的市民' },
+            { figure: '200+', label: '课程、讲座和比赛' },
+            { figure: '2 年', label: '推行时间' },
+          ]}
+        />
       </Case>
 
       <dl class="threepart flagship-parts">
@@ -122,6 +135,14 @@ const proposals = submissions.filter((s) => s.hasPaper);
           <p>
             能够接触人工智能，只解决了一半问题。2019 年，全港有 94% 的家庭可以上网，但月入少于一万港元的家庭只有 71%。而即使有电脑，如果没有人教孩子好好使用人工智能，他们也可能只是依赖它，而不是从中学习。这第二道差距，正是我们<a href="/zh-hans/policy/think-first">《Think First 先想后问》建议</a>要处理的问题。
           </p>
+          <MeterList
+            title="家中可以上网的住户，2019 年"
+            rows={[
+              { label: '全港住户', value: 94 },
+              { label: '月入少于一万港元的住户', value: 71 },
+            ]}
+            source="资料来源：立法会资料研究组。"
+          />
           <h3>我们接下来会留意的事</h3>
           <ul>
             <li>
@@ -156,6 +177,16 @@ const proposals = submissions.filter((s) => s.hasPaper);
       </div>
     </div>
   </section>
+
+  <figure class="photo">
+    <Photo
+      name="teaching-chalkboard-maths.jpg"
+      alt="导师在黑板上示范 1117 × 1117 的心算捷径。"
+      sizes="100vw"
+      position="50% 35%"
+    />
+    <figcaption class="wrap">天主教领岛学校的一节数学课。我们大部分的建议，都是从这样的教室开始的。</figcaption>
+  </figure>
 
   <section class="sec washed" aria-labelledby="submissions">
     <div class="wrap">

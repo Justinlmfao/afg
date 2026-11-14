@@ -11,6 +11,7 @@ import Case from '../../components/Case.astro';
 import Steps from '../../components/Steps.astro';
 import Annotated from '../../components/Annotated.astro';
 import PhotoGrid from '../../components/PhotoGrid.astro';
+import Photo from '../../components/Photo.astro';
 import MarginNote from '../../components/MarginNote.astro';
 import Lesson from './_lesson.astro';
 import '../../styles/pages/teaching.css';
@@ -64,6 +65,16 @@ const cohorts = [
     ],
   },
 ];
+
+// A photograph beside each module, in module order. Their descriptions are
+// the same ones used in the grids further down the page.
+const allPhotos = [...photos, ...cohorts.flatMap((c) => c.photos)];
+const modulePhotos = [
+  'teaching-chalkboard-maths.jpg',
+  'teaching-english-careers.jpg',
+  'vsa-2024-25-helping-pair.jpg',
+  'vsa-2024-25-activity.jpg',
+].map((name) => allPhotos.find((p) => p.name === name)!);
 ---
 
 <BaseLayout
@@ -125,6 +136,16 @@ const cohorts = [
     </div>
   </section>
 
+  <figure class="photo">
+    <Photo
+      name="teaching-ai-study-partner.jpg"
+      alt="导师手持笔记本电脑，示范如何向人工智能大声讲解一个数学概念，借此检查自己是否真的明白。"
+      sizes="100vw"
+      position="50% 30%"
+    />
+    <figcaption class="wrap">在天主教领岛学校，向人工智能学习伙伴讲解一个数学概念。</figcaption>
+  </figure>
+
   <section class="sec" aria-labelledby="why-we-teach">
     <div class="wrap rail">
       <div class="rail-head">
@@ -142,12 +163,12 @@ const cohorts = [
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="a-moment">
+  <section class="sec band band-quote" aria-labelledby="a-moment">
     <div class="wrap rail">
       <div class="rail-head">
         <h2 id="a-moment">课堂上的一刻</h2>
       </div>
-      <figure class="quote">
+      <figure>
         <blockquote>
           <p>
             我们去天主教领岛学校之前，以为要花很多力气，才能说服一班孩子人工智能和时事跟他们有关。我们错了。他们不是没有兴趣，只是从来没有人给过他们机会。不到一小时，他们已经在争论一个演算法算不算公平。他们从来不缺好奇心，缺的是机会。
@@ -205,16 +226,29 @@ const cohorts = [
       </div>
       <ul class="module-list">
         {
-          modules.map((m) => (
+          modules.map((m, i) => (
             <li class="module">
-              <h3>{m.title_hans ?? m.title}</h3>
-              <div class="prose">
-                <p>{m.body_hans}</p>
+              <div class="module-text">
+                <h3>{m.title_hans ?? m.title}</h3>
+                <div class="prose">
+                  <p>{m.body_hans}</p>
+                </div>
+                {m.why_hans && (
+                  <p class="module-why">
+                    <b>有什么帮助：</b>{m.why_hans}
+                  </p>
+                )}
               </div>
-              {m.why_hans && (
-                <p class="module-why">
-                  <b>有什么帮助：</b>{m.why_hans}
-                </p>
+              {modulePhotos[i] && (
+                <div class="module-photo">
+                  <Photo
+                    name={modulePhotos[i].name}
+                    alt={modulePhotos[i].alt}
+                    position={modulePhotos[i].position}
+                    sizes="(min-width: 48rem) 16rem, 100vw"
+                    widths={[480, 800, 1200]}
+                  />
+                </div>
               )}
             </li>
           ))
@@ -257,7 +291,7 @@ const cohorts = [
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="promises">
+  <section class="sec band" aria-labelledby="promises">
     <div class="wrap rail">
       <div class="rail-head">
         <p class="kicker-date">我们对学校和家长的承诺</p>

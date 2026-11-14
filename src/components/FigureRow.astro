@@ -3,11 +3,13 @@
 // the home page hero. Two across on a phone, four on a wide screen.
 interface Props {
   items: { figure: string | number; label: string }[];
+  /** Inside a section, under its heading, rather than closing the hero. */
+  inline?: boolean;
 }
-const { items } = Astro.props;
+const { items, inline = false } = Astro.props;
 ---
 
-<dl class="figures">
+<dl class:list={['figures', inline && 'figures-inline']}>
   {
     items.map((item) => (
       <div>

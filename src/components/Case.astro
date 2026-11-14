@@ -70,6 +70,7 @@ const gaps = stages.map((stage, i) =>
     <h2 id={id} set:html={title} />
     <slot name="intro" />
   </div>
+  <slot name="figures" />
 
   <ol class:list={['track', pending && 'pending']}>
     {

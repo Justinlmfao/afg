@@ -10,6 +10,7 @@ import Case from '../components/Case.astro';
 import Steps from '../components/Steps.astro';
 import Annotated from '../components/Annotated.astro';
 import PhotoGrid from '../components/PhotoGrid.astro';
+import Photo from '../components/Photo.astro';
 import MarginNote from '../components/MarginNote.astro';
 import Lesson from './_lesson.astro';
 import '../styles/pages/teaching.css';
@@ -88,6 +89,16 @@ const cohorts = [
     ],
   },
 ];
+
+// A photograph beside each module, in module order. Their descriptions are
+// the same ones used in the grids further down the page.
+const allPhotos = [...photos, ...cohorts.flatMap((c) => c.photos)];
+const modulePhotos = [
+  'teaching-chalkboard-maths.jpg',
+  'teaching-english-careers.jpg',
+  'vsa-2024-25-helping-pair.jpg',
+  'vsa-2024-25-activity.jpg',
+].map((name) => allPhotos.find((p) => p.name === name)!);
 ---
 
 <BaseLayout
@@ -158,6 +169,16 @@ const cohorts = [
     </div>
   </section>
 
+  <figure class="photo">
+    <Photo
+      name="teaching-ai-study-partner.jpg"
+      alt="A tutor, laptop in hand, shows pupils how to explain a maths idea aloud to an AI to check they have understood it."
+      sizes="100vw"
+      position="50% 30%"
+    />
+    <figcaption class="wrap">Explaining a maths idea aloud to an AI study partner, at Ho Man Tin Ling To Catholic School.</figcaption>
+  </figure>
+
   <section class="sec" aria-labelledby="why-we-teach">
     <div class="wrap rail">
       <div class="rail-head">
@@ -181,12 +202,12 @@ const cohorts = [
   </section>
 
   <!-- A moment from the work -->
-  <section class="sec" aria-labelledby="a-moment">
+  <section class="sec band band-quote" aria-labelledby="a-moment">
     <div class="wrap rail">
       <div class="rail-head">
         <h2 id="a-moment">A moment from class</h2>
       </div>
-      <figure class="quote">
+      <figure>
         <blockquote>
           <p>
             We went to Ling To expecting to spend the session convincing a room of children that AI and
@@ -255,16 +276,29 @@ const cohorts = [
       </div>
       <ul class="module-list">
         {
-          modules.map((m) => (
+          modules.map((m, i) => (
             <li class="module">
-              <h3>{m.title}</h3>
-              <div class="prose">
-                <m.Body />
+              <div class="module-text">
+                <h3>{m.title}</h3>
+                <div class="prose">
+                  <m.Body />
+                </div>
+                {m.why && (
+                  <p class="module-why">
+                    <b>How it helps:</b> {m.why}
+                  </p>
+                )}
               </div>
-              {m.why && (
-                <p class="module-why">
-                  <b>How it helps:</b> {m.why}
-                </p>
+              {modulePhotos[i] && (
+                <div class="module-photo">
+                  <Photo
+                    name={modulePhotos[i].name}
+                    alt={modulePhotos[i].alt}
+                    position={modulePhotos[i].position}
+                    sizes="(min-width: 48rem) 16rem, 100vw"
+                    widths={[480, 800, 1200]}
+                  />
+                </div>
               )}
             </li>
           ))
@@ -315,7 +349,7 @@ const cohorts = [
   </section>
 
   <!-- What schools and families can count on -->
-  <section class="sec" aria-labelledby="promises">
+  <section class="sec band" aria-labelledby="promises">
     <div class="wrap rail">
       <div class="rail-head">
         <p class="kicker-date">Our promises to schools and families</p>

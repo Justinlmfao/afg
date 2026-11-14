@@ -26,8 +26,11 @@ policy paper and a school notice board, not a startup landing page.
   that must stand apart on a page: the "What we can claim" note, or the
   three-line argument on a proposal page.
 - **Documents and photographs are the decoration.** Real classroom photos
-  with captions, real submission titles, real sources. No illustrations,
-  icons, gradients, textures or emoji.
+  with captions, real submission titles, real sources, and the odd small
+  chart drawn from a cited figure. Long pages are broken up with full-width
+  photographs, a photograph beside each teaching module, and solid bands for
+  a quotation or a short list. No illustrations, icons, gradients, textures
+  or emoji, and no pictures we don't hold the rights to.
 - **Asymmetric on purpose.** Left-aligned headings, an 8/3 split in the home
   hero, rails with the heading on the left. Nothing is centred except the
   text inside a button.
@@ -159,7 +162,7 @@ would become a template.
 
 ## 5. Layout
 
-- **Navigation:** Policy · Teaching · About · Team · Contact. Each proposal
+- **Navigation:** About · Policy · Teaching · Team · Contact. Each proposal
   has its own page; so does the sample lesson, which prints.
 - **Header:** 60px (56px on phones), sticky, white, hairline below. On
   phones: the wordmark, one visible language link (中文, or EN on the Chinese
@@ -203,7 +206,8 @@ would become a template.
 | `Annotated`, `Worksheet` | The Think First worksheet as HTML, with numbered notes |
 | `Gallery` | One large photograph and two small (or a pair), with one caption for all |
 | `PhotoGrid` | A whole set of photographs in a grid; each opens at full size |
-| `FigureRow` | The four figures under the home hero |
+| `FigureRow` | A row of figures: under the home hero, and AI for All in numbers on Policy |
+| `MeterList` | A few percentages on aligned bars, each with its value printed and its source named |
 | `Now` | The "Now" note in the home hero, from `facts.now` |
 | `PageTop`, `VerticalTitle` | The top of an inner page and its margin title |
 | `Photo` | A photograph from `src/assets/photos/`, as AVIF and WebP at four widths |

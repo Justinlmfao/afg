@@ -8,7 +8,7 @@
 // without a bio is listed without the toggle.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageTop from '../../components/PageTop.astro';
-import Gallery from '../../components/Gallery.astro';
+import Photo from '../../components/Photo.astro';
 import '../../styles/pages/team.css';
 import { getCollection, render } from 'astro:content';
 
@@ -37,8 +37,29 @@ const members = await Promise.all(
     </p>
   </PageTop>
 
+  <!-- The team, large, before the names -->
+  <figure class="photo photo-tall">
+    <Photo
+      name="team-classroom.jpg"
+      alt="六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。"
+      sizes="100vw"
+      position="50% 42%"
+      eager
+    />
+    <figcaption class="wrap">在天主教领岛学校的教室内，摄于一节课之后。</figcaption>
+  </figure>
+
   <section class="sec">
     <div class="wrap team-body">
+      <figure class="team-side">
+        <Photo
+          name="team-outside-school.jpg"
+          alt="五位 AI For Good 成员在天主教领岛学校门外。"
+          sizes="(min-width: 64rem) 17rem, 100vw"
+          position="62% 100%"
+        />
+        <figcaption>天主教领岛学校门外，我们上课的地方。</figcaption>
+      </figure>
       <div class="people">
         {
           members.map(({ name, role, paras, Bio }) =>
@@ -65,25 +86,6 @@ const members = await Promise.all(
           )
         }
       </div>
-    </div>
-  </section>
-
-  <section class="sec">
-    <div class="wrap team-body">
-      <Gallery
-        photos={[
-          {
-            name: 'team-classroom.jpg',
-            alt: '六位 AI For Good 成员在天主教领岛学校的教室内，摄于一节课之后。',
-            caption: '在天主教领岛学校的教室内，摄于一节课之后。',
-          },
-          {
-            name: 'team-outside-school.jpg',
-            alt: '五位 AI For Good 成员在天主教领岛学校门外。',
-            caption: '学校门外。',
-          },
-        ]}
-      />
     </div>
   </section>
 </BaseLayout>
