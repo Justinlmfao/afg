@@ -1,80 +1,133 @@
 /* =========================================================================
    AI For Good — global styles
 
-   One paper, two inks: a single warm white ground shared by the whole site,
-   with the two pillars told apart by their accent —
-     policy blue #2A5AB0 (the think tank)  ·  vermilion #CC4A22 (the teaching)
-   Colour comes in a few confident blocks rather than many lines and pale
-   boxes. The pair is checked for contrast and colour-blind separation (see
-   DESIGN.md). Motion is used only where it carries meaning; everything
-   respects prefers-reduced-motion.
+   "Statesman": white paper, black ink, one green. Newsreader for headings
+   and the few big figures, Source Sans 3 for everything you read. Ruled, not
+   boxed; no shadows, gradients or load animation. See DESIGN.md.
    ========================================================================= */
 
 :root {
-  /* The named values (DESIGN.md) */
-  --paper: #fbf9f5;
-  --ink: #1c1b18;              /* headings */
-  --text: #2c2a26;             /* running text */
-  --text-soft: #46423b;        /* standfirsts */
-  --graphite: #5a554c;         /* dates, captions, labels only */
-  --rule: #e9e4db;             /* the few separators that remain */
-  --policy: #2a5ab0;
-  --teaching: #cc4a22;
+  /* Colour (DESIGN.md). White paper, black ink, one green. */
+  --paper: #ffffff;        /* page */
+  --surface: #f4f4f1;      /* the one boxed note per page */
+  --ink: #16171b;          /* headings, logo              17.9:1 on paper */
+  --text: #2b2d30;         /* body                        13.8:1 */
+  --muted: #5b5f5e;        /* dates, captions, labels      6.5:1 */
+  --rule: #dcdfdb;         /* hairlines (decorative) */
+  --green: #1a563e;        /* the accent: links, buttons, case line, focus  8.6:1 */
+  --green-hover: #13442f;
+  --navy: #1d395e;         /* AFG marks only (favicon, avatar, share image) */
+  --night: #16171b;        /* footer background */
+  --cream: #f5f2eb;        /* text on night               16.0:1 */
+  --night-muted: #b9b6ae;  /* secondary text on night      8.8:1 */
+  --night-rule: #3a3b3f;
+  --mark: #ffe27a;         /* highlighter behind ink text, once per page */
+  --field: #868a87;        /* form field borders           3.5:1 */
 
-  /* Derived tints and helpers */
-  --policy-deep: #1f4489;      /* hover, and text on policy washes */
-  --policy-wash: #edf2fa;
-  --teaching-deep: #a93d1c;    /* small text in the teaching accent */
-  --teaching-wash: #fbeee8;
-  --tint: #f4f1eb;             /* neutral block behind notes and quotes */
-  --surface: #ffffff;          /* cards */
-  --charcoal: #1f1d1a;         /* the closing band */
-  --field-border: #8f897f;     /* form fields: 3:1 against white */
-
-  /* Type */
-  /* Latin faces first; the CJK families after them are what Traditional
-     Chinese falls back to per-glyph, so no CJK webfont is downloaded. The
-     "fallback" faces (below) stand in while the web fonts load. */
-  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Times New Roman',
-    'Noto Serif TC', 'Source Han Serif TC', 'Songti TC', 'PMingLiU', serif;
-  --sans: 'Inter', 'Inter fallback', system-ui, -apple-system, 'Segoe UI',
+  /* Type. Latin faces first; Chinese falls through to the system faces, so
+     no Chinese web font is downloaded. */
+  --serif: 'Newsreader', 'Newsreader fallback', Georgia, 'Songti TC', 'PMingLiU',
+    'Noto Serif TC', serif;
+  --sans: 'Source Sans 3', 'Source Sans 3 fallback', -apple-system, 'Segoe UI',
     'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
-  /* Heading scale. One size per role, so a section heading or a heading
-     inside a row looks the same wherever it appears. */
-  --h2: clamp(1.6rem, 1.2rem + 0.9vw, 1.9rem); /* section headings */
-  --h3: 1.35rem; /* sub-sections, card and module titles */
-  --h4: 1.2rem;  /* headings inside dense rows: steps, method lists */
 
-  /* Layout */
-  --measure: 35rem;            /* about 68 characters of body text */
-  --measure-wide: calc(var(--measure) + 3.5rem); /* cards: text width plus their inset */
-  --wide: 68rem;
-  --radius: 6px;               /* small things: fields, focus rings */
-  --radius-card: 16px;         /* cards and tinted blocks */
-  --radius-img: 12px;          /* photographs */
-  --shadow-card: 0 1px 2px rgba(28, 27, 24, 0.05), 0 8px 24px rgba(28, 27, 24, 0.06);
-  --header-h: 4rem;
+  /* Fluid scale, 360 to 1240px wide. Seven sizes, nothing else. */
+  --step--1: clamp(0.885rem, 0.859rem + 0.117vw, 0.95rem);  /* 14→15px dates, captions, tags, notes */
+  --step-0: clamp(1.062rem, 1.011rem + 0.227vw, 1.188rem);  /* 17→19px body */
+  --step-1: clamp(1.275rem, 1.189rem + 0.381vw, 1.484rem);  /* 20→24px lead, ledger titles */
+  --step-2: clamp(1.53rem, 1.397rem + 0.592vw, 1.855rem);   /* 24→30px h3, case stage names, steps */
+  --step-3: clamp(1.836rem, 1.638rem + 0.879vw, 2.319rem);  /* 29→37px h2 */
+  --step-4: clamp(2.203rem, 1.918rem + 1.265vw, 2.899rem);  /* 35→46px inner-page h1, big figure */
+  --step-5: clamp(2.6rem, 2.1rem + 2.4vw, 3.9rem);          /* 42→62px home h1 only */
+
+  /* Space and layout */
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: clamp(2rem, 1.6rem + 1.8vw, 3rem);    /* inside sections */
+  --space-6: clamp(3rem, 2.4rem + 2.7vw, 4.5rem);  /* between sections */
+  --space-7: clamp(4rem, 3rem + 4.5vw, 6.5rem);    /* top of page */
+  --wide: 74rem;    /* page container */
+  --text-w: 36rem;  /* reading column, about 65 characters */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --header-h: 60px;
+
+  /* Names the previous design used, pointed at the new values until each
+     page is rebuilt. Removed at the end of the redesign. */
+  --text-soft: var(--text);
+  --graphite: var(--muted);
+  --policy: var(--green);
+  --policy-deep: var(--green-hover);
+  --policy-wash: var(--surface);
+  --teaching: var(--green);
+  --teaching-deep: var(--green-hover);
+  --teaching-wash: var(--surface);
+  --tint: var(--surface);
+  --charcoal: var(--night);
+  --field-border: var(--field);
+  --h2: var(--step-3);
+  --h3: var(--step-2);
+  --h4: var(--step-1);
+  --measure: var(--text-w);
+  --measure-wide: calc(var(--text-w) + 3.5rem);
+  --radius: 4px;
+  --radius-card: 0;
+  --radius-img: 0;
+  --shadow-card: none;
 }
 
-/* ---- Font fallbacks ---------------------------------------------------- */
-/* Arial and Times resized to match Inter and Newsreader, so text keeps the
-   same line breaks when the web fonts arrive instead of jumping. Inter's
-   values are the published ones; Newsreader's were measured against Times. */
+/* ---- Fonts ------------------------------------------------------------- */
+/* Both families are served from this site (public/fonts/), Latin only: one
+   variable file each, plus the Source Sans italic. */
 @font-face {
-  font-family: 'Inter fallback';
+  font-family: 'Newsreader';
+  src: url('/fonts/newsreader-latin.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/fonts/source-sans-3-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  src: url('/fonts/source-sans-3-italic-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+    U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Arial and Times resized to the web fonts' proportions, so lines break in
+   the same places before and after the fonts arrive. The size adjustments
+   were measured by setting this site's own copy in both faces (Source Sans 3
+   at body size against Arial; Newsreader at heading size against Times); the
+   ascent and descent come from the font files. */
+@font-face {
+  font-family: 'Source Sans 3 fallback';
   src: local('Arial'), local('Liberation Sans');
-  size-adjust: 107.12%;
-  ascent-override: 90.44%;
-  descent-override: 22.52%;
+  size-adjust: 93.25%;
+  ascent-override: 109.8%;
+  descent-override: 42.9%;
   line-gap-override: 0%;
 }
 
 @font-face {
   font-family: 'Newsreader fallback';
   src: local('Times New Roman'), local('Liberation Serif');
-  size-adjust: 110.2%;
-  ascent-override: 67.15%;
-  descent-override: 24.5%;
+  size-adjust: 105.7%;
+  ascent-override: 69.5%;
+  descent-override: 25.1%;
   line-gap-override: 0%;
 }
 
@@ -93,7 +146,7 @@ html {
   -webkit-text-size-adjust: 100%;
   /* The parts of the page the browser draws, in the site's palette */
   accent-color: var(--policy);
-  scrollbar-color: #cdc5b6 var(--paper);
+  scrollbar-color: #b9bdb8 var(--paper);
 }
 
 /* The sticky header is a little slimmer on phones */
@@ -109,7 +162,7 @@ html {
 }
 
 ::selection {
-  background: #d7e2f6;
+  background: var(--mark);
   color: var(--ink);
 }
 
@@ -122,8 +175,8 @@ body {
   background: var(--paper);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-size: var(--step-0);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   min-height: 100vh;
