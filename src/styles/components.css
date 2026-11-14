@@ -827,7 +827,7 @@ html[lang^='zh'] .page-top h1 {
 .steps {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.2rem 2rem;
+  gap: 1.5rem 2rem;
   margin: var(--space-4) 0 var(--space-5);
   padding: 0;
   list-style: none;
@@ -853,8 +853,8 @@ html[lang^='zh'] .page-top h1 {
 }
 
 .steps p {
-  margin-top: 0.3rem;
-  font-size: var(--step--1);
+  margin-top: 0.4rem;
+  line-height: 1.5;
 }
 
 @media (min-width: 44rem) {
@@ -1158,7 +1158,6 @@ html[lang^='zh'] .page-top h1 {
   padding: 0;
   list-style: none;
   counter-reset: pin;
-  font-size: var(--step--1);
 }
 
 .pins li {
@@ -1175,7 +1174,7 @@ html[lang^='zh'] .page-top h1 {
   content: counter(pin);
   position: absolute;
   left: 0;
-  top: 0.05rem;
+  top: 0.2rem;
 }
 
 /* ---- Footer (Footer.astro): also every page's closing call to action ---- */
@@ -1424,4 +1423,67 @@ html[lang^='zh'] .page-top h1 {
 
 .cta-pair .btn {
   margin-top: 1rem;
+}
+
+/* ---- People (the Team page): press a name to open the bio underneath ---- */
+.people {
+  max-width: 46rem;
+}
+
+.person {
+  border-bottom: 1px solid var(--rule);
+}
+
+.person:first-child {
+  border-top: 1px solid var(--ink);
+}
+
+.person > summary,
+div.person {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 44px;
+  padding-block: 0.9rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+/* The + sits at the right of the row, not before the name */
+.person > summary::before {
+  order: 2;
+  font-size: var(--step-2);
+  color: var(--accent);
+}
+
+.person > summary:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.person > summary:hover :is(h2, h3) {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.person-head {
+  display: block;
+}
+
+.person-role {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--muted);
+}
+
+.person .prose {
+  padding-bottom: 1.2rem;
+}
+
+.person :is(h2, h3) {
+  font-size: var(--step-2);
 }

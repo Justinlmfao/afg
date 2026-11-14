@@ -1,0 +1,88 @@
+---
+// Team page: the people who lead AFG, and two photographs of the team.
+// Names, roles and bios come from src/content/team/*.md. Anyone without a
+// bio is listed without the toggle.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTop from '../components/PageTop.astro';
+import Gallery from '../components/Gallery.astro';
+import '../styles/pages/team.css';
+import { getCollection, render } from 'astro:content';
+
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
+---
+
+<BaseLayout
+  title="Team"
+  pageClass="page-team"
+  description="AI For Good is run entirely by students: more than 35 members working on policy research and tutoring."
+>
+  <PageTop vertical="團隊">
+    <h1>Run entirely by students</h1>
+    <p class="lead">
+      More than 35 of us work on policy research and tutoring. These are the people who lead the work.
+      Press a name to read more about them.
+    </p>
+  </PageTop>
+
+  <!-- The leads. Each name opens its bio: a native <details>, so it works
+       without JavaScript and from the keyboard. -->
+  <section class="sec">
+    <div class="wrap team-body">
+      <div class="people">
+        {
+          members.map(({ name, role, Bio }) =>
+            Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2>{name}</h2>
+                    <span class="person-role">{role}</span>
+                  </span>
+                </summary>
+                <div class="prose">
+                  <Bio />
+                </div>
+              </details>
+            ) : (
+              <div class="person">
+                <span class="person-head">
+                  <h2>{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team photographs -->
+  <section class="sec">
+    <div class="wrap team-body">
+      <Gallery
+        photos={[
+          {
+            name: 'team-classroom.jpg',
+            alt: 'Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School, after a session.',
+            caption: 'In a classroom at Ho Man Tin Ling To Catholic School, after a session.',
+          },
+          {
+            name: 'team-outside-school.jpg',
+            alt: 'Five AI For Good members outside Ho Man Tin Ling To Catholic School.',
+            caption: 'Outside the school.',
+          },
+        ]}
+      />
+    </div>
+  </section>
+</BaseLayout>

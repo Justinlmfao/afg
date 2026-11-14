@@ -104,7 +104,7 @@
 
 /* The page names set down the margin on wide screens (VerticalTitle.astro)
    use these two tiny files, which hold only the characters needed:
-   政策 教學 關於我們 聯絡 找不到, and their Simplified forms. Add a character to a
+   政策 教學 關於我們 團隊 聯絡 找不到, and their Simplified forms. Add a character to a
    margin title and it falls back to the system serif until the file is
    remade. */
 @font-face {
@@ -400,7 +400,8 @@ html[lang^='zh'] .lead {
   margin: 0 0 0.5rem;
 }
 
-.kicker-date {
+.kicker-date,
+.rail-head .kicker-date {
   display: block;
   font-size: var(--step--1);
   color: var(--muted);
@@ -420,8 +421,6 @@ html[lang^='zh'] .lead {
 
 .rail-head p {
   margin-top: 0.8rem;
-  font-size: var(--step--1);
-  color: var(--muted);
 }
 
 .rail-head .kicker-date {
@@ -432,6 +431,13 @@ html[lang^='zh'] .lead {
   .rail {
     grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
     column-gap: clamp(2rem, 5vw, 5rem);
+  }
+
+  /* The heading stays in view, under the header, while its section scrolls */
+  .rail-head {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    align-self: start;
   }
 }
 

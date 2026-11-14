@@ -1,0 +1,87 @@
+---
+// Traditional Chinese Team page. Same team collection and order as the
+// English page. Role and bio come from role_zh and bio_zh in
+// src/content/team/*.md (bio_zh is one string per paragraph). Anything
+// untranslated falls back to English rather than disappearing; anyone
+// without a bio is listed without the toggle.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageTop from '../../components/PageTop.astro';
+import Gallery from '../../components/Gallery.astro';
+import '../../styles/pages/team.css';
+import { getCollection, render } from 'astro:content';
+
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role_zh ?? m.data.role,
+      paras: m.data.bio_zh,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
+---
+
+<BaseLayout
+  title="團隊"
+  pageClass="page-team"
+  description="AI For Good 全由學生營運，超過 35 位成員參與政策研究和補習工作。"
+>
+  <PageTop vertical="團隊">
+    <h1>全數由學生營運</h1>
+    <p class="lead">
+      我們有超過 35 位成員，分別參與政策研究和補習工作。以下是帶領團隊的成員，按一下名字就可以看看他們的介紹。
+    </p>
+  </PageTop>
+
+  <section class="sec">
+    <div class="wrap team-body">
+      <div class="people">
+        {
+          members.map(({ name, role, paras, Bio }) =>
+            paras || Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2>{name}</h2>
+                    <span class="person-role">{role}</span>
+                  </span>
+                </summary>
+                <div class="prose" lang={paras ? undefined : 'en'}>
+                  {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
+                </div>
+              </details>
+            ) : (
+              <div class="person">
+                <span class="person-head">
+                  <h2>{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap team-body">
+      <Gallery
+        photos={[
+          {
+            name: 'team-classroom.jpg',
+            alt: '六位 AI For Good 成員在天主教領島學校的課室內，攝於一節課之後。',
+            caption: '在天主教領島學校的課室內，攝於一節課之後。',
+          },
+          {
+            name: 'team-outside-school.jpg',
+            alt: '五位 AI For Good 成員在天主教領島學校門外。',
+            caption: '學校門外。',
+          },
+        ]}
+      />
+    </div>
+  </section>
+</BaseLayout>

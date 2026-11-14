@@ -85,6 +85,7 @@ export const ui = {
       policy: 'Policy',
       teaching: 'Teaching',
       about: 'About',
+      team: 'Team',
       contact: 'Contact',
     },
     langLabel: 'Language',
@@ -153,6 +154,7 @@ export const ui = {
       policy: '政策研究',
       teaching: '教學計劃',
       about: '關於我們',
+      team: '團隊',
       contact: '聯絡我們',
     },
     langLabel: '語言',
@@ -170,7 +172,7 @@ export const ui = {
       did: '我們做了什麼',
       changed: '帶來的改變',
       soFar: '目前的進展',
-      claim: '我們能說的：',
+      claim: '我們可以這樣說：',
     },
     ledger: {
       date: '日期',
@@ -196,7 +198,7 @@ export const ui = {
       cite: '引用格式',
       citeSubmitted: '提交於',
       back: '所有意見書',
-      read: '閱讀建議書全文',
+      read: '閱讀完整提案',
     },
     footer: {
       blurb: '一群香港學生，為政府撰寫政策建議，也為基層家庭的小學生提供免費補習。',
@@ -217,6 +219,7 @@ export const ui = {
       policy: '政策研究',
       teaching: '教学计划',
       about: '关于我们',
+      team: '团队',
       contact: '联系我们',
     },
     langLabel: '语言',
@@ -234,7 +237,7 @@ export const ui = {
       did: '我们做了什么',
       changed: '带来的改变',
       soFar: '目前的进展',
-      claim: '我们能说的：',
+      claim: '我们可以这样说：',
     },
     ledger: {
       date: '日期',
@@ -260,7 +263,7 @@ export const ui = {
       cite: '引用格式',
       citeSubmitted: '提交于',
       back: '所有意见书',
-      read: '阅读建议书全文',
+      read: '阅读完整提案',
     },
     footer: {
       blurb: '一群香港学生，为政府撰写政策建议，也为基层家庭的小学生提供免费补习。',
@@ -292,5 +295,6 @@ export const navItems = [
   { key: 'policy', path: '/policy' },
   { key: 'teaching', path: '/teaching' },
   { key: 'about', path: '/about' },
+  { key: 'team', path: '/team' },
   { key: 'contact', path: '/get-involved' },
 ] as const;

@@ -159,9 +159,8 @@ would become a template.
 
 ## 5. Layout
 
-- **Navigation:** Policy · Teaching · About · Contact. The Team page is now
-  the People section of About (`/team` redirects to `/about#people`). Each
-  proposal has its own page; so does the sample lesson, which prints.
+- **Navigation:** Policy · Teaching · About · Team · Contact. Each proposal
+  has its own page; so does the sample lesson, which prints.
 - **Header:** 60px (56px on phones), sticky, white, hairline below. On
   phones: the wordmark, one visible language link (中文, or EN on the Chinese
   pages) and a Menu button. The menu opens as a full-width sheet with large
@@ -173,9 +172,10 @@ would become a template.
 - **Hero (home):** the heading across the full width; below it the
   standfirst and actions in eight columns and the "Now" note in three.
 - **Rail:** from 56rem a section's heading sits in a 17rem left column and
-  its content on the right. Below that they stack.
+  its content on the right, and the heading stays in view under the header
+  while a long section scrolls past. Below 56rem they stack.
 - **Inner pages:** from 64rem the page's Chinese name is set vertically in
-  the left margin (政策, 教學, 關於我們, 聯絡), like the subject names on the
+  the left margin (政策, 教學, 關於我們, 團隊, 聯絡), like the subject names on the
   chalkboard in our classroom photographs: chalk yellow on the navy and green
   bands. It is decoration, hidden from screen readers; the `<h1>` is the
   title.
@@ -234,8 +234,8 @@ state. Everything else works without it.
 Kept from the previous site, restyled: every section and every sentence, the
 four figures under the hero, the two doors and the two outcome panels, "Who
 we are", "What we're working on", "Latest work", the full sample lesson on
-the Teaching page, all eighteen classroom photographs, and the closing calls
-to action. The v4 pieces (the case, the ledger, the proposal pages, the
+the Teaching page, all eighteen classroom photographs, the separate Team
+page, and the closing calls to action. The v4 pieces (the case, the ledger, the proposal pages, the
 worksheet, the summary list) were added on top.
 
 Removed:

@@ -46,6 +46,11 @@
     margin-top: var(--space-5);
   }
 
+  .ledger-note {
+    margin-top: var(--space-4);
+    color: var(--muted);
+  }
+
   .format-intro {
     margin-bottom: var(--space-4);
   }

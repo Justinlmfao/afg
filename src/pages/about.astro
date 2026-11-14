@@ -1,29 +1,15 @@
 ---
 // About page: what AFG is, why it does both policy and teaching, how it
-// started, what it does and how, its impact, the people who lead it, and
-// what's next. The People section replaces the old Team page.
+// started, what it does and how, its impact, and what's next. The people
+// who lead it are on the Team page.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageTop from '../components/PageTop.astro';
 import SummaryList from '../components/SummaryList.astro';
 import Photo from '../components/Photo.astro';
 import '../styles/pages/about.css';
-import { getCollection, render } from 'astro:content';
 import { facts } from '../data/facts';
 
 const f = facts;
-
-// The people who lead AFG (src/content/team/). Anyone without a bio is
-// listed without the toggle.
-const people = await Promise.all(
-  (await getCollection('team'))
-    .filter((m) => !m.data.draft)
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (m) => ({
-      name: m.data.name,
-      role: m.data.role,
-      Bio: m.body?.trim() ? (await render(m)).Content : null,
-    }))
-);
 ---
 
 <BaseLayout
@@ -267,44 +253,16 @@ const people = await Promise.all(
     </div>
   </div>
 
-  <!-- The people who lead it. This was the Team page. -->
+  <!-- The people who lead it have a page of their own: /team -->
   <section class="sec sec-after-band" aria-labelledby="people">
     <div class="wrap rail">
       <div class="rail-head">
         <h2 id="people">Run entirely by students.</h2>
-        <p>
-          More than 35 of us work on policy research and tutoring. These are the people who lead the
-          work. Press a name to read more about them.
-        </p>
       </div>
       <div>
-        <!-- Each name opens its bio: a native <details>, so it works from the
-             keyboard and without JavaScript. -->
-        <div class="people">
-          {
-            people.map(({ name, role, Bio }) =>
-              Bio ? (
-                <details class="person">
-                  <summary>
-                    <span class="person-head">
-                      <h3>{name}</h3>
-                      <span class="person-role">{role}</span>
-                    </span>
-                  </summary>
-                  <div class="prose">
-                    <Bio />
-                  </div>
-                </details>
-              ) : (
-                <div class="person">
-                  <span class="person-head">
-                    <h3>{name}</h3>
-                    <span class="person-role">{role}</span>
-                  </span>
-                </div>
-              )
-            )
-          }
+        <div class="prose">
+          <p>More than 35 of us work on policy research and tutoring.</p>
+          <p><a class="textlink" href="/team">Meet the team</a></p>
         </div>
         <figure class="origin-figure">
           <Photo
@@ -317,6 +275,7 @@ const people = await Promise.all(
       </div>
     </div>
   </section>
+
 
   <!-- 7. Partners -->
   <section class="sec" aria-labelledby="partners">

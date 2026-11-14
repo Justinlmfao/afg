@@ -7,7 +7,7 @@
   }
 
   .routes li {
-    padding-block: 1rem;
+    padding-block: 1.2rem;
     border-bottom: 1px solid var(--rule);
   }
 
@@ -20,9 +20,6 @@
     font-size: var(--step-1);
   }
 
-  .routes p {
-    font-size: var(--step--1);
-  }
 
   .contact-form {
     display: grid;

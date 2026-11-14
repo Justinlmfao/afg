@@ -39,12 +39,12 @@ below.
 | `/policy/<key>` | One page per proposal: its case, the argument in three lines, the paper |
 | `/teaching` | The programme as a case, why we teach, the Think First steps and worksheet, modules, the sample lesson in full, promises, all the classroom photographs |
 | `/teaching/sample-lesson` | The sample lesson, set up to print |
-| `/about` | At a glance, why we do both, how it started, what we do and how, our impact, the people who lead it, what's next |
+| `/about` | At a glance, why we do both, how it started, what we do and how, our impact, what's next |
+| `/team` | The five people who lead the work, with their bios, and the team photographs |
 | `/get-involved` | Contact form and email |
 
-Old URLs redirect: `/research` and `/programs` to the pages that replaced
-them, and `/team` to `/about#people` (the Team page is now the People section
-of About). The redirects are listed in `astro.config.mjs`.
+Old URLs redirect: `/research` and `/programs` go to the pages that replaced
+them. The redirects are listed in `astro.config.mjs`.
 
 Every page also exists in Traditional Chinese under `/zh` and Simplified
 Chinese under `/zh-hans`.
@@ -118,7 +118,7 @@ Three things to know when writing Chinese in these files:
 | --- | --- | --- |
 | A submission | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. A file with only the fields at the top is **a row in the ledger** on the Policy page: `title`, `lang`, `key`, `date` (`"2025-12"`, `"2024"`, or `"2025/2026"` for a consultation spanning two years), `status` (`submitted`, `reflected` or `in-progress`), `ask` (one line), `order` (lower shows first, so give the newest the lowest number). Add the paper as the Markdown body, using `###` for its headings, and it also gets **its own page** at `/policy/<key>`; then fill in `case_title`, `noticed`, `did`, `changed`, `changed_status` (`changed` or `pending`) and the three lines `case_for`, `case_against`, `recommendation`. Copy `think-first.en.md` and `think-first.zh.md` as a starting point. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real submissions only.** |
 | A teaching module | `src/content/programs/` | `summary` is the one sentence always on show; the Markdown body opens beneath it; `why` is the "How it helps" line. Chinese goes in `title_zh`, `summary_zh`, `body_zh` and `why_zh`. |
-| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens under their name in the People section of About. `role_zh` and `bio_zh` are the Traditional Chinese (`bio_zh` is one quoted line per paragraph); run `npm run zh-hans` for the Simplified. A member with no bio is listed without the button. |
+| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens when you press their name on the Team page. `role_zh` and `bio_zh` are the Traditional Chinese (`bio_zh` is one quoted line per paragraph); run `npm run zh-hans` for the Simplified. A member with no bio is listed without the button. |
 
 Set `draft: true` on any file to keep it as a hidden template.
 

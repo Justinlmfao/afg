@@ -79,65 +79,6 @@
     padding-bottom: var(--space-5);
   }
 
-  /* People: press a name to open the bio underneath */
-  .people {
-    max-width: 46rem;
-  }
-
-  .person {
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .person:first-child {
-    border-top: 1px solid var(--ink);
-  }
-
-  .person > summary,
-  div.person {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%;
-    min-height: 44px;
-    padding-block: 0.9rem;
-    color: var(--ink);
-    font-weight: 400;
-  }
-
-  /* The + sits at the right of the row, not before the name */
-  .person > summary::before {
-    order: 2;
-    font-size: var(--step-2);
-    color: var(--accent);
-  }
-
-  .person > summary:hover {
-    color: var(--ink);
-    text-decoration: none;
-  }
-
-  .person > summary:hover h3 {
-    text-decoration: underline;
-    text-decoration-color: var(--accent);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-  }
-
-  .person-head {
-    display: block;
-  }
-
-  .person-role {
-    display: block;
-    margin-top: 0.15rem;
-    color: var(--muted);
-  }
-
-  .person .prose {
-    padding-bottom: 1.2rem;
-  }
-
   /* What's next: a ruled list with a coloured word for each half */
   .next-list {
     max-width: 46rem;

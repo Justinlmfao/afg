@@ -10,12 +10,13 @@ ask: "Pay at-risk workers to retrain before they lose their jobs: up to about HK
 case_title: "Paying workers to retrain before AI takes their jobs, not after."
 noticed: "Hong Kong is short of workers just as AI looks set to make many routine office jobs unnecessary. Hong Kong mostly pays people to retrain after they lose their job."
 did: "We proposed paying at-risk workers to retrain before redundancy, steering them towards sectors short of staff, and rewarding employers who retrain people instead of letting them go: up to about HK$240 million over three years."
-changed: "Nothing we can point to yet."
+changed: "The 2026–27 Budget announced that the Employees Retraining Board will be upgraded as Upskill Hong Kong, with skills-based courses that include AI applications. In September 2026 the government's own manpower update projected a surplus of 25,000 to 30,000 clerical workers by 2028 as companies use more AI, the risk our proposal was written about. Paying those workers to retrain before they are made redundant is the part still to come."
 changed_status: pending
 case_for: "Paying a worker to retrain while they still have a job costs far less than unemployment afterwards, and it moves people into the sectors that are short of staff."
 case_against: "Nobody knows exactly which jobs AI will replace, some of the money pays for training that would have happened anyway, and not every job switch is realistic."
 recommendation: "All five measures, starting with an AI Exposure Index that is reviewed every year."
 summary: "Hong Kong is short of workers just as AI looks set to make many routine office jobs unnecessary. That's how structural unemployment starts: the jobs exist, but the people who lose theirs can't fill them. Hong Kong mostly pays people to retrain after they lose their job. We propose paying at-risk workers to retrain before it happens, steering them towards sectors that are short of staff, and rewarding employers who retrain people instead of letting them go, for up to about HK$240 million over three years."
+changed_date: "2026-02/2026-09"
 order: 5
 ---
 

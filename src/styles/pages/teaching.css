@@ -81,9 +81,7 @@
   }
 
   .module-why {
-    margin-top: 0.5rem;
-    font-size: var(--step--1);
-    color: var(--muted);
+    margin-top: 0.8rem;
   }
 
   .module-why b {
@@ -170,9 +168,8 @@
 
   /* Notes for the tutor: run-in labels, set apart by a rule, not a box */
   .aside {
-    padding-top: 0.8rem;
+    padding-top: 0.9rem;
     border-top: 1px solid var(--rule);
-    font-size: var(--step--1);
   }
 
   .aside b,

@@ -16,12 +16,12 @@ classroom" grid on the Teaching page, in this order (the first is shown large):
 | `teaching-exploring-interests.jpg` | Using AI to explore interests | |
 | `teaching-english-careers.jpg` | The English module | |
 
-The team (About page):
+The team (both are on the Team page, side by side):
 
-| File | Where it appears |
+| File | Also appears |
 | --- | --- |
-| `team-outside-school.jpg` | "How it started": outside the school |
-| `team-classroom.jpg` | People: six members in the classroom |
+| `team-classroom.jpg` | About, "Run entirely by students" |
+| `team-outside-school.jpg` | About, "How it started" |
 
 Sessions with Victoria Shanghai Academy. All twelve are on the Teaching page,
 six under each year; two also appear in the home gallery:

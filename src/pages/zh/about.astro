@@ -9,7 +9,6 @@ import PageTop from '../../components/PageTop.astro';
 import SummaryList from '../../components/SummaryList.astro';
 import Photo from '../../components/Photo.astro';
 import '../../styles/pages/about.css';
-import { getCollection, render } from 'astro:content';
 import { facts } from '../../data/facts';
 import { getLangFromUrl } from '../../i18n';
 
@@ -17,18 +16,6 @@ import { getLangFromUrl } from '../../i18n';
 // Simplified page, where the same lookups return the Simplified wording.
 const lang = getLangFromUrl(Astro.url);
 const f = facts;
-
-const people = await Promise.all(
-  (await getCollection('team'))
-    .filter((m) => !m.data.draft)
-    .sort((a, b) => a.data.order - b.data.order)
-    .map(async (m) => ({
-      name: m.data.name,
-      role: m.data.role_zh ?? m.data.role,
-      paras: m.data.bio_zh,
-      Bio: m.body?.trim() ? (await render(m)).Content : null,
-    }))
-);
 ---
 
 <BaseLayout
@@ -211,39 +198,16 @@ const people = await Promise.all(
     </div>
   </div>
 
-  <!-- The people who lead it. This was the Team page. -->
+  <!-- The people who lead it have a page of their own: /team -->
   <section class="sec sec-after-band" aria-labelledby="people">
     <div class="wrap rail">
       <div class="rail-head">
         <h2 id="people">全由學生營運。</h2>
-        <p>我們有超過 35 位成員，分別參與政策研究和補習工作。以下是帶領團隊的成員，按一下名字就可以看看他們的介紹。</p>
       </div>
       <div>
-        <div class="people">
-          {
-            people.map(({ name, role, paras, Bio }) =>
-              paras || Bio ? (
-                <details class="person">
-                  <summary>
-                    <span class="person-head">
-                      <h3>{name}</h3>
-                      <span class="person-role">{role}</span>
-                    </span>
-                  </summary>
-                  <div class="prose" lang={paras ? undefined : 'en'}>
-                    {paras ? paras.map((p) => <p>{p}</p>) : Bio && <Bio />}
-                  </div>
-                </details>
-              ) : (
-                <div class="person">
-                  <span class="person-head">
-                    <h3>{name}</h3>
-                    <span class="person-role">{role}</span>
-                  </span>
-                </div>
-              )
-            )
-          }
+        <div class="prose">
+          <p>我們有超過 35 位成員，分別參與政策研究和補習工作。</p>
+          <p><a class="textlink" href="/zh/team">認識團隊</a></p>
         </div>
         <figure class="origin-figure">
           <Photo
@@ -256,6 +220,7 @@ const people = await Promise.all(
       </div>
     </div>
   </section>
+
 
   <section class="sec" aria-labelledby="partners">
     <div class="wrap rail">

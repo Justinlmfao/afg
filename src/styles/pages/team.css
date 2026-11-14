@@ -1,0 +1,20 @@
+/* Team page, shared by the English and Chinese versions. The list of people
+   is styled in components.css (.people, .person). */
+.page-team {
+  /* The list and the photographs line up under the page heading */
+  .team-body > * {
+    max-width: 46rem;
+  }
+
+  @media (min-width: 64rem) {
+    .team-body {
+      display: grid;
+      grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+      column-gap: clamp(2rem, 5vw, 5rem);
+    }
+
+    .team-body > * {
+      grid-column: 2;
+    }
+  }
+}
