@@ -87,8 +87,8 @@
 }
 
 /* The page names set down the margin on wide screens (VerticalTitle.astro)
-   use these two tiny files, which hold only the dozen characters needed:
-   政策 教學 關於我們 聯絡, and their Simplified forms. Add a character to a
+   use these two tiny files, which hold only the characters needed:
+   政策 教學 關於我們 聯絡 找不到, and their Simplified forms. Add a character to a
    margin title and it falls back to the system serif until the file is
    remade. */
 @font-face {
@@ -293,9 +293,13 @@ html[lang^='zh'] body {
   text-spacing-trim: trim-start;
 }
 
+/* Chinese headings break after punctuation or at a <wbr>, not in the middle
+   of a word; a phrase too long for the line may still break anywhere. */
 html[lang^='zh'] :is(h1, h2, h3, h4) {
   line-height: 1.4;
   letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 html[lang^='zh'] .lead {
@@ -597,5 +601,9 @@ details > summary:hover {
   figure,
   li {
     break-inside: avoid;
+  }
+
+  .rail-head {
+    margin-bottom: 0.6rem;
   }
 }

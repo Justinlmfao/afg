@@ -1,207 +1,220 @@
-# AFG site — design plan
+# AFG site: design
 
-Written before building, per the brief ("write a short design plan… review it
-against this brief and cut anything generic… then build").
+The current design ("Statesman", v4, November 2026). It replaces the blue and
+orange "one paper, two inks" design. It was built from the v4 redesign spec
+of 15 November 2026; this file records what was built.
 
-## 1. Palette
+## 1. The style
 
-Revised in November 2026 to be livelier but still calm ("simplistic yet
-vibrant"): a cleaner warm white, a clearer blue and orange, and near-black text.
+The logo sets the tone: a civic, documentary voice. Think of a well-set
+policy paper and a school notice board, not a startup landing page.
 
-| Name | Hex | Job |
-| --- | --- | --- |
-| Paper | `#FBF9F5` | Page ground. A warm white, cleaner than the old beige. |
-| Ink | `#1C1B18` | Headings. |
-| Text | `#2C2A26` | Running text, so paragraphs read crisp rather than grey. |
-| Text soft | `#46423B` | Standfirsts and secondary paragraphs. |
-| Graphite | `#5A554C` | Dates, captions and small labels only. |
-| Rule | `#E9E4DB` | The few separators that remain (list rows, table rules). |
-| Policy blue | `#2A5AB0` | The think tank: links, marks and fills on everything policy. |
-| Vermilion | `#CC4A22` | The teaching programme: marks and fills on everything teaching. |
+- **Serif for the voice, sans for the facts.** Headings and the few big
+  figures are Newsreader, matching the logo. Everything read in paragraphs,
+  plus dates, labels and buttons, is Source Sans 3.
+- **White paper, black ink, one green.** The logo's green is the only accent.
+  Navy appears only in the AFG marks (favicon, avatar, share image). The
+  logo's near-black is the footer.
+- **Ruled, not boxed.** Content is separated by white space and thin rules,
+  like a printed document. A box is kept for the one thing that must stand
+  apart on a page: the "What we can claim" note, or the three-line argument
+  on a proposal page.
+- **Documents and photographs are the decoration.** Real classroom photos
+  with captions, real submission titles, real sources. No illustrations,
+  icons, gradients, textures or emoji.
+- **Asymmetric on purpose.** Left-aligned headings, an 8/3 split in the home
+  hero, rails with the heading on the left. Nothing is centred except the
+  text inside a button.
 
-Derived values: policy deep `#1F4489` (hover, text on blue tints), teaching
-deep `#A93D1C` (any small orange text: vermilion itself is 4.4:1 on paper, so
-it is kept for fills and large marks), policy wash `#EDF2FA`, teaching wash
-`#FBEEE8`, neutral tint `#F4F1EB` (notes, quotes, footer), charcoal `#1F1D1A`
-(the home page's closing band), and form-field borders `#8F897F` (3:1 against
-white).
+## 2. Logo
 
-**Checked, not eyeballed.** White text on the blue fill is 6.6:1 and on the
-vermilion fill 4.6:1, so both carry small white text. Blue text on paper is
-6.3:1. Colour-blind separation between the two accents (CIEDE2000 after
-full-strength Machado simulation): 45.9 normal, 49.8 protan, 57.4 deutan,
-62.2 tritan. A colour-blind reader can always tell which pillar they're on.
+| Version | Use |
+| --- | --- |
+| Wordmark | Site header on every page. 22px tall on desktop, 19px on phones. |
+| Full lockup (dark) | Footer, on the dark ground. Up to 380px wide. |
+| Full lockup (light) | Print, PDFs. At least 240px wide; below that use the wordmark. |
+| Avatar (`public/brand/`) | Social profile pictures. Not used on pages. |
+| Favicon | Browser tab and home-screen icon. |
 
-## 2. Type — two faces, strict roles
+- `Logo.astro` inlines the SVG and sets its fill to the text colour, so it is
+  ink on white and cream on the footer.
+- Don't recolour, stretch, outline or re-type the wordmark in live text.
+- The spaced capitals of HONG KONG exist only inside the logo. Nothing else on
+  the site is set in capitals or letter-spaced.
+- Files: `src/assets/brand/` (logos), `public/favicon.svg`,
+  `public/favicon-32.png`, `public/apple-touch-icon.png`,
+  `public/icon-512.png`, `public/og-default.jpg` (1200×630 share image).
 
-- **Newsreader** (serif) — headings, proposal titles, the organisation's voice.
-  Weights 400/500/600, italic only for sparing emphasis.
-- **Inter** (sans) — body, UI, labels, and **every number**. Per the dataviz
-  hero-figure spec, the big 86% is set in Inter, not the serif; large standalone
-  numbers keep proportional figures, and only aligned columns get `tabular-nums`.
-- **No third face.** Captions, eyebrows and small labels are Inter, in
-  sentence case; nothing is set in capitals or monospace.
-- **One size per heading role** (tokens in `global.css`): `--h2` for section
-  headings, `--h3` for sub-sections and card or module titles, `--h4` for
-  headings inside dense rows such as process steps.
-- While the web fonts load, Arial and Times stand in, resized to Inter's and
-  Newsreader's metrics (`Inter fallback`, `Newsreader fallback`), so the page
-  doesn't reflow when the real fonts arrive.
+## 3. Tokens (`src/styles/global.css`)
 
-## 3. Layout concept
+### Colour
 
-The organising idea: **one paper, two inks.** A single shared grid, type scale,
-and background; the two pillars are distinguished by accent colour, density, and
-structure — policy is dense and ruled like a well-set policy paper; teaching is
-airy and warm with photographs. A reader always knows which side they're on.
+| Token | Hex | Job | Contrast on paper |
+| --- | --- | --- | --- |
+| `--paper` | `#FFFFFF` | Page | |
+| `--surface` | `#F4F4F1` | The one boxed note per page | |
+| `--ink` | `#16171B` | Headings, logo | 17.9:1 |
+| `--text` | `#2B2D30` | Body | 13.8:1 |
+| `--muted` | `#5B5F5E` | Dates, captions, labels | 6.5:1 (5.9:1 on surface) |
+| `--rule` | `#DCDFDB` | Hairlines (decorative) | |
+| `--green` | `#1A563E` | The accent: links, buttons, the case line, focus | 8.6:1 |
+| `--green-hover` | `#13442F` | | |
+| `--navy` | `#1D395E` | AFG marks only | |
+| `--night` | `#16171B` | Footer background | |
+| `--cream` | `#F5F2EB` | Text on night | 16.0:1 |
+| `--night-muted` | `#B9B6AE` | Secondary text on night | 8.8:1 |
+| `--night-rule` | `#3A3B3F` | | |
+| `--mark` | `#FFE27A` | Highlighter behind ink text | 14.0:1 |
+| `--field` | `#868A87` | Form field borders | 3.5:1 |
 
-Home (the router — sends readers to a pillar instead of averaging them):
+No tinted washes, no gradients, no shadows. Policy and Teaching are not
+colour-coded. `<mark>` appears once per page at most, on the phrase that
+matters most.
 
-```
-┌──────────────────────────────────────────────┐
-│ AI For Good      Policy Teaching Team Contact │
-├──────────────────────────────────────────────┤
-│ One-sentence intro: student-led, Hong Kong,  │
-│ founded June 2023. It does two things:       │
-├──────────────────────┬───────────────────────┤
-│ ▍POLICY (blue rule)  │ ▍TEACHING (verm rule) │
-│ dense, ruled ledger  │ airy, warm wash       │
-│ ~20 recs / yr        │ 86% moved up a band   │
-│ HK$50M commitment    │ 350 children · 7 sch. │
-│ → Read the policy    │ → See the teaching    │
-├──────────────────────┴───────────────────────┤
-│ quiet line: 35+ members · student-founded    │
-│ short story + values (no ASA/club claims)    │
-├──────────────────────────────────────────────┤
-│ footer: nav · contact email · HK             │
-└──────────────────────────────────────────────┘
-```
+### Type
 
-Policy page — the boldness is spent on the **proposal template**, which makes
-the for/against/recommendation method *visible* instead of described:
+| Role | Face |
+| --- | --- |
+| Headings, big figures, ledger titles, step names | Newsreader 500, optical sizing on |
+| Body, UI, dates, captions, tables, buttons | Source Sans 3 400 / 600 / 700, 400 italic |
+| The paper on a proposal page | Newsreader at text size |
+| Chinese body and UI | The system face (PingFang, Microsoft JhengHei), then Noto Sans |
+| Chinese headings | The system Song/Ming face, then Noto Serif |
 
-```
-Policy
-A student-led think tank that submits written
-recommendations to Hong Kong lawmakers.
-──────────────────────────────────────────────
-~20        recommendations submitted per year
-HK$50M     government AI course commitment ←weighted
-2024–      Policy Address · Budget feedback
-2026–30    First Five-Year Plan (current)
-──────────────────────────────────────────────
-How a proposal is made
-1 Member interviews → 2 Research → 3 Drafting
-┌─────────────────────────────────────────────┐
-│ Every proposal, same shape:                  │
-│ The case for      │ steel-manned arguments   │
-│ The case against  │ the honest counter-case  │
-│ ▍Recommendation   │ what we ask for (blue)   │
-└─────────────────────────────────────────────┘
-Submissions
-"Submissions are published here after they are filed."
-```
+- Both Latin families are served from the site (`public/fonts/`, Latin only),
+  not from Google, so the body face can be preloaded and no third party is
+  contacted. No Chinese web font is downloaded, except two 4 KB files holding
+  only the characters of the vertical margin titles.
+- Arial and Times stand in while the fonts load, resized to match. The sizes
+  were measured by setting this site's own copy in both faces.
+- Seven sizes, nothing else: `--step--1` (14→15px: dates, captions, notes),
+  `--step-0` (17→19px: body), `--step-1` (lead, ledger titles), `--step-2`
+  (h3, stage names, steps, rail headings), `--step-3` (h2), `--step-4`
+  (inner-page h1, the big figure), `--step-5` (home h1 only). They grow with
+  the window from 360 to 1240px.
+- Weights: body 400; headings 500; labels, nav and buttons 600; 700 only for
+  run-in labels such as **Now** and **What we can claim:**.
+- Line height 1.6 in English, 1.85 in Chinese; headings 1.15 and 1.4.
+- Italic only for the time-gap labels on the case line and for publication
+  titles. Tabular figures in the ledger and case dates. No capitals.
+- Chinese: `text-autospace`, `text-spacing-trim` and `line-break: strict`
+  where the browser supports them. Chinese headings break after punctuation
+  or at a `<wbr>`, never in the middle of a word.
 
-Teaching page — the boldness here is the **86% hero figure** (an outcome, not
-an activity count); everything else stays quiet:
+### Space, shape, motion
 
-```
-Teaching
-Free tutoring for underprivileged primary students,
-delivered by trained student tutors.
+- Spaces: `--space-3` 1rem, `--space-4` 1.5rem, `--space-5` (inside
+  sections), `--space-6` (between sections), `--space-7` (top of page).
+  Container `--wide` 74rem; reading column `--text-w` 36rem.
+- Radius 0 everywhere except buttons and form fields (4px) and the dots on
+  the case line.
+- No shadows. No animation on load or on scroll. Hover changes colour and
+  underline thickness over 120ms.
+- Focus: a 3px green outline, 2px off the element (cream in the footer).
 
-86%   ← Inter, huge, counted up once; vermilion mark
-of our students have moved up at least one
-class band since 2024.
+## 4. The signature: the case
 
-350 children taught · 7 schools · 43 tutors trained   (one quiet line)
+Every piece of work is told the same way: **What we noticed → What we did →
+What changed.** It is the first real content on the home page and the top of
+every proposal page. It shows cause, action and result with dates and
+evidence, and says so when the result isn't in yet.
 
-How we teach — four modules (ruled list, not cards)
-Partners — "7 schools, including…" (text, no logo wall)
-In the classroom — 6 real photos (lightbox)
-A moment from the work — anecdote
-```
+`Case.astro`:
 
-Photographs belong to the teaching pillar only: the six real session photos
-carry the gallery, and one of them heads the Teaching panel on the home page.
-Policy stays entirely typographic and ruled. That asymmetry is the point — it
-is how a reader knows which side of the organisation they are on before they
-read a word.
+- **Wide (the component is at least 60rem wide):** a 2px green line across
+  the top with three dots. Under each: the date, the stage name, the text,
+  then the evidence. Columns are `1fr 1fr 1.35fr`, so "What changed" has the
+  most room. No boxes or icons.
+- **Narrow:** the line runs down the left and the stages stack.
+- **Time between stages** is worked out from the dates and set in small
+  italic on the line: "six months later", "the next year". Unknown: left off.
+- **The last dot is filled** when something changed. When it hasn't
+  (`status: 'pending'`), the dot is hollow, the last stretch of line is
+  dashed and the stage is named "What's changed so far".
+- **Evidence:** a photo thumbnail with a caption, a document by name and
+  date, or a source link. Real items only.
+- **One big figure at most,** inside "What changed", and not repeated in the
+  title.
+- **The claim note** sits under the case on `--surface`.
 
-## 4. Principles specific to this brief
+Where it is used: Home (AI for All), Policy (AI for All in full, then each
+proposal in brief with `CaseBrief.astro`), every `/policy/<key>` page, and
+Teaching (the programme itself). Not on About or Contact: used everywhere it
+would become a template.
 
-1. **Every number is traceable to the brief**, appears once per page in one
-   agreed form (350, 7 schools, 43 tutors, 86%, ~20/yr, HK$50M, 35+ members,
-   June 2023), and the strongest figure on each pillar gets the weight: HK$50M
-   on policy, 86% on teaching.
-2. **The method is shown structurally.** The for/against/recommendation shape
-   is rendered with marginal labels like a set document (the standing format
-   on /policy), never three matching cards; each real proposal follows it in
-   its full text.
-3. **No invented output.** Only real proposals go in the submissions
-   collection; each shows a summary card that opens to the full paper.
-4. **Motion only where it carries meaning**: the 86% counts up once, photos
-   open in a lightbox, links underline on hover, and a handful of entrances on
-   the two pillar panels. Nothing ambient.
-5. **Sentence case everywhere.** No all-caps eyebrow chips, no promotional
-   adjectives; active voice, plain verbs.
-6. **Headings in the margin, text in one column, spreads across.** On wide
-   screens every section uses the **rail**: its heading (and any kicker) sits
-   in a 15rem margin column, on the same baseline as the first line of text
-   beside it, and stays pinned in view while a long section scrolls past. All
-   running text shares the one column to its right, so a reader scans a
-   single line of headings and reads from a single left edge. Rows inside a
-   section that carry their own label (modules, cohort years) use
-   `.rail-row` to put the label in the same margin column. Grids and photos
-   (the two doors, the lesson cards, galleries, the two blocks on About,
-   calls to action) are spreads: they span the full container. Sections are
-   separated by space, with generous padding around narrative sections and
-   tight padding (`section-tight`) between short reference rows. Below 60rem
-   everything folds back to heading-above. The page title block (kicker, h1,
-   lead) always starts at the container's left edge. Figures that sit under
-   cards line up with the cards' text.
-7. **Colour in a few confident blocks, not many lines.** Each page gets at
-   most two or three solid colour moments: the home page's HK$50M and 86%
-   panels (blue and vermilion, edge to edge, white type), the Teaching
-   page's 86% band, and the home page's charcoal closing band. Everything
-   else stays on paper or a soft tint. Sections are separated by space, not
-   hairlines; lists keep faint row separators; cards have no outline (a soft
-   fill, or white with a soft shadow) and 16px corners; buttons are rounded.
-   No coloured side stripes: notes and quotes are tinted blocks. The one
-   recurring mark is a short 2.5rem × 4px bar in the pillar's colour hanging
-   from the top edge of each card (blue-to-vermilion on About, where the two
-   halves meet).
-8. **Comfortable reading on any screen.** Body lines are capped at about 68
-   characters (`--measure`, 35rem), Chinese at about 31; cards may run 3.5rem
-   wider because their text sits inset. No text is smaller than 14px. On
-   phones, cards keep only a slim inset, numbered steps put the number beside
-   the heading, photo galleries become sideways swipe rows, and the long
-   Policy and Teaching pages open with a row of "On this page" links.
+## 5. Layout
 
-## 5. Review — what was cut, and why
+- **Navigation:** Policy · Teaching · About · Contact. The Team page is now
+  the People section of About (`/team` redirects to `/about#people`). Each
+  proposal has its own page; so does the sample lesson, which prints.
+- **Header:** 60px (56px on phones), sticky, white, hairline below. On
+  phones: the wordmark, one visible language link (中文, or EN on the Chinese
+  pages) and a Menu button. The menu opens as a full-width sheet with large
+  serif links and the three languages.
+- **Footer:** also every page's closing call to action. Dark ground, the
+  full logo, one column for schools and organisations and one for students,
+  each with a cream button; then email, nav, languages and "Last updated".
+  No page has a separate closing section.
+- **Hero (home):** the heading across the full width; below it the
+  standfirst and actions in eight columns and the "Now" note in three.
+- **Rail:** from 56rem a section's heading sits in a 17rem left column and
+  its content on the right. Below that they stack.
+- **Inner pages:** from 64rem the page's Chinese name is set vertically in
+  the left margin (政策, 教學, 關於我們, 聯絡), like the subject names on the
+  chalkboard in our classroom photographs. It is decoration, hidden from
+  screen readers; the `<h1>` is the title.
+- **Margin notes:** a caveat or source sits in a right-hand column beside the
+  sentence it supports from 64rem, and follows it below that. No toggles, no
+  numbered footnotes.
+- **Phones:** nothing scrolls sideways at 320px. Every link or button that
+  stands on its own is at least 44×44px. Photographs are cropped per image so
+  faces stay in frame. A gallery shows one photograph. Long material sits in
+  a native `<details>` or on its own page.
 
-Cut from the previous design because it would look the same on any student
-nonprofit (or was banned by the brief):
+## 6. Components
 
-- The particle-network canvas and floating gradient blobs (generic tech
-  ambience, no connection to policy documents or tutoring).
-- The dark "cinematic" heroes, film grain, and word-by-word headline animation
-  (v5 — the mistakes the client flagged; also indistinguishable from an agency
-  template).
-- The auto-scrolling topic marquee (decorative breadth; the real breadth is the
-  named consultations).
-- Gradient text, gradient stat numbers, and the animated rainbow progress bar
-  ("hero with a big gradient number" is called out by name in the brief).
-- All-caps eyebrow pills above every heading → replaced by sentence-case
-  accent-coloured section labels.
-- Three identical "what we do" cards → replaced by the two differentiated
-  pillar panels.
-- Card tilt, magnetic buttons, cursor spotlight, fade-up on every section →
-  replaced by the short list in principle 4.
-- The illustrative submissions, reports, and the "4 recommendations reflected
-  in the Policy Address" figure — not in the verified-facts list, so they do
-  not appear.
+| Component | Purpose |
+| --- | --- |
+| `Case`, `CaseBrief` | The case, in full and in brief |
+| `Ledger` | Every submission as a dated list; a table when wide, stacked rows when narrow |
+| `Steps` | Real sequences only: the four Think First steps, the three steps of a proposal |
+| `ThreePart` | The case for, the case against, what we recommend |
+| `MarginNote` | A caveat beside the text it supports |
+| `SummaryList` | Key and value list, used once on About |
+| `Annotated`, `Worksheet` | The Think First worksheet as HTML, with numbered notes |
+| `Gallery` | One large photograph and two small (or a pair), with one caption for all |
+| `Now` | The "Now" note in the home hero, from `facts.now` |
+| `PageTop`, `VerticalTitle` | The top of an inner page and its margin title |
+| `Photo` | A photograph from `src/assets/photos/`, as AVIF and WebP at four widths |
+| `ProposalPage` | The layout of `/policy/<key>` |
+| `Logo`, `Header`, `Footer`, `OnThisPage` | Site furniture |
 
-Kept from v4 because it serves this subject: the warm paper ground, the
-Newsreader/Inter pairing, the classroom photo gallery + lightbox, and the
-count-up treatment (now reserved for the one hero figure).
+The only JavaScript is the phone menu, and the contact form's "Sending…"
+state. Everything else works without it.
+
+## 7. Rules that keep it honest
+
+1. **Every figure comes from `src/data/facts.ts`** and is said once per page.
+2. **Placeholders never go live.** Anything marked `sample: true` shows with
+   a "Sample" tag in `npm run dev` and is left out of the built site.
+   `scripts/check-design.mjs` runs after every build and fails it if sample
+   content, an arrow character, an eyebrow label, a count-up or a scroll
+   reveal is found; it warns if a headline figure appears twice on a page.
+3. **Attribution on AI for All stays limited.** We recommended it and the
+   Budget went that way. It is a government programme; we didn't fund it and
+   we don't run it.
+4. **"Not yet" is shown.** A proposal that hasn't changed anything says so.
+5. **Sentence case, active voice, no promotional adjectives.**
+
+## 8. What was removed, and why
+
+- The label above every heading, the four-number stat strip, the two "door"
+  cards and the coloured proof blocks: template sections that repeated the
+  same figures up to four times a page.
+- The warm off-white ground, blue and orange blocks, rounded cards and soft
+  shadows: now the look AI tools produce when told to look less like AI.
+- The count-up on 86% (screenshots caught it mid-count), scroll reveals and
+  the hero entrance.
+- Every arrow after a link, the pill-shaped "On this page" chips, the
+  three-bar logo, the photo lightbox, the icon set, and the "Latest work"
+  list that mixed modules and proposals.

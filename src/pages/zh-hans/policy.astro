@@ -104,8 +104,8 @@ const proposals = submissions.filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="submissions">
     <div class="wrap">
       <div class="sec-head">
-        <h2 id="submissions">我们向政府提交过的所有意见书。</h2>
-        <p>每份意见书包含多项建议：每年合共约{f.recsPerYear.word.zh}项。</p>
+        <h2 id="submissions">我们向政府提交过的<wbr />所有意见书。</h2>
+        <p>每份意见书包含多项建议：每年合共约{f.recsPerYear.word[lang]}项。</p>
       </div>
       <Ledger rows={submissions} caption="我们向香港政府提交的意见书，由新到旧" />
     </div>
@@ -114,7 +114,7 @@ const proposals = submissions.filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="how-we-write">
     <div class="wrap">
       <div class="sec-head">
-        <h2 id="how-we-write">每份建议书都先反驳自己。</h2>
+        <h2 id="how-we-write">每份建议书<wbr />都先反驳自己。</h2>
       </div>
       <Steps
         long
@@ -147,7 +147,7 @@ const proposals = submissions.filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="proposals">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="proposals">两份可以阅读全文的建议书。</h2>
+        <h2 id="proposals">两份可以<wbr />阅读全文的<wbr />建议书。</h2>
         <p>每一份都先交代来龙去脉，然后是我们提交的全文。</p>
       </div>
       <div>

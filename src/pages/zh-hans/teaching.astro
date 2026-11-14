@@ -32,7 +32,7 @@ const modules = (await getCollection('programs'))
   description="为香港基层家庭的小学生提供免费补习。43 位受训学生导师在 7 所学校教过 350 个孩子；自 2024 年起，86% 的学生至少升了一个组别。"
 >
   <PageTop vertical="教学">
-    <h1>免费补习：孩子先自己尝试，再问人工智能。</h1>
+    <h1>免费补习：<wbr />孩子先自己尝试，<wbr />再问人工智能。</h1>
     <p class="lead">
       我们的学生导师在全港各区为基层家庭的小学生上课。每个科目都配上人工智能，让孩子多了一个免费、有耐性、课后也能继续用的学习伙伴。
     </p>
@@ -59,7 +59,7 @@ const modules = (await getCollection('programs'))
         }}
         did={{
           date: '2024/2026',
-          text: `我们培训了 ${f.tutors.value} 位中学生导师，在${f.schools.word.zh}所学校教过 ${f.children.value} 个孩子，共四个单元（数学、英文、经济和科学），每一节课都以 Think First 先想后问为基础。`,
+          text: `我们培训了 ${f.tutors.value} 位中学生导师，在${f.schools.word[lang]}所学校教过 ${f.children.value} 个孩子，共四个单元（数学、英文、经济和科学），每一节课都以 Think First 先想后问为基础。`,
         }}
         changed={{
           dateLabel: `自 ${f.bandUp.since} 年起`,
@@ -74,11 +74,11 @@ const modules = (await getCollection('programs'))
             showSamples && f.bandUp.method.sample && (
               <MarginNote label="我们怎样计算。">
                 <span class="sample-tag" data-sample>{ui[lang].sample}</span>
-                {f.bandUp.method.zh}
+                {f.bandUp.method[lang]}
               </MarginNote>
             )
           }
-          {!f.bandUp.method.sample && <MarginNote label="我们怎样计算。">{f.bandUp.method.zh}</MarginNote>}
+          {!f.bandUp.method.sample && <MarginNote label="我们怎样计算。">{f.bandUp.method[lang]}</MarginNote>}
         </Fragment>
       </Case>
 
@@ -96,7 +96,7 @@ const modules = (await getCollection('programs'))
   <section class="sec" aria-labelledby="think-first">
     <div class="wrap">
       <div class="sec-head">
-        <h2 id="think-first">每一节课，都跟从同样的四个步骤。</h2>
+        <h2 id="think-first">每一节课，<wbr />都跟从同样的<wbr />四个步骤。</h2>
         <p>
           工具有多大用处，要看孩子懂不懂得好好使用。一个直接问人工智能要答案的孩子，什么也学不到；一个先自己尝试、再问提示、最后用自己的话解释答案的孩子，学到的会比自己一个人学更多。教会孩子分辨这两种用法，就是我们的导师在做的事。我们把它叫做 Think First 先想后问。
         </p>
@@ -130,7 +130,7 @@ const modules = (await getCollection('programs'))
   <section class="sec" aria-labelledby="promises">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="promises">学校和家长可以放心的事。</h2>
+        <h2 id="promises">学校和家长<wbr />可以放心的事。</h2>
       </div>
       <ul class="promise-list">
         <li>导师上课时，一定有学校或中心的职员在场。</li>
@@ -144,7 +144,7 @@ const modules = (await getCollection('programs'))
   <section class="sec" aria-labelledby="modules">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="modules">四个学科，每一科都以人工智能作为学习伙伴。</h2>
+        <h2 id="modules">四个学科，<wbr />每一科都以<wbr />人工智能<wbr />作为学习伙伴。</h2>
         <p>
           我们不把人工智能当作独立的科目来教。我们的导师都是中学生，完成 AFG 的培训后才开始教学，并以小组形式上课，让每个孩子都得到照顾。
         </p>
@@ -220,7 +220,7 @@ const modules = (await getCollection('programs'))
           />
         </div>
 
-        <h3 class="place-h">与沪江维多利亚学校合作</h3>
+        <h3 class="place-h">与沪江维多利亚学校<wbr />合作</h3>
         <p class="prose">
           除了在小学上课，我们也和沪江维多利亚学校合办课程，对象是社区里的年轻人。
         </p>

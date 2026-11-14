@@ -251,6 +251,14 @@ html[lang^='zh'] .page-top h1 {
   max-width: 16em;
 }
 
+/* On the narrowest phones a Chinese heading drops a size, so a phrase of
+   eight or nine characters still fits on one line */
+@media (max-width: 26rem) {
+  html[lang^='zh'] h1 {
+    font-size: var(--step-3);
+  }
+}
+
 /* ---- On this page (OnThisPage.astro) ----------------------------------- */
 .on-this-page {
   margin-top: var(--space-5);
@@ -1054,7 +1062,6 @@ html[lang^='zh'] .page-top h1 {
 
 .sheet-table {
   width: 100%;
-  min-width: 26rem;
   border-collapse: collapse;
   font-size: var(--step--1);
 }
@@ -1062,7 +1069,7 @@ html[lang^='zh'] .page-top h1 {
 .sheet-table th,
 .sheet-table td {
   height: 2.6rem;
-  padding: 0.4rem 0.5rem;
+  padding: 0.4rem;
   border: 1px solid var(--muted);
   text-align: left;
   vertical-align: middle;

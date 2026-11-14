@@ -21,9 +21,9 @@ export const aiForAll = {
     hans: 'AI for All，2024–2026 年',
   },
   title: {
-    en: 'From what we saw in class to the 2026–27 Budget.',
-    zh: '從課室所見，到 2026–27 年度財政預算案。',
-    hans: '从教室所见，到 2026–27 年度财政预算案。',
+    en: 'From what we saw in class to the <span class="nowrap">2026–27</span> Budget.',
+    zh: '從課室所見，<wbr>到 <span class="nowrap">2026–27</span> 年度<wbr>財政預算案。',
+    hans: '从教室所见，<wbr>到 <span class="nowrap">2026–27</span> 年度<wbr>财政预算案。',
   },
   noticed: {
     date: '2024',

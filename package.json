@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/check-design.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "zh-hans": "node scripts/generate-simplified.mjs"
+    "zh-hans": "node scripts/generate-simplified.mjs",
+    "check": "node scripts/check-design.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",

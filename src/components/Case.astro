@@ -37,7 +37,7 @@ interface Props {
   id?: string;
   /** A small line above the title, e.g. "AI for All, 2024–2026". */
   period?: string;
-  /** States the arc, without the number. */
+  /** States the arc, without the number. May contain <wbr> and nowrap spans. */
   title: string;
   noticed: Stage;
   did: Stage;
@@ -67,7 +67,7 @@ const gaps = stages.map((stage, i) =>
 <div class="case">
   <div class="sec-head">
     {period && <p class="kicker-date">{period}</p>}
-    <h2 id={id}>{title}</h2>
+    <h2 id={id} set:html={title} />
   </div>
 
   <ol class:list={['track', pending && 'pending']}>
@@ -117,7 +117,7 @@ const gaps = stages.map((stage, i) =>
   {
     claim && (
       <p class="claim">
-        <strong class="runin">{t.claim}</strong>{lang === 'en' ? ' ' : ''}{claimText}{' '}<slot name="claim-more" />
+        <strong class="runin">{t.claim}</strong>{lang === 'en' ? ' ' : ''}{claimText}{lang === 'en' ? ' ' : ''}<slot name="claim-more" />
       </p>
     )
   }

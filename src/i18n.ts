@@ -278,19 +278,13 @@ export const ui = {
 
 /**
  * Short labels for the switcher. Full names are too long to sit three abreast
- * in the header, and these read unambiguously to anyone who needs them.
+ * in the header, and these read unambiguously to anyone who needs them. Each
+ * link is marked with its own language, so a screen reader says it correctly.
  */
 export const langShort: Record<Lang, string> = {
   en: 'EN',
   zh: '繁體',
   hans: '简体',
-};
-
-/** Accessible name for each switcher link, in the language you are leaving. */
-export const switchLabels: Record<Lang, Record<Lang, string>> = {
-  en: { en: 'English', zh: 'Switch to Traditional Chinese', hans: 'Switch to Simplified Chinese' },
-  zh: { en: '切換至英文版', zh: '繁體中文', hans: '切換至簡體中文版' },
-  hans: { en: '切换至英文版', zh: '切换至繁体中文版', hans: '简体中文' },
 };
 
 /** Nav items in display order, with their English (root) paths. */

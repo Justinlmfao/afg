@@ -11,7 +11,11 @@ import Gallery from '../../components/Gallery.astro';
 import '../../styles/pages/about.css';
 import { getCollection, render } from 'astro:content';
 import { facts } from '../../data/facts';
+import { getLangFromUrl } from '../../i18n';
 
+// The page's language, from its address: this file is also the source of the
+// Simplified page, where the same lookups return the Simplified wording.
+const lang = getLangFromUrl(Astro.url);
 const f = facts;
 
 const people = await Promise.all(
@@ -34,9 +38,9 @@ const people = await Promise.all(
   description="AI For Good 是一個由香港學生營運的組織，於 2023 年 6 月成立。我們為政府撰寫政策建議，也為基層家庭的孩子提供免費補習。"
 >
   <PageTop vertical="關於我們">
-    <h1>政策和教學，出於同一個原因。</h1>
+    <h1>政策和教學，<wbr />出於同一個原因。</h1>
     <p class="lead">
-      AI For Good 是一個由香港學生營運的組織，於 {f.founded.zh}成立。我們為政府撰寫人工智能和經濟政策的建議，也為基層家庭的小學生提供免費補習。
+      AI For Good 是一個由香港學生營運的組織，於 {f.founded[lang]}成立。我們為政府撰寫人工智能和經濟政策的建議，也為基層家庭的小學生提供免費補習。
     </p>
   </PageTop>
 
@@ -47,7 +51,7 @@ const people = await Promise.all(
       </div>
       <SummaryList
         rows={[
-          { key: '成立', value: `${f.founded.zh}，由 ${f.founders[0]}、${f.founders[1]} 和 ${f.founders[2]} 創辦` },
+          { key: '成立', value: `${f.founded[lang]}，由 ${f.founders[0]}、${f.founders[1]} 和 ${f.founders[2]} 創辦` },
           { key: '成員', value: `${f.members.value} 位學生` },
           {
             key: '政策',
@@ -59,7 +63,7 @@ const people = await Promise.all(
           },
           {
             key: '成果',
-            value: `${f.aiForAll.budget} 年度財政預算案<a href="/zh/policy#ai-for-all">撥款${f.aiForAll.amount.zh}推行 AI for All</a>`,
+            value: `${f.aiForAll.budget} 年度財政預算案<a href="/zh/policy#ai-for-all">撥款${f.aiForAll.amount[lang]}推行 AI for All</a>`,
           },
           {
             key: '合作夥伴',
@@ -73,7 +77,7 @@ const people = await Promise.all(
   <section class="sec" aria-labelledby="why-both">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="why-both">寫政策的人，應該見過受政策影響的人。</h2>
+        <h2 id="why-both">寫政策的人，<wbr />應該見過<wbr />受政策影響的人。</h2>
       </div>
       <div class="prose">
         <p class="lead">

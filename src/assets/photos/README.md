@@ -1,48 +1,45 @@
-# Programme photos
+# Photographs
 
-These are the real photos from sessions at Ho Man Tin Ling To Catholic School,
-shown in the "In the classroom" gallery on the Teaching page (and the first one
-also heads the Teaching panel on the home page).
+Every photograph on the site. The build resizes them and makes AVIF and WebP
+versions (see `src/components/Photo.astro`), so keep the originals here at
+about 1600px wide.
 
-| Filename | What it shows |
+Sessions at Ho Man Tin Ling To Catholic School:
+
+| File | What it shows | Where it appears |
+| --- | --- | --- |
+| `teaching-classroom.jpg` | A tutor leading a session, a pupil's hand raised | Home, full width under the hero |
+| `teaching-chalkboard-maths.jpg` | A tutor working through 1117 × 1117 on the chalkboard | The thumbnail in the AI for All case |
+| `teaching-ai-study-partner.jpg` | Explaining a maths idea aloud to an AI | Home gallery |
+| `teaching-ai-tools.jpg` | Two tutors introducing what an AI assistant can do | Teaching, "Where we teach" |
+| `teaching-english-careers.jpg` | The English module | Teaching, "Where we teach" |
+| `teaching-exploring-interests.jpg` | Using AI to explore interests | Teaching, "Where we teach" |
+
+The team:
+
+| File | Where it appears |
 | --- | --- |
-| `teaching-classroom.jpg` | Feature tile — a tutor leading a session, a pupil's hand raised |
-| `teaching-chalkboard-maths.jpg` | A tutor working through the 1117 × 1117 mental-arithmetic shortcut |
-| `teaching-ai-study-partner.jpg` | Explaining a maths idea aloud to an AI to check understanding |
-| `teaching-ai-tools.jpg` | Two tutors introducing what an AI assistant can do |
-| `teaching-exploring-interests.jpg` | Using AI to explore interests — dinosaurs, space, music |
-| `teaching-english-careers.jpg` | The English module: how English opens career doors |
+| `team-classroom.jpg` | About, People: six members in the classroom |
+| `team-outside-school.jpg` | About, People: outside the school |
 
-Team and cover photographs:
-
-| Filename | Where it appears |
-| --- | --- |
-| `team-classroom.jpg` | Team page — six members in the classroom |
-| `teaching-classroom.jpg` | Also the full-bleed band under the home page hero |
-| `team-outside-school.jpg` | Team page and the About origin section — outside Ling To |
-
-Sessions at Victoria Shanghai Academy (Teaching page, six per year):
+Sessions with Victoria Shanghai Academy:
 
 | Prefix | Year |
 | --- | --- |
-| `vsa-2024-25-*.jpg` | 2024–25 — AI in local communities |
-| `vsa-2025-26-*.jpg` | 2025–26 — AI ethics and using AI on community problems |
+| `vsa-2024-25-*.jpg` | 2024–25: AI in local communities |
+| `vsa-2025-26-*.jpg` | 2025–26: what AI can make better, and how it gets misused |
 
-Six per year fills the 3-column grid evenly; to add or remove a year, edit the
-`cohorts` array at the top of `src/pages/teaching.astro`.
+Three of these appear on the home page and three on Teaching. The rest are
+kept here for when a gallery is changed; a photo that no page names is not
+built or published.
 
 Notes:
 
-- All six are 1600 px wide, roughly 3:2, and 155–190 KB. They're displayed with
-  `object-fit: cover`, so they crop gracefully into each frame.
-- **Six photos fill the gallery grid exactly** (the first spans two columns and
-  two rows; the other five fill the remaining cells). If you add or remove one,
-  the last row will be uneven — either keep the count at six, or adjust the
-  grid in `src/pages/teaching.astro`.
-- To change the order, the captions, or which photo is the feature tile, edit
-  the `photos` array near the top of `src/pages/teaching.astro`. The `alt` text
-  is also used as the lightbox caption, so keep it descriptive.
-- To swap a photo, replace the file with the same filename (resize to ~1600 px
-  wide first so the page stays fast).
-- **Consent:** pupils' faces are visible. Keep whatever permission the schools
-  and families have given on file, and swap out any photo if that changes.
+- A gallery takes three photographs (one large, two small) or two side by
+  side, with one caption each; the component joins them into a single
+  caption. On phones only the first photograph shows, so put the best first.
+- Photos are cropped to fit their frame. If a face is cut off, pass
+  `position` (and `positionPhone` for narrow screens) to `<Photo>`, e.g.
+  `position="50% 38%"`.
+- Only photographs the school and families have agreed to. No children's
+  names in captions or alt text.

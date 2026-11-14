@@ -12,7 +12,7 @@ import {
   langOrder,
   langShort,
   htmlLangs,
-  switchLabels,
+  hreflangs,
 } from '../i18n';
 
 const lang = getLangFromUrl(Astro.url);
@@ -61,8 +61,8 @@ const languages = langOrder.map((code) => ({
               <a
                 href={l.href}
                 lang={htmlLangs[l.code]}
+                hreflang={hreflangs[l.code]}
                 aria-current={l.current ? 'true' : undefined}
-                aria-label={switchLabels[lang][l.code]}
               >
                 {l.label}
               </a>

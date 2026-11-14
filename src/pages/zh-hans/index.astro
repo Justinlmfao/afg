@@ -33,10 +33,10 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
 >
   <div class="wrap hero">
     <div class="hero-grid">
-      <h1>香港学生撰写人工智能政策建议，也为受影响的孩子上课。</h1>
+      <h1>香港学生撰写<wbr />人工智能政策建议，<wbr />也为受影响的孩子<wbr />上课。</h1>
       <div>
         <p class="lead">
-          我们每年向政府提交约{f.recsPerYear.word.zh}项建议，并为基层家庭的小学生免费上课。
+          我们每年向政府提交约{f.recsPerYear.word[lang]}项建议，并为基层家庭的小学生免费上课。
         </p>
         <div class="actions">
           <a class="btn" href="/zh-hans/policy">我们的政策研究</a>
@@ -70,7 +70,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="policy-h">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="policy-h">自 2024 年起，我们回应了每一份施政报告及财政预算案咨询。</h2>
+        <h2 id="policy-h"><span class="nowrap">自 2024 年起，</span><wbr />我们回应了<wbr />每一份施政报告<wbr />及财政预算案咨询。</h2>
         <p>每份建议书都先写支持的理由、反对的理由，然后才是我们的建议。</p>
       </div>
       <div>
@@ -83,7 +83,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="teaching-h">
     <div class="wrap">
       <div class="sec-head">
-        <h2 id="teaching-h">孩子先自己尝试，再请人工智能给提示，从不直接要答案。</h2>
+        <h2 id="teaching-h">孩子先自己尝试，<wbr />再请人工智能<wbr />给提示，<wbr />从不直接要答案。</h2>
         <p>每一节课都跟从同样的四个步骤，数学、英文、经济和科学都一样。</p>
       </div>
       <Steps
@@ -115,7 +115,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
       />
       <div class="noted facts">
         <p class="facts-main">
-          我们的 {f.tutors.value} 位受训导师，在{f.schools.word.zh}所学校教过 {f.children.value} 个孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的学生至少升了一个组别。
+          我们的 {f.tutors.value} 位受训导师，在{f.schools.word[lang]}所学校教过 {f.children.value} 个孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的学生至少升了一个组别。
         </p>
         <MarginNote label="关于这个数字。">
           这不是我们一个人的功劳。老师、家长和学生自己都付出了努力。但这是我们用来要求自己的数字。{(!f.bandUp.method.sample || showSamples) && <a href="/zh-hans/teaching#results">我们怎样计算</a>}

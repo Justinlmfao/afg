@@ -5,10 +5,9 @@ with two pillars: a **policy think tank** that submits written recommendations
 to lawmakers, and a **free tutoring programme** for underprivileged primary
 students.
 
-Built with [Astro](https://astro.build) as a fully static site — no server or
-backend. The design rationale (palette, type, wireframes, and what was
-deliberately cut) is in `DESIGN.md`; the content source of truth is
-`AFG-website-brief.md`.
+Built with [Astro](https://astro.build) as a fully static site, with no server
+or backend. The design (palette, type, the case format, and what was
+deliberately removed) is recorded in `DESIGN.md`.
 
 ---
 
@@ -19,9 +18,15 @@ Requires [Node.js](https://nodejs.org) 18+ (set up for Node 22).
 ```bash
 npm install      # first time only
 npm run dev      # dev server at http://localhost:4321
-npm run build    # static build into dist/
+npm run build    # static build into dist/, then the design check
+npm run check    # the design check alone (scripts/check-design.mjs)
 npm run preview  # preview the built site
+npm run zh-hans  # regenerate Simplified Chinese from Traditional
 ```
+
+`npm run build` fails if a page contains placeholder ("sample") content, an
+arrow character, or the old count-up and scroll animations. See "Samples"
+below.
 
 ---
 
@@ -29,14 +34,17 @@ npm run preview  # preview the built site
 
 | Route | What it is |
 | --- | --- |
-| `/` | Routes the reader to one of the two pillars |
-| `/about` | What AFG is, why it does both, origin, method, impact, what's next |
-| `/policy` | The think tank: record, method, filed submissions |
-| `/teaching` | The tutoring programme: the 86% outcome, modules, partners, photos |
-| `/team` | The five leads + 35+ members |
-| `/get-involved` | Contact form + email |
+| `/` | The AI for All case, recent proposals, how we teach |
+| `/policy` | AI for All in full, a ledger of every submission, how a proposal is written |
+| `/policy/<key>` | One page per proposal: its case, the argument in three lines, the paper |
+| `/teaching` | The programme as a case, the Think First steps and worksheet, promises, modules, where we teach |
+| `/teaching/sample-lesson` | The sample lesson, set up to print |
+| `/about` | At a glance, why we do both, the founder's account, the people who lead it |
+| `/get-involved` | Contact form and email |
 
-Old URLs (`/research`, `/programs`) redirect to the new ones.
+Old URLs redirect: `/research` and `/programs` to the pages that replaced
+them, and `/team` to `/about#people` (the Team page is now the People section
+of About). The redirects are listed in `astro.config.mjs`.
 
 Every page also exists in Traditional Chinese under `/zh` and Simplified
 Chinese under `/zh-hans`.
@@ -55,19 +63,33 @@ run:
 npm run zh-hans
 ```
 
-That converts `src/pages/zh/` into `src/pages/zh-hans/` and fills in the
-`*_hans` fields beside every `*_zh` field in the content collections. The
-output is committed so you can read it in review, but it is regenerated from
-scratch each run — **fix the Traditional and re-run rather than editing a
-`/zh-hans` file**, or your edit disappears. Nothing in the site build depends
-on the script; it is a tool you run when the Chinese changes.
+That converts `src/pages/zh/` into `src/pages/zh-hans/`, makes the `.hans.md`
+proposals, and fills in the `*_hans` fields in the content collections and the
+`hans:` lines in `src/data/`. The output is committed so you can read it in
+review, but it is regenerated from scratch each run: **fix the Traditional and
+re-run rather than editing a `/zh-hans` file**, or your edit disappears.
+Nothing in the site build depends on the script; it is a tool you run when the
+Chinese changes.
 
 | To change | File |
 | --- | --- |
-| Nav labels, footer, skip link, the switcher | `src/i18n.ts` (all three languages) |
+| A number (350 children, 43 tutors, 86%, HK$50 million…) | `src/data/facts.ts`. Every page reads from it. |
+| The "Now" note on the home page | `now` in `src/data/facts.ts` (and its `updated` month) |
+| The contact email address | `contactEmail` in `src/data/facts.ts` |
+| The AI for All story (home and Policy) | `src/data/cases.ts` |
+| Nav labels, footer text, labels such as "What we noticed" | `src/i18n.ts` (all three languages) |
+| English page copy | `src/pages/*.astro` |
 | Chinese page copy | `src/pages/zh/*.astro`, then `npm run zh-hans` |
-| Chinese for a module, submission, or role | the `*_zh` fields in `src/content/**`, then `npm run zh-hans` |
+| A submission, module or team member | `src/content/**` (see below), then `npm run zh-hans` |
 | A Hong Kong word that should read differently on the mainland | the `TERMS` list in `scripts/generate-simplified.mjs` |
+| Colours, type sizes, spacing | the `:root` block in `src/styles/global.css` |
+| How a component looks | `src/styles/components.css` (one block per component) |
+| How one page looks | `src/styles/pages/<page>.css` |
+| The logo, favicon or share image | `src/assets/brand/`, `public/favicon*`, `public/og-default.jpg` |
+
+In `src/data/*.ts` the three languages sit side by side as `en:`, `zh:` and
+`hans:` lines. Edit `en:` and `zh:`; `npm run zh-hans` rewrites each `hans:`
+line from the `zh:` line above it, so keep every `zh:` value on one line.
 
 The Chinese pages are separate `.astro` files but they **import the same
 stylesheet** as their English twin (`src/styles/pages/*.css`, applied through
@@ -75,33 +97,50 @@ the `pageClass` prop), so a design change lands in all three languages at once
 and only the words are duplicated. Anything without a `*_zh` / `*_hans` value
 falls back to English rather than going blank.
 
-Two things to know when writing Chinese in these files:
+Three things to know when writing Chinese in these files:
 
 - **Keep each Chinese paragraph on one source line.** Astro turns a line break
   inside a paragraph into a space, which is invisible in English and shows up
   as a gap between characters in Chinese. Put a space either side of Latin
-  words and names sitting in a Chinese sentence.
-- **A measure set in `ch` holds about half as many characters in Chinese.** A
-  couple of them are widened for Chinese at the bottom of the Chinese block in
-  `src/styles/global.css`; add to that block rather than changing the shared
-  value.
+  words and numbers sitting in a Chinese sentence.
+- **Chinese headings only break after punctuation.** To allow a break inside
+  a long heading, put `<wbr />` between two phrases, as the existing headings
+  do.
+- **Look a figure up by language, not by name.** In a Chinese page write
+  `{f.aiForAll.amount[lang]}`, not `.zh`: the same file becomes the
+  Simplified page.
 
 ## Editing content (no code needed)
 
 | To add | Folder | Notes |
 | --- | --- | --- |
-| A policy proposal | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. Copy `think-first.en.md` / `think-first.zh.md` as a starting point. Front matter: `title`, `lang`, `key`, `date`, `area`, `summary`, `order` (lower shows first, so give the newest the lowest number), optional `pdf`. The Markdown body is the full paper, using `####` for headings. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real proposals only.** |
-| A teaching module | `src/content/programs/` | Markdown body is the description; `why` is the "closes the gap" line; `icon` names a glyph in `Icon.astro`. |
-| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens when you press their name on the Team page. `bio_zh` is the Traditional Chinese, one quoted line per paragraph; run `npm run zh-hans` for the Simplified. A member with no bio is listed without the toggle. |
+| A submission | `src/content/submissions/` | One file per language: `name.en.md` and `name.zh.md`, sharing the same `key`. A file with only the fields at the top is **a row in the ledger** on the Policy page: `title`, `lang`, `key`, `date` (`"2025-12"`, `"2024"`, or `"2025/2026"` for a consultation spanning two years), `status` (`submitted`, `reflected` or `in-progress`), `ask` (one line), `order` (lower shows first, so give the newest the lowest number). Add the paper as the Markdown body, using `###` for its headings, and it also gets **its own page** at `/policy/<key>`; then fill in `case_title`, `noticed`, `did`, `changed`, `changed_status` (`changed` or `pending`) and the three lines `case_for`, `case_against`, `recommendation`. Copy `think-first.en.md` and `think-first.zh.md` as a starting point. Run `npm run zh-hans` to make the Simplified `name.hans.md`. **Real submissions only.** |
+| A teaching module | `src/content/programs/` | `summary` is the one sentence always on show; the Markdown body opens beneath it; `why` is the "How it helps" line. Chinese goes in `title_zh`, `summary_zh`, `body_zh` and `why_zh`. |
+| A team member | `src/content/team/` | `name`, `role`, `order`. The Markdown body is their bio, which opens under their name in the People section of About. `role_zh` and `bio_zh` are the Traditional Chinese (`bio_zh` is one quoted line per paragraph); run `npm run zh-hans` for the Simplified. A member with no bio is listed without the button. |
 
 Set `draft: true` on any file to keep it as a hidden template.
 
+### Samples (placeholders that must be replaced)
+
+A few things were filled in so the layout could be built, and are **not real**:
+
+1. What we asked for in the 2024 Policy Address and 2025–26 Budget
+   consultations (`policy-address-2024.*.md` and `budget-2025-26.*.md` in
+   `src/content/submissions/`).
+2. How the 86% figure is counted (`bandUp.method` in `src/data/facts.ts`).
+
+Each is marked `sample: true`. In `npm run dev` it shows with a small "Sample"
+tag. On the built site it is left out: the two ledger rows keep their date,
+title and status with no "ask", and the method note doesn't appear. To make
+one real, replace the words and delete the `sample: true` line. The build
+fails if sample content ever reaches a page.
+
 ### Photos
 
-Six real session photos fill the Teaching page's gallery grid exactly, and
-three team photos sit on the home hero, the Team page, and the About origin
-section. All live in `public/programs/` — see `public/programs/README.md` for
-which file goes where, and how to swap or reorder them.
+Photographs live in `src/assets/photos/`; the build makes AVIF and WebP
+versions at several widths. To use one, drop the `.jpg` in that folder and
+name it in a page with `<Photo name="file.jpg" … />` or in a `<Gallery>`. See
+`src/assets/photos/README.md` for which file shows what.
 
 ### PDFs
 
@@ -112,21 +151,20 @@ submission's `pdf:` field, e.g. `pdf: "/research/my-submission.pdf"`.
 
 ## The rules this site follows
 
-From `AFG-website-brief.md`:
-
-- **Every number is traceable to the brief**: founded June 2023 · 35+ members
-  · ~20 recommendations/year · HK$50M allocated to AI for All in the 2026–27
-  Budget · Policy Address & Budget since 2024 · Five-Year Plan (2026–2030) ·
-  350 children · 7 schools · 43 tutors · 86% band promotion since 2024. If a
-  figure isn't on that list, it doesn't go on a page.
+- **Every number lives in `src/data/facts.ts`** and is said once per page:
+  founded June 2023 · 35+ members · ~20 recommendations a year · HK$50 million
+  allocated to AI for All in the 2026–27 Budget · 350 children · 7 schools ·
+  43 tutors · 86% moved up a class band since 2024. If a figure isn't in that
+  file, it doesn't go on a page.
 - **Attribution on AI for All is deliberately limited.** AI for All is a
   government programme delivered by Cyberport, HKSTP and the Productivity
   Council. The site says we recommended it and the Budget went that way — it
   never says we caused it, secured it, or won it. Keep it that way unless
   there is a citable acknowledgement from a bureau; one unverifiable claim
   would put every other figure here in doubt.
-- **No invented output.** The submissions collection ships empty; the
-  for/against/recommendation template waits for real filings.
+- **No invented output.** Only real submissions go in the collection, and
+  anything not yet confirmed is marked `sample: true` so it can't go live.
+- **"Not yet" is shown.** A proposal that hasn't changed anything says so.
 - **Never describe AFG as an official VSA club/ASA** — it is student-led and
   student-founded.
 - Sentence case, active voice, no promotional adjectives.

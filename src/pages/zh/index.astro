@@ -31,10 +31,10 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
 >
   <div class="wrap hero">
     <div class="hero-grid">
-      <h1>香港學生撰寫人工智能政策建議，也為受影響的孩子上課。</h1>
+      <h1>香港學生撰寫<wbr />人工智能政策建議，<wbr />也為受影響的孩子<wbr />上課。</h1>
       <div>
         <p class="lead">
-          我們每年向政府提交約{f.recsPerYear.word.zh}項建議，並為基層家庭的小學生免費上課。
+          我們每年向政府提交約{f.recsPerYear.word[lang]}項建議，並為基層家庭的小學生免費上課。
         </p>
         <div class="actions">
           <a class="btn" href="/zh/policy">我們的政策研究</a>
@@ -68,7 +68,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="policy-h">
     <div class="wrap rail">
       <div class="rail-head">
-        <h2 id="policy-h">自 2024 年起，我們回應了每一份施政報告及財政預算案諮詢。</h2>
+        <h2 id="policy-h"><span class="nowrap">自 2024 年起，</span><wbr />我們回應了<wbr />每一份施政報告<wbr />及財政預算案諮詢。</h2>
         <p>每份建議書都先寫支持的理由、反對的理由，然後才是我們的建議。</p>
       </div>
       <div>
@@ -81,7 +81,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
   <section class="sec" aria-labelledby="teaching-h">
     <div class="wrap">
       <div class="sec-head">
-        <h2 id="teaching-h">孩子先自己嘗試，再請人工智能給提示，從不直接要答案。</h2>
+        <h2 id="teaching-h">孩子先自己嘗試，<wbr />再請人工智能<wbr />給提示，<wbr />從不直接要答案。</h2>
         <p>每一節課都跟從同樣的四個步驟，數學、英文、經濟和科學都一樣。</p>
       </div>
       <Steps
@@ -113,7 +113,7 @@ const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
       />
       <div class="noted facts">
         <p class="facts-main">
-          我們的 {f.tutors.value} 位受訓導師，在{f.schools.word.zh}間學校教過 {f.children.value} 個孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的學生至少升了一個組別。
+          我們的 {f.tutors.value} 位受訓導師，在{f.schools.word[lang]}間學校教過 {f.children.value} 個孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的學生至少升了一個組別。
         </p>
         <MarginNote label="關於這個數字。">
           這不是我們一個人的功勞。老師、家長和學生自己都付出了努力。但這是我們用來要求自己的數字。{(!f.bandUp.method.sample || showSamples) && <a href="/zh/teaching#results">我們怎樣計算</a>}

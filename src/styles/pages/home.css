@@ -61,8 +61,21 @@
 
 html[lang^='zh'] .page-home {
   .hero h1 {
-    max-width: 14em;
+    max-width: 16em;
+    font-size: var(--step-4);
     letter-spacing: 0;
+  }
+
+  @media (max-width: 26rem) {
+    .hero h1 {
+      font-size: var(--step-3);
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hero h1 {
+      font-size: var(--step-5);
+    }
   }
 
   .hero .lead,
