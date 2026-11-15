@@ -109,14 +109,41 @@
 .menu-btn {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 0.9rem;
-  border: 1px solid var(--rule);
-  border-radius: 4px;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
   background: none;
-  font: 600 var(--step--1) / 1 var(--sans);
   color: var(--ink);
   cursor: pointer;
+}
+
+/* Three stripes; they turn into a cross while the menu is open */
+.menu-bars {
+  display: grid;
+  gap: 5px;
+  width: 22px;
+}
+
+.menu-bars span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+  transition: transform 120ms, opacity 120ms;
+}
+
+.menu-btn[aria-expanded='true'] .menu-bars span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-btn[aria-expanded='true'] .menu-bars span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-btn[aria-expanded='true'] .menu-bars span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* The open menu: a full-width sheet under the header */

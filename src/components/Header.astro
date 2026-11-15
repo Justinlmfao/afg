@@ -81,10 +81,11 @@ const languages = langOrder.map((code) => ({
         type="button"
         aria-expanded="false"
         aria-controls="menu"
+        aria-label={t.menu}
         data-open={t.menu}
         data-close={t.close}
       >
-        {t.menu}
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
       </button>
     </div>
   </div>
@@ -130,7 +131,7 @@ const languages = langOrder.map((code) => ({
     if (!button || !menu) return;
     menu.hidden = !open;
     button.setAttribute('aria-expanded', String(open));
-    button.textContent = (open ? button.dataset.close : button.dataset.open) ?? '';
+    button.setAttribute('aria-label', (open ? button.dataset.close : button.dataset.open) ?? '');
   };
 
   button?.addEventListener('click', () => setOpen(menu?.hidden ?? false));
