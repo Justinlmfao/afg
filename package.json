@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "zh-hans": "node scripts/generate-simplified.mjs",
-    "check": "node scripts/check-design.mjs"
+    "check": "node scripts/check-design.mjs",
+    "icons": "node scripts/make-icons.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.0",

@@ -50,9 +50,12 @@ policy paper and a school notice board, not a startup landing page.
 - Don't recolour, stretch, outline or re-type the wordmark in live text.
 - The spaced capitals of HONG KONG exist only inside the logo. Nothing else on
   the site is set in capitals or letter-spaced.
-- Files: `src/assets/brand/` (logos), `public/favicon.svg`,
-  `public/favicon-32.png`, `public/apple-touch-icon.png`,
-  `public/icon-512.png`, `public/og-default.jpg` (1200×630 share image).
+- Files: `src/assets/brand/` (logos), `public/og-default.jpg` (1200×630
+  share image), and the site icon. The icon is `public/favicon.svg`; every
+  other size (`favicon.ico`, 32, 48 and 96px PNGs, the touch icon, and the
+  192 and 512px icons listed in `site.webmanifest`) is made from it by
+  `npm run icons`. The touch icon and the "maskable" icon are full squares,
+  because phones round the corners themselves.
 
 ## 3. Tokens (`src/styles/global.css`)
 

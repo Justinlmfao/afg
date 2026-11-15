@@ -1,0 +1,14 @@
+{
+  "name": "AI For Good Hong Kong",
+  "short_name": "AI For Good",
+  "description": "Students in Hong Kong writing policy recommendations for the government and running free tutoring for primary school children.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#16171b",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

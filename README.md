@@ -22,6 +22,7 @@ npm run build    # static build into dist/, then the design check
 npm run check    # the design check alone (scripts/check-design.mjs)
 npm run preview  # preview the built site
 npm run zh-hans  # regenerate Simplified Chinese from Traditional
+npm run icons    # remake every size of the site icon from public/favicon.svg
 ```
 
 `npm run build` fails if a page contains placeholder ("sample") content, an
@@ -87,7 +88,8 @@ Chinese changes.
 | Which colour a page or section takes | `tone-policy` (navy) or `tone-teaching` (green) in its class; add `washed` for the pale ground or `band` for the solid colour |
 | How a component looks | `src/styles/components.css` (one block per component) |
 | How one page looks | `src/styles/pages/<page>.css` |
-| The logo, favicon or share image | `src/assets/brand/`, `public/favicon*`, `public/og-default.jpg` |
+| The logo or share image | `src/assets/brand/`, `public/og-default.jpg` |
+| The site icon (browser tab, bookmarks, home screen, search results) | Replace `public/favicon.svg`, then run `npm run icons` to remake every size |
 
 In `src/data/*.ts` the three languages sit side by side as `en:`, `zh:` and
 `hans:` lines. Edit `en:` and `zh:`; `npm run zh-hans` rewrites each `hans:`
