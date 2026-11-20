@@ -70,12 +70,18 @@ const languages = langOrder.map((code) => ({
           ))
         }
       </span>
+      <button class="theme-btn" type="button" aria-pressed="false" aria-label={t.darkMode}>
+        <span aria-hidden="true"></span>
+      </button>
     </nav>
 
     <div class="head-phone">
       <a class="lang-quick" href={localizePath(switchPath, quick.code)} lang={htmlLangs[quick.code]}>
         {quick.label}
       </a>
+      <button class="theme-btn" type="button" aria-pressed="false" aria-label={t.darkMode}>
+        <span aria-hidden="true"></span>
+      </button>
       <button
         class="menu-btn"
         type="button"
@@ -123,7 +129,30 @@ const languages = langOrder.map((code) => ({
 </header>
 
 <script>
-  // The only script on the site: opening and closing the phone menu.
+  // Light and dark mode. The page starts in the device's setting; pressing
+  // the button switches and remembers the choice (the early script in
+  // BaseLayout applies it before the page is drawn).
+  const root = document.documentElement;
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
+  const isDark = () => root.dataset.theme === 'dark' || (!root.dataset.theme && systemDark.matches);
+  const themeButtons = document.querySelectorAll<HTMLButtonElement>('.theme-btn');
+  const showTheme = () => themeButtons.forEach((b) => b.setAttribute('aria-pressed', String(isDark())));
+  showTheme();
+  systemDark.addEventListener('change', showTheme);
+  themeButtons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const next = isDark() ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        // Storage can be blocked; the choice then lasts for this page only.
+      }
+      showTheme();
+    })
+  );
+
+  // Opening and closing the phone menu.
   const button = document.querySelector<HTMLButtonElement>('.menu-btn');
   const menu = document.getElementById('menu');
 

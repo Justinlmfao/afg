@@ -38,6 +38,11 @@
   --accent: var(--green);
   --accent-hover: var(--green-hover);
   --wash: var(--surface);
+  --on-accent: #ffffff;    /* text on an accent-filled button or marker */
+  /* The colour of a solid band: the same as the accent in light mode */
+  --policy-band: var(--navy);
+  --teaching-band: var(--green);
+  --band-bg: var(--teaching-band);
   --band-muted: #cfd6d2;   /* secondary text on a solid band  5.7:1 on green, 8.2:1 on navy */
 
   /* Type. Latin faces first; Chinese falls through to the system faces, so
@@ -144,6 +149,63 @@
   line-gap-override: 0%;
 }
 
+/* ---- Dark mode ---------------------------------------------------------- */
+/* Follows the device setting, unless the visitor has chosen with the
+   button in the header (stored as data-theme on <html>; see BaseLayout).
+   The same values appear twice, once for each way of switching on, so
+   keep the two blocks identical. Screen only: printing stays light. */
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #121417;
+    --surface: #1c1f23;
+    --ink: #f2f0eb;          /* 16.2:1 on paper */
+    --text: #d9d7d1;         /* 12.8:1 */
+    --muted: #a3a7a5;        /*  7.6:1 */
+    --rule: #33373c;
+    --field: #7b807d;        /*  4.6:1 */
+    --night: #0b0c0e;
+    --policy: #93b6e6;       /* lighter so links read on dark: 8.9:1 */
+    --policy-hover: #b4cdf0;
+    --policy-wash: #162232;
+    --teaching: #72c49b;     /* 8.9:1 */
+    --teaching-hover: #98d6b6;
+    --teaching-wash: #14241c;
+    --accent: var(--teaching);
+    --accent-hover: var(--teaching-hover);
+    --on-accent: #0e1411;    /* dark text on the light accent: 8.9:1 */
+    /* Solid bands keep the logo's deep colours, which read as bands on dark */
+    --policy-band: var(--navy);
+    --teaching-band: var(--green);
+    color-scheme: dark;
+  }
+}
+
+@media screen {
+  :root[data-theme='dark'] {
+    --paper: #121417;
+    --surface: #1c1f23;
+    --ink: #f2f0eb;          /* 16.2:1 on paper */
+    --text: #d9d7d1;         /* 12.8:1 */
+    --muted: #a3a7a5;        /*  7.6:1 */
+    --rule: #33373c;
+    --field: #7b807d;        /*  4.6:1 */
+    --night: #0b0c0e;
+    --policy: #93b6e6;       /* lighter so links read on dark: 8.9:1 */
+    --policy-hover: #b4cdf0;
+    --policy-wash: #162232;
+    --teaching: #72c49b;     /* 8.9:1 */
+    --teaching-hover: #98d6b6;
+    --teaching-wash: #14241c;
+    --accent: var(--teaching);
+    --accent-hover: var(--teaching-hover);
+    --on-accent: #0e1411;    /* dark text on the light accent: 8.9:1 */
+    /* Solid bands keep the logo's deep colours, which read as bands on dark */
+    --policy-band: var(--navy);
+    --teaching-band: var(--green);
+    color-scheme: dark;
+  }
+}
+
 /* Simplified Chinese reads from the Simplified system faces. */
 html[lang='zh-Hans'] {
   --margin-title: 'AFG margin title SC';
@@ -172,6 +234,7 @@ html[lang='zh-Hans'] {
 
 html {
   -webkit-text-size-adjust: 100%;
+  color-scheme: light;
   accent-color: var(--accent);
   /* Anchored sections stop below the sticky header */
   scroll-padding-top: calc(var(--header-h) + 1.25rem);
@@ -209,7 +272,7 @@ ol {
 
 ::selection {
   background: var(--mark);
-  color: var(--ink);
+  color: #16171b;
 }
 
 /* ---- Type -------------------------------------------------------------- */
@@ -283,7 +346,7 @@ a[href^='mailto:'] {
 /* The highlighter: once per page at most, on the phrase that matters most */
 mark {
   background: var(--mark);
-  color: var(--ink);
+  color: #16171b;
   padding: 0 0.12em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -327,12 +390,14 @@ html[lang^='zh'] .lead {
   --accent: var(--policy);
   --accent-hover: var(--policy-hover);
   --wash: var(--policy-wash);
+  --band-bg: var(--policy-band);
 }
 
 .tone-teaching {
   --accent: var(--teaching);
   --accent-hover: var(--teaching-hover);
   --wash: var(--teaching-wash);
+  --band-bg: var(--teaching-band);
 }
 
 /* A section on its tone's pale ground */
@@ -342,7 +407,7 @@ html[lang^='zh'] .lead {
 
 /* A solid band in the tone's colour, with cream type */
 .band {
-  background: var(--accent);
+  background: var(--band-bg);
   color: var(--cream);
 }
 
@@ -526,12 +591,12 @@ html[lang^='zh'] .lead {
 
 .btn {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn:hover {
   background: var(--accent-hover);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .btn[disabled] {

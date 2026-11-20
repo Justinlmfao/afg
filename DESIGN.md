@@ -83,6 +83,31 @@ policy paper and a school notice board, not a startup landing page.
 | `--mark` | `#FFE27A` | Highlighter behind ink text | 14.0:1 |
 | `--field` | `#868A87` | Form field borders | 3.5:1 |
 
+**Dark mode.** The site follows the device's light or dark setting. The
+round half-filled button in the header (beside the languages on wide
+screens, beside the menu on phones) switches it and remembers the choice in
+the browser. Dark mode redefines the colour tokens only, in one block at the
+top of `global.css` (written twice: once for the device setting, once for
+the switch; keep them the same):
+
+| Token | Dark | Contrast on dark paper |
+| --- | --- | --- |
+| `--paper` | `#121417` | |
+| `--surface` | `#1C1F23` | |
+| `--ink` | `#F2F0EB` | 16.2:1 |
+| `--text` | `#D9D7D1` | 12.8:1 |
+| `--muted` | `#A3A7A5` | 7.6:1 |
+| `--rule` | `#33373C` | |
+| `--policy` (accent) | `#93B6E6` | 8.9:1 |
+| `--teaching` (accent) | `#72C49B` | 8.9:1 |
+| `--policy-wash` / `--teaching-wash` | `#162232` / `#14241C` | |
+| `--night` (footer) | `#0B0C0E` | |
+
+In dark mode the accents are lighter, so filled buttons switch to dark text
+(`--on-accent`), while solid bands keep the logo's deep navy and green
+(`--policy-band`, `--teaching-band`). The highlighter keeps dark text.
+Printing always uses the light colours.
+
 **Tone.** `.tone-policy` or `.tone-teaching` on a page's `<main>` or on a
 section sets `--accent`, `--accent-hover` and `--wash`. Components only ever
 use `--accent`, so anything placed inside takes the right colour. `.washed`
@@ -217,7 +242,7 @@ would become a template.
 | `ProposalPage` | The layout of `/policy/<key>` |
 | `Logo`, `Header`, `Footer`, `OnThisPage` | Site furniture |
 
-The only JavaScript is the phone menu, and the contact form's "Sending…"
+The only JavaScript is the phone menu, the light/dark switch, and the contact form's "Sending…"
 state. Everything else works without it.
 
 ## 7. Rules that keep it honest

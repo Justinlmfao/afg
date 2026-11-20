@@ -106,7 +106,39 @@
   text-decoration: none;
 }
 
+/* Light / dark switch: a circle, half filled */
+.theme-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.theme-btn span {
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+}
+
+.theme-btn:hover {
+  color: var(--accent);
+}
+
+.nav .theme-btn {
+  margin-left: -0.6rem;
+}
+
 .menu-btn {
+  flex: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1172,7 +1204,7 @@ html[lang^='zh'] .page-top h1 {
   border-radius: 50%;
   background: var(--accent);
   font: 700 0.8rem / 1 var(--sans);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .pin {
@@ -1207,6 +1239,7 @@ html[lang^='zh'] .page-top h1 {
 /* ---- Footer (Footer.astro): also every page's closing call to action ---- */
 .foot {
   padding-block: var(--space-6) var(--space-5);
+  border-top: 1px solid var(--night-rule);
   background: var(--night);
   color: var(--cream);
 }
