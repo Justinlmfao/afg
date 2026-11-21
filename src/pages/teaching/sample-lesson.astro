@@ -1,0 +1,50 @@
+---
+// The sample lesson on a page of its own, so a school can print it. The
+// lesson's words live in src/pages/_lesson.astro, shared with the Teaching
+// page. Once it has been taught as written, say so: "first taught at
+// [school], [month]" is stronger than "sample".
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageTop from '../../components/PageTop.astro';
+import Worksheet from '../../components/Worksheet.astro';
+import Lesson from '../_lesson.astro';
+import '../../styles/pages/teaching.css';
+---
+
+<BaseLayout
+  title="Sample lesson: Bigger isn't better"
+  pageClass="page-teaching tone-teaching"
+  description="A 60-minute AI For Good lesson for P5–P6, using maths and English: students work out a rate, then argue a case with evidence and a fair account of the other side."
+>
+  <PageTop vertical="教學" band>
+    <p class="back no-print"><a class="textlink" href="/teaching#sample-lesson">Our teaching</a></p>
+    <p class="kicker-date">Sample lesson</p>
+    <h1>Bigger isn't better</h1>
+    <p class="lead">
+      One lesson, using our <strong>Mathematics</strong> and <strong>English</strong> modules. We've
+      published it so schools can see how a lesson is put together before they invite us in.
+    </p>
+    <ul class="lesson-facts">
+      <li><span>Level</span>P5–P6</li>
+      <li><span>Length</span>60 minutes</li>
+      <li><span>Staffing</span>2 tutors for every 8–10 students</li>
+    </ul>
+  </PageTop>
+
+  <section class="sec" aria-label="The lesson">
+    <div class="wrap">
+      <Lesson level={2} />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="worksheet">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="worksheet">The worksheet.</h2>
+        <p>One for each student. This page prints cleanly from your browser.</p>
+      </div>
+      <div class="lesson-sheet">
+        <Worksheet />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

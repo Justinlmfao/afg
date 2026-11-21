@@ -1,0 +1,29 @@
+---
+// The shape of every proposal: the case for, the case against, then what we
+// recommend. `boxed` sets it apart as the one note on a proposal page.
+import { getLangFromUrl, ui } from '../i18n';
+
+interface Props {
+  caseFor: string;
+  caseAgainst: string;
+  recommendation: string;
+  boxed?: boolean;
+}
+const { caseFor, caseAgainst, recommendation, boxed = false } = Astro.props;
+const t = ui[getLangFromUrl(Astro.url)].proposal;
+---
+
+<dl class:list={['threepart', boxed && 'threepart-boxed']}>
+  <div>
+    <dt>{t.caseFor}</dt>
+    <dd>{caseFor}</dd>
+  </div>
+  <div>
+    <dt>{t.caseAgainst}</dt>
+    <dd>{caseAgainst}</dd>
+  </div>
+  <div>
+    <dt>{t.recommendation}</dt>
+    <dd>{recommendation}</dd>
+  </div>
+</dl>

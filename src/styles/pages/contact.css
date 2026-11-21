@@ -1,0 +1,74 @@
+/* Contact page, shared by the English and Chinese versions. */
+.page-contact {
+  .routes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .routes li {
+    padding-block: 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .routes li:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .routes h2 {
+    margin-bottom: 0.3rem;
+    font-size: var(--step-1);
+  }
+
+
+  .contact-form {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 36rem;
+  }
+
+  .field {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .field label {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .field input,
+  .field textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--field);
+    border-radius: 4px;
+    background: var(--paper);
+    font: inherit;
+    color: var(--ink);
+  }
+
+  .field textarea {
+    resize: vertical;
+  }
+
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    border-color: var(--accent);
+  }
+
+  .contact-form .btn {
+    justify-self: start;
+  }
+
+  .hidden-field {
+    position: absolute;
+    left: -9999px;
+  }
+}

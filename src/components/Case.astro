@@ -1,0 +1,126 @@
+---
+// The signature of the site: every piece of our work told the same way.
+//   What we noticed  →  What we did  →  What changed
+// Each stage has a date, a few sentences and, where there is one, a piece of
+// evidence. When nothing has changed yet, say so: `status: 'pending'` leaves
+// the last dot hollow, dashes the line into it and renames the stage
+// "What's changed so far".
+//
+// On a wide screen the line runs across the top with a column under each
+// dot; on a phone it runs down the left.
+//
+// Rules: one big figure at most, inside "What changed", and not repeated in
+// the title. Real evidence only. Stage text may contain <mark>.
+import Photo from './Photo.astro';
+import { formatDate, gapLabel, machineDate } from '../lib/dates';
+import { getLangFromUrl, ui } from '../i18n';
+
+interface Evidence {
+  kind: 'photo' | 'document' | 'source';
+  /** The caption, document name or link text. */
+  label: string;
+  href?: string;
+  /** For a photo: its file name in src/assets/photos/. */
+  photo?: string;
+  /** For a document: when it was sent, e.g. "2025-08". */
+  date?: string;
+}
+interface Stage {
+  /** '2024', '2025-08' or '2026-02/2026-06': see src/lib/dates.ts. */
+  date?: string;
+  /** Shown in place of the date, and no time gap is worked out: "Since 2024". */
+  dateLabel?: string;
+  text: string;
+  evidence?: Evidence;
+}
+interface Props {
+  id?: string;
+  /** A small line above the title, e.g. "AI for All, 2024–2026". */
+  period?: string;
+  /** States the arc, without the number. May contain <wbr> and nowrap spans. */
+  title: string;
+  noticed: Stage;
+  did: Stage;
+  changed: Stage & { status: 'changed' | 'pending'; figure?: string };
+  /** The "What we can claim" note under the case. */
+  claim?: string;
+}
+const { id, period, title, noticed, did, changed, claim } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang].stage;
+const pending = changed.status === 'pending';
+// After the run-in "What we can claim:" an English sentence starts in lower case.
+const claimText = claim && lang === 'en' ? claim.charAt(0).toLowerCase() + claim.slice(1) : claim;
+
+const stages = [
+  { ...noticed, name: t.noticed, key: 'noticed' },
+  { ...did, name: t.did, key: 'did' },
+  { ...changed, name: pending ? t.soFar : t.changed, key: 'changed' },
+];
+// The time from each stage to the next, where both dates are known.
+const gaps = stages.map((stage, i) =>
+  stage.dateLabel || stages[i + 1]?.dateLabel ? undefined : gapLabel(stage.date, stages[i + 1]?.date, lang)
+);
+---
+
+<div class="case">
+  <div class="sec-head">
+    {period && <p class="kicker-date">{period}</p>}
+    <h2 id={id} set:html={title} />
+    <slot name="intro" />
+  </div>
+  <slot name="figures" />
+
+  <ol class:list={['track', pending && 'pending']}>
+    {
+      stages.map((stage, i) => (
+        <li class:list={['stage', stage.key === 'changed' && !pending && 'changed']}>
+          <p class="when">
+            {stage.dateLabel ??
+              (stage.date &&
+                (machineDate(stage.date) ? (
+                  <time datetime={stage.date}>{formatDate(stage.date, lang)}</time>
+                ) : (
+                  formatDate(stage.date, lang)
+                )))}
+          </p>
+          <h3>{stage.name}</h3>
+          {stage.key === 'changed' && changed.figure && <p class="big">{changed.figure}</p>}
+          <p set:html={stage.text} />
+
+          {stage.evidence?.kind === 'photo' && stage.evidence.photo && (
+            <div class="evidence">
+              <Photo name={stage.evidence.photo} alt="" sizes="84px" widths={[168, 336]} />
+              <span>{stage.evidence.label}</span>
+            </div>
+          )}
+          {stage.evidence?.kind === 'document' && (
+            <div class="evidence">
+              <a class="doc" href={stage.evidence.href}>
+                {stage.evidence.label}
+                {stage.evidence.date && <span>{formatDate(stage.evidence.date, lang)}</span>}
+              </a>
+            </div>
+          )}
+          {stage.evidence?.kind === 'source' && (
+            <div class="evidence">
+              <a href={stage.evidence.href} rel="noopener">{stage.evidence.label}</a>
+            </div>
+          )}
+          {stage.key === 'changed' && <slot name="changed-note" />}
+
+          {gaps[i] && <p class="gap">{gaps[i]}</p>}
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    claim && (
+      <p class="claim">
+        <strong class="runin">{t.claim}</strong>{lang === 'en' ? ' ' : ''}{claimText}{lang === 'en' ? ' ' : ''}<slot name="claim-more" />
+      </p>
+    )
+  }
+</div>

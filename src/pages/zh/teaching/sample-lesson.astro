@@ -1,0 +1,48 @@
+---
+// The sample lesson in Traditional Chinese, on a page of its own so a school
+// can print it. The lesson's words live in src/pages/zh/_lesson.astro, shared
+// with the Teaching page.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageTop from '../../../components/PageTop.astro';
+import Worksheet from '../../../components/Worksheet.astro';
+import Lesson from '../_lesson.astro';
+import '../../../styles/pages/teaching.css';
+---
+
+<BaseLayout
+  title="示範課堂：數字大，不代表比較強"
+  pageClass="page-teaching tone-teaching"
+  description="AI For Good 一節 60 分鐘的課，對象是小五至小六學生，用上數學和英文：學生先計算一個比率，再用證據論證，並公平地寫出另一方的看法。"
+>
+  <PageTop vertical="教學" band>
+    <p class="back no-print"><a class="textlink" href="/zh/teaching#sample-lesson">我們的教學</a></p>
+    <p class="kicker-date">示範課堂</p>
+    <h1>數字大，<wbr />不代表比較強</h1>
+    <p class="lead">
+      這節課用上了我們的<strong>數學</strong>和<strong>英文</strong>單元。我們把它公開，讓學校在邀請我們之前，先看看一節課是怎樣設計的。
+    </p>
+    <ul class="lesson-facts">
+      <li><span>程度</span>小五至小六</li>
+      <li><span>時長</span>60 分鐘</li>
+      <li><span>人手</span>每 8–10 位學生配 2 位導師</li>
+    </ul>
+  </PageTop>
+
+  <section class="sec" aria-label="課堂內容">
+    <div class="wrap">
+      <Lesson level={2} />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="worksheet">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="worksheet">工作紙。</h2>
+        <p>每位學生一張。這一頁可以直接用瀏覽器列印。</p>
+      </div>
+      <div class="lesson-sheet">
+        <Worksheet />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+// A caveat or source that supports a sentence. Put it after the text it
+// belongs to, inside a `.noted` wrapper: on wide screens it sits in the
+// right-hand margin beside that text, on narrow ones it follows it.
+import { getLangFromUrl } from '../i18n';
+
+interface Props {
+  /** The run-in label, e.g. "About that number." */
+  label?: string;
+  id?: string;
+}
+const { label, id } = Astro.props;
+// English needs a space after the label; Chinese punctuation carries its own.
+const space = getLangFromUrl(Astro.url) === 'en' ? ' ' : '';
+---
+
+<p class="sidenote" id={id}>{label && <b>{label}</b>}{label && space}<slot /></p>

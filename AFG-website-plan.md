@@ -1,12 +1,25 @@
-# AI For Good — Website Content Plan & Build Brief (v3)
+# AI For Good — Website Content Plan & Build Brief (v3) — SUPERSEDED
 
-Everything needed to build the site, written out in full.
-
-> **Design note (current build):** the site is intentionally colourful and
-> motion-rich — animated gradient hero, scroll-reveal, count-up numbers,
-> magnifying/tilting cards, gradient text, scroll-progress bar. This overrides
-> the "restrained" wording kept in the Design Direction section below. All
-> motion respects `prefers-reduced-motion`.
+> ## ⚠️ This document is out of date. Do not copy facts or copy from it.
+>
+> **`AFG-website-brief.md` is the source of truth**, and where the two
+> conflict, the brief wins. This file is kept only because the brief points to
+> it for the **four teaching module names and descriptions**, which are still
+> accurate.
+>
+> Known conflicts with the live site — the brief and the site are correct:
+>
+> | This document says | Correct |
+> | --- | --- |
+> | 10 institutions | **7 schools** |
+> | Six policy submissions and three reports, written out below | **None published.** Those were illustrative and were deleted; the Policy page shows the filed-state note until real submissions are added |
+> | 4 recommendations a year reflected in the Policy Address | Not a verified figure — **not used on the site** |
+> | 60+ workshops delivered | Not a verified figure — **not used on the site** |
+> | A colourful, motion-rich design direction | Superseded — see `DESIGN.md` for the current editorial design and its rationale |
+>
+> Confirmed figures now in use: founded June 2023 · 35+ members · ~20
+> recommendations a year · HK$50M commitment · **350 children** · 7 schools ·
+> 43 tutors · 86% band promotion since 2024.
 
 ## 0. What's real vs. example
 

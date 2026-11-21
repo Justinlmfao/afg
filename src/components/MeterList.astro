@@ -1,0 +1,31 @@
+---
+// A few percentages compared on aligned bars: a name, a bar and a figure for
+// each row. Every value is printed beside its bar, so nothing depends on
+// colour or on hovering. Give the source: it is shown under the bars.
+interface Props {
+  title: string;
+  rows: { label: string; value: number }[];
+  source?: string;
+}
+const { title, rows, source } = Astro.props;
+---
+
+<figure class="meters">
+  <figcaption>{title}</figcaption>
+  <dl>
+    {
+      rows.map((row) => (
+        <div>
+          <dt>{row.label}</dt>
+          <dd>
+            <span class="meter" aria-hidden="true">
+              <span style={`width:${row.value}%`} />
+            </span>
+            <span class="meter-value">{row.value}%</span>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  {source && <p class="meters-source">{source}</p>}
+</figure>

@@ -1,0 +1,106 @@
+/* About page, shared by the English and Chinese versions. */
+.page-about {
+  blockquote.tagline {
+    margin: 0;
+  }
+
+  .signed {
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--rule);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .origin-figure {
+    max-width: 46rem;
+    margin: var(--space-5) 0 0;
+  }
+
+  .origin-figure img {
+    width: 100%;
+  }
+
+  .origin-figure figcaption {
+    padding-top: 0.6rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  /* What we do: a heading, then the two halves in their own colours */
+  .what-head {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-top: 1px solid var(--rule);
+  }
+
+  .block h3 {
+    color: var(--accent);
+  }
+
+  .block p {
+    max-width: 32rem;
+    margin-top: 0.7rem;
+  }
+
+  .block .textlink {
+    margin-top: 0.6rem;
+  }
+
+  .how-we-work,
+  .sec-after-band {
+    border-top: 0;
+  }
+
+  /* How we work: two ruled rows */
+  .methods {
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .methods > div {
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .methods > div:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .methods dt {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .methods dd {
+    margin: 0.2rem 0 0;
+  }
+
+  .impact {
+    padding-bottom: var(--space-5);
+  }
+
+  /* What's next: a ruled list with a coloured word for each half */
+  .next-list {
+    max-width: 46rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .next-list li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .next-list li:first-child {
+    border-top: 1px solid var(--ink);
+  }
+}
+
+html[lang^='zh'] .page-about .next-list li {
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+}

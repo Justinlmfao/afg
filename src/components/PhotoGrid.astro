@@ -1,0 +1,47 @@
+---
+// A grid of photographs, for showing a whole set: the six from Ho Man Tin
+// Ling To Catholic School, the six from each year with Victoria Shanghai
+// Academy. Three across on a wide screen, two on a phone. With `feature`,
+// the first photograph is shown large.
+//
+// Each photograph is a link to its full-size version, so it can be opened
+// and enlarged without any script.
+import { getImage } from 'astro:assets';
+import Photo from './Photo.astro';
+import { photo } from '../lib/photos';
+
+interface Props {
+  photos: { name: string; alt: string; position?: string }[];
+  feature?: boolean;
+}
+const { photos, feature = false } = Astro.props;
+
+const items = await Promise.all(
+  photos.map(async (p, i) => ({
+    ...p,
+    large: feature && i === 0,
+    full: (await getImage({ src: photo(p.name), width: 1600, format: 'webp' })).src,
+  }))
+);
+---
+
+<ul class:list={['photo-grid', feature && 'photo-grid-feature']}>
+  {
+    items.map((p) => (
+      <li class:list={[p.large && 'photo-large']}>
+        <a href={p.full}>
+          <Photo
+            name={p.name}
+            alt={p.alt}
+            position={p.position}
+            sizes={
+              p.large
+                ? '(min-width: 56rem) 32rem, (min-width: 40rem) 66vw, 100vw'
+                : '(min-width: 56rem) 16rem, (min-width: 40rem) 33vw, 50vw'
+            }
+          />
+        </a>
+      </li>
+    ))
+  }
+</ul>

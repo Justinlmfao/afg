@@ -1,0 +1,22 @@
+---
+// The top of every page except the home page: the heading, standfirst and
+// anything else passed in, with the page's Chinese name down the margin.
+import VerticalTitle from './VerticalTitle.astro';
+
+interface Props {
+  /** The page name for the margin, in Chinese: 政策, 教學, 關於我們, 聯絡. */
+  vertical: string;
+  /** Set the top on a solid band in the page's colour (Policy, Teaching). */
+  band?: boolean;
+}
+const { vertical, band = false } = Astro.props;
+---
+
+<div class:list={[band && 'page-band band']}>
+  <div class="wrap page-top">
+    <VerticalTitle text={vertical} />
+    <div class="page-top-main">
+      <slot />
+    </div>
+  </div>
+</div>

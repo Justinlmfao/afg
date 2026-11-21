@@ -1,0 +1,264 @@
+/* Teaching page and the sample lesson under it, in every language. */
+.page-teaching {
+  .quiet-facts {
+    margin-top: 0.6rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  /* A tutor's account */
+  .quote {
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .quote blockquote {
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  .quote figcaption {
+    margin-top: 0.8rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .sheet-intro {
+    max-width: var(--text-w);
+  }
+
+  .closing-line {
+    max-width: 30ch;
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    line-height: 1.25;
+    color: var(--ink);
+  }
+
+  /* Promises: a ruled list */
+  .promise-list {
+    max-width: 46rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .promise-list li {
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+    font-size: var(--step-1);
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .promise-list li:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  /* On the green band the list is cream, ruled in a paler line */
+  .band .promise-list li {
+    border-color: rgb(245 242 235 / 0.3);
+    color: var(--cream);
+  }
+
+  .band .promise-list li:first-child {
+    border-top-color: var(--cream);
+  }
+
+  /* Modules: four ruled rows */
+  .module-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .module {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+    padding-block: var(--space-4);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* The photograph sits above the words on a phone, beside them when wide */
+  .module-photo {
+    order: -1;
+  }
+
+  .module-photo img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    object-position: var(--pos, 50% 50%);
+  }
+
+  @media (min-width: 48rem) {
+    .module {
+      grid-template-columns: minmax(0, 1fr) 16rem;
+      column-gap: 2.5rem;
+      align-items: start;
+    }
+
+    .module-photo {
+      order: 0;
+      padding-top: 0.4rem;
+    }
+
+    .module-photo img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  .module:first-child {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--ink);
+  }
+
+  .module h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .module-why {
+    margin-top: 0.8rem;
+  }
+
+  .module-why b {
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .module details {
+    margin-top: 0.4rem;
+  }
+
+  .module details .prose {
+    margin-top: 0.3rem;
+  }
+
+  /* With Victoria Shanghai Academy: a year, what it covered, six photographs */
+  .cohort + .cohort {
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--rule);
+  }
+
+  .cohort h3 {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cohort .prose {
+    margin-block: 0.4rem var(--space-4);
+  }
+
+  /* The sample lesson, inline and on its own page */
+  .lesson-top {
+    margin-bottom: var(--space-5);
+  }
+
+  .lesson-part {
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--rule);
+  }
+
+  .lesson-part + .lesson-part {
+    margin-top: var(--space-5);
+  }
+
+  .lesson-part :is(h2, h3) {
+    font-size: var(--step-2);
+  }
+
+  /* ---- The sample lesson page ---- */
+  .lesson-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 2rem;
+    margin: var(--space-4) 0 0;
+    padding: 0.8rem 0 0;
+    border-top: 1px solid var(--rule);
+    list-style: none;
+    font-size: var(--step--1);
+  }
+
+  .lesson-facts span {
+    margin-right: 0.4em;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .page-band .lesson-facts {
+    border-top-color: rgb(245 242 235 / 0.35);
+  }
+
+  .page-band .lesson-facts span {
+    color: var(--band-muted);
+  }
+
+  .part-tag {
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .rail-head .part-tag {
+    margin: 0 0 0.4rem;
+  }
+
+  /* Notes for the tutor: run-in labels, set apart by a rule, not a box */
+  .aside {
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .aside b,
+  .objective b {
+    margin-right: 0.4em;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .frames {
+    padding: 0;
+    list-style: none;
+  }
+
+  .frames li {
+    padding-block: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .frames li:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .lesson-sheet {
+    max-width: 46rem;
+  }
+}
+
+html[lang^='zh'] .page-teaching {
+  .closing-line {
+    max-width: 20em;
+    line-height: 1.5;
+  }
+
+  .quote blockquote {
+    line-height: 1.7;
+  }
+
+}
+
+/* The sample lesson is the page most likely to be printed: keep each part
+   together and give the worksheet a page of its own. */
+@media print {
+  .page-teaching .lesson-sheet {
+    break-before: page;
+  }
+
+  .page-teaching .rail {
+    display: block;
+  }
+}

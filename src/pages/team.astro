@@ -1,132 +1,89 @@
 ---
+// Team page: the people who lead AFG, and two photographs of the team.
+// Names, roles and bios come from src/content/team/*.md. Anyone without a
+// bio is listed without the toggle.
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageHero from '../components/PageHero.astro';
-import { getCollection } from 'astro:content';
+import PageTop from '../components/PageTop.astro';
+import Photo from '../components/Photo.astro';
+import '../styles/pages/team.css';
+import { getCollection, render } from 'astro:content';
 
-// Team members come from src/content/team/ (drafts excluded). The `group`
-// field controls which section a person appears under; the order of groups
-// below controls section order on the page.
-const members = (await getCollection('team')).filter((m) => !m.data.draft);
-
-const groupOrder = ['Leadership', 'Executive Team'];
-
-const grouped = groupOrder
-  .map((group) => ({
-    group,
-    people: members
-      .filter((m) => m.data.group === group)
-      .sort((a, b) => a.data.order - b.data.order),
-  }))
-  .filter((section) => section.people.length > 0);
-
-// Colourful gradients cycled across avatars.
-const gradients = [
-  'linear-gradient(135deg,#4f46e5,#2563eb)',
-  'linear-gradient(135deg,#f97316,#ec4899)',
-  'linear-gradient(135deg,#0d9488,#059669)',
-  'linear-gradient(135deg,#7c3aed,#4f46e5)',
-  'linear-gradient(135deg,#f59e0b,#ef4444)',
-];
-
-const initials = (name: string) =>
-  name
-    .split(' ')
-    .map((w) => w[0])
-    .slice(0, 2)
-    .join('');
-
-let avatarIndex = 0;
+const members = await Promise.all(
+  (await getCollection('team'))
+    .filter((m) => !m.data.draft)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (m) => ({
+      name: m.data.name,
+      role: m.data.role,
+      Bio: m.body?.trim() ? (await render(m)).Content : null,
+    }))
+);
 ---
 
 <BaseLayout
-  title="Our Team"
-  description="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
+  title="Team"
+  pageClass="page-team"
+  description="AI For Good is run entirely by students: more than 35 members working on policy research and tutoring."
 >
-  <PageHero
-    eyebrow="Our Team"
-    titlePre="Our"
-    titleAccent="Team"
-    lead="AI For Good is run entirely by students, organised into research, partnerships, and education teams."
-  />
+  <PageTop vertical="團隊">
+    <h1>Run entirely by students</h1>
+    <p class="lead">
+      More than 35 of us work on policy research and tutoring. These are the people who lead the work.
+      Press a name to read more about them.
+    </p>
+  </PageTop>
 
-  {
-    grouped.map((section) => (
-      <section class="section-tight team-section">
-        <div class="container">
-          <p class="eyebrow" data-reveal>{section.group}</p>
-          <ul class="people-grid">
-            {section.people.map((person, i) => {
-              const grad = gradients[avatarIndex++ % gradients.length];
-              return (
-                <li
-                  class="person magnify"
-                  data-reveal
-                  style={`--reveal-delay:${i * 0.08}s`}
-                >
-                  <span class="avatar" style={`background:${grad}`} aria-hidden="true">
-                    {initials(person.data.name)}
+  <!-- The team, large, before the names -->
+  <figure class="photo photo-tall">
+    <Photo
+      name="team-classroom.jpg"
+      alt="Six AI For Good members in a classroom at Ho Man Tin Ling To Catholic School, after a session."
+      sizes="100vw"
+      position="50% 42%"
+      eager
+    />
+    <figcaption class="wrap">In a classroom at Ho Man Tin Ling To Catholic School, after a session.</figcaption>
+  </figure>
+
+  <!-- The leads. Each name opens its bio: a native <details>, so it works
+       without JavaScript and from the keyboard. -->
+  <section class="sec">
+    <div class="wrap team-body">
+      <figure class="team-side">
+        <Photo
+          name="team-outside-school.jpg"
+          alt="Five AI For Good members outside Ho Man Tin Ling To Catholic School."
+          sizes="(min-width: 64rem) 17rem, 100vw"
+          position="62% 100%"
+        />
+        <figcaption>Outside Ho Man Tin Ling To Catholic School, where we teach.</figcaption>
+      </figure>
+      <div class="people">
+        {
+          members.map(({ name, role, Bio }) =>
+            Bio ? (
+              <details class="person">
+                <summary>
+                  <span class="person-head">
+                    <h2>{name}</h2>
+                    <span class="person-role">{role}</span>
                   </span>
-                  <p class="person-name">{person.data.name}</p>
-                  <p class="person-role">{person.data.role}</p>
-                  <p class="person-bio">{person.data.bio}</p>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
-    ))
-  }
+                </summary>
+                <div class="prose">
+                  <Bio />
+                </div>
+              </details>
+            ) : (
+              <div class="person">
+                <span class="person-head">
+                  <h2>{name}</h2>
+                  <span class="person-role">{role}</span>
+                </span>
+              </div>
+            )
+          )
+        }
+      </div>
+    </div>
+  </section>
 </BaseLayout>
-
-<style>
-  .people-grid {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.25rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-    gap: 1.5rem;
-  }
-
-  .person {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    padding: 1.75rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    color: #fff;
-    font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    box-shadow: var(--shadow-sm);
-  }
-
-  .person-name {
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-  }
-
-  .person-role {
-    color: var(--color-accent);
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    margin-block: 0.2rem 0.6rem;
-  }
-
-  .person-bio {
-    color: var(--color-text-soft);
-    font-size: 0.97rem;
-  }
-</style>

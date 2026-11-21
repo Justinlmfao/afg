@@ -1,0 +1,27 @@
+---
+// Where the contact form lands once Netlify has accepted a message
+// (the form's action attribute points here).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTop from '../components/PageTop.astro';
+import '../styles/pages/utility.css';
+import { contactEmail } from '../data/facts';
+---
+
+<BaseLayout
+  title="Message sent"
+  description="Your message to AI For Good has been sent."
+  pageClass="page-utility"
+  noindex
+>
+  <PageTop vertical="聯絡">
+    <h1>Thanks, we've got your message.</h1>
+    <p class="lead">
+      We'll reply to the email address you gave us. That usually takes us less than a week. If you want to add anything,
+      write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+    </p>
+    <ul class="next-links">
+      <li><a class="textlink" href="/">Back to the home page</a></li>
+      <li><a class="textlink" href="/policy">Our policy work</a></li>
+    </ul>
+  </PageTop>
+</BaseLayout>

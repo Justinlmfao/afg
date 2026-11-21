@@ -1,0 +1,33 @@
+---
+// Served for any address that doesn't exist (Netlify picks up 404.html).
+// One page for every language, so the Chinese lines sit below the English.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageTop from '../components/PageTop.astro';
+import '../styles/pages/utility.css';
+---
+
+<BaseLayout
+  title="Page not found"
+  description="This page doesn't exist on the AI For Good website."
+  pageClass="page-utility"
+  noindex
+>
+  <PageTop vertical="找不到">
+    <h1>This page isn't here.</h1>
+    <p class="lead">
+      The link may be out of date, or the page may have moved. These are good places to start:
+    </p>
+    <ul class="next-links">
+      <li><a class="textlink" href="/">Home</a></li>
+      <li><a class="textlink" href="/about">About</a></li>
+      <li><a class="textlink" href="/policy">Policy</a></li>
+      <li><a class="textlink" href="/teaching">Teaching</a></li>
+      <li><a class="textlink" href="/team">Team</a></li>
+      <li><a class="textlink" href="/get-involved">Contact</a></li>
+    </ul>
+    <div class="other-langs">
+      <p lang="zh-Hant-HK">找不到這個頁面。<a href="/zh/">前往繁體中文首頁</a></p>
+      <p lang="zh-Hans">找不到这个页面。<a href="/zh-hans/">前往简体中文首页</a></p>
+    </div>
+  </PageTop>
+</BaseLayout>

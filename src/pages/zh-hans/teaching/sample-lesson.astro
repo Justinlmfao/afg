@@ -1,0 +1,50 @@
+---
+// GENERATED FILE — do not edit by hand.
+// Run `npm run zh-hans` to rebuild this from src/pages/zh/.
+// The sample lesson in Simplified Chinese, on a page of its own so a school
+// can print it. The lesson's words live in src/pages/zh-hans/_lesson.astro, shared
+// with the Teaching page.
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageTop from '../../../components/PageTop.astro';
+import Worksheet from '../../../components/Worksheet.astro';
+import Lesson from '../_lesson.astro';
+import '../../../styles/pages/teaching.css';
+---
+
+<BaseLayout
+  title="示范课堂：数字大，不代表比较强"
+  pageClass="page-teaching tone-teaching"
+  description="AI For Good 一节 60 分钟的课，对象是小五至小六学生，用上数学和英文：学生先计算一个比率，再用证据论证，并公平地写出另一方的看法。"
+>
+  <PageTop vertical="教学" band>
+    <p class="back no-print"><a class="textlink" href="/zh-hans/teaching#sample-lesson">我们的教学</a></p>
+    <p class="kicker-date">示范课堂</p>
+    <h1>数字大，<wbr />不代表比较强</h1>
+    <p class="lead">
+      这节课用上了我们的<strong>数学</strong>和<strong>英文</strong>单元。我们把它公开，让学校在邀请我们之前，先看看一节课是怎样设计的。
+    </p>
+    <ul class="lesson-facts">
+      <li><span>程度</span>小五至小六</li>
+      <li><span>时长</span>60 分钟</li>
+      <li><span>人手</span>每 8–10 位学生配 2 位导师</li>
+    </ul>
+  </PageTop>
+
+  <section class="sec" aria-label="课堂内容">
+    <div class="wrap">
+      <Lesson level={2} />
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="worksheet">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="worksheet">工作纸。</h2>
+        <p>每位学生一张。这一页可以直接用浏览器列印。</p>
+      </div>
+      <div class="lesson-sheet">
+        <Worksheet />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

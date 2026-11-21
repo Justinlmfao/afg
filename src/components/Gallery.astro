@@ -1,0 +1,45 @@
+---
+// One large photograph and two small ones, or two side by side, with a
+// single caption underneath that says which is which. On phones only the
+// first photograph shows, with its own caption.
+//
+// Each caption is a full sentence without the position, e.g.
+// "Using AI as a study partner at Ho Man Tin Ling To Catholic School."
+import Photo from './Photo.astro';
+import { getLangFromUrl } from '../i18n';
+
+interface Props {
+  photos: { name: string; alt: string; caption: string; position?: string }[];
+}
+const { photos } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const pair = photos.length === 2;
+
+const where = {
+  en: pair ? ['Left: ', 'Right: '] : ['Left: ', 'Top right: ', 'Bottom right: '],
+  zh: pair ? ['左：', '右：'] : ['左：', '右上：', '右下：'],
+  hans: pair ? ['左：', '右：'] : ['左：', '右上：', '右下：'],
+}[lang];
+
+// After "Left: " an English caption starts in lower case.
+const lower = (text: string) => (lang === 'en' ? text.charAt(0).toLowerCase() + text.slice(1) : text);
+const joined = photos.map((p, i) => where[i] + lower(p.caption)).join(lang === 'en' ? ' ' : '');
+
+const sizes = pair
+  ? ['(min-width: 40rem) 50vw, 100vw', '50vw']
+  : ['(min-width: 60rem) 48rem, 100vw', '(min-width: 60rem) 24rem, 50vw', '(min-width: 60rem) 24rem, 50vw'];
+---
+
+<figure class="gallery-wrap">
+  <div class:list={['gallery', pair && 'gallery-pair']}>
+    {
+      photos.map((p, i) => (
+        <Photo name={p.name} alt={p.alt} sizes={sizes[i]} position={p.position} frame={`g${i + 1}`} />
+      ))
+    }
+  </div>
+  <figcaption>
+    <span class="cap-wide">{joined}</span>
+    <span class="cap-phone">{photos[0].caption}</span>
+  </figcaption>
+</figure>

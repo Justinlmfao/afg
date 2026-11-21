@@ -1,0 +1,236 @@
+/* Policy page and the proposal pages under it, in every language. */
+.page-policy {
+  /* So far: a figure and what it counts, on ruled rows */
+  .record {
+    max-width: 46rem;
+    margin: 0;
+  }
+
+  .record > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem 1.5rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .record > div:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .record dt {
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.15;
+    color: var(--accent);
+  }
+
+  .record dd {
+    margin: 0;
+  }
+
+  @media (min-width: 40rem) {
+    .record > div {
+      grid-template-columns: 11rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  .case .sec-head p:not(.kicker-date) {
+    max-width: var(--text-w);
+  }
+
+  .flagship-parts {
+    max-width: 52rem;
+    margin-top: var(--space-5);
+  }
+
+  .ledger-note {
+    margin-top: var(--space-4);
+    color: var(--muted);
+  }
+
+  .format-intro {
+    margin-bottom: var(--space-4);
+  }
+
+  .format-title {
+    font-size: var(--step-1);
+  }
+
+  .format-sub {
+    margin: 0.2rem 0 0.9rem;
+  }
+
+  /* Under the AI for All case: the fuller account, and its sources */
+  .after-case {
+    display: grid;
+    gap: var(--space-5);
+    margin-top: var(--space-5);
+  }
+
+  .after-case details > .prose {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .after-case {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      column-gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .sources {
+    font-size: var(--step--1);
+  }
+
+  .sources-label {
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .sources ul {
+    margin-top: 0.3rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sources li {
+    padding-block: 0.25rem 0.7rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .sources a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .sources li span {
+    display: block;
+    color: var(--muted);
+  }
+
+  /* ---- A proposal page (ProposalPage.astro) ---- */
+  .page-top h1 {
+    max-width: 26ch;
+  }
+
+  .back {
+    margin: 0 0 0.6rem;
+  }
+
+  /* The paper reads like a paper: the serif, at text size */
+  .paper {
+    max-width: 38rem;
+    font-family: var(--serif);
+    font-size: var(--step-0);
+  }
+
+  .paper > * + * {
+    margin-top: 1em;
+  }
+
+  .paper h3 {
+    margin-top: 2.2em;
+    padding-top: 1.1em;
+    border-top: 1px solid var(--rule);
+    font-size: var(--step-2);
+  }
+
+  .paper > h3:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .paper strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .paper li + li {
+    margin-top: 0.5em;
+  }
+
+  .paper li > ul,
+  .paper li > ol {
+    margin-top: 0.5em;
+  }
+
+  /* Tables scroll sideways inside the paper instead of pushing the page */
+  .paper table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .paper th,
+  .paper td {
+    min-width: 7rem;
+    padding: 0.6rem 1rem 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .paper th {
+    border-bottom-color: var(--ink);
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .paper a {
+    overflow-wrap: anywhere;
+  }
+
+  /* The references, the last list in a paper: each one is a link on its
+     own line, so it gets room to be tapped */
+  .paper > ul:last-child {
+    padding: 0;
+    list-style: none;
+  }
+
+  .paper > ul:last-child li {
+    margin: 0;
+    border-top: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: var(--step--1);
+  }
+
+  .paper > ul:last-child a {
+    display: block;
+    padding-block: 0.75rem;
+  }
+
+  .paper-meta p + p {
+    margin-top: 0.6rem;
+  }
+
+  .cite {
+    max-width: 38rem;
+    margin-top: var(--space-5);
+    padding-top: 1rem;
+    border-top: 1px solid var(--ink);
+    font-size: var(--step--1);
+    color: var(--muted);
+    overflow-wrap: anywhere;
+  }
+
+  .cite b {
+    font-weight: 700;
+    color: var(--text);
+  }
+}
+
+html[lang^='zh'] .page-policy {
+  .page-top h1 {
+    max-width: 18em;
+  }
+}

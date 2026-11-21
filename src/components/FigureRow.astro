@@ -1,0 +1,21 @@
+---
+// A row of figures, each with a few words under it: the four numbers under
+// the home page hero. Two across on a phone, four on a wide screen.
+interface Props {
+  items: { figure: string | number; label: string }[];
+  /** Inside a section, under its heading, rather than closing the hero. */
+  inline?: boolean;
+}
+const { items, inline = false } = Astro.props;
+---
+
+<dl class:list={['figures', inline && 'figures-inline']}>
+  {
+    items.map((item) => (
+      <div>
+        <dt>{item.figure}</dt>
+        <dd>{item.label}</dd>
+      </div>
+    ))
+  }
+</dl>

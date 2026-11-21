@@ -1,0 +1,248 @@
+---
+// Traditional Chinese home page. Shares the English page's stylesheet
+// (src/styles/pages/home.css) via pageClass, so layout changes stay in one
+// place; only the prose differs. Keep each Chinese paragraph on one source
+// line: Astro turns a line break into a space, which shows in Chinese.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Photo from '../../components/Photo.astro';
+import Now from '../../components/Now.astro';
+import FigureRow from '../../components/FigureRow.astro';
+import Case from '../../components/Case.astro';
+import Ledger from '../../components/Ledger.astro';
+import Steps from '../../components/Steps.astro';
+import Gallery from '../../components/Gallery.astro';
+import MarginNote from '../../components/MarginNote.astro';
+import '../../styles/pages/home.css';
+import { getCollection } from 'astro:content';
+import { facts, showSamples } from '../../data/facts';
+import { aiForAllCase } from '../../data/cases';
+import { formatDate } from '../../lib/dates';
+import { getSubmissions, submissionHref } from '../../lib/submissions';
+import { getLangFromUrl } from '../../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const f = facts;
+const story = aiForAllCase(lang, { document: '/zh/policy#ai-for-all' });
+// The proposals with a page of their own.
+const proposals = (await getSubmissions(lang)).filter((s) => s.hasPaper);
+const modules = (await getCollection('programs'))
+  .filter((m) => !m.data.draft)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="AI For Good 香港：學生主導的人工智能政策研究與免費補習"
+  pageClass="page-home"
+  description="AI For Good 是一個由香港學生創辦和營運的組織：我們向政府提交政策建議，也為基層家庭的小學生提供免費補習。"
+>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div class="hero-head">
+        <p class="kicker-date">學生主導的政策研究</p>
+        <h1>香港學生撰寫<wbr />人工智能政策建議，<wbr />也為受影響的孩子<wbr />上課。</h1>
+      </div>
+      <div>
+        <p class="lead">
+          我們是一群香港學生，研究人工智能和經濟政策如何改變這座城市，每年向政府提交約{f.recsPerYear.word[lang]}項建議。我們也為基層家庭的小學生免費教授人工智能和經濟知識。
+        </p>
+        <div class="actions">
+          <a class="btn" href="/zh/policy">閱讀我們的政策研究</a>
+          <a class="textlink" href="/zh/teaching">看看我們的教學</a>
+        </div>
+      </div>
+      <Now />
+    </div>
+    <FigureRow
+      items={[
+        { figure: f.recsPerYear.value, label: '每年提交的建議' },
+        { figure: f.children.value, label: '教過的孩子' },
+        { figure: f.schools.value, label: '合作學校' },
+        { figure: f.tutors.value, label: '受訓學生導師' },
+      ]}
+    />
+  </div>
+
+  <figure class="photo">
+    <Photo
+      name="teaching-classroom.jpg"
+      alt="導師在天主教領島學校上課，一名學生舉手回答。"
+      sizes="100vw"
+      position="50% 38%"
+      positionPhone="68% 40%"
+      eager
+    />
+    <figcaption class="wrap">天主教領島學校的一節補習課。</figcaption>
+  </figure>
+
+  <div class="halves doors">
+    <section class="half-col tone-policy" aria-labelledby="door-policy">
+      <div class="half washed door">
+        <h2 id="door-policy">政策研究</h2>
+        <p>我們向香港政府提交書面建議，自 2024 年起每一輪施政報告和財政預算案諮詢都有參與。</p>
+        <p class="door-number">{f.recsPerYear.value} <span>每年提交的建議</span></p>
+        <a class="textlink" href="/zh/policy">閱讀我們的政策研究</a>
+      </div>
+      <div class="half band">
+        <p class="proof-figure">HK$50M</p>
+        <p class="proof-label">{f.aiForAll.budget} 年度財政預算案撥給 AI for All 的款項，正是我們一直倡議的那類普及人工智能計劃</p>
+      </div>
+    </section>
+    <section class="half-col tone-teaching" aria-labelledby="door-teaching">
+      <div class="half washed door">
+        <h2 id="door-teaching">教學計劃</h2>
+        <p>由我們親自培訓的學生導師，在七間學校為小學生提供免費補習。</p>
+        <p class="door-number">{f.children.value} <span>教過的孩子</span></p>
+        <a class="textlink" href="/zh/teaching">看看我們的教學</a>
+      </div>
+      <div class="half band">
+        <p class="proof-figure">{f.bandUp.value}{f.bandUp.unit}</p>
+        <p class="proof-label">自 {f.bandUp.since} 年起，至少升了一個組別的學生比例</p>
+      </div>
+    </section>
+  </div>
+
+  <section class="sec tone-policy" aria-labelledby="ai-for-all">
+    <div class="wrap">
+      <Case id="ai-for-all" {...story}>
+        <a slot="claim-more" href="/zh/policy#ai-for-all">{story.more}</a>
+      </Case>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="who-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="who-h">我們是誰</h2>
+      </div>
+      <div class="prose">
+        <p class="tagline">為我們終將繼承的科技，制訂政策。</p>
+        <p>
+          AI For Good 由學生在 2023 年 6 月創立，到今天仍然全由學生營運，現在已有超過 35 人。我們一開始是校外的獨立智庫，後來才陸續和全港各區的學校合作。我們同時做兩件事：為政府撰寫有證據支持的建議，也去教那些最先感受到這些決定影響的孩子。
+        </p>
+        <p><a class="textlink" href="/zh/about">了解更多</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="current-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="current-h">我們正在做的事</h2>
+      </div>
+      <ul class="current-list">
+        <li class="tone-policy">
+          <span class="tone-tag">政策</span>
+          <span>就《香港特別行政區經濟和社會發展第一個五年規劃（2026–2030）》撰寫意見書。我們主張人工智能的資源應該投放到有需要的地方，而不只是沿用現有的計劃。</span>
+        </li>
+        <li class="tone-teaching">
+          <span class="tone-tag">教學</span>
+          <span>明年會帶著新一批導師重返天主教領島學校。</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec tone-policy washed" aria-labelledby="policy-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="policy-h"><span class="nowrap">自 2024 年起，</span><wbr />我們回應了<wbr />每一份施政報告<wbr />及財政預算案諮詢。</h2>
+        <p>每份建議書都先寫支持的理由、反對的理由，然後才是我們的建議。</p>
+      </div>
+      <div>
+        <Ledger rows={proposals} variant="brief" heading="其他近期建議" caption="其他近期建議" />
+        <a class="more" href="/zh/policy#submissions">所有意見書</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec tone-teaching washed" aria-labelledby="teaching-h">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2 id="teaching-h">孩子先自己嘗試，<wbr />再請人工智能<wbr />給提示，<wbr />從不直接要答案。</h2>
+        <p>每一節課都跟從同樣的四個步驟，數學、英文、經濟和科學都一樣。</p>
+      </div>
+      <Steps
+        items={[
+          { name: '嘗試', text: '先自己試著解題。' },
+          { name: '提問', text: '請人工智能給提示或核對。' },
+          { name: '核對', text: '比較它的回應和自己的做法。' },
+          { name: '解釋', text: '關掉人工智能，用自己的話解釋。' },
+        ]}
+      />
+      <Gallery
+        photos={[
+          {
+            name: 'teaching-ai-study-partner.jpg',
+            alt: '導師在小學課堂上，用投影在螢幕上的人工智能學習夥伴教學。',
+            caption: '在天主教領島學校，把人工智能當作學習夥伴。',
+          },
+          {
+            name: 'vsa-2025-26-helping.jpg',
+            alt: '導師協助一名學生使用手提電腦。',
+            caption: '與滬江維多利亞學校合辦的社區課堂，2025–26 年度。',
+          },
+          {
+            name: 'vsa-2024-25-presenting.jpg',
+            alt: '兩位導師向一班年輕人講解。',
+            caption: '社區課堂，2024–25 年度。',
+          },
+        ]}
+      />
+      <div class="noted facts">
+        <p class="facts-main">
+          我們的 {f.tutors.value} 位受訓導師，在{f.schools.word[lang]}間學校教過 {f.children.value} 個孩子。自 {f.bandUp.since} 年起，{f.bandUp.value}{f.bandUp.unit} 的學生至少升了一個組別。
+        </p>
+        <MarginNote label="關於這個數字。">
+          這不是我們一個人的功勞。老師、家長和學生自己都付出了努力。但這是我們用來要求自己的數字。{(!f.bandUp.method.sample || showSamples) && <a href="/zh/teaching#results">我們怎樣計算</a>}
+        </MarginNote>
+      </div>
+      <a class="more" href="/zh/teaching">我們的教學、單元和示範課堂</a>
+    </div>
+  </section>
+
+  <!-- Latest work, straight from the collections. The flagship leads. -->
+  <section class="sec" aria-labelledby="latest-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="latest-h">最新工作</h2>
+      </div>
+      <ul class="latest-list">
+        <li class="tone-policy">
+          <span class="tone-tag">主要項目</span>
+          <a href="/zh/policy#ai-for-all">AI for All：{f.aiForAll.budget} 年度財政預算案撥款{f.aiForAll.amount[lang]}</a>
+          <span class="latest-meta">2024–2026 年</span>
+        </li>
+        {
+          proposals.map((s) => (
+            <li class="tone-policy">
+              <span class="tone-tag">提案</span>
+              <a href={submissionHref(s, lang)}>{s.title}</a>
+              <span class="latest-meta">{formatDate(s.date, lang, 'long')}</span>
+            </li>
+          ))
+        }
+        {
+          modules.map((m) => (
+            <li class="tone-teaching">
+              <span class="tone-tag">單元</span>
+              <a href="/zh/teaching#modules">{m.data.title_zh ?? m.data.title}</a>
+              <span class="latest-meta">教學</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="partners-h">
+    <div class="wrap rail">
+      <div class="rail-head">
+        <h2 id="partners-h">合作夥伴</h2>
+      </div>
+      <p class="prose">
+        天主教領島學校 · St. Barnabas' Home &amp; Society · Kennedy Town School · 10% Organisation
+      </p>
+    </div>
+  </section>
+</BaseLayout>

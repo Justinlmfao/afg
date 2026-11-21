@@ -1,0 +1,27 @@
+---
+// The AI For Good logo, inlined from the SVG files in src/assets/brand/ so it
+// takes the colour of the text around it.
+//
+//   wordmark  "AI For Good" on its own: the header on every page.
+//   lockup    wordmark, rule and HONG KONG: the footer, on the dark ground.
+//
+// Don't re-type the wordmark in live text or recolour it; change the files.
+import wordmark from '../assets/brand/logo-wordmark-light.svg?raw';
+import lockup from '../assets/brand/logo-lockup-dark.svg?raw';
+
+interface Props {
+  variant?: 'wordmark' | 'lockup';
+  /** Read out as the image's name. Leave unset when the link around it is already named. */
+  label?: string;
+}
+const { variant = 'wordmark', label } = Astro.props;
+
+const naming = label ? ` role="img" aria-label="${label}"` : ' aria-hidden="true"';
+const svg = (variant === 'lockup' ? lockup : wordmark)
+  .replace(/\s*<title[^>]*>[\s\S]*?<\/title>/, '')
+  .replace(/ role="img" aria-labelledby="t"/, `${naming} class="logo logo-${variant}"`)
+  // The lettering follows the text colour; the lockup's rule keeps its own grey.
+  .replace(/fill="#(16171B|F5F2EB)"/g, 'fill="currentColor"');
+---
+
+<Fragment set:html={svg} />

@@ -1,123 +1,72 @@
 ---
-// Site footer. Deep gradient background to bookend the stats band.
-// Contact email is on file (dudequa3@gmail.com) but left blank for now. Set
-// `email` to that address when ready and the contact line will appear.
-const year = new Date().getFullYear();
-const email = '';
+// Site footer, on the dark ground with the full logo. It is also every
+// page's closing call to action: one line for schools and organisations, one
+// for students. No page carries a separate closing section.
+import Logo from './Logo.astro';
+import { contactEmail } from '../data/facts';
+import { monthOf } from '../lib/dates';
+import { getLangFromUrl, localizePath, ui, navItems, langOrder, langShort, htmlLangs } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const t = ui[lang];
+const f = t.footer;
+const contact = localizePath('/get-involved', lang);
+const switchPath = /^\/404(\.html)?\/?$/.test(Astro.url.pathname) ? '/' : Astro.url.pathname;
+// The month the site was last built, which is when its content last changed.
+const updated = monthOf(new Date(), lang);
 ---
 
-<footer class="site-footer">
-  <div class="container footer-inner">
-    <div>
-      <p class="footer-brand">
-        <span class="brand-dot" aria-hidden="true"></span> AI For Good
-      </p>
-      <p class="footer-tagline">
-        A student-led think tank in Hong Kong working at the intersection of
-        technology, economics, and policy.
-      </p>
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <Logo variant="lockup" label="AI For Good Hong Kong" />
+        <p class="foot-blurb">{f.blurb}</p>
+      </div>
+      <div>
+        <h2>{f.schoolsTitle}</h2>
+        <p>{f.schoolsText}</p>
+        <a class="btn-light" href={`${contact}#schools`}>{f.schoolsAction}</a>
+      </div>
+      <div>
+        <h2>{f.studentsTitle}</h2>
+        <p>{f.studentsText}</p>
+        <a class="btn-light" href={`${contact}#students`}>{f.studentsAction}</a>
+      </div>
     </div>
 
-    <nav class="footer-nav" aria-label="Footer">
-      <a href="/about">About</a>
-      <a href="/research">Research</a>
-      <a href="/programs">Programs</a>
-      <a href="/team">Team</a>
-      <a href="/get-involved">Get Involved</a>
-    </nav>
-
-    <div class="footer-contact">
-      {email && <a href={`mailto:${email}`}>{email}</a>}
-      <p class="footer-meta">Based in Hong Kong · &copy; {year} AI For Good</p>
+    <div class="foot-base">
+      <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      <nav aria-label={t.navFooter}>
+        <ul>
+          {
+            navItems.map((item) => (
+              <li>
+                <a href={localizePath(item.path, lang)}>{t.nav[item.key]}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <ul aria-label={t.langLabel}>
+        {
+          langOrder.map((code) => (
+            <li>
+              <a
+                href={localizePath(switchPath, code)}
+                lang={htmlLangs[code]}
+                aria-current={code === lang ? 'true' : undefined}
+              >
+                {langShort[code]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <span class="foot-meta">
+        {f.place} · {f.updated}{lang === 'en' ? ' ' : ''}{updated}
+      </span>
+      <span class="foot-meta">&copy; {new Date().getFullYear()} AI For Good</span>
     </div>
   </div>
 </footer>
-
-<style>
-  .site-footer {
-    margin-top: auto;
-    padding-block: 3.5rem;
-    font-size: 0.95rem;
-    background: linear-gradient(135deg, #0f1030, #1e1b4b 55%, #0b3b3a);
-    color: rgba(255, 255, 255, 0.78);
-    position: relative;
-  }
-
-  .site-footer::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--grad-rainbow);
-    background-size: 200% 100%;
-    animation: gradientShift 6s linear infinite;
-  }
-
-  .footer-inner {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  .footer-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-serif);
-    font-size: 1.25rem;
-    color: #fff;
-    margin-bottom: 0.5rem;
-  }
-
-  .brand-dot {
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 50%;
-    background: var(--grad-rainbow);
-    background-size: 200% 200%;
-    animation: gradientShift 5s ease infinite;
-  }
-
-  .footer-tagline {
-    max-width: 28rem;
-  }
-
-  .footer-nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
-
-  .footer-nav a {
-    color: rgba(255, 255, 255, 0.78);
-    text-decoration: none;
-    width: fit-content;
-    transition: color 0.15s ease, transform 0.15s ease;
-  }
-
-  .footer-nav a:hover {
-    color: #fff;
-    transform: translateX(4px);
-  }
-
-  .footer-contact a {
-    color: #fff;
-    font-weight: 600;
-  }
-
-  .footer-meta {
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  @media (max-width: 46rem) {
-    .footer-inner {
-      grid-template-columns: 1fr;
-      gap: 1.75rem;
-    }
-  }
-</style>

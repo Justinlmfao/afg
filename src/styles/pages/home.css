@@ -1,0 +1,176 @@
+/* Home page, shared by the English and Chinese versions. */
+.page-home {
+  /* Hero: the heading across the full width, then the standfirst and
+     actions in eight columns with the "Now" note in three. */
+  .hero {
+    padding-block: var(--space-7) var(--space-5);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .hero h1 {
+    max-width: 17ch;
+    font-size: var(--step-5);
+    letter-spacing: -0.012em;
+  }
+
+  .hero .lead {
+    max-width: 40ch;
+  }
+
+  @media (min-width: 60rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
+      column-gap: clamp(2rem, 6vw, 6rem);
+    }
+
+    .hero-head {
+      grid-column: 1 / -1;
+    }
+
+    .now {
+      align-self: start;
+      margin-top: 0.35rem;
+    }
+  }
+
+  .hero-head .kicker-date {
+    margin-bottom: 0.6rem;
+  }
+
+  .hero .figures dt {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* The two doors */
+  .door h2 {
+    font-size: var(--step-3);
+    color: var(--accent);
+  }
+
+  .door p {
+    max-width: 30rem;
+    margin-top: 0.6rem;
+  }
+
+  .door .door-number {
+    margin-top: 1rem;
+    font-family: var(--serif);
+    font-size: var(--step-3);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .door-number span {
+    font-family: var(--sans);
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .door .textlink {
+    margin-top: 0.6rem;
+  }
+
+  .doors + .sec {
+    border-top: 0;
+  }
+
+  /* What we're working on, and Latest work: ruled lists */
+  .current-list,
+  .latest-list {
+    max-width: 46rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .current-list li,
+  .latest-list li {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: baseline;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .current-list li:first-child,
+  .latest-list li:first-child {
+    border-top: 1px solid var(--ink);
+  }
+
+  .latest-list li {
+    padding-block: 0.35rem;
+  }
+
+  .latest-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    line-height: 1.25;
+    color: var(--ink);
+    text-decoration-color: var(--rule);
+  }
+
+  .latest-list a:hover {
+    text-decoration-color: var(--accent);
+  }
+
+  .latest-meta {
+    grid-column: 2;
+    margin-top: -0.3rem;
+    padding-bottom: 0.4rem;
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .facts {
+    margin-top: var(--space-5);
+  }
+
+  .facts-main {
+    max-width: 34ch;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+}
+
+html[lang^='zh'] .page-home {
+  .hero h1 {
+    max-width: 16em;
+    font-size: var(--step-4);
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 26rem) {
+    .hero h1 {
+      font-size: var(--step-3);
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .hero h1 {
+      font-size: var(--step-5);
+    }
+  }
+
+  .hero .lead,
+  .facts-main {
+    max-width: 24em;
+    line-height: 1.7;
+  }
+
+  .current-list li,
+  .latest-list li {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+  }
+}

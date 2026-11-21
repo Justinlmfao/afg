@@ -1,0 +1,17 @@
+---
+// The Think First worksheet with numbered notes beside it. The numbers on
+// the sheet match the numbers on the notes, in order.
+import Worksheet from './Worksheet.astro';
+
+interface Props {
+  notes: string[];
+}
+const { notes } = Astro.props;
+---
+
+<div class="annotated">
+  <Worksheet pins />
+  <ol class="pins">
+    {notes.map((note) => <li>{note}</li>)}
+  </ol>
+</div>

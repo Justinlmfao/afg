@@ -1,0 +1,17 @@
+---
+// A plain list of links to the sections of a long page.
+import { getLangFromUrl, ui } from '../i18n';
+
+interface Props {
+  items: { href: string; label: string }[];
+}
+const { items } = Astro.props;
+const label = ui[getLangFromUrl(Astro.url)].onThisPage;
+---
+
+<nav class="on-this-page" aria-label={label}>
+  <p>{label}</p>
+  <ul>
+    {items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+  </ul>
+</nav>
