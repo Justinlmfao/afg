@@ -96,6 +96,8 @@ export const ui = {
     navPrimary: 'Main',
     navFooter: 'Footer',
     sending: 'Sending…',
+    formError:
+      "Sorry, your message didn't go through. Please try again, or email us at the address above.",
     shareImageAlt:
       'A tutoring session at Ho Man Tin Ling To Catholic School, beside the AI For Good Hong Kong logo.',
     onThisPage: 'On this page',
@@ -166,6 +168,7 @@ export const ui = {
     navPrimary: '主要導覽',
     navFooter: '頁尾導覽',
     sending: '傳送中…',
+    formError: '抱歉，訊息未能送出。請再試一次，或直接電郵至上面的地址。',
     shareImageAlt: '天主教領島學校的一節補習課，旁邊是 AI For Good Hong Kong 的標誌。',
     onThisPage: '本頁內容',
     now: { label: '我們現在在做的事', title: '現在', updated: '更新於' },
@@ -232,6 +235,7 @@ export const ui = {
     navPrimary: '主导航',
     navFooter: '页脚导航',
     sending: '发送中…',
+    formError: '抱歉，消息未能发出。请再试一次，或直接发电子邮件至上面的地址。',
     shareImageAlt: '天主教领岛学校的一节补习课，旁边是 AI For Good Hong Kong 的标志。',
     onThisPage: '本页内容',
     now: { label: '我们现在在做的事', title: '现在', updated: '更新于' },
