@@ -67,6 +67,18 @@
     justify-self: start;
   }
 
+  .form-error {
+    max-width: 36rem;
+    padding: 0.8rem 1rem;
+    border-left: 3px solid #b3261e;
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  .form-error[hidden] {
+    display: none;
+  }
+
   .hidden-field {
     position: absolute;
     left: -9999px;

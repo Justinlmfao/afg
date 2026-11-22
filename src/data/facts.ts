@@ -74,5 +74,10 @@ export const facts = {
 // Justin chose. Change it here and it changes everywhere.
 export const contactEmail = 'ps20153216@student.vsa.edu.hk';
 
+// Where the contact form sends messages: a free Formspree form. Messages
+// arrive by email at the address set up in that Formspree account. To use a
+// different form, change this one line.
+export const contactForm = 'https://formspree.io/f/mgaknwbr';
+
 /** True where placeholder content may be shown: `npm run dev` only. */
 export const showSamples = import.meta.env.DEV;

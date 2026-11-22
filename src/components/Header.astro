@@ -101,8 +101,8 @@ const languages = langOrder.map((code) => ({
       <nav aria-label={t.navPrimary}>
         <ul>
           {
-            links.map((link) => (
-              <li>
+            links.map((link, i) => (
+              <li style={`--i: ${i}`}>
                 <a
                   class:list={['menu-link', link.here && 'is-here']}
                   href={link.href}
@@ -115,7 +115,7 @@ const languages = langOrder.map((code) => ({
           }
         </ul>
       </nav>
-      <p class="menu-lang">
+      <p class="menu-lang" style={`--i: ${links.length}`}>
         {
           languages.map((l) => (
             <a href={l.href} lang={htmlLangs[l.code]} aria-current={l.current ? 'true' : undefined}>
@@ -139,16 +139,41 @@ const languages = langOrder.map((code) => ({
   const showTheme = () => themeButtons.forEach((b) => b.setAttribute('aria-pressed', String(isDark())));
   showTheme();
   systemDark.addEventListener('change', showTheme);
+  const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const applyTheme = (next: 'light' | 'dark') => {
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // Storage can be blocked; the choice then lasts for this page only.
+    }
+    showTheme();
+  };
+
   themeButtons.forEach((b) =>
     b.addEventListener('click', () => {
       const next = isDark() ? 'light' : 'dark';
-      root.dataset.theme = next;
-      try {
-        localStorage.setItem('theme', next);
-      } catch {
-        // Storage can be blocked; the choice then lasts for this page only.
+      // Browsers without view transitions, and people who ask for less
+      // motion, get the change at once.
+      if (!document.startViewTransition || calm.matches) {
+        applyTheme(next);
+        return;
       }
-      showTheme();
+      // Otherwise the new colours grow in a circle from the button
+      const box = b.getBoundingClientRect();
+      const x = box.left + box.width / 2;
+      const y = box.top + box.height / 2;
+      const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      const change = document.startViewTransition(() => applyTheme(next));
+      change.ready
+        .then(() => {
+          root.animate(
+            { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
+            { duration: 550, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', pseudoElement: '::view-transition-new(root)' }
+          );
+        })
+        .catch(() => {});
     })
   );
 
@@ -156,18 +181,30 @@ const languages = langOrder.map((code) => ({
   const button = document.querySelector<HTMLButtonElement>('.menu-btn');
   const menu = document.getElementById('menu');
 
+  let closing = 0;
+
+  // The menu slides down when it opens and back up before it hides
   const setOpen = (open: boolean) => {
     if (!button || !menu) return;
-    menu.hidden = !open;
+    window.clearTimeout(closing);
+    if (open) {
+      menu.hidden = false;
+      // Wait a frame so the browser draws the closed position first
+      requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add('is-open')));
+    } else if (!menu.hidden) {
+      menu.classList.remove('is-open');
+      closing = window.setTimeout(() => (menu.hidden = true), calm.matches ? 0 : 260);
+    }
     button.setAttribute('aria-expanded', String(open));
     button.setAttribute('aria-label', (open ? button.dataset.close : button.dataset.open) ?? '');
   };
 
-  button?.addEventListener('click', () => setOpen(menu?.hidden ?? false));
+  const isOpen = () => button?.getAttribute('aria-expanded') === 'true';
+  button?.addEventListener('click', () => setOpen(!isOpen()));
 
   // Escape closes the menu and puts focus back on its button
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && menu && !menu.hidden) {
+    if (event.key === 'Escape' && isOpen()) {
       setOpen(false);
       button?.focus();
     }
@@ -175,7 +212,7 @@ const languages = langOrder.map((code) => ({
 
   // So does tapping anywhere outside the header
   document.addEventListener('click', (event) => {
-    if (menu && !menu.hidden && !(event.target as Element).closest('.site-head')) setOpen(false);
+    if (isOpen() && !(event.target as Element).closest('.site-head')) setOpen(false);
   });
 
   // And widening the window past the point where the full nav appears

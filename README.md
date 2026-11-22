@@ -177,14 +177,19 @@ submission's `pdf:` field, e.g. `pdf: "/research/my-submission.pdf"`.
 
 ## Deploy (free)
 
-**Netlify (recommended — the contact form needs it):** import the repo;
-`netlify.toml` sets the build (`npm run build` → `dist`). Form submissions
-appear under **Forms** in the Netlify dashboard. After sending, visitors land
-on `/thanks/` (or `/zh/thanks/`, `/zh-hans/thanks/`); unknown addresses show
-`404.html`. Both are kept out of search results and the sitemap.
+**Cloudflare (where the site runs now):** the site is a Cloudflare Worker
+called `afg`, built from this repository. It runs `npm run build` and serves
+the `dist/` folder. aiforgoodhk.org and afghk.org point at it, with free
+HTTPS that renews itself. Unknown addresses show `404.html`; the thank-you
+pages are kept out of search results and the sitemap.
 
-**Cloudflare Pages** also serves the static output, but the Netlify form won't
-receive submissions there — swap in Formspree or rely on the published email.
+**Contact form:** messages go to Formspree, which emails them on. The form's
+address is `contactForm` in `src/data/facts.ts`. After sending, visitors land
+on `/thanks/` (or `/zh/thanks/`, `/zh-hans/thanks/`). Formspree's free plan
+takes 50 messages a month.
+
+`netlify.toml` is left from when the site ran on Netlify; it does nothing on
+Cloudflare and can be deleted once Netlify is retired.
 
 The site's domain is **aiforgoodhk.org**, set as `site:` in `astro.config.mjs`.
 Canonical URLs, the language links in each page's `<head>`, the sitemap
