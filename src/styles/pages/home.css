@@ -1,9 +1,92 @@
 /* Home page, shared by the English and Chinese versions. */
 .page-home {
-  /* "Now": one quiet line under the header */
+  /* "Now": one quiet line under the header, with a button to hide it.
+     Hiding folds the strip up (grid rows 1fr to 0fr) before it goes. */
   .now-strip {
+    display: grid;
+    grid-template-rows: 1fr;
     background: var(--surface);
     border-bottom: 1px solid var(--rule);
+    transition:
+      grid-template-rows 300ms cubic-bezier(0.65, 0, 0.35, 1),
+      opacity 200ms ease;
+  }
+
+  .now-strip[hidden] {
+    display: none;
+  }
+
+  .now-strip.is-closing {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  .now-strip-in {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .now-strip .wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .now-strip .now {
+    flex: 1;
+  }
+
+  /* A small cross, drawn like the menu button's */
+  .now-close {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-right: -12px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .now-close span {
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+
+  .now-close span::before,
+  .now-close span::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: -1px;
+    width: 16px;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    transform: rotate(45deg);
+    transition: transform 200ms ease;
+  }
+
+  .now-close span::after {
+    transform: rotate(-45deg);
+  }
+
+  .now-close:hover {
+    color: var(--ink);
+  }
+
+  .now-close:hover span::before {
+    transform: rotate(135deg);
+  }
+
+  .now-close:hover span::after {
+    transform: rotate(45deg);
   }
 
   .now-strip .now {
@@ -59,6 +142,10 @@
     margin-top: 0.6rem;
     font-size: var(--step-5);
     letter-spacing: -0.012em;
+  }
+
+  .hero-text h1:focus {
+    outline: none;
   }
 
   .hero-text .lead {

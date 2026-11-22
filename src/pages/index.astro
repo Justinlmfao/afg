@@ -3,7 +3,7 @@
 // figures, the "Now" note) come from src/data/; the rest is written here.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
-import Now from '../components/Now.astro';
+import NowStrip from '../components/NowStrip.astro';
 import FigureRow from '../components/FigureRow.astro';
 import Case from '../components/Case.astro';
 import Ledger from '../components/Ledger.astro';
@@ -38,9 +38,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
   description="AI For Good is run by students in Hong Kong. We send the government around twenty policy recommendations a year, and teach primary school children from underprivileged families, for free."
 >
   <!-- "Now": what we're working on this month, in a strip under the header -->
-  <div class="now-strip">
-    <div class="wrap"><Now /></div>
-  </div>
+  <NowStrip />
 
   <!-- Hero: the words on the left, the classroom on the right, running to
        the edge of the screen. On phones the photo comes first. -->

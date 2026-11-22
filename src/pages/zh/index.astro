@@ -5,7 +5,7 @@
 // line: Astro turns a line break into a space, which shows in Chinese.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Photo from '../../components/Photo.astro';
-import Now from '../../components/Now.astro';
+import NowStrip from '../../components/NowStrip.astro';
 import FigureRow from '../../components/FigureRow.astro';
 import Case from '../../components/Case.astro';
 import Ledger from '../../components/Ledger.astro';
@@ -40,9 +40,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
   description="AI For Good 是一個由香港學生創辦和營運的組織：我們向政府提交政策建議，也為基層家庭的小學生提供免費補習。"
 >
   <!-- "Now": what we're working on this month, in a strip under the header -->
-  <div class="now-strip">
-    <div class="wrap"><Now /></div>
-  </div>
+  <NowStrip />
 
   <!-- Hero: the words on the left, the classroom on the right, running to
        the edge of the screen. On phones the photo comes first. -->
