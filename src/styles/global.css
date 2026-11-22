@@ -714,6 +714,14 @@ details > summary:hover {
   color: var(--muted);
 }
 
+/* Switching light and dark mode: the new colours spread out in a circle
+   from the button (the script in Header.astro drives the circle). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     transition-duration: 0.001ms !important;

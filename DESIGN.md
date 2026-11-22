@@ -156,6 +156,12 @@ phrase that matters most.
   the case line.
 - No shadows. No animation on load or on scroll. Hover changes colour and
   underline thickness over 120ms.
+- Motion only answers a press, in the header:
+  - The phone menu's three stripes fold into a cross. The menu slides down,
+    and its links arrive one after another, 40ms apart.
+  - The light/dark circle turns over. The new colours then spread across the
+    page in a circle from the button, using the browser's view transitions.
+  - Anyone who asks their device for less motion gets each change at once.
 - Focus: a 3px green outline, 2px off the element (cream in the footer).
 
 ## 4. The signature: the case

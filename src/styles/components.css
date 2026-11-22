@@ -127,10 +127,26 @@
   border: 2px solid currentColor;
   border-radius: 50%;
   background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+  transition: transform 450ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* The circle turns over, so the filled half swaps sides */
+.theme-btn[aria-pressed='true'] span {
+  transform: rotate(180deg);
+}
+
+.theme-btn:active span {
+  scale: 0.85;
 }
 
 .theme-btn:hover {
   color: var(--accent);
+}
+
+/* No grey or blue flash on tap; the buttons animate instead */
+.theme-btn,
+.menu-btn {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav .theme-btn {
@@ -163,7 +179,10 @@
   height: 2px;
   background: currentColor;
   border-radius: 1px;
-  transition: transform 120ms, opacity 120ms;
+  transform-origin: center;
+  transition:
+    transform 300ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 180ms ease;
 }
 
 .menu-btn[aria-expanded='true'] .menu-bars span:nth-child(1) {
@@ -172,6 +191,7 @@
 
 .menu-btn[aria-expanded='true'] .menu-bars span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .menu-btn[aria-expanded='true'] .menu-bars span:nth-child(3) {
@@ -189,10 +209,39 @@
   padding-block: 0.25rem 1.25rem;
   background: var(--paper);
   border-bottom: 1px solid var(--ink);
+  /* Closed position: tucked up under the header and see-through. The script
+     adds .is-open a frame after showing it, so it slides down. */
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  transition:
+    opacity 220ms ease,
+    transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.menu.is-open {
+  opacity: 1;
+  transform: none;
 }
 
 .menu[hidden] {
   display: none;
+}
+
+/* The links follow one after another (--i is each link's place) */
+.menu li,
+.menu-lang {
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 200ms ease,
+    transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.menu.is-open li,
+.menu.is-open .menu-lang {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(60ms + var(--i, 0) * 40ms);
 }
 
 .menu ul {
