@@ -27,6 +27,9 @@ const modules = (await getCollection('programs'))
   .filter((m) => !m.data.draft)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
+// Photographs for the proposal cards, in order. They show our own work in
+// class, so they are decorative here (empty alt text).
+const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
 ---
 
 <BaseLayout
@@ -34,44 +37,48 @@ const modules = (await getCollection('programs'))
   pageClass="page-home"
   description="AI For Good is run by students in Hong Kong. We send the government around twenty policy recommendations a year, and teach primary school children from underprivileged families, for free."
 >
-  <div class="wrap hero">
-    <div class="hero-grid">
-      <div class="hero-head">
-        <p class="kicker-date">Student-led policy research</p>
-        <h1>Hong Kong students writing AI policy, and teaching the children it affects.</h1>
-      </div>
-      <div>
-        <p class="lead">
-          We're a group of students in Hong Kong. We study how AI and economic policy are changing the city, and send around {f.recsPerYear.word.en} recommendations a year to the government. We also teach AI and economics, for free, to primary school children from underprivileged families.
-        </p>
-        <div class="actions">
-          <a class="btn" href="/policy">Read our policy work</a>
-          <a class="textlink" href="/teaching">See our teaching</a>
-        </div>
-      </div>
-      <Now />
-    </div>
-    <FigureRow
-      items={[
-        { figure: f.recsPerYear.value, label: 'recommendations a year' },
-        { figure: f.children.value, label: 'children taught' },
-        { figure: f.schools.value, label: 'partner schools' },
-        { figure: f.tutors.value, label: 'student tutors trained' },
-      ]}
-    />
+  <!-- "Now": what we're working on this month, in a strip under the header -->
+  <div class="now-strip">
+    <div class="wrap"><Now /></div>
   </div>
 
-  <figure class="photo">
-    <Photo
-      name="teaching-classroom.jpg"
-      alt="A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer."
-      sizes="100vw"
-      position="50% 38%"
-      positionPhone="68% 40%"
-      eager
+  <!-- Hero: the words on the left, the classroom on the right, running to
+       the edge of the screen. On phones the photo comes first. -->
+  <div class="hero-split">
+    <div class="hero-text">
+      <p class="kicker-date">Student-led policy research</p>
+      <h1>Hong Kong students writing AI policy, and teaching the children it affects.</h1>
+      <p class="lead">
+        We're a group of students in Hong Kong. We study how AI and economic policy are changing the city, and send around {f.recsPerYear.word.en} recommendations a year to the government. We also teach AI and economics, for free, to primary school children from underprivileged families.
+      </p>
+      <div class="actions">
+        <a class="btn" href="/policy">Read our policy work</a>
+        <a class="textlink" href="/teaching">See our teaching</a>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <Photo
+        name="teaching-classroom.jpg"
+        alt="A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer."
+        sizes="(min-width: 60rem) 50vw, 100vw"
+        position="58% 40%"
+        positionPhone="68% 40%"
+        eager
+      />
+      <figcaption>A tutoring session at Ho Man Tin Ling To Catholic School.</figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap hero-figures">
+    <FigureRow
+    items={[
+      { figure: f.recsPerYear.value, label: 'recommendations a year' },
+      { figure: f.children.value, label: 'children taught' },
+      { figure: f.schools.value, label: 'partner schools' },
+      { figure: f.tutors.value, label: 'student tutors trained' },
+    ]}
     />
-    <figcaption class="wrap">A tutoring session at Ho Man Tin Ling To Catholic School.</figcaption>
-  </figure>
+  </div>
 
   <!-- The two halves of the work, each in its own colour: what it is on the
        pale ground, and the one outcome it rests on in the solid band. -->
@@ -162,6 +169,16 @@ const modules = (await getCollection('programs'))
     </div>
   </section>
 
+  <figure class="photo photo-break">
+    <Photo
+      name="vsa-2025-26-cohort.jpg"
+      alt="The 2025/26 group of students and tutors together in the classroom."
+      sizes="100vw"
+      position="50% 45%"
+    />
+    <figcaption class="wrap">Our 2025–26 students and tutors, at our community sessions with Victoria Shanghai Academy.</figcaption>
+  </figure>
+
   <section class="sec tone-policy washed" aria-labelledby="policy-h">
     <div class="wrap rail">
       <div class="rail-head">
@@ -224,35 +241,45 @@ const modules = (await getCollection('programs'))
 
   <!-- Latest work, straight from the collections. The flagship leads. -->
   <section class="sec" aria-labelledby="latest-h">
-    <div class="wrap rail">
-      <div class="rail-head">
+    <div class="wrap">
+      <div class="sec-head">
         <h2 id="latest-h">Latest work</h2>
       </div>
-      <ul class="latest-list">
-        <li class="tone-policy">
-          <span class="tone-tag">Flagship</span>
-          <a href="/policy#ai-for-all">AI for All: {f.aiForAll.amount.en} in the {f.aiForAll.budget} Budget</a>
-          <span class="latest-meta">2024–2026</span>
-        </li>
-        {
-          proposals.map((s) => (
-            <li class="tone-policy">
-              <span class="tone-tag">Proposal</span>
-              <a href={submissionHref(s, lang)}>{s.title}</a>
-              <span class="latest-meta">{formatDate(s.date, lang, 'long')}</span>
-            </li>
-          ))
-        }
-        {
-          modules.map((m) => (
-            <li class="tone-teaching">
-              <span class="tone-tag">Module</span>
-              <a href="/teaching#modules">{m.data.title}</a>
-              <span class="latest-meta">Teaching</span>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="latest">
+        <ul class="latest-cards">
+          <li class="tone-policy">
+            <a class="card" href="/policy#ai-for-all">
+              <Photo name="vsa-2025-26-uses.jpg" alt="" sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 100vw" widths={[480, 800]} position="50% 35%" />
+              <span class="tone-tag">Flagship</span>
+              <span class="card-title">AI for All: {f.aiForAll.amount.en} in the {f.aiForAll.budget} Budget</span>
+              <span class="latest-meta">2024–2026</span>
+            </a>
+          </li>
+          {
+            proposals.map((s, i) => (
+              <li class="tone-policy">
+                <a class="card" href={submissionHref(s, lang)}>
+                  <Photo name={cardPhotos[i % cardPhotos.length]} alt="" sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 100vw" widths={[480, 800]} />
+                  <span class="tone-tag">Proposal</span>
+                  <span class="card-title">{s.title}</span>
+                  <span class="latest-meta">{formatDate(s.date, lang, 'long')}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <ul class="latest-modules">
+          {
+            modules.map((m) => (
+              <li class="tone-teaching">
+                <span class="tone-tag">Module</span>
+                <a href="/teaching#modules">{m.data.title}</a>
+                <span class="latest-meta">Teaching</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 

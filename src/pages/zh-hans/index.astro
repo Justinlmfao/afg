@@ -31,6 +31,9 @@ const modules = (await getCollection('programs'))
   .filter((m) => !m.data.draft)
   .sort((a, b) => a.data.order - b.data.order)
   .slice(0, 3);
+// Photographs for the proposal cards, in order. They show our own work in
+// class, so they are decorative here (empty alt text).
+const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
 ---
 
 <BaseLayout
@@ -38,44 +41,48 @@ const modules = (await getCollection('programs'))
   pageClass="page-home"
   description="AI For Good 是一个由香港学生创办和运营的组织：我们向政府提交政策建议，也为基层家庭的小学生提供免费补习。"
 >
-  <div class="wrap hero">
-    <div class="hero-grid">
-      <div class="hero-head">
-        <p class="kicker-date">学生主导的政策研究</p>
-        <h1>香港学生撰写<wbr />人工智能政策建议，<wbr />也为受影响的孩子<wbr />上课。</h1>
-      </div>
-      <div>
-        <p class="lead">
-          我们是一群香港学生，研究人工智能和经济政策如何改变这座城市，每年向政府提交约{f.recsPerYear.word[lang]}项建议。我们也为基层家庭的小学生免费教授人工智能和经济知识。
-        </p>
-        <div class="actions">
-          <a class="btn" href="/zh-hans/policy">阅读我们的政策研究</a>
-          <a class="textlink" href="/zh-hans/teaching">看看我们的教学</a>
-        </div>
-      </div>
-      <Now />
-    </div>
-    <FigureRow
-      items={[
-        { figure: f.recsPerYear.value, label: '每年提交的建议' },
-        { figure: f.children.value, label: '教过的孩子' },
-        { figure: f.schools.value, label: '合作学校' },
-        { figure: f.tutors.value, label: '受训学生导师' },
-      ]}
-    />
+  <!-- "Now": what we're working on this month, in a strip under the header -->
+  <div class="now-strip">
+    <div class="wrap"><Now /></div>
   </div>
 
-  <figure class="photo">
-    <Photo
-      name="teaching-classroom.jpg"
-      alt="导师在天主教领岛学校上课，一名学生举手回答。"
-      sizes="100vw"
-      position="50% 38%"
-      positionPhone="68% 40%"
-      eager
+  <!-- Hero: the words on the left, the classroom on the right, running to
+       the edge of the screen. On phones the photo comes first. -->
+  <div class="hero-split">
+    <div class="hero-text">
+      <p class="kicker-date">学生主导的政策研究</p>
+      <h1>香港学生撰写<wbr />人工智能政策建议，<wbr />也为受影响的孩子<wbr />上课。</h1>
+      <p class="lead">
+        我们是一群香港学生，研究人工智能和经济政策如何改变这座城市，每年向政府提交约{f.recsPerYear.word[lang]}项建议。我们也为基层家庭的小学生免费教授人工智能和经济知识。
+      </p>
+      <div class="actions">
+        <a class="btn" href="/zh-hans/policy">阅读我们的政策研究</a>
+        <a class="textlink" href="/zh-hans/teaching">看看我们的教学</a>
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <Photo
+        name="teaching-classroom.jpg"
+        alt="导师在天主教领岛学校上课，一名学生举手回答。"
+        sizes="(min-width: 60rem) 50vw, 100vw"
+        position="58% 40%"
+        positionPhone="68% 40%"
+        eager
+      />
+      <figcaption>天主教领岛学校的一节补习课。</figcaption>
+    </figure>
+  </div>
+
+  <div class="wrap hero-figures">
+    <FigureRow
+    items={[
+      { figure: f.recsPerYear.value, label: '每年提交的建议' },
+      { figure: f.children.value, label: '教过的孩子' },
+      { figure: f.schools.value, label: '合作学校' },
+      { figure: f.tutors.value, label: '受训学生导师' },
+    ]}
     />
-    <figcaption class="wrap">天主教领岛学校的一节补习课。</figcaption>
-  </figure>
+  </div>
 
   <div class="halves doors">
     <section class="half-col tone-policy" aria-labelledby="door-policy">
@@ -145,6 +152,16 @@ const modules = (await getCollection('programs'))
     </div>
   </section>
 
+  <figure class="photo photo-break">
+    <Photo
+      name="vsa-2025-26-cohort.jpg"
+      alt="2025/26 年度的学生与导师在教室内合照。"
+      sizes="100vw"
+      position="50% 45%"
+    />
+    <figcaption class="wrap">2025–26 年度的学生与导师，摄于我们与沪江维多利亚学校合办的社区课程。</figcaption>
+  </figure>
+
   <section class="sec tone-policy washed" aria-labelledby="policy-h">
     <div class="wrap rail">
       <div class="rail-head">
@@ -205,35 +222,45 @@ const modules = (await getCollection('programs'))
 
   <!-- Latest work, straight from the collections. The flagship leads. -->
   <section class="sec" aria-labelledby="latest-h">
-    <div class="wrap rail">
-      <div class="rail-head">
+    <div class="wrap">
+      <div class="sec-head">
         <h2 id="latest-h">最新工作</h2>
       </div>
-      <ul class="latest-list">
-        <li class="tone-policy">
-          <span class="tone-tag">主要项目</span>
-          <a href="/zh-hans/policy#ai-for-all">AI for All：{f.aiForAll.budget} 年度财政预算案拨款{f.aiForAll.amount[lang]}</a>
-          <span class="latest-meta">2024–2026 年</span>
-        </li>
-        {
-          proposals.map((s) => (
-            <li class="tone-policy">
-              <span class="tone-tag">提案</span>
-              <a href={submissionHref(s, lang)}>{s.title}</a>
-              <span class="latest-meta">{formatDate(s.date, lang, 'long')}</span>
-            </li>
-          ))
-        }
-        {
-          modules.map((m) => (
-            <li class="tone-teaching">
-              <span class="tone-tag">单元</span>
-              <a href="/zh-hans/teaching#modules">{m.data.title_hans ?? m.data.title}</a>
-              <span class="latest-meta">教学</span>
-            </li>
-          ))
-        }
-      </ul>
+      <div class="latest">
+        <ul class="latest-cards">
+          <li class="tone-policy">
+            <a class="card" href="/zh-hans/policy#ai-for-all">
+              <Photo name="vsa-2025-26-uses.jpg" alt="" sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 100vw" widths={[480, 800]} position="50% 35%" />
+              <span class="tone-tag">主要项目</span>
+              <span class="card-title">AI for All：{f.aiForAll.budget} 年度财政预算案拨款{f.aiForAll.amount[lang]}</span>
+              <span class="latest-meta">2024–2026 年</span>
+            </a>
+          </li>
+          {
+            proposals.map((s, i) => (
+              <li class="tone-policy">
+                <a class="card" href={submissionHref(s, lang)}>
+                  <Photo name={cardPhotos[i % cardPhotos.length]} alt="" sizes="(min-width: 60rem) 22rem, (min-width: 40rem) 45vw, 100vw" widths={[480, 800]} />
+                  <span class="tone-tag">提案</span>
+                  <span class="card-title">{s.title}</span>
+                  <span class="latest-meta">{formatDate(s.date, lang, 'long')}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <ul class="latest-modules">
+          {
+            modules.map((m) => (
+              <li class="tone-teaching">
+                <span class="tone-tag">单元</span>
+                <a href="/zh-hans/teaching#modules">{m.data.title_hans ?? m.data.title}</a>
+                <span class="latest-meta">教学</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
     </div>
   </section>
 

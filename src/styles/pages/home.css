@@ -1,48 +1,127 @@
 /* Home page, shared by the English and Chinese versions. */
 .page-home {
-  /* Hero: the heading across the full width, then the standfirst and
-     actions in eight columns with the "Now" note in three. */
-  .hero {
-    padding-block: var(--space-7) var(--space-5);
+  /* "Now": one quiet line under the header */
+  .now-strip {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
   }
 
-  .hero-grid {
+  .now-strip .now {
+    display: block;
+    max-width: none;
+    line-height: 1.45;
+    padding-block: 0.6rem;
+    border-top: 0;
+  }
+
+  .now-strip .now b,
+  .now-strip .now time {
+    display: inline;
+    margin: 0 0.6rem 0 0;
+  }
+
+  .now-strip .now time {
+    margin: 0 0 0 0.6rem;
+    white-space: nowrap;
+  }
+
+  /* Hero: words on the left, the classroom photo on the right running to the
+     edge of the screen. The words line up with the page container. */
+  .hero-split {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-4);
   }
 
-  .hero h1 {
+  .hero-photo {
+    order: -1;
+    margin: 0;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: var(--pos-phone, var(--pos, 50% 50%));
+  }
+
+  .hero-photo figcaption {
+    padding: 0.6rem var(--gutter) 0;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  .hero-text {
+    padding: var(--space-5) var(--gutter) 0;
+  }
+
+  .hero-text h1 {
     max-width: 17ch;
+    margin-top: 0.6rem;
     font-size: var(--step-5);
     letter-spacing: -0.012em;
   }
 
-  .hero .lead {
+  .hero-text .lead {
     max-width: 40ch;
+    margin-top: var(--space-4);
   }
 
   @media (min-width: 60rem) {
-    .hero-grid {
-      grid-template-columns: minmax(0, 8fr) minmax(0, 3fr);
-      column-gap: clamp(2rem, 6vw, 6rem);
+    /* Three columns: the page margin (so the words start where the logo
+       does), the words up to the middle, and the photo from the middle to
+       the edge. Percentages here are of the full width. */
+    .hero-split {
+      --edge: max(var(--gutter), calc((100% - var(--wide)) / 2 + var(--gutter)));
+      grid-template-columns: var(--edge) minmax(0, calc(50% - var(--edge))) minmax(0, 50%);
+      min-height: min(44rem, calc(100svh - var(--header-h) - 3rem));
     }
 
-    .hero-head {
-      grid-column: 1 / -1;
+    .hero-text h1 {
+      font-size: clamp(2.6rem, 2rem + 1.6vw, 3.4rem);
     }
 
-    .now {
-      align-self: start;
-      margin-top: 0.35rem;
+    .hero-text {
+      grid-column: 2;
+      align-self: center;
+      padding: var(--space-6) clamp(2rem, 4vw, 4.5rem) var(--space-6) 0;
+    }
+
+    .hero-photo {
+      grid-column: 3;
+      grid-row: 1;
+      order: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-photo picture {
+      flex: 1;
+      display: block;
+      min-height: 0;
+    }
+
+    .hero-photo img {
+      height: 100%;
+      aspect-ratio: auto;
+      object-position: var(--pos, 50% 50%);
+    }
+
+    .hero-photo figcaption {
+      padding-inline: 0 var(--gutter);
+      padding-bottom: 0.6rem;
+      text-align: right;
     }
   }
 
-  .hero-head .kicker-date {
-    margin-bottom: 0.6rem;
+  .hero-figures {
+    padding-block: var(--space-5) var(--space-6);
   }
 
-  .hero .figures dt {
+  .hero-figures .figures {
+    margin-top: 0;
+  }
+
+  .hero-figures .figures dt {
     font-variant-numeric: tabular-nums;
   }
 
@@ -75,21 +154,20 @@
     margin-top: 0.6rem;
   }
 
-  .doors + .sec {
+  .doors + .sec,
+  .hero-figures + .doors {
     border-top: 0;
   }
 
-  /* What we're working on, and Latest work: ruled lists */
+  /* What we're working on: a ruled list across the whole column */
   .current-list,
-  .latest-list {
-    max-width: 46rem;
+  .latest-modules {
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .current-list li,
-  .latest-list li {
+  .current-list li {
     display: grid;
     grid-template-columns: 5.5rem minmax(0, 1fr);
     column-gap: 1rem;
@@ -98,16 +176,102 @@
     border-bottom: 1px solid var(--rule);
   }
 
-  .current-list li:first-child,
-  .latest-list li:first-child {
+  .current-list li:first-child {
     border-top: 1px solid var(--ink);
   }
 
-  .latest-list li {
-    padding-block: 0.35rem;
+  /* Latest work: the policy pieces as photo cards, three across, then the
+     teaching modules in a row beneath. Ruled above, never boxed. */
+  .latest-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .latest-list a {
+  @media (min-width: 40rem) {
+    .latest-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 60rem) {
+    .latest-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: var(--pos, 50% 50%);
+    transition: opacity 160ms;
+  }
+
+  .card .tone-tag {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 2px solid var(--accent);
+  }
+
+  .card-title {
+    margin-top: 0.35rem;
+    font-family: var(--serif);
+    font-size: var(--step-2);
+    font-weight: 500;
+    line-height: 1.2;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color 120ms;
+  }
+
+  .card:hover .card-title,
+  .card:focus-visible .card-title {
+    text-decoration-color: var(--accent);
+  }
+
+  .card:hover img {
+    opacity: 0.9;
+  }
+
+  .card .latest-meta {
+    margin-top: 0.5rem;
+  }
+
+  .latest-meta {
+    font-size: var(--step--1);
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .latest-modules {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: var(--space-5);
+    border-top: 1px solid var(--ink);
+  }
+
+  .latest-modules li {
+    display: flex;
+    flex-direction: column;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .latest-modules a {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -118,17 +282,30 @@
     text-decoration-color: var(--rule);
   }
 
-  .latest-list a:hover {
+  .latest-modules a:hover {
     text-decoration-color: var(--accent);
   }
 
-  .latest-meta {
-    grid-column: 2;
-    margin-top: -0.3rem;
-    padding-bottom: 0.4rem;
-    font-size: var(--step--1);
-    font-variant-numeric: tabular-nums;
-    color: var(--muted);
+  @media (min-width: 40rem) {
+    .latest-modules {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-4);
+    }
+
+    .latest-modules li {
+      border-bottom: 0;
+    }
+  }
+
+  /* The photograph between sections */
+  .photo-break img {
+    aspect-ratio: 21 / 8;
+  }
+
+  @media (max-width: 40rem) {
+    .photo-break img {
+      aspect-ratio: 3 / 2;
+    }
   }
 
   .facts {
@@ -145,32 +322,31 @@
 }
 
 html[lang^='zh'] .page-home {
-  .hero h1 {
+  .hero-text h1 {
     max-width: 16em;
     font-size: var(--step-4);
     letter-spacing: 0;
   }
 
   @media (max-width: 26rem) {
-    .hero h1 {
+    .hero-text h1 {
       font-size: var(--step-3);
     }
   }
 
   @media (min-width: 60rem) {
-    .hero h1 {
-      font-size: var(--step-5);
+    .hero-text h1 {
+      font-size: var(--step-4);
     }
   }
 
-  .hero .lead,
+  .hero-text .lead,
   .facts-main {
     max-width: 24em;
     line-height: 1.7;
   }
 
-  .current-list li,
-  .latest-list li {
+  .current-list li {
     grid-template-columns: 4.5rem minmax(0, 1fr);
   }
 }
