@@ -65,7 +65,7 @@
   --space-3: 1rem;
   --space-4: 1.5rem;
   --space-5: clamp(2rem, 1.6rem + 1.8vw, 3rem);    /* inside sections */
-  --space-6: clamp(3rem, 2.4rem + 2.7vw, 4.5rem);  /* between sections */
+  --space-6: clamp(3.5rem, 2.6rem + 3.6vw, 6rem);  /* between sections */
   --space-7: clamp(4rem, 3rem + 4.5vw, 6.5rem);    /* top of page */
   --wide: 74rem;    /* page container */
   --text-w: 36rem;  /* reading column, about 65 characters */
@@ -243,7 +243,7 @@ html {
 body {
   background: var(--paper);
   color: var(--text);
-  font: 400 var(--step-0) / 1.6 var(--sans);
+  font: 400 var(--step-0) / 1.65 var(--sans);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   display: flex;
@@ -446,6 +446,14 @@ html[lang^='zh'] .lead {
   border-top: 1px solid var(--rule);
 }
 
+/* A change of background already separates two sections; no line too */
+.sec.washed,
+.washed + .sec,
+.sec.band,
+.photo + .sec {
+  border-top: 0;
+}
+
 .sec-first {
   border-top: 0;
   padding-top: 0;
@@ -512,7 +520,7 @@ html[lang^='zh'] .lead {
 }
 
 .prose > * + * {
-  margin-top: 1em;
+  margin-top: 1.15em;
 }
 
 .prose > h3 {

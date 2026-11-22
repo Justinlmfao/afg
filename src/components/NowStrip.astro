@@ -1,0 +1,50 @@
+---
+// The "Now" note as a strip under the header, with a button to hide it.
+// Hiding is remembered against the note's date (facts.now.updated), so when
+// the note is updated it shows again for everyone.
+import Now from './Now.astro';
+import { facts } from '../data/facts';
+import { getLangFromUrl, ui } from '../i18n';
+
+const t = ui[getLangFromUrl(Astro.url)];
+---
+
+<div class="now-strip" data-updated={facts.now.updated}>
+  <div class="now-strip-in">
+    <div class="wrap">
+      <Now />
+      <button class="now-close" type="button" aria-label={t.nowClose}>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</div>
+<script is:inline>
+  // Runs before the strip is drawn, so a hidden note never flashes up
+  (function () {
+    var strip = document.currentScript.previousElementSibling;
+    try {
+      if (localStorage.getItem('now-hidden') === strip.dataset.updated) strip.hidden = true;
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  // The button folds the strip away, then removes it and remembers that
+  const strip = document.querySelector<HTMLElement>('.now-strip');
+  strip?.querySelector('.now-close')?.addEventListener('click', () => {
+    try {
+      localStorage.setItem('now-hidden', strip.dataset.updated ?? '');
+    } catch {
+      // Storage can be blocked; the note then stays hidden on this page only
+    }
+    strip.classList.add('is-closing');
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.setTimeout(() => (strip.hidden = true), calm ? 0 : 300);
+    // Keyboard focus would otherwise vanish with the button; move it to the
+    // page's heading instead
+    const heading = document.querySelector<HTMLElement>('main h1');
+    heading?.setAttribute('tabindex', '-1');
+    heading?.focus({ preventScroll: true });
+  });
+</script>
