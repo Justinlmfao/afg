@@ -44,31 +44,32 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
   <!-- "Now": what we're working on this month, in a strip under the header -->
   <NowStrip />
 
-  <!-- Hero: the words on the left, the classroom on the right, running to
-       the edge of the screen. On phones the photo comes first. -->
-  <div class="hero-split">
-    <div class="hero-text">
-      <p class="kicker-date">学生主导的政策研究</p>
-      <h1>香港学生撰写<wbr />人工智能政策建议，<wbr />也为受影响的孩子<wbr />上课。</h1>
-      <p class="lead">
-        我们是一群香港学生，研究人工智能和经济政策如何改变这座城市，每年向政府提交约{f.recsPerYear.word[lang]}项建议。我们也为基层家庭的小学生免费教授人工智能和经济知识。
-      </p>
-      <div class="actions">
-        <a class="btn" href="/zh-hans/policy">阅读我们的政策研究</a>
-        <a class="textlink" href="/zh-hans/teaching">看看我们的教学</a>
-      </div>
-    </div>
+  <!-- Hero: the classroom photo runs to the right edge of the screen and the
+       words sit on a paper panel over its top-left corner. On phones the
+       panel overlaps the bottom of the photo instead. The hand-drawn marks
+       (.drawn-under, .drawn-circle) are the only pencil colour on the page. -->
+  <div class="hero-stage">
     <figure class="hero-photo">
       <Photo
         name="teaching-classroom.jpg"
         alt="导师在天主教领岛学校上课，一名学生举手回答。"
-        sizes="(min-width: 60rem) 50vw, 100vw"
-        position="58% 40%"
+        sizes="(min-width: 60rem) 75vw, 100vw"
+        position="62% 45%"
         positionPhone="68% 40%"
         eager
       />
       <figcaption>天主教领岛学校的一节补习课。</figcaption>
     </figure>
+    <div class="hero-text">
+      <h1>我们<span class="drawn-under">免费</span>教香港的孩子，<wbr />再把在教室看到的<wbr />告诉政府。</h1>
+      <p class="lead">2024 年，我们在一些没有人工智能课堂、也没有资源开办的学校教书。2025 年 8 月，我们把所见写进施政报告意见书。{f.aiForAll.budget} 年度财政预算案拨款<span class="drawn-circle">{f.aiForAll.amount[lang]}</span>予 AI for All，正是我们提出的那类计划。</p>
+      <p class="hero-sub">我们有超过 35 名学生成员，研究人工智能和经济政策如何改变这座城市，每年向政府提交约{f.recsPerYear.word[lang]}项建议，也为基层家庭的小学生免费教授人工智能和经济知识。</p>
+      <div class="actions">
+        <a class="btn" href="/zh-hans/policy">看看我们向政府说了什么</a>
+        <a class="textlink" href="/zh-hans/teaching/sample-lesson">试上我们的一课</a>
+      </div>
+    </div>
+    <p class="hand-note">我们的导师自己也还是中学生。</p>
   </div>
 
   <div class="wrap hero-figures">
@@ -88,7 +89,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <h2 id="door-policy">政策研究</h2>
         <p>我们向香港政府提交书面建议，自 2024 年起每一轮施政报告和财政预算案咨询都有参与。</p>
         <p class="door-number">{f.recsPerYear.value} <span>每年提交的建议</span></p>
-        <a class="textlink" href="/zh-hans/policy">阅读我们的政策研究</a>
+        <a class="textlink" href="/zh-hans/policy">我们提交过的所有意见书</a>
       </div>
       <div class="half band">
         <p class="proof-figure">HK$50M</p>
@@ -100,7 +101,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <h2 id="door-teaching">教学计划</h2>
         <p>由我们亲自培训的学生导师，在七所学校为小学生提供免费补习。</p>
         <p class="door-number">{f.children.value} <span>教过的孩子</span></p>
-        <a class="textlink" href="/zh-hans/teaching">看看我们的教学</a>
+        <a class="textlink" href="/zh-hans/teaching">我们怎样上课</a>
       </div>
       <div class="half band">
         <p class="proof-figure">{f.bandUp.value}{f.bandUp.unit}</p>
@@ -187,6 +188,11 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
           { name: '解释', text: '关掉人工智能，用自己的话解释。' },
         ]}
       />
+      <!-- A real line from one of our tutors (in full on the Teaching page) -->
+      <figure class="home-quote">
+        <blockquote><p>他们从来不缺好奇心，缺的是机会。</p></blockquote>
+        <figcaption>我们的一位导师，在天主教领岛学校上完课后. <a href="/zh-hans/teaching#a-moment">完整的故事</a></figcaption>
+      </figure>
       <Gallery
         photos={[
           {

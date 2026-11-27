@@ -108,15 +108,16 @@
     white-space: nowrap;
   }
 
-  /* Hero: words on the left, the classroom photo on the right running to the
-     edge of the screen. The words line up with the page container. */
-  .hero-split {
+  /* Hero: the classroom photo across the full width, with the words on a
+     paper panel that overlaps its bottom-left edge and carries on below.
+     The panel's text starts where the logo does. */
+  .hero-stage {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-photo {
-    order: -1;
+    position: relative;
     margin: 0;
   }
 
@@ -127,20 +128,24 @@
     object-position: var(--pos-phone, var(--pos, 50% 50%));
   }
 
+  /* On phones the caption sits under the photo; on wider screens it moves
+     onto the photo's bottom-right corner, on a strip of paper */
   .hero-photo figcaption {
     padding: 0.6rem var(--gutter) 0;
     font-size: var(--step--1);
+    line-height: 1.35;
     color: var(--muted);
   }
 
   .hero-text {
-    padding: var(--space-5) var(--gutter) 0;
+    position: relative;
+    padding: var(--space-4) var(--gutter) 0;
+    background: var(--paper);
   }
 
   .hero-text h1 {
-    max-width: 17ch;
-    margin-top: 0.6rem;
-    font-size: var(--step-5);
+    max-width: 18ch;
+    font-size: var(--step-4);
     letter-spacing: -0.012em;
   }
 
@@ -149,54 +154,72 @@
   }
 
   .hero-text .lead {
-    max-width: 40ch;
+    max-width: 42ch;
+    margin-top: var(--space-4);
+    color: var(--ink);
+  }
+
+  .hero-sub {
+    max-width: 52ch;
+    margin-top: 1rem;
+  }
+
+  .hero-text .actions {
     margin-top: var(--space-4);
   }
 
+  .hero-stage .hand-note {
+    justify-self: end;
+    margin: var(--space-4) var(--gutter) 0 0;
+    max-width: 18rem;
+    text-align: right;
+  }
+
   @media (min-width: 60rem) {
-    /* Three columns: the page margin (so the words start where the logo
-       does), the words up to the middle, and the photo from the middle to
-       the edge. Percentages here are of the full width. */
-    .hero-split {
+    .hero-stage {
       --edge: max(var(--gutter), calc((100% - var(--wide)) / 2 + var(--gutter)));
-      grid-template-columns: var(--edge) minmax(0, calc(50% - var(--edge))) minmax(0, 50%);
-      min-height: min(44rem, calc(100svh - var(--header-h) - 3rem));
-    }
-
-    .hero-text h1 {
-      font-size: clamp(2.6rem, 2rem + 1.6vw, 3.4rem);
-    }
-
-    .hero-text {
-      grid-column: 2;
-      align-self: center;
-      padding: var(--space-6) clamp(2rem, 4vw, 4.5rem) var(--space-6) 0;
+      grid-template-columns: var(--edge) minmax(0, 41rem) minmax(0, 1fr);
+      grid-template-rows: auto 9rem auto;
     }
 
     .hero-photo {
-      grid-column: 3;
-      grid-row: 1;
-      order: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .hero-photo picture {
-      flex: 1;
-      display: block;
-      min-height: 0;
+      grid-column: 1 / -1;
+      grid-row: 1 / 3;
     }
 
     .hero-photo img {
-      height: 100%;
+      height: clamp(26rem, 60svh, 42rem);
       aspect-ratio: auto;
       object-position: var(--pos, 50% 50%);
     }
 
     .hero-photo figcaption {
-      padding-inline: 0 var(--gutter);
-      padding-bottom: 0.6rem;
-      text-align: right;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      max-width: 40%;
+      padding: 0.4rem var(--gutter) 0.45rem 0.9rem;
+      background: var(--paper);
+    }
+
+    .hero-text {
+      grid-column: 2;
+      grid-row: 2 / 4;
+      align-self: start;
+      margin: 0 0 0 -2.5rem;
+      padding: 2.5rem clamp(2rem, 3vw, 3rem) 0 2.5rem;
+    }
+
+    .hero-text h1 {
+      max-width: none;
+      font-size: clamp(2.6rem, 2rem + 1.6vw, 3.5rem);
+    }
+
+    .hero-stage .hand-note {
+      grid-column: 3;
+      grid-row: 3;
+      align-self: start;
+      margin-top: 4.25rem;
     }
   }
 
@@ -278,15 +301,34 @@
     list-style: none;
   }
 
+  /* The flagship takes the big space; the two proposals stack beside it */
   @media (min-width: 40rem) {
     .latest-cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .latest-cards > li:first-child {
+      grid-column: 1 / -1;
     }
   }
 
   @media (min-width: 60rem) {
     .latest-cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+      column-gap: var(--space-5);
+    }
+
+    .latest-cards > li:first-child {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    .latest-cards > li:first-child img {
+      aspect-ratio: 4 / 3;
+    }
+
+    .latest-cards > li:first-child .card-title {
+      font-size: var(--step-3);
     }
   }
 
@@ -395,6 +437,37 @@
     }
   }
 
+  /* One real line from a tutor, set large, with a pencil quotation mark */
+  .home-quote {
+    max-width: 44rem;
+    margin: var(--space-5) 0;
+  }
+
+  .home-quote blockquote p {
+    font-family: var(--serif);
+    font-size: var(--step-3);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+
+  .home-quote blockquote p::before {
+    content: '\201C';
+    display: block;
+    height: 0.55em;
+    margin-bottom: 0.1em;
+    font-family: var(--hand);
+    font-size: 2.2em;
+    line-height: 1;
+    color: var(--pencil);
+  }
+
+  .home-quote figcaption {
+    margin-top: 0.8rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
   .facts {
     margin-top: var(--space-5);
   }
@@ -409,6 +482,11 @@
 }
 
 html[lang^='zh'] .page-home {
+  .home-quote blockquote p {
+    font-size: var(--step-2);
+    line-height: 1.5;
+  }
+
   .hero-text h1 {
     max-width: 16em;
     font-size: var(--step-4);

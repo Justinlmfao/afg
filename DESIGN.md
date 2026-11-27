@@ -156,6 +156,14 @@ phrase that matters most.
   the case line.
 - No shadows. No animation on load or on scroll. Hover changes colour and
   underline thickness over 120ms.
+- One pencil colour (`--pencil`) for the few hand-drawn things on a page:
+  - an underline under a phrase (`.drawn-under`) and a ring around a figure
+    (`.drawn-circle`), at most one of each per page;
+  - short handwritten notes (`.hand-note`), in Caveat for English and the
+    serif for Chinese.
+  These are deliberately a little imperfect. Keep them rare, or they stop
+  reading as handwritten.
+- No eyebrow labels above headlines.
 - Motion only answers a press, in the header:
   - The phone menu's three stripes fold into a cross. The menu slides down,
     and its links arrive one after another, 40ms apart.
