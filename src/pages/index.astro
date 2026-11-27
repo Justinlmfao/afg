@@ -40,31 +40,32 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
   <!-- "Now": what we're working on this month, in a strip under the header -->
   <NowStrip />
 
-  <!-- Hero: the words on the left, the classroom on the right, running to
-       the edge of the screen. On phones the photo comes first. -->
-  <div class="hero-split">
-    <div class="hero-text">
-      <p class="kicker-date">Student-led policy research</p>
-      <h1>Hong Kong students writing AI policy, and teaching the children it affects.</h1>
-      <p class="lead">
-        We're a group of students in Hong Kong. We study how AI and economic policy are changing the city, and send around {f.recsPerYear.word.en} recommendations a year to the government. We also teach AI and economics, for free, to primary school children from underprivileged families.
-      </p>
-      <div class="actions">
-        <a class="btn" href="/policy">Read our policy work</a>
-        <a class="textlink" href="/teaching">See our teaching</a>
-      </div>
-    </div>
+  <!-- Hero: the classroom photo runs to the right edge of the screen and the
+       words sit on a paper panel over its top-left corner. On phones the
+       panel overlaps the bottom of the photo instead. The hand-drawn marks
+       (.drawn-under, .drawn-circle) are the only pencil colour on the page. -->
+  <div class="hero-stage">
     <figure class="hero-photo">
       <Photo
         name="teaching-classroom.jpg"
         alt="A tutor leads a session at Ho Man Tin Ling To Catholic School while a pupil raises her hand to answer."
-        sizes="(min-width: 60rem) 50vw, 100vw"
-        position="58% 40%"
+        sizes="(min-width: 60rem) 75vw, 100vw"
+        position="62% 45%"
         positionPhone="68% 40%"
         eager
       />
       <figcaption>A tutoring session at Ho Man Tin Ling To Catholic School.</figcaption>
     </figure>
+    <div class="hero-text">
+      <h1>We teach kids in Hong Kong <span class="drawn-under">for free</span>, then tell the government what we saw in class.</h1>
+      <p class="lead">In 2024 we were teaching in schools with no AI lessons and no money to start any. In August 2025 we put what we saw into our Policy Address submission. The {f.aiForAll.budget} Budget gave <span class="drawn-circle">{f.aiForAll.amount.en}</span> to AI for All, the kind of programme we'd asked for.</p>
+      <p class="hero-sub">We're more than 35 students. We study how AI and economic policy are changing the city, send around {f.recsPerYear.word.en} recommendations a year to the government, and teach AI and economics, for free, to primary school children from underprivileged families.</p>
+      <div class="actions">
+        <a class="btn" href="/policy">See what we told the government</a>
+        <a class="textlink" href="/teaching/sample-lesson">Try one of our lessons</a>
+      </div>
+    </div>
+    <p class="hand-note">Our tutors are still at secondary school themselves.</p>
   </div>
 
   <div class="wrap hero-figures">
@@ -89,7 +90,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
           Address and Budget consultation since 2024.
         </p>
         <p class="door-number">{f.recsPerYear.value} <span>recommendations a year</span></p>
-        <a class="textlink" href="/policy">Read our policy work</a>
+        <a class="textlink" href="/policy">Every submission we've sent</a>
       </div>
       <div class="half band">
         <p class="proof-figure">HK$50M</p>
@@ -107,7 +108,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
           seven schools.
         </p>
         <p class="door-number">{f.children.value} <span>children taught</span></p>
-        <a class="textlink" href="/teaching">See our teaching</a>
+        <a class="textlink" href="/teaching">How our lessons work</a>
       </div>
       <div class="half band">
         <p class="proof-figure">{f.bandUp.value}{f.bandUp.unit}</p>
@@ -204,6 +205,11 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
           { name: 'Explain', text: 'AI off. Explain it in your own words.' },
         ]}
       />
+      <!-- A real line from one of our tutors (in full on the Teaching page) -->
+      <figure class="home-quote">
+        <blockquote><p>Curiosity was never what was missing. Access was.</p></blockquote>
+        <figcaption>One of our tutors, after a session at Ho Man Tin Ling To Catholic School. <a href="/teaching#a-moment">The whole story</a></figcaption>
+      </figure>
       <Gallery
         photos={[
           {

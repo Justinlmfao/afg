@@ -23,6 +23,7 @@
   --night-muted: #b9b6ae;  /* secondary text on night      8.8:1 */
   --night-rule: #3a3b3f;
   --mark: #ffe27a;         /* highlighter behind ink text, once per page */
+  --pencil: #c4441c;       /* hand-drawn marks and handwritten notes   4.9:1 */
   --field: #868a87;        /* form field borders           3.5:1 */
 
   /* The two halves of the work each have a colour: Policy is the navy,
@@ -71,6 +72,7 @@
   --text-w: 36rem;  /* reading column, about 65 characters */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
   --margin-title: 'AFG margin title';
+  --hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
   --header-h: 60px;
 }
 
@@ -112,6 +114,15 @@
    政策 教學 關於我們 團隊 聯絡 找不到, and their Simplified forms. Add a character to a
    margin title and it falls back to the system serif until the file is
    remade. */
+/* Caveat, for the few handwritten notes (Latin only; Chinese notes use the
+   serif). Loaded only on pages that use it. */
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 @font-face {
   font-family: 'AFG margin title';
   src: url('/fonts/noto-serif-tc-titles.woff2') format('woff2');
@@ -170,6 +181,7 @@
     --teaching: #72c49b;     /* 8.9:1 */
     --teaching-hover: #98d6b6;
     --teaching-wash: #14241c;
+    --pencil: #ff9466;       /* 8.0:1 on dark paper */
     --accent: var(--teaching);
     --accent-hover: var(--teaching-hover);
     --on-accent: #0e1411;    /* dark text on the light accent: 8.9:1 */
@@ -196,6 +208,7 @@
     --teaching: #72c49b;     /* 8.9:1 */
     --teaching-hover: #98d6b6;
     --teaching-wash: #14241c;
+    --pencil: #ff9466;       /* 8.0:1 on dark paper */
     --accent: var(--teaching);
     --accent-hover: var(--teaching-hover);
     --on-accent: #0e1411;    /* dark text on the light accent: 8.9:1 */
@@ -429,6 +442,63 @@ html[lang^='zh'] .lead {
 
 .band :is(.kicker-date, .meta-line, .small, .band-quiet) {
   color: var(--band-muted);
+}
+
+/* ---- Hand-drawn marks --------------------------------------------------- */
+/* A pencil underline or ring around a few words, drawn as an SVG mask so it
+   takes the --pencil colour in both themes. At most one of each per page. */
+.drawn-under,
+.drawn-circle {
+  position: relative;
+  white-space: nowrap;
+}
+
+.drawn-circle {
+  margin-inline: 0.2em;
+}
+
+.drawn-under::after,
+.drawn-circle::after {
+  content: '';
+  position: absolute;
+  background: var(--pencil);
+  pointer-events: none;
+  -webkit-mask: var(--shape) no-repeat center / 100% 100%;
+  mask: var(--shape) no-repeat center / 100% 100%;
+}
+
+.drawn-under::after {
+  --shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 24' preserveAspectRatio='none'%3E%3Cpath d='M3 15 C 45 7, 95 5, 135 10 S 186 17, 197 9' fill='none' stroke='black' stroke-width='4.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  left: -0.04em;
+  right: -0.06em;
+  bottom: -0.16em;
+  height: 0.3em;
+}
+
+.drawn-circle::after {
+  --shape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 80' preserveAspectRatio='none'%3E%3Cpath d='M118 9 C 70 4, 18 14, 8 38 C 0 62, 52 76, 104 74 C 160 72, 198 58, 192 34 C 186 12, 140 4, 84 10' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+  inset: -0.2em -0.4em -0.26em -0.45em;
+}
+
+/* Chinese has no spaces, so the ring gets a little room of its own */
+html[lang^='zh'] .drawn-circle {
+  margin-inline: 0.35em;
+}
+
+/* A short handwritten note, a little off-straight */
+.hand-note {
+  font-family: var(--hand);
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--pencil);
+  transform: rotate(-2deg);
+}
+
+html[lang^='zh'] .hand-note {
+  font-family: var(--serif);
+  font-size: var(--step-0);
+  font-weight: 500;
 }
 
 /* ---- Layout ------------------------------------------------------------ */
