@@ -169,6 +169,12 @@ phrase that matters most.
     and its links arrive one after another, 40ms apart.
   - The light/dark circle turns over. The new colours then spread across the
     page in a circle from the button, using the browser's view transitions.
+  - Folding sections (`<details>`, such as the names on the Team page) grow
+    open and shut, and their + turns into a minus.
+  - Buttons ease between colours and press in slightly. Photos in grids and
+    cards lean in a touch under the pointer.
+  - Moving between pages fades, where the browser supports cross-document
+    view transitions. Links to a section on the same page scroll smoothly.
   - Anyone who asks their device for less motion gets each change at once.
 - Focus: a 3px green outline, 2px off the element (cream in the footer).
 
