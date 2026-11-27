@@ -69,18 +69,20 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <a class="textlink" href="/zh-hans/teaching/sample-lesson">试上我们的一课</a>
       </div>
     </div>
-    <p class="hand-note">我们的导师自己也还是中学生。</p>
-  </div>
-
-  <div class="wrap hero-figures">
-    <FigureRow
-    items={[
-      { figure: f.recsPerYear.value, label: '每年提交的建议' },
-      { figure: f.children.value, label: '教过的孩子' },
-      { figure: f.schools.value, label: '合作学校' },
-      { figure: f.tutors.value, label: '受训学生导师' },
-    ]}
-    />
+    <!-- Beside the words on wide screens; under them on phones -->
+    <div class="hero-side">
+      <p class="hand-note">我们的导师自己也还是中学生。</p>
+      <div class="wrap hero-figures">
+      <FigureRow
+      items={[
+        { figure: f.recsPerYear.value, label: '每年提交的建议' },
+        { figure: f.children.value, label: '教过的孩子' },
+        { figure: f.schools.value, label: '合作学校' },
+        { figure: f.tutors.value, label: '受训学生导师' },
+      ]}
+      />
+      </div>
+    </div>
   </div>
 
   <div class="halves doors">

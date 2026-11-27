@@ -65,18 +65,20 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <a class="textlink" href="/teaching/sample-lesson">Try one of our lessons</a>
       </div>
     </div>
-    <p class="hand-note">Our tutors are still at secondary school themselves.</p>
-  </div>
-
-  <div class="wrap hero-figures">
-    <FigureRow
-    items={[
-      { figure: f.recsPerYear.value, label: 'recommendations a year' },
-      { figure: f.children.value, label: 'children taught' },
-      { figure: f.schools.value, label: 'partner schools' },
-      { figure: f.tutors.value, label: 'student tutors trained' },
-    ]}
-    />
+    <!-- Beside the words on wide screens; under them on phones -->
+    <div class="hero-side">
+      <p class="hand-note">Our tutors are still at secondary school themselves.</p>
+      <div class="wrap hero-figures">
+      <FigureRow
+      items={[
+        { figure: f.recsPerYear.value, label: 'recommendations a year' },
+        { figure: f.children.value, label: 'children taught' },
+        { figure: f.schools.value, label: 'partner schools' },
+        { figure: f.tutors.value, label: 'student tutors trained' },
+      ]}
+      />
+      </div>
+    </div>
   </div>
 
   <!-- The two halves of the work, each in its own colour: what it is on the
