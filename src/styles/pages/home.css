@@ -468,6 +468,63 @@
     color: var(--muted);
   }
 
+  /* In their words: three short lines from the children, handwritten,
+     each a little off-straight in its own direction */
+  .voices {
+    margin: var(--space-5) 0;
+  }
+
+  .voices-head {
+    font-size: var(--step--1);
+    font-family: var(--sans);
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .voices ul {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+    margin: 0.8rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .voices li {
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .voices blockquote p {
+    font-family: var(--hand);
+    font-size: 1.7rem;
+    font-weight: 500;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .voices li:nth-child(odd) blockquote {
+    transform: rotate(-1.2deg);
+  }
+
+  .voices li:nth-child(even) blockquote {
+    transform: rotate(0.9deg);
+  }
+
+  .voices-who {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+  }
+
+  @media (min-width: 48rem) {
+    .voices ul {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-5);
+    }
+  }
+
   .facts {
     margin-top: var(--space-5);
   }
@@ -482,6 +539,12 @@
 }
 
 html[lang^='zh'] .page-home {
+  .voices blockquote p {
+    font-family: var(--serif);
+    font-size: var(--step-1);
+    line-height: 1.6;
+  }
+
   .home-quote blockquote p {
     font-size: var(--step-2);
     line-height: 1.5;

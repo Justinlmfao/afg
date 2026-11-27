@@ -1,0 +1,30 @@
+---
+// "In their words": short lines from the children, from src/data/voices.ts.
+// Stand-in lines (sample: true) show only on the local preview; if nothing
+// real is left, the block isn't drawn at all.
+import { voices } from '../data/voices';
+import { showSamples } from '../data/facts';
+import { getLangFromUrl } from '../i18n';
+
+const lang = getLangFromUrl(Astro.url);
+const shown = voices.filter((v) => !v.sample || showSamples);
+const heading = { en: 'In their words', zh: '孩子們說', hans: '孩子们说' }[lang];
+---
+
+{
+  shown.length > 0 && (
+    <section class="voices" aria-label={heading}>
+      <h3 class="voices-head">{heading}</h3>
+      <ul>
+        {shown.map((v) => (
+          <li data-sample={v.sample ? '' : undefined}>
+            <blockquote>
+              <p>{v.text[lang]}</p>
+            </blockquote>
+            <span class="voices-who">{v.who[lang]}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}

@@ -4,6 +4,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Photo from '../components/Photo.astro';
 import NowStrip from '../components/NowStrip.astro';
+import Voices from '../components/Voices.astro';
 import FigureRow from '../components/FigureRow.astro';
 import Case from '../components/Case.astro';
 import Ledger from '../components/Ledger.astro';
@@ -135,11 +136,12 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
       <div class="prose">
         <p class="tagline">Policy for a technology we'll inherit.</p>
         <p>
-          AI For Good was started by students in June 2023, and it's still run entirely by students.
-          There are more than 35 of us now. We began outside school as an independent think tank, and
-          since then we've teamed up with schools across Hong Kong. We do two things side by side: we
-          write evidence-based recommendations for the government, and we teach the children who feel
-          the effects of those decisions first.
+          No adults run this. AI For Good was started by students in June 2023, and it's still run
+          entirely by students. There are more than 35 of us now. We began outside school as an
+          independent think tank, and since then we've teamed up with schools across Hong Kong. We do two
+          things side by side: we write evidence-based recommendations for the government, and we teach
+          the children who feel the effects of those decisions first. Some weeks that means drafting a
+          submission; other weeks it means standing at a whiteboard in front of a primary class.
         </p>
         <p><a class="textlink" href="/about">More about us</a></p>
       </div>
@@ -210,6 +212,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <blockquote><p>Curiosity was never what was missing. Access was.</p></blockquote>
         <figcaption>One of our tutors, after a session at Ho Man Tin Ling To Catholic School. <a href="/teaching#a-moment">The whole story</a></figcaption>
       </figure>
+      <Voices />
       <Gallery
         photos={[
           {

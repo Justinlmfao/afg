@@ -8,6 +8,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Photo from '../../components/Photo.astro';
 import NowStrip from '../../components/NowStrip.astro';
+import Voices from '../../components/Voices.astro';
 import FigureRow from '../../components/FigureRow.astro';
 import Case from '../../components/Case.astro';
 import Ledger from '../../components/Ledger.astro';
@@ -126,7 +127,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
       <div class="prose">
         <p class="tagline">为我们终将继承的科技，制订政策。</p>
         <p>
-          AI For Good 由学生在 2023 年 6 月创立，到今天仍然全由学生运营，现在已有超过 35 人。我们一开始是校外的独立智库，后来才陆续和全港各区的学校合作。我们同时做两件事：为政府撰写有证据支持的建议，也去教那些最先感受到这些决定影响的孩子。
+          这里没有大人主理。AI For Good 由学生在 2023 年 6 月创立，到今天仍然全由学生运营，现在已有超过 35 人。我们一开始是校外的独立智库，后来才陆续和全港各区的学校合作。我们同时做两件事：为政府撰写有证据支持的建议，也去教那些最先感受到这些决定影响的孩子。有些星期，我们在赶一份给政府的意见书；有些星期，我们站在白板前，面对一班小学生。
         </p>
         <p><a class="textlink" href="/zh-hans/about">了解更多</a></p>
       </div>
@@ -193,6 +194,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <blockquote><p>他们从来不缺好奇心，缺的是机会。</p></blockquote>
         <figcaption>我们的一位导师，在天主教领岛学校上完课后. <a href="/zh-hans/teaching#a-moment">完整的故事</a></figcaption>
       </figure>
+      <Voices />
       <Gallery
         photos={[
           {
