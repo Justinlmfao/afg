@@ -168,16 +168,18 @@
     margin-top: var(--space-4);
   }
 
-  .hero-stage .hand-note {
-    justify-self: end;
-    margin: var(--space-4) var(--gutter) 0 0;
+  .hero-side .hand-note {
     max-width: 18rem;
+    margin: var(--space-4) var(--gutter) 0 auto;
     text-align: right;
   }
 
   @media (min-width: 60rem) {
     .hero-stage {
       --edge: max(var(--gutter), calc((100% - var(--wide)) / 2 + var(--gutter)));
+      /* The same margin measured from the screen, for use inside a column
+         (where 100% would mean the column, not the page) */
+      --edge-vw: max(var(--gutter), calc((100vw - var(--wide)) / 2 + var(--gutter)));
       grid-template-columns: var(--edge) minmax(0, 41rem) minmax(0, 1fr);
       grid-template-rows: auto 9rem auto;
     }
@@ -197,7 +199,8 @@
       position: absolute;
       right: 0;
       bottom: 0;
-      max-width: 40%;
+      /* Never wider than the photo left uncovered by the text panel */
+      max-width: min(30rem, calc(100vw - var(--edge-vw) - 41rem - 1rem));
       padding: 0.4rem var(--gutter) 0.45rem 0.9rem;
       background: var(--paper);
     }
@@ -215,11 +218,34 @@
       font-size: clamp(2.6rem, 2rem + 1.6vw, 3.5rem);
     }
 
-    .hero-stage .hand-note {
+    .hero-text {
+      padding-bottom: var(--space-6);
+    }
+
+    /* The right column under the photo: the note, then the four figures */
+    .hero-side {
       grid-column: 3;
       grid-row: 3;
-      align-self: start;
-      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      /* Right edge in line with the page container; the note alone stays
+         under the caption, at the screen edge */
+      padding: 1.5rem var(--edge-vw) var(--space-6) clamp(2rem, 4vw, 4.5rem);
+    }
+
+    .hero-side .hand-note {
+      margin: 0 calc(var(--gutter) - var(--edge-vw)) 0 auto;
+    }
+
+    .hero-side .hero-figures {
+      max-width: none;
+      margin-top: var(--space-5);
+      padding: 0;
+    }
+
+    .hero-side .figures {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space-4);
     }
   }
 
@@ -265,7 +291,7 @@
   }
 
   .doors + .sec,
-  .hero-figures + .doors {
+  .hero-stage + .doors {
     border-top: 0;
   }
 

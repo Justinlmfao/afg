@@ -65,18 +65,20 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <a class="textlink" href="/teaching/sample-lesson">Try one of our lessons</a>
       </div>
     </div>
-    <p class="hand-note">Our tutors are still at secondary school themselves.</p>
-  </div>
-
-  <div class="wrap hero-figures">
-    <FigureRow
-    items={[
-      { figure: f.recsPerYear.value, label: 'recommendations a year' },
-      { figure: f.children.value, label: 'children taught' },
-      { figure: f.schools.value, label: 'partner schools' },
-      { figure: f.tutors.value, label: 'student tutors trained' },
-    ]}
-    />
+    <!-- Beside the words on wide screens; under them on phones -->
+    <div class="hero-side">
+      <p class="hand-note">Our tutors are still at secondary school themselves.</p>
+      <div class="wrap hero-figures">
+      <FigureRow
+      items={[
+        { figure: f.recsPerYear.value, label: 'recommendations a year' },
+        { figure: f.children.value, label: 'children taught' },
+        { figure: f.schools.value, label: 'partner schools' },
+        { figure: f.tutors.value, label: 'student tutors trained' },
+      ]}
+      />
+      </div>
+    </div>
   </div>
 
   <!-- The two halves of the work, each in its own colour: what it is on the
@@ -135,11 +137,12 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
       <div class="prose">
         <p class="tagline">Policy for a technology we'll inherit.</p>
         <p>
-          AI For Good was started by students in June 2023, and it's still run entirely by students.
-          There are more than 35 of us now. We began outside school as an independent think tank, and
-          since then we've teamed up with schools across Hong Kong. We do two things side by side: we
-          write evidence-based recommendations for the government, and we teach the children who feel
-          the effects of those decisions first.
+          No adults run this. AI For Good was started by students in June 2023, and it's still run
+          entirely by students. There are more than 35 of us now. We began outside school as an
+          independent think tank, and since then we've teamed up with schools across Hong Kong. We do two
+          things side by side: we write evidence-based recommendations for the government, and we teach
+          the children who feel the effects of those decisions first. Some weeks that means drafting a
+          submission; other weeks it means standing at a whiteboard in front of a primary class.
         </p>
         <p><a class="textlink" href="/about">More about us</a></p>
       </div>

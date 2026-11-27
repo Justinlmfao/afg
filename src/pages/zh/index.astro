@@ -67,18 +67,20 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
         <a class="textlink" href="/zh/teaching/sample-lesson">試上我們的一課</a>
       </div>
     </div>
-    <p class="hand-note">我們的導師自己也還是中學生。</p>
-  </div>
-
-  <div class="wrap hero-figures">
-    <FigureRow
-    items={[
-      { figure: f.recsPerYear.value, label: '每年提交的建議' },
-      { figure: f.children.value, label: '教過的孩子' },
-      { figure: f.schools.value, label: '合作學校' },
-      { figure: f.tutors.value, label: '受訓學生導師' },
-    ]}
-    />
+    <!-- Beside the words on wide screens; under them on phones -->
+    <div class="hero-side">
+      <p class="hand-note">我們的導師自己也還是中學生。</p>
+      <div class="wrap hero-figures">
+      <FigureRow
+      items={[
+        { figure: f.recsPerYear.value, label: '每年提交的建議' },
+        { figure: f.children.value, label: '教過的孩子' },
+        { figure: f.schools.value, label: '合作學校' },
+        { figure: f.tutors.value, label: '受訓學生導師' },
+      ]}
+      />
+      </div>
+    </div>
   </div>
 
   <div class="halves doors">
@@ -124,7 +126,7 @@ const cardPhotos = ['teaching-chalkboard-maths.jpg', 'team-outside-school.jpg'];
       <div class="prose">
         <p class="tagline">為我們終將繼承的科技，制訂政策。</p>
         <p>
-          AI For Good 由學生在 2023 年 6 月創立，到今天仍然全由學生營運，現在已有超過 35 人。我們一開始是校外的獨立智庫，後來才陸續和全港各區的學校合作。我們同時做兩件事：為政府撰寫有證據支持的建議，也去教那些最先感受到這些決定影響的孩子。
+          這裡沒有大人主理。AI For Good 由學生在 2023 年 6 月創立，到今天仍然全由學生營運，現在已有超過 35 人。我們一開始是校外的獨立智庫，後來才陸續和全港各區的學校合作。我們同時做兩件事：為政府撰寫有證據支持的建議，也去教那些最先感受到這些決定影響的孩子。有些星期，我們在趕一份給政府的意見書；有些星期，我們站在白板前，面對一班小學生。
         </p>
         <p><a class="textlink" href="/zh/about">了解更多</a></p>
       </div>
