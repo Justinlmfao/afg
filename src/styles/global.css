@@ -338,7 +338,10 @@ a {
   color: var(--accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: color 120ms, text-decoration-color 120ms;
+  transition:
+    color 180ms ease,
+    text-decoration-color 180ms ease,
+    text-decoration-thickness 180ms ease;
 }
 
 a:hover {
@@ -672,6 +675,20 @@ html[lang^='zh'] .hand-note {
   color: var(--on-accent);
 }
 
+/* Buttons ease between colours and give a little when pressed */
+.btn,
+.btn-light {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 150ms ease;
+}
+
+.btn:active,
+.btn-light:active {
+  transform: scale(0.97);
+}
+
 .btn:hover {
   background: var(--accent-hover);
   color: var(--on-accent);
@@ -732,16 +749,39 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 
+/* A plus drawn from two bars; opening shrinks the upright bar away, so it
+   turns smoothly into a minus (and back while closing) */
 details > summary::before {
-  content: '+';
+  content: '';
   flex: none;
-  width: 1ch;
-  font-weight: 400;
-  text-align: center;
+  width: 0.7em;
+  height: 0.7em;
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) center / 2px 100% no-repeat;
+  transition:
+    background-size 260ms ease,
+    transform 260ms ease;
 }
 
-details[open] > summary::before {
-  content: '\2212';
+details[open]:not(.is-closing) > summary::before {
+  background-size:
+    100% 2px,
+    2px 0;
+  transform: rotate(180deg);
+}
+
+/* The opened content fades in as the section grows (the script in
+   BaseLayout animates the height) */
+details[open]:not(.is-closing) > :not(summary) {
+  animation: details-in 320ms ease both;
+}
+
+@keyframes details-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.3rem);
+  }
 }
 
 details > summary:hover {
@@ -792,17 +832,67 @@ details > summary:hover {
   color: var(--muted);
 }
 
+/* ---- Moving between pages --------------------------------------------- */
+/* In browsers that support it, one page fades into the next instead of
+   flashing white. Links within a page scroll smoothly to their section. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+::view-transition-old(root) {
+  animation: 160ms cubic-bezier(0.4, 0, 1, 1) both page-out;
+}
+
+::view-transition-new(root) {
+  animation: 280ms cubic-bezier(0, 0, 0.2, 1) 40ms both page-in;
+}
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+/* The header stays put while the page under it changes */
+:root:not(.theme-switching) .site-head {
+  view-transition-name: site-head;
+}
+
 /* Switching light and dark mode: the new colours spread out in a circle
    from the button (the script in Header.astro drives the circle). */
-::view-transition-old(root),
-::view-transition-new(root) {
+:root.theme-switching::view-transition-old(root),
+:root.theme-switching::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  ::before,
+  ::after {
     transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 

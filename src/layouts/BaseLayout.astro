@@ -133,5 +133,58 @@ const organisation = {
       <slot />
     </main>
     <Footer />
+    <script>
+      // Folding sections (<details>, e.g. each name on the Team page) open and
+      // close smoothly instead of jumping. Without this script, or for people
+      // who ask for less motion, they still open and close at once.
+      const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const ease = 'cubic-bezier(0.2, 0.7, 0.2, 1)';
+
+      document.querySelectorAll<HTMLDetailsElement>('details').forEach((details) => {
+        const summary = details.querySelector<HTMLElement>(':scope > summary');
+        if (!summary) return;
+        let motion: Animation | null = null;
+
+        // The height of the box with only its summary showing
+        const closedHeight = () => {
+          const box = getComputedStyle(details);
+          return (
+            summary.offsetHeight +
+            parseFloat(box.paddingTop) +
+            parseFloat(box.paddingBottom) +
+            parseFloat(box.borderTopWidth) +
+            parseFloat(box.borderBottomWidth)
+          );
+        };
+
+        summary.addEventListener('click', (event) => {
+          if (calm.matches || typeof details.animate !== 'function') return;
+          event.preventDefault();
+          const from = details.offsetHeight;
+          motion?.cancel();
+          details.style.overflow = 'hidden';
+          const opening = !details.open || details.classList.contains('is-closing');
+
+          if (opening) {
+            details.classList.remove('is-closing');
+            details.open = true;
+            const to = details.scrollHeight;
+            motion = details.animate({ height: [`${from}px`, `${to}px`] }, { duration: 340, easing: ease });
+          } else {
+            details.classList.add('is-closing');
+            motion = details.animate({ height: [`${from}px`, `${closedHeight()}px`] }, { duration: 280, easing: ease });
+          }
+
+          motion.onfinish = () => {
+            if (!opening) {
+              details.open = false;
+              details.classList.remove('is-closing');
+            }
+            details.style.overflow = '';
+            motion = null;
+          };
+        });
+      });
+    </script>
   </body>
 </html>

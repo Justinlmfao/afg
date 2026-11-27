@@ -165,7 +165,11 @@ const languages = langOrder.map((code) => ({
       const x = box.left + box.width / 2;
       const y = box.top + box.height / 2;
       const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      // Marks this transition as the theme change, so the page-to-page fade
+      // in global.css stays out of it
+      root.classList.add('theme-switching');
       const change = document.startViewTransition(() => applyTheme(next));
+      change.finished.finally(() => root.classList.remove('theme-switching'));
       change.ready
         .then(() => {
           root.animate(
